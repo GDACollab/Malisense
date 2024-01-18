@@ -38,21 +38,21 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""StartSprint"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""68413389-947c-40f8-aa15-253a4495816d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""EndSprint"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""1140a8cb-0b1e-4aae-8491-1f11b7149af8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
