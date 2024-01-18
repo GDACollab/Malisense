@@ -1,5 +1,5 @@
 {
-    "name": "New Controls",
+    "name": "NewControls",
     "maps": [
         {
             "name": "Player",
@@ -13,6 +13,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "StartSprint",
+                    "type": "Button",
+                    "id": "68413389-947c-40f8-aa15-253a4495816d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EndSprint",
+                    "type": "Button",
+                    "id": "1140a8cb-0b1e-4aae-8491-1f11b7149af8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -125,6 +143,28 @@
                     "action": "8 Directions Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b6cd2c99-2e5f-44ae-8bc4-7ce979524c56",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartSprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9d1d3e5-7e46-4b96-be7d-84af7884c4df",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndSprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
