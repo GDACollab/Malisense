@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     public void OptionsMenu()
     {
-        StartCoroutine(FadeToOptions());
+        
     }
 
     public void Credits()
@@ -34,18 +34,5 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    //Coroutines ======================================================================================
-    IEnumerator FadeToOptions()
-    {
-        // Gradually increase the alpha value of the fade image
-        float alpha = fadeImage.color.a;
-        while (alpha < 1f)
-        {
-            alpha += fadeSpeed * Time.deltaTime;
-            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, alpha);
-            yield return null;
-        }
-
-        // Enable Game Object Here
-    }
+    
 }
