@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-using System; // Math.Sqrt();
-
 public class PlayerControl : MonoBehaviour
 {
     // Input System
@@ -16,7 +14,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float sprintRatio;
 
     public bool isSprinting;
-    float diagonalRatio = (float)Math.Sqrt(1.0 / 2.0);
 
     void Start()
     {
@@ -30,13 +27,7 @@ public class PlayerControl : MonoBehaviour
         Vector2 currentPosition = transform.position;
         float adjustedSpeed = moveSpeed;
 
-        // If moving diagonally, decrease the speed based on the Pythagorean Theorem
-        if ((moveAction.ReadValue<Vector2>().y > 0 && (moveAction.ReadValue<Vector2>().x < 0 || moveAction.ReadValue<Vector2>().x > 0)) ||
-            (moveAction.ReadValue<Vector2>().y < 0 && (moveAction.ReadValue<Vector2>().x < 0 || moveAction.ReadValue<Vector2>().x > 0)))
-        {
-            adjustedSpeed *= diagonalRatio;
-        }
-
+        // Sprint functionality
         if (sprintAction.ReadValue<float>() > 0f)
         {
             adjustedSpeed *= sprintRatio;
