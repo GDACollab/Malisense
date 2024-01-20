@@ -9,17 +9,21 @@ public class PlayerControl : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     InputAction sprintAction;
+    InputAction sneakAction;
 
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintRatio;
+    [SerializeField] float sneakRatio;
 
     public bool isSprinting;
+    public bool isSneaking;
 
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("8 Directions Movement");
         sprintAction = playerInput.actions.FindAction("Sprint");
+        sneakAction = playerInput.actions.FindAction("Sneak");
     }
 
     void Update()
@@ -28,7 +32,7 @@ public class PlayerControl : MonoBehaviour
         float adjustedSpeed = moveSpeed;
 
         // Sprint functionality
-        if (sprintAction.ReadValue<float>() > 0f)
+        if (sprintAction.ReadValue<float>() > 0f && !isSneaking)
         {
             adjustedSpeed *= sprintRatio;
             isSprinting = true;
@@ -36,6 +40,16 @@ public class PlayerControl : MonoBehaviour
         else
         {
             isSprinting = false;
+        }
+        
+        if (sneakAction.ReadValue<float>() > 0f && !isSprinting)
+        {
+            adjustedSpeed *= sneakRatio;
+            isSneaking = true;
+        }
+        else
+        {
+            isSneaking = false;
         }
 
         // Input System
