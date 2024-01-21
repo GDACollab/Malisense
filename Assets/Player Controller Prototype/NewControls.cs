@@ -37,18 +37,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""StartSprint"",
+                    ""name"": ""Sprint"",
                     ""type"": ""Value"",
-                    ""id"": ""68413389-947c-40f8-aa15-253a4495816d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""EndSprint"",
-                    ""type"": ""Value"",
-                    ""id"": ""1140a8cb-0b1e-4aae-8491-1f11b7149af8"",
+                    ""id"": ""65cc8520-8236-45a2-bc3e-c7434b3e7c35"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -167,24 +158,68 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""b6cd2c99-2e5f-44ae-8bc4-7ce979524c56"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": ""Press"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""8b357a52-c37d-4689-8186-2e455f883439"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""StartSprint"",
-                    ""isComposite"": false,
+                    ""action"": ""8 Directions Movement"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""b9d1d3e5-7e46-4b96-be7d-84af7884c4df"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": ""Press(behavior=1)"",
+                    ""name"": ""up"",
+                    ""id"": ""ca9b52d6-40ce-419c-be81-9c9dd22b057c"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EndSprint"",
+                    ""action"": ""8 Directions Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""9a33a8c8-7e43-4694-88eb-1672e5bc6581"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""8 Directions Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""db239605-c7b0-4606-8aa0-d4aebe1f0c58"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""8 Directions Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""50225c0c-e7d0-436e-832d-4e2f3d9d998b"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""8 Directions Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d56b6d1b-6895-4eae-8131-8cc5ed35e069"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -196,8 +231,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player__8DirectionsMovement = m_Player.FindAction("8 Directions Movement", throwIfNotFound: true);
-        m_Player_StartSprint = m_Player.FindAction("StartSprint", throwIfNotFound: true);
-        m_Player_EndSprint = m_Player.FindAction("EndSprint", throwIfNotFound: true);
+        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -260,15 +294,13 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player__8DirectionsMovement;
-    private readonly InputAction m_Player_StartSprint;
-    private readonly InputAction m_Player_EndSprint;
+    private readonly InputAction m_Player_Sprint;
     public struct PlayerActions
     {
         private @NewControls m_Wrapper;
         public PlayerActions(@NewControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @_8DirectionsMovement => m_Wrapper.m_Player__8DirectionsMovement;
-        public InputAction @StartSprint => m_Wrapper.m_Player_StartSprint;
-        public InputAction @EndSprint => m_Wrapper.m_Player_EndSprint;
+        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -281,12 +313,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @_8DirectionsMovement.started += instance.On_8DirectionsMovement;
             @_8DirectionsMovement.performed += instance.On_8DirectionsMovement;
             @_8DirectionsMovement.canceled += instance.On_8DirectionsMovement;
-            @StartSprint.started += instance.OnStartSprint;
-            @StartSprint.performed += instance.OnStartSprint;
-            @StartSprint.canceled += instance.OnStartSprint;
-            @EndSprint.started += instance.OnEndSprint;
-            @EndSprint.performed += instance.OnEndSprint;
-            @EndSprint.canceled += instance.OnEndSprint;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -294,12 +323,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @_8DirectionsMovement.started -= instance.On_8DirectionsMovement;
             @_8DirectionsMovement.performed -= instance.On_8DirectionsMovement;
             @_8DirectionsMovement.canceled -= instance.On_8DirectionsMovement;
-            @StartSprint.started -= instance.OnStartSprint;
-            @StartSprint.performed -= instance.OnStartSprint;
-            @StartSprint.canceled -= instance.OnStartSprint;
-            @EndSprint.started -= instance.OnEndSprint;
-            @EndSprint.performed -= instance.OnEndSprint;
-            @EndSprint.canceled -= instance.OnEndSprint;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -320,7 +346,6 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void On_8DirectionsMovement(InputAction.CallbackContext context);
-        void OnStartSprint(InputAction.CallbackContext context);
-        void OnEndSprint(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }
