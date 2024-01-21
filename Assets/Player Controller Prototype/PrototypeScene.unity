@@ -673,10 +673,12 @@ MonoBehaviour:
   StaminaBar: {fileID: 943265679}
   moveSpeed: 360
   sprintRatio: 1.5
+  sneakRatio: 0.5
   maxStamina: 10
   minimumToSprint: 0.25
   isMoving: 0
   isSprinting: 0
+  isSneaking: 0
 --- !u!114 &1872068028
 MonoBehaviour:
   m_ObjectHideFlags: 0

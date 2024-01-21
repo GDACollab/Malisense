@@ -11,12 +11,14 @@ public class PlayerControl : MonoBehaviour
     PlayerInput playerInput;
     InputAction moveAction;
     InputAction sprintAction;
+    InputAction sneakAction;
 
     //stamina bar stuff, just temporary janky bar to keep track of stamina easier for debug purposes, can change it and make it look nicer later
     public Image StaminaBar;
 
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintRatio;
+    [SerializeField] float sneakRatio;
     [SerializeField] float maxStamina; //How many seconds of sprinting
     [SerializeField] float minimumToSprint; //Determines when player can run again, the variable should be a percentage
     float currentStamina; //How many seconds of springing left
@@ -25,6 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     public bool isMoving;
     public bool isSprinting;
+    public bool isSneaking;
 
     void Start()
     {
@@ -32,6 +35,7 @@ public class PlayerControl : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("8 Directions Movement");
         sprintAction = playerInput.actions.FindAction("Sprint");
+        sneakAction = playerInput.actions.FindAction("Sneak");
         currentStamina = maxStamina;
 
     }
@@ -53,7 +57,7 @@ public class PlayerControl : MonoBehaviour
         if ((sprintAction.ReadValue<float>() > 0f) && (currentStamina > 0f) && (!exhausted) && (isMoving == true)) //Two new test cases (actually added a 3rd, only starts sprinting if moving)
                                                                                              //2nd check to see if currentStamina greater than 0, then check to see if character is exhausted
         {
-            currentStamina -= 2 * Time.deltaTime; //The rate at which stamina drains (drains 1 every second)
+            currentStamina -= 4 * Time.deltaTime; //The rate at which stamina drains (drains 1 every second)
             if (currentStamina < 0f) //Makes the exhaust variable true, which means the character cannot run for some time.
                 exhausted = true;
             
@@ -67,6 +71,17 @@ public class PlayerControl : MonoBehaviour
             if (currentStamina < maxStamina)
                 currentStamina += 1 * Time.deltaTime; //The rate at which stamina regenerates (Regenerates 1 every second)
 
+        }
+
+        //sneaking
+        if (sneakAction.ReadValue<float>() > 0f && !isSprinting)
+        {
+            adjustedSpeed *= sneakRatio;
+            isSneaking = true;
+        }
+        else
+        {
+            isSneaking = false;
         }
 
         // Input System
