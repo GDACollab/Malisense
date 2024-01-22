@@ -12,7 +12,20 @@ public class LoaderCallback : MonoBehaviour
         if (isFirstUpdate)
         {
             isFirstUpdate = false;
-            Loader.LoaderCallback(); 
+            StartCoroutine(LoadingDelay());
         }
     }
+
+    private IEnumerator LoadingDelay()
+    {
+        // Set the delay duration (in seconds)
+        float delayDuration = 5.0f;
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(delayDuration);
+
+        // Call the loader callback after the delay
+        Loader.LoaderCallback();
+    }
+
 }
