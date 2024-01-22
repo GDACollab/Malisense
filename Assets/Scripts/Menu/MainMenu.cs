@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     //Functions ======================================================================================
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Loader.Load(Loader.Scene.GameScene);
     }
 
     public void OnApplicationQuit()
