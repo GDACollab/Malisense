@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3322401963125106643}
   - component: {fileID: 3080584818237740689}
   - component: {fileID: 9059986571753088723}
-  - component: {fileID: 6247542007923838723}
   m_Layer: 0
   m_Name: ItemPickup
   m_TagString: Untagged
@@ -135,30 +134,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 1adb74180b0874b38b86c3a8b1d9d8b5, type: 2}
---- !u!50 &6247542007923838723
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6799335906551869834}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

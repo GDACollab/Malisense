@@ -38,8 +38,16 @@ public class PlayerControl : MonoBehaviour
     {
         float moveX = moveAction.ReadValue<Vector2>().x;
         float moveY = moveAction.ReadValue<Vector2>().y;
+        
+        Vector2 direction = new Vector2(moveX, moveY).normalized;
 
-        rb.velocity = new Vector2(moveX * adjustedSpeed, moveY * adjustedSpeed);
+        rb.velocity = direction * adjustedSpeed;
+        float angle = Vector2.SignedAngle(Vector2.right, direction) - 90;
+
+        if (direction.magnitude > 0)
+        {
+            rb.MoveRotation(angle);   
+        }
     }
 
     void Update()
