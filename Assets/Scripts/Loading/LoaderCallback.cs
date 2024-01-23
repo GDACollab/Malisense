@@ -38,6 +38,14 @@ public class LoaderCallback : MonoBehaviour
         // Wait for the specified duration
         yield return new WaitForSeconds(delayDuration);
 
+        fadeOutUIImage.gameObject.SetActive(true);
+        while (fadeOutUIImage.color.a < 1.5)
+        {
+            objectColor.a += fadeSpeed * Time.deltaTime;
+            fadeOutUIImage.color = objectColor;
+            yield return null;
+        }
+
         // Call the loader callback after the delay
         Loader.LoaderCallback();
     }
