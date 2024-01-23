@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,18 +20,33 @@ public class PlayerControl : MonoBehaviour
     public bool isSprinting;
     public bool isSneaking;
 
+    public Rigidbody2D rb;
+
+    float adjustedSpeed;
+
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody2D>();
         moveAction = playerInput.actions.FindAction("8 Directions Movement");
         sprintAction = playerInput.actions.FindAction("Sprint");
         sneakAction = playerInput.actions.FindAction("Sneak");
+        
+    }
+
+    private void FixedUpdate()
+    {
+        float moveX = moveAction.ReadValue<Vector2>().x;
+        float moveY = moveAction.ReadValue<Vector2>().y;
+
+        rb.velocity = new Vector2(moveX * adjustedSpeed, moveY * adjustedSpeed);
     }
 
     void Update()
     {
+        adjustedSpeed = moveSpeed;
+        
         Vector2 currentPosition = transform.position;
-        float adjustedSpeed = moveSpeed;
 
         // Sprint functionality
         if (sprintAction.ReadValue<float>() > 0f && !isSneaking)
@@ -54,19 +70,14 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Input System
-        float moveX = moveAction.ReadValue<Vector2>().x;
-        float moveY = moveAction.ReadValue<Vector2>().y;
-
-        currentPosition.x += moveX * adjustedSpeed * Time.deltaTime;
-        currentPosition.y += moveY * adjustedSpeed * Time.deltaTime;
+        
 
         // Setting up the boundary for the ball
         currentPosition.x = Mathf.Clamp(currentPosition.x, -960, 960);
         currentPosition.y = Mathf.Clamp(currentPosition.y, -540, 540);
         
         // Apply the new position every frame
-        transform.position = currentPosition;
         // Rotate every frame, change to snap to 45degree increments
-        transform.up =currentPosition;
+        //transform.up =currentPosition;
     }
 }
