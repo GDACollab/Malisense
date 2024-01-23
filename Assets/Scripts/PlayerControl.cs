@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,8 +63,10 @@ public class PlayerControl : MonoBehaviour
         // Setting up the boundary for the ball
         currentPosition.x = Mathf.Clamp(currentPosition.x, -960, 960);
         currentPosition.y = Mathf.Clamp(currentPosition.y, -540, 540);
-
+        
         // Apply the new position every frame
         transform.position = currentPosition;
+        // Rotate every frame, change to snap to 45degree increments
+        transform.up =currentPosition;
     }
 }

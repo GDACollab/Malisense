@@ -4,14 +4,6 @@ using UnityEngine;
 
 // Two places for items, hotbar and inventory
 // Hotbar is a max of 3 items
-
-// TEMP DATABASE MAYBE???
-[CreateAssetMenu(fileName = "New Data Table", menuName = "Inventory/Item DataTable")]
-public class ItemDataBase : ScriptableObject
-{
-    public List<ItemBase> items;
-}
-
 public enum Rarity
 {
     None,
@@ -39,11 +31,12 @@ public enum CounterType
 }
 
 // ITEM CLASS
-public class ItemBase : ScriptableObject
+public abstract class ItemBase : ScriptableObject
 {
     [Header("Item")]
     public string ItemID;
     public Rarity rarity;
+    [TextArea(15, 20)]
     public string description;
     public int stackSize;
     public Sprite thumbnail;
