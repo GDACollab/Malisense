@@ -582,6 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1872068026}
   - component: {fileID: 1872068027}
+  - component: {fileID: 1872068030}
   - component: {fileID: 1872068028}
   - component: {fileID: 1872068029}
   - component: {fileID: 1872068025}
@@ -674,14 +675,10 @@ MonoBehaviour:
   moveSpeed: 360
   sprintRatio: 1.5
   sneakRatio: 0.5
-  maxStamina: 10
   isMoving: 0
   isSprinting: 0
   isSneaking: 0
-  minimumToSprint: 0.25
-  staminaRegen: 1
-  staminaDepletion: 4
-  StaminaBar: {fileID: 943265679}
+  playerStamina: {fileID: 1872068030}
 --- !u!114 &1872068028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +736,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1872068030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872068024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ec2500440dfee469e489ea8a7fa5cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 10
+  staminaRegen: 1
+  staminaDepletion: 4
+  minimumToSprint: 0.25
+  StaminaBar: {fileID: 943265679}
+  isExhausted: 0
+  playerControl: {fileID: 1872068027}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
