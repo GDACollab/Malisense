@@ -58,7 +58,8 @@ public class PlayerControl : MonoBehaviour
         currentStamina = maxStamina;
 	}
 
-    private void FixedUpdate()		// for moving and rotating
+    private void FixedUpdate()
+	// For moving and rotating
     {
 		// Movement
         float moveX = moveAction.ReadValue<Vector2>().x;
@@ -78,7 +79,8 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    void Update()		// for sprinting and sneaking
+    void Update()
+	// For sprinting and sneaking
 	{
 		adjustedSpeed = moveSpeed;
 

@@ -581,8 +581,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1872068026}
-  - component: {fileID: 1872068028}
   - component: {fileID: 1872068027}
+  - component: {fileID: 1872068028}
   - component: {fileID: 1872068029}
   - component: {fileID: 1872068025}
   m_Layer: 0
@@ -675,13 +675,13 @@ MonoBehaviour:
   sprintRatio: 1.5
   sneakRatio: 0.5
   maxStamina: 10
+  isMoving: 0
+  isSprinting: 0
+  isSneaking: 0
   minimumToSprint: 0.25
   staminaRegen: 1
   staminaDepletion: 4
   StaminaBar: {fileID: 943265679}
-  isMoving: 0
-  isSprinting: 0
-  isSneaking: 0
 --- !u!114 &1872068028
 MonoBehaviour:
   m_ObjectHideFlags: 0
