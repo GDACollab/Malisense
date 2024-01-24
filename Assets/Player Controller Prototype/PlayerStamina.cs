@@ -5,11 +5,14 @@ using UnityEngine.UI;       // for Image GameObject
 
 public class PlayerStamina : MonoBehaviour
 {
-	// Stamina
-	[SerializeField] float maxStamina;
+    // Movement Script
+    PlayerControl playerControl;
+
+    // Stamina
+    [SerializeField] float maxStamina;
 	[Tooltip("n stamina per second")][SerializeField] float staminaRegen;
 	[Tooltip("n stamina per second")][SerializeField] float staminaDepletion;
-	[Tooltip("percentage of stamina required to sprint again")][Range(0.00f, 1.00f)][SerializeField] float minimumToSprint;
+	[Tooltip("percentage of stamina required to sprint again after becoming exhausted")][Range(0.00f, 1.00f)][SerializeField] float minimumToSprint;
 	float currentStamina;
 
 	// UI Elements
@@ -17,16 +20,15 @@ public class PlayerStamina : MonoBehaviour
 	public Image StaminaBar;
 
 	// Stamina States
-	[Header("Stamina States")]
+	[Header("Stamina States (for other scripts to use)")]
 	public bool isExhausted = false;		// makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
-
-	// Player Movement Script (to know when player is sprinting)
-	[Header("Player Movement Script")]
-	[SerializeField] PlayerControl playerControl;
 
 	void Start()
 	{
-		// Set Initial Stamina
+		// Set movement script
+		playerControl = GetComponent<PlayerControl>();
+
+		// Set initial stamina
 		currentStamina = maxStamina;
 	}
 

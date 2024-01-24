@@ -14,34 +14,35 @@ public class PlayerControl : MonoBehaviour
 	// Rigid Body
 	Rigidbody2D rb;
 
+	// Stamina Script
+	PlayerStamina playerStamina;
+
 	// Movement
 	[Header("Movement")]
-	[SerializeField] float moveSpeed;
+	[SerializeField] float walkingSpeed;
 	[SerializeField] float sprintRatio;
 	[SerializeField] float sneakRatio;
-	float adjustedSpeed;
+	float adjustedSpeed;								// the speed the player moves at, accounting for sprinting or sneaking
 
-	// Movement States (for other scripts to use)
-	[Header("Movement States")]
+	// Movement States
+	[Header("Movement States (for other scripts to use)")]
 	public bool isMoving;
 	public bool isSprinting;
 	public bool isSneaking;
 
-	// Player Stamina Script (to know when player is exhausted)
-	[Header("Player Stamina Script")]
-	[SerializeField] PlayerStamina playerStamina;
-
-
 	void Start()
 	{
-		// Set Input System Variables
+		// Set input system variables
 		playerInput = GetComponent<PlayerInput>();
 		moveAction = playerInput.actions.FindAction("8 Directions Movement");
 		sprintAction = playerInput.actions.FindAction("Sprint");
 		sneakAction = playerInput.actions.FindAction("Sneak");
 
-		// Set Rigid Body Variables
+		// Set rigid body variables
 		rb = GetComponent<Rigidbody2D>();
+
+		// Set stamina script variables
+		playerStamina = GetComponent<PlayerStamina>();
 	}
 
 	private void FixedUpdate()
@@ -69,7 +70,7 @@ public class PlayerControl : MonoBehaviour
 	// For sprinting and sneaking
 	{
 		// Walking (default)
-		adjustedSpeed = moveSpeed;
+		adjustedSpeed = walkingSpeed;
 
         // Sprinting
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!playerStamina.isExhausted))

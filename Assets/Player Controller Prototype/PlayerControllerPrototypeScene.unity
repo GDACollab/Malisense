@@ -672,13 +672,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2433e2b677d8b794cb6409d49e5dfa36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 360
+  walkingSpeed: 360
   sprintRatio: 1.5
   sneakRatio: 0.5
   isMoving: 0
   isSprinting: 0
   isSneaking: 0
-  playerStamina: {fileID: 1872068030}
 --- !u!114 &1872068028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,7 +753,6 @@ MonoBehaviour:
   minimumToSprint: 0.25
   StaminaBar: {fileID: 943265679}
   isExhausted: 0
-  playerControl: {fileID: 1872068027}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
