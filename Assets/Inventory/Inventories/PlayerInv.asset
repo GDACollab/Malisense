@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: PlayerInv
   m_EditorClassIdentifier: Assembly-CSharp::InventoryBase/Inventory
   size: 0
-  inventory: []
+  inventory:
+  - item: {fileID: 11400000, guid: 8a23122a0335b4e47a2752cc9fe54b7c, type: 2}
+    amount: 14
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
