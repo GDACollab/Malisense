@@ -6,30 +6,27 @@ using UnityEngine.UI;
 using System;
 
 
-public class MainMenu : MonoBehaviour
+public class DeathScript : MonoBehaviour
 {
     public Image fadeOutUIImage; // Reference to the UI Image
     public float fadeSpeed = 0.5f;
 
     //Functions ======================================================================================
-    public void PlayGame()
+    public void ResetButton()
     {
-        StartCoroutine(FadeToBlackAndLoadScene());
+        StartCoroutine(Fader());
     }
 
-    public void OnApplicationQuit()
-    {
-        Application.Quit();
-    }
-
-    IEnumerator FadeToBlackAndLoadScene()
+    IEnumerator Fader()
     {
         fadeOutUIImage.gameObject.SetActive(true);
-        yield return StartCoroutine(FadeToBlack());
+        //Play Audio with FMOD - Need to research Library
+
+        yield return StartCoroutine(ImageFade());
         Loader.Load(Loader.Scene.GameScene); 
     }
 
-    IEnumerator FadeToBlack()
+    IEnumerator ImageFade()
     {
         fadeOutUIImage.gameObject.SetActive(true); // Activate the image if it's not already
         Color objectColor = fadeOutUIImage.color;
