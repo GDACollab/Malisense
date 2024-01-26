@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// MODIFIED FROM https://stuartspixelgames.com/2018/06/24/simple-2d-top-down-movement-unity-c/
+// MODIFIED FROM https://stuartspixelgames.com/2018/06/24/simple-2d-top-down-movement-unity-c/ but won't be in final code anyway
 public class MovementScript : MonoBehaviour 
 {   
     Rigidbody2D rb;
