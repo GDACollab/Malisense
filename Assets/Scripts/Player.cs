@@ -7,9 +7,6 @@ public class Player : Character
 {
     public PlayerInput input;
     public InputAction interactAction;
-    
-    // string is name of item, int is amount in inv
-    public InventoryBase.Inventory playerInv;
         
     // Start is called before the first frame update
     void Start()
@@ -33,7 +30,7 @@ public class Player : Character
 
             if (!item) return;
 
-            bool success = playerInv.AddItem(item.item, 1);
+            bool success = Inventory.AddItem(item.item, 1);
             if (success)
             {
                 Destroy(other.gameObject);

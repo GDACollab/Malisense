@@ -13,6 +13,9 @@ public abstract class Character : MonoBehaviour, IEffectable
     private float nextTickTime = 0f;
     public List<Effect> effects = new List<Effect>();
     
+    // string is name of item, int is amount in inv
+    public InventoryBase.Inventory Inventory;
+    
     // Start is called before the first frame update
     void Start()
     {
