@@ -15,7 +15,9 @@ public class FloorNotesReader : MonoBehaviour
 
     private void Update(){
         int itemNameLength = itemName.text.Length;
+        print(itemNameLength);
         int itemDescriptionLength = itemDescription.text.Length;
+        print(itemDescriptionLength);
 
         layoutElement.enabled = (itemNameLength > characterWrapLimit || itemDescriptionLength > characterWrapLimit) ? true : false;
     }

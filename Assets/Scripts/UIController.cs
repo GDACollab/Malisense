@@ -9,7 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private FNRPanel _fnr;
 
-    public FNRPanel FNRWindow => _fnr;
+    public FNRPanel FNRPanel => _fnr;
 
     private void Awake()
     {
