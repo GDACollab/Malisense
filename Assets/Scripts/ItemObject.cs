@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour
@@ -12,10 +13,13 @@ public class ItemObject : MonoBehaviour
     
     [SerializeField, Tooltip("How far the object will get thrown")]
     float throwStrength = 100;
+
+    [SerializeField] 
+    EffectData effectData;
     
     [SerializeField]
     float effectRadius = 50;
-
+    
     private void Start()
     {
         // ref to player, always good to have
@@ -30,9 +34,18 @@ public class ItemObject : MonoBehaviour
             rb.velocity = player.transform.up * throwStrength;
         }
     }
-
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        // If object can receive effects
+        var effectable = other.GetComponent<IEffectable>();
+        Debug.Log($"Hit {other.gameObject.name}");
+
+        if (effectable != null)
+        {
+            // just an example :)
+            Effect temp = new Effects.CloudBootsEffect(effectData);
+            effectable.AddEffect(temp);
+        }
+        Destroy(this.gameObject);
     }
 }

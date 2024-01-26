@@ -11,12 +11,17 @@ public class InventoryBase : MonoBehaviour
     public class Inventory : ScriptableObject
     {
         [SerializeField] private int size;
-        public List<InventorySlot> inventory = new List<InventorySlot>();
+        public List<InventorySlot> inventory;
 
-        private void Awake()
+        private void OnValidate()
         {
             // Set inventory size
-            inventory.Capacity = size;
+            inventory.Clear();
+            
+            for (int i = 0; i < size; i++)
+            {
+                inventory.Add(new InventorySlot(null, 0));
+            }
         }
 
         public bool AddItem(ItemBase item, int amount)

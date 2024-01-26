@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     public PlayerInput input;
     public InputAction interactAction;
@@ -23,16 +23,16 @@ public class Player : MonoBehaviour
     {
         
     }
-    
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (interactAction.ReadValue<float>() > 0f)
         {
-            
+
             var item = other.GetComponent<ItemPickup>();
 
             if (!item) return;
-            
+
             bool success = playerInv.AddItem(item.item, 1);
             if (success)
             {
