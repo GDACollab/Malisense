@@ -45,15 +45,15 @@ public class PlayerStamina : MonoBehaviour
 		// Check if player is sprinting
 		if (playerControl.isSprinting)
 		{
-			currentStamina -= staminaDepletion * Time.deltaTime;		// deplete stamina
+			currentStamina -= staminaDepletion * Time.deltaTime;        // deplete stamina
 			if (currentStamina < 0f)                                    // check if player should now be exhausted
-                isExhausted = true;
+				isExhausted = true;
 		}
 		else
 		{
-			if (currentStamina < maxStamina)							// regen stamina
+			if (currentStamina < maxStamina)                            // regen stamina
 				currentStamina += staminaRegen * Time.deltaTime;
-        }
+		}
 
         // Update the stamina bar
         StaminaBar.fillAmount = currentStamina / maxStamina;

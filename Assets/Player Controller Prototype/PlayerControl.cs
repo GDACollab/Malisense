@@ -54,7 +54,7 @@ public class PlayerControl : MonoBehaviour
 		Vector2 direction = new Vector2(moveX, moveY).normalized;
 		rb.velocity = direction * adjustedSpeed;
 
-		// set isMoving
+		// Set isMoving
 		if (moveX != 0 || moveY != 0)
 			isMoving = true;
 		else
