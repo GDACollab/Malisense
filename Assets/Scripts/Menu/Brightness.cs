@@ -1,34 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
 
 public class Brightness : MonoBehaviour
 {
 
     public Slider brightnessSlider;
+    public VolumeProfile postProfile;
 
-    public PostProcessProfile brightness;
-    public PostProcessLayer layer;
+    private LiftGammaGain liftGammaGainEffect;
 
-    AutoExposure exposure;
     // Start is called before the first frame update
     void Start()
     {
-        brightness.TryGetSettings(out exposure);
+        if (!postProfile)
+            return;
+
+        if (postProfile.TryGet(out liftGammaGainEffect))
+        {
+            brightnessSlider.value = liftGammaGainEffect.gamma.value.w;
+        }
+        else
+        {
+            Debug.LogWarning("Missing Lift Gamma Gain post processing effect!");
+        }
+
     }
 
     public void SetBrightness(float value)
     {
-        Debug.Log(value);
-        if (value != 0)
-        {
-            exposure.keyValue.value = value;
-        }
-        else
-        {
-            exposure.keyValue.value = 0.05f;
-        }
+        if (!liftGammaGainEffect)
+            return;
+
+        Vector4 gamma = liftGammaGainEffect.gamma.value;
+
+        gamma.w = value;
+
+        liftGammaGainEffect.gamma.value = gamma;
     }
 }
