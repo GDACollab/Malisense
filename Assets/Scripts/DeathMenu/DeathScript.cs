@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
+using FMODUnity;
 
 
 public class DeathScript : MonoBehaviour
 {
     public Image fadeOutUIImage; // Reference to the UI Image
-    public float fadeSpeed = 0.5f;
+    public float fadeSpeed = 0.07f;
 
+    [SerializeField] private EventReference ascension;
     //Functions ======================================================================================
     public void ResetButton()
     {
+        playSound();
         StartCoroutine(Fader());
     }
 
@@ -40,5 +43,8 @@ public class DeathScript : MonoBehaviour
             yield return null;
         }
     }
-
+    private void playSound()
+    {
+        AudioManager.Instance.PlayOneShot(ascension, this.transform.position);
+    }
 }
