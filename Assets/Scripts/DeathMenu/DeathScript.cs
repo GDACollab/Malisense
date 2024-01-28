@@ -13,6 +13,7 @@ public class DeathScript : MonoBehaviour
     public float fadeSpeed = 0.07f;
 
     [SerializeField] private EventReference ascension;
+    public GameObject prefabToFade;
     //Functions ======================================================================================
     public void ResetButton()
     {
