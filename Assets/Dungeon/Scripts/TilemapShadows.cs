@@ -66,7 +66,7 @@ public class TilemapShadows : MonoBehaviour
         // Add shadow casters
         foreach(var rect in GenerateCoverRects(mask, width, height, margin))
         {
-            var obj = new GameObject($"Shadow {rect}", typeof(ShadowCaster2D));
+            var obj = new GameObject($"Shadow {rect.x} {rect.y}", typeof(ShadowCaster2D));
             obj.GetComponent<ShadowCaster2D>().selfShadows = true;
 
             obj.transform.parent = transform;
