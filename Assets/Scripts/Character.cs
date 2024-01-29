@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // Base class for Characters, both the player, NPCS, and enemies
@@ -33,7 +34,7 @@ public abstract class Character : MonoBehaviour, IEffectable
     public void HandleEffect()
     {
         currentEffectTime += Time.deltaTime;
-        foreach (Effect data in effects)
+        foreach (Effect data in effects.ToList())
         {
             if (data.EffectType == EffectType.Persistent && Math.Round(currentEffectTime, 2, MidpointRounding.AwayFromZero) > nextTickTime + data.period)
             {
