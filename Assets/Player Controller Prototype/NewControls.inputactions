@@ -26,16 +26,7 @@
                 {
                     "name": "Sneak",
                     "type": "Value",
-                    "id": "f7ace6a2-dbf1-41f6-8021-888ca366fcda",
-                    "expectedControlType": "Digital",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Interact",
-                    "type": "Value",
-                    "id": "3e593be7-9d70-4d1f-a578-4d8b92e11cc6",
+                    "id": "9cbb0e3b-8203-4c15-a40f-661063302a4b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -221,23 +212,12 @@
                 },
                 {
                     "name": "",
-                    "id": "27a938ea-aeba-42c3-b0c3-547aa7e64532",
-                    "path": "<Keyboard>/ctrl",
+                    "id": "87719c7b-7ded-4748-b8f0-e9188d3424f0",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ab2bcc33-0e3d-4e67-92a3-6fb232a1cfca",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
