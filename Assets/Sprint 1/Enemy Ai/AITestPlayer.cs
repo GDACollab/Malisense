@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AITestPlayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float moveSpeed = 10;   // Movement Speed Multiplier
     public float collisionOffset = 0.05f;
