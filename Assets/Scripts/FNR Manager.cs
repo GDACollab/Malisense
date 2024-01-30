@@ -4,7 +4,8 @@ using TMPro;
 // huge props to https://www.youtube.com/watch?v=B6nCNhsJNjU
 public class FNRManager : MonoBehaviour
 {
-    public GameObject FNRWindow; 
+    public GameObject FNRWindow;
+    public GameObject Darken_Background;
     public TextMeshProUGUI Title;
     public TextMeshProUGUI Body;
 
@@ -29,5 +30,6 @@ public class FNRManager : MonoBehaviour
     public void hideFNR()
     {
         FNRWindow.SetActive(false);
+        Darken_Background.SetActive(false); 
     }
 }
