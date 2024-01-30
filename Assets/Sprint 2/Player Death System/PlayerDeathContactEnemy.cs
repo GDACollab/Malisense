@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerDeathContactEnemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Player died due to contact to enemy");
+        }
     }
 }
