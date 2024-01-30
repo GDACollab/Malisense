@@ -18,7 +18,7 @@ public class ItemObject : MonoBehaviour
     EffectData effectData;
     
     [SerializeField]
-    float effectRadius = 50;
+    //float effectRadius = 50;
     
     private void Start()
     {
