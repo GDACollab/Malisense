@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ItemTestPlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
     // Input System
     PlayerInput playerInput;

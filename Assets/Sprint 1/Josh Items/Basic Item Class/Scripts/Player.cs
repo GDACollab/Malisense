@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ItemTestPlayer : Character
+public class Player : Character
 {
     public PlayerInput input;
     public InputAction interactAction;
