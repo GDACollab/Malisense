@@ -14,11 +14,13 @@ public class Brightness : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (!postProfile)
             return;
 
         if (postProfile.TryGet(out liftGammaGainEffect))
         {
+            liftGammaGainEffect.gamma.value = new Vector4(1,1,1,0);
             brightnessSlider.value = liftGammaGainEffect.gamma.value.w;
         }
         else
@@ -31,12 +33,16 @@ public class Brightness : MonoBehaviour
     public void SetBrightness(float value)
     {
         if (!liftGammaGainEffect)
-            return;
+            Debug.LogWarning("Missing Lift Gamma Gain Effect");
+        //return;
+
+        Debug.Log(liftGammaGainEffect.gamma.value);
 
         Vector4 gamma = liftGammaGainEffect.gamma.value;
 
         gamma.w = value;
 
         liftGammaGainEffect.gamma.value = gamma;
+        liftGammaGainEffect.lift.value = gamma;
     }
 }
