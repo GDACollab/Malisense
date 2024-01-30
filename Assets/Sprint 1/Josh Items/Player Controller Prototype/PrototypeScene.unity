@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 1872068026}
   - component: {fileID: 1872068025}
   - component: {fileID: 1872068027}
+  - component: {fileID: 1872068033}
   - component: {fileID: 1872068028}
   - component: {fileID: 1872068030}
   - component: {fileID: 1872068031}
@@ -735,15 +736,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1872068024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2433e2b677d8b794cb6409d49e5dfa36, type: 3}
+  m_Script: {fileID: 11500000, guid: ce75cd0872347454fa53af7619e8387e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 720
+  walkingSpeed: 300
   sprintRatio: 2
   sneakRatio: 0
+  isMoving: 0
   isSprinting: 0
   isSneaking: 0
-  rb: {fileID: 0}
 --- !u!114 &1872068028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: e9060dc3963fd6e46ab8ba54f8444f5c, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: dde836942fe358e40871da1de0c38af5, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -860,6 +861,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1872068033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872068024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ec2500440dfee469e489ea8a7fa5cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 10
+  staminaRegen: 0
+  staminaDepletion: 0
+  minimumToSprint: 0
+  StaminaBar: {fileID: 0}
+  isExhausted: 0
 --- !u!1001 &250724601494173324
 PrefabInstance:
   m_ObjectHideFlags: 0

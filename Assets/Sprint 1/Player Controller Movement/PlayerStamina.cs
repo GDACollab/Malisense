@@ -55,7 +55,10 @@ public class PlayerStamina : MonoBehaviour
 				currentStamina += staminaRegen * Time.deltaTime;
 		}
 
-        // Update the stamina bar
-        StaminaBar.fillAmount = currentStamina / maxStamina;
+		// Update the stamina bar
+		if (StaminaBar != null)
+		{
+			StaminaBar.fillAmount = currentStamina / maxStamina;
+		}
     }
 }
