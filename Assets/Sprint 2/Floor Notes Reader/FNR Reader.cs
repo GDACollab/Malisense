@@ -4,8 +4,10 @@ using TMPro;
 // huge props to https://www.youtube.com/watch?v=B6nCNhsJNjU
 public class FNRManager : MonoBehaviour
 {
+    [Header("Canvas and Window Slots")]
     public GameObject FNRWindow;
     public GameObject Darken_Background;
+    [Header("Text")]
     public TextMeshProUGUI Title;
     public TextMeshProUGUI Body;
 
