@@ -163,6 +163,7 @@ public class V_SelectableItems2 : MonoBehaviour
     {
         Color objectColor = fadeOutUIImage.color;
         float fadeAmount;
+        ActivateUI(listIndex);
 
         yield return new WaitForSeconds(2.0f);
 
@@ -175,5 +176,20 @@ public class V_SelectableItems2 : MonoBehaviour
         }
     }
 
+    private void ActivateUI(int index)
+    {
+        // Deactivate all UI elements
+        foreach (var uiElement in UI_ELEMENTS)
+        {
+            uiElement.SetActive(false);
+        }
 
-}
+        // Activate the UI element that corresponds to the selected object
+        if (index >= 0 && index < UI_ELEMENTS.Count)
+        {
+            UI_ELEMENTS[index].SetActive(true);
+        }
+    }
+
+
+ }
