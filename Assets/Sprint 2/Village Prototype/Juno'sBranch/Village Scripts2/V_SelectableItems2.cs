@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class V_SelectableItems2 : MonoBehaviour
 {   
-    //
+    //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> SELECTABLES = new List<GameObject>();
+    [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
     [SerializeField] private int listIndex;
     [SerializeField] private bool currentlySelected = false;
     [SerializeField] private bool hasEntered = false;
@@ -162,6 +163,8 @@ public class V_SelectableItems2 : MonoBehaviour
     {
         Color objectColor = fadeOutUIImage.color;
         float fadeAmount;
+
+        yield return new WaitForSeconds(2.0f);
 
         while (fadeOutUIImage.color.a > 0)
         {
