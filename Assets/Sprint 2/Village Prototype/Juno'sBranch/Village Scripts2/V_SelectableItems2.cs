@@ -1,8 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class V_SelectableItems2 : MonoBehaviour
-{
+{   
+    //
     [SerializeField] private List<GameObject> SELECTABLES = new List<GameObject>();
     [SerializeField] private int listIndex;
     [SerializeField] private bool currentlySelected = false;
@@ -15,7 +18,7 @@ public class V_SelectableItems2 : MonoBehaviour
     public float buildingZoomScale;
     public float zoomTimeSeconds;
     private float defaultCameraScale;
-    private bool zooming;
+    public bool zooming;
     private float zoomScaleStart, zoomScaleGoal;
     private float secondsPassed; // seconds passed since starting the lerp
     private Vector3 cameraStartPosition;
@@ -23,6 +26,10 @@ public class V_SelectableItems2 : MonoBehaviour
     private bool isCenteringCamera;
 
     private GameObject thisObject;
+
+    //UI Stuff
+    public Image fadeOutUIImage; // Reference to the UI Image
+    public float fadeSpeed = 0.5f;
 
     private void Start()
     {
@@ -52,8 +59,12 @@ public class V_SelectableItems2 : MonoBehaviour
             {
                 zooming = false;
                 isCenteringCamera = false;
+                StartCoroutine(FadeToClear());
             }
         }
+
+
+
     }
 
     public void moveInList(int move)
@@ -92,6 +103,7 @@ public class V_SelectableItems2 : MonoBehaviour
         Zoom(buildingZoomScale);
 
         // UI Fading - Coroutine
+        StartCoroutine(FadeToBlack());
         // Villager UI Appears
         // Reset Camera
     }
@@ -129,4 +141,36 @@ public class V_SelectableItems2 : MonoBehaviour
             currentlySelected = false;
         }
     }
+
+    private IEnumerator FadeToBlack()
+    {
+        Color objectColor = fadeOutUIImage.color;
+        float fadeAmount;
+
+        while (fadeOutUIImage.color.a < 1)
+        {
+            fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+            fadeOutUIImage.color = objectColor;
+            yield return null;
+        }
+
+    }
+
+
+    private IEnumerator FadeToClear()
+    {
+        Color objectColor = fadeOutUIImage.color;
+        float fadeAmount;
+
+        while (fadeOutUIImage.color.a > 0)
+        {
+            fadeAmount = objectColor.a - (fadeSpeed * Time.deltaTime);
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+            fadeOutUIImage.color = objectColor;
+            yield return null;
+        }
+    }
+
+
 }
