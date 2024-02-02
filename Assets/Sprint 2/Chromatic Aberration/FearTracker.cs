@@ -24,7 +24,6 @@ public class FearTracker : MonoBehaviour
     /// The current intensity of fear effects, from 0 to 1.
     /// </summary>
     public float FearIntensity => _smoothedFear;
-    public ChromAbManager _ChromAbManager;
     private float _lastFearTime = float.NegativeInfinity;
     private float _unsmoothedFear;
     private float _smoothedFear;
@@ -64,9 +63,5 @@ public class FearTracker : MonoBehaviour
     {
         _unsmoothedFear = Mathf.MoveTowards(_unsmoothedFear, 0f, Time.deltaTime / lingerDuration);
         _smoothedFear = Mathf.SmoothDamp(_smoothedFear, _unsmoothedFear, ref _vel, smoothness);
-
-//#warning Change this to apply the chromatic abberation effect!
-        // transform.Find("Sprite").localScale = new Vector3(0.5f, 0.5f - 0.5f * FearIntensity, 1f);
-        _ChromAbManager.PissingPants(true, FearIntensity);
     }
 }
