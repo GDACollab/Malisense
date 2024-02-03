@@ -9,6 +9,7 @@ public class FloornoteInteract : MonoBehaviour
     public bool FNInRange;
     public KeyCode FNinteractKey;
     public UnityEvent FNinteractAction;
+    public GameObject popUpFloorNote;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +38,8 @@ public class FloornoteInteract : MonoBehaviour
         if(FNInRange)
         {
             if(Input.GetKeyDown(FNinteractKey)) 
-            { 
+            {
+                popUpFloorNote.SetActive(true);
                 FNinteractAction.Invoke();
                 Debug.Log("Player interacted with Floornote");
             }
