@@ -3,15 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Light
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Dungeon
   - Water
   - UI
-  - 
+  - Map
   - 
   - 
   - 
@@ -38,6 +39,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Floor
+    uniqueID: 2743604031
+    locked: 0
+  - name: Walls
+    uniqueID: 3153198361
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MAP
+    uniqueID: 2699522737
     locked: 0
