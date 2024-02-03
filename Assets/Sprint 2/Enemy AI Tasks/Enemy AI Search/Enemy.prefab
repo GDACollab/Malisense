@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 4361278910717339455}
   - component: {fileID: 4461813916616751564}
   - component: {fileID: 2187735537590383946}
+  - component: {fileID: 595134235400723951}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -244,4 +245,22 @@ MonoBehaviour:
   currentState: 0
   patrol: {fileID: 0}
   chasing: {fileID: 4461813916616751564}
-  alert: {fileID: 0}
+  alert: {fileID: 595134235400723951}
+--- !u!114 &595134235400723951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8646597992690969897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 233e74ab3adc24f98ad4a07b06bc91a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 200
+  nextWaypointDistance: 3
+  pathUpdateRate: 0.5
+  GFX: {fileID: 0}
+  reachedEndOfPath: 0
