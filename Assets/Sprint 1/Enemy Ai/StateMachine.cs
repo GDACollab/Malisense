@@ -27,7 +27,7 @@ public class StateMachine : MonoBehaviour
     void Start()
     {
         currentState = State.Patrolling;
-        switchState(State.Chasing);
+        switchState(State.Alert);
     }
 
     void switchState(State newState)

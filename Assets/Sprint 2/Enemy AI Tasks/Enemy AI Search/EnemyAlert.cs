@@ -8,8 +8,8 @@ public class EnemyAlert : StateBaseClass
     // Start is called before the first frame update
     public Transform target;
 
-    public float speed = 100f;              // Acceleration speed
-    public float nextWaypointDistance = 0f; // How close an enemy needs to be to the waypoint to move on to next one
+    public float speed = 200f;              // Acceleration speed
+    public float nextWaypointDistance = 3f; // How close an enemy needs to be to the waypoint to move on to next one
     public float pathUpdateRate = 0.5f;     // Time between pathfinder updates
 
     public Transform GFX;
@@ -26,6 +26,8 @@ public class EnemyAlert : StateBaseClass
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         seeker.StartPath(rb.position, target.position);
+        Debug.Log(target.position);
+        Debug.Log(speed);
 
         // Update pathfinding
         //InvokeRepeating("UpdatePath",   // Method name
