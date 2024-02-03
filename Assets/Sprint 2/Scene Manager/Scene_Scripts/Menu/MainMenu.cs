@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     {
         fadeOutUIImage.gameObject.SetActive(true);
         yield return StartCoroutine(FadeToBlack());
-        Loader.Load(Loader.Scene.GameScene); 
+        Loader.Load(Loader.Scene.JunoVersion); 
     }
 
     IEnumerator FadeToBlack()

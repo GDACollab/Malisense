@@ -10,7 +10,8 @@ public static class Loader
     {
         MainMenu,
         LoadingScene,
-        GameScene
+        GameScene,
+        JunoVersion
     }
 
     private static Action onLoaderCallback;
