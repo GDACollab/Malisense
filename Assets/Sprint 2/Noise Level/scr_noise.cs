@@ -21,4 +21,11 @@ public class scr_noise : MonoBehaviour
     {
         
     }
+
+    //Call whenever a sound is made
+    //pos is the location the sound originates, size is the diameter of the area in which the sound can be heard
+    void MakeSound(Vector3 pos, float size)
+    {
+
+    }
 }
