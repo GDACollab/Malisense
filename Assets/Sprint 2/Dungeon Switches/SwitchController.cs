@@ -8,8 +8,10 @@ public class SwitchController : MonoBehaviour
 
     void Update()
     {
+        
         /*
          * Call ActivateSwitch() if the player clicks the interact key and is within the switch's interaction range
+         * Active the lamp when ActivateSwitch() is true
          */
     }
     // Called when the switch is clicked or activated
