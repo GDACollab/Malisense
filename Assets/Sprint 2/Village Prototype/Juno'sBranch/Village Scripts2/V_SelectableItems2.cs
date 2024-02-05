@@ -156,6 +156,11 @@ public class V_SelectableItems2 : MonoBehaviour
             yield return null;
         }
 
+        if (listIndex == 4)
+        {
+            Loader.Load(Loader.Scene.GameScene);
+        }
+
     }
 
 
