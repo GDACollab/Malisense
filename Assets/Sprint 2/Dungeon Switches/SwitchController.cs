@@ -6,6 +6,12 @@ public class SwitchController : MonoBehaviour
 {
     private bool isActivated = false;
 
+    void Update()
+    {
+        /*
+         * Call ActivateSwitch() if the player clicks the interact key and is within the switch's interaction range
+         */
+    }
     // Called when the switch is clicked or activated
     public void ActivateSwitch()
     {
