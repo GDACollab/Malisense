@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class InventoryBase : MonoBehaviour
 {
-    // TEMP DATABASE MAYBE???
+    
     [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Inventory")]
     public class Inventory : ScriptableObject
     {
         [SerializeField] private int size;
         public List<InventorySlot> inventory;
+        
+        public HeavyItem carriedObject;
 
         private void OnValidate()
         {
@@ -24,8 +26,15 @@ public class InventoryBase : MonoBehaviour
             }
         }
 
+        // return success
         public bool AddItem(ItemBase item, int amount)
         {
+            // Prevents players from picking up items
+            if (carriedObject)
+            {
+                return false;
+            }
+            
             // if item IS in inv, add it to the slot.
             int targetSlot = HasItem(item);
             
@@ -54,7 +63,77 @@ public class InventoryBase : MonoBehaviour
                 return false;
             }
         }
-        
+
+        public bool RemoveItem(ItemBase targetItem, int amount)
+        {
+            if (amount <= 0)
+            {
+                print("Amount Less than 1");
+                return false;
+            }
+
+            if (targetItem == null)
+            {
+                print("Item is null");
+                return false;
+            }
+            
+            foreach (InventorySlot slot in inventory)
+            {
+                if (slot.item.Equals(targetItem))
+                {
+                    // Item found
+                    slot.amount -= Math.Max(slot.amount - amount, 0);
+
+                    if (slot.amount <= 0)
+                    {
+                        // Clear slot
+                        slot.item = null;
+                    }
+                    
+                    return true;
+                }
+            }
+
+            // Item not found
+            print("Item " + targetItem.name + " Not Found");
+            return false;
+        }
+
+        // we love overloading
+        public bool RemoveItem(int targetSlot, int amount)
+        {
+            if (amount <= 0)
+            {
+                print("Amount Less than 1");
+                return false;
+            }
+
+            if (targetSlot <= 0 || targetSlot > size - 1)
+            {
+                print("Target slot out of array bounds");
+                return false;
+            }
+
+            InventorySlot slot = inventory[targetSlot];
+
+            if (slot.item == null)
+            {
+                print("Item at slot: " + targetSlot + ", is null");
+                return false;
+            }
+            
+            // Item found
+            slot.amount -= Math.Max(slot.amount - amount, 0);
+
+            if (slot.amount <= 0)
+            {
+                // Clear slot
+                slot.item = null;
+            }
+                    
+            return true;
+        }
         
         // attempts to return the inv slot that has the specific item
         public int HasItem(ItemBase targetItem)
@@ -91,6 +170,7 @@ public class InventoryBase : MonoBehaviour
         }
     }
 
+    // could also be a struct prolly
     [System.Serializable]
     public class InventorySlot
     {
