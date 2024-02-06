@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1772592993816570770}
   - component: {fileID: 2321137910769987868}
   - component: {fileID: 1328936604463086059}
-  - component: {fileID: 7789252450794114203}
   - component: {fileID: 3108461271474953184}
+  - component: {fileID: 2589529836627001864}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -146,22 +146,6 @@ MonoBehaviour:
   pathUpdateRate: 0.5
   GFX: {fileID: 5781489286502987235}
   reachedEndOfPath: 0
---- !u!114 &7789252450794114203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1910794357741763404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b77788c4d163a84ea299c2671b849bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 1
-  patrol: {fileID: 0}
-  chasing: {fileID: 1328936604463086059}
-  alert: {fileID: 3108461271474953184}
 --- !u!114 &3108461271474953184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +172,25 @@ MonoBehaviour:
   - {x: 0, y: -1}
   - {x: -1, y: 0}
   - {x: 0, y: 1}
+--- !u!114 &2589529836627001864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910794357741763404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29966feb3d2e4beda7d2423c1b6acea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 1
+  patrol: {fileID: 0}
+  chasing: {fileID: 1328936604463086059}
+  alert: {fileID: 3108461271474953184}
+  alertInit: 0
+  patrolInit: 0
+  chaseInit: 0
 --- !u!1 &3981003867585251268
 GameObject:
   m_ObjectHideFlags: 0

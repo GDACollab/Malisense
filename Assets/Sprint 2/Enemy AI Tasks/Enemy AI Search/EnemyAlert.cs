@@ -31,6 +31,9 @@ public class EnemyAlert : StateBaseClass
         rb = GetComponent<Rigidbody2D>();
         center = new Vector2(target.position.x,target.position.y);
         seeker.StartPath(rb.position, target.position, OnPathComplete);
+        reachedEndOfPath = false;
+        onCircumference = false;
+        circumferenceIndex = 0;
     }
 
 
