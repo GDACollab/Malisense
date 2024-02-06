@@ -619,7 +619,7 @@ namespace FMODUnity
             Platforms.ForEach(LinkPlatform);
 
 #if UNITY_EDITOR
-            EditorSettings.CheckActiveBuildTarget();
+            //EditorSettings.CheckActiveBuildTarget();
 #endif
         }
 
