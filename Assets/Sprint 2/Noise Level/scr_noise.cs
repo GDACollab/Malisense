@@ -10,6 +10,8 @@ public class scr_noise : MonoBehaviour
     //a command from this script gets called, creating the object on top of the character that moved
     //If the circle hits a sound monster, it gets alerted
 
+    public GameObject noiseObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +26,12 @@ public class scr_noise : MonoBehaviour
 
     //Call whenever a sound is made
     //pos is the location the sound originates, size is the diameter of the area in which the sound can be heard
-    void MakeSound(Vector3 pos, float size)
+    public void MakeSound(Vector3 pos, float size)
     {
+        GameObject noise;
+        noise = Instantiate(noiseObject,pos,Quaternion.identity);
+        //Warning: if the object has no scr_noiseObject, then the game will crash
+        noise.GetComponent<scr_noiseObject>().diameter = size; //This grabs the component scr_noiseObject in noise, and sets the diamter variable in it to size
 
     }
 }
