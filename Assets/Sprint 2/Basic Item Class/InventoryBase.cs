@@ -15,6 +15,8 @@ public class InventoryBase : MonoBehaviour
         
         public HeavyItem carriedObject;
 
+        
+        // happens when editor is updated
         private void OnValidate()
         {
             // Set inventory size

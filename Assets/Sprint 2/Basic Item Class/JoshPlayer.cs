@@ -8,7 +8,9 @@ public class JoshPlayer : MonoBehaviour
 {
     public PlayerInput input;
     public InputAction interactAction;
+    public InputAction setDownAction;
     public Rigidbody2D rb;
+    public GameObject triangle;
     
     // TODO add drop Big item IA
     
@@ -21,7 +23,9 @@ public class JoshPlayer : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        triangle = transform.GetChild(0).gameObject;
         interactAction = input.actions.FindAction("Interact");
+        setDownAction = input.actions.FindAction("SetDown");
     }
 
     // Update is called once per frame
@@ -32,7 +36,19 @@ public class JoshPlayer : MonoBehaviour
             return;
         }
 
-        newInventory.carriedObject.transform.position = transform.position;
+        if (setDownAction.ReadValue<float>() > 0f)
+        {
+            if (newInventory.carriedObject)
+            {
+                newInventory.carriedObject = null;
+            }
+        }
+
+        if (newInventory.carriedObject)
+        {
+            newInventory.carriedObject.transform.position = triangle.transform.position;
+            newInventory.carriedObject.transform.rotation = triangle.transform.rotation;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -41,7 +57,16 @@ public class JoshPlayer : MonoBehaviour
         {
             var item = other.GetComponent<ItemPickup>();
             var heavyItem = other.GetComponent<HeavyItem>();
+            var door = other.GetComponent<Door>();
 
+            if (door && newInventory.carriedObject)
+            {
+                Destroy(newInventory.carriedObject.gameObject);
+                newInventory.carriedObject = null;
+                Destroy(other.gameObject);
+                return;
+            }
+            
             if (!item)
             {
                 if (!heavyItem)
@@ -50,7 +75,7 @@ public class JoshPlayer : MonoBehaviour
                 }
 
                 newInventory.carriedObject = heavyItem;
-                return;    
+                return;
             };
 
             bool success = newInventory.AddItem(item.item, 1);

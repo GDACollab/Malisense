@@ -76,7 +76,7 @@ public class JoshController : MonoBehaviour
 		adjustedSpeed = walkingSpeed;
 
         // Sprinting
-        if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!playerStamina.isExhausted))
+        if ((sprintAction.ReadValue<float>() > 0f) && (isMoving) && (!playerStamina.isExhausted))
 		{
 			adjustedSpeed *= sprintRatio;
 			isSprinting = true;
@@ -100,7 +100,7 @@ public class JoshController : MonoBehaviour
 		// Apply carried object effect
 		if (player.newInventory.carriedObject != null)
 		{
-			adjustedSpeed *= 0.5f;
+			adjustedSpeed *= 0.4f;
 		}
 	}
 }
