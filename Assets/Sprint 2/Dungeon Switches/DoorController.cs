@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
-{
+{    
     public GameObject door;
     public GameObject[] switches;
 
@@ -22,6 +22,7 @@ public class DoorController : MonoBehaviour
         // Check for switch activation
         CheckSwitches();
 
+
         // Check if all switches are activated to open the door
         if (activatedSwitchCount == switches.Length)
         {
@@ -29,6 +30,8 @@ public class DoorController : MonoBehaviour
         }
         else
         {
+            //Reset the activated switch count
+            activatedSwitchCount = 0;
             CloseDoor();
         }
     }
