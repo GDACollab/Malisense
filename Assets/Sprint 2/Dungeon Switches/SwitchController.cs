@@ -13,7 +13,7 @@ public class SwitchController : MonoBehaviour
     //activate the switch, the switch cannot be turned off
     void Update()
     {
-        if (Vector3.Distance(transform.position, GameObject.Find("Player").transform.position) < 1.5f)
+        if ((Vector3.Distance(transform.position, GameObject.Find("Player").transform.position) < 1.5f) && isActivated == false)
         {
             ActivateSwitch();
         }
@@ -24,10 +24,7 @@ public class SwitchController : MonoBehaviour
     {
         // Toggle the switch state
         isActivated = true;
-        if (isActivated)
-        {
-               spriteRenderer.color = activatedColor;
-        }
+        spriteRenderer.color = activatedColor;
 
         //ADD SOUND EFFECT HERE
         // You can add a visual feedback or animation for switch activation here
