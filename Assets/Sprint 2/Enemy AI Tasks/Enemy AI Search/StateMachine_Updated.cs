@@ -24,9 +24,9 @@ public class StateMachine_Updated : MonoBehaviour
     public StateBaseClass chasing;
     public StateBaseClass alert;
 
-    public bool alertInit = false;
-    public bool patrolInit = false;
-    public bool chaseInit = false;
+    private bool alertInit = false;
+    private bool patrolInit = false;
+    private bool chaseInit = false;
 
     void Start()
     {

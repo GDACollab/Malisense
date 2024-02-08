@@ -16,11 +16,11 @@ public class EnemyAlert : StateBaseClass
 
     Path path;
     int currentWaypoint = 0;
-    public bool reachedEndOfPath = false;
-    public bool onCircumference = false;
-    public int circumferenceIndex = 0;
-    public Vector2 center;
-    public Vector2[] circlePoints = { new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0), new Vector2(0, 1) };
+    private bool reachedEndOfPath;
+    private bool onCircumference;
+    private int circumferenceIndex;
+    private Vector2 center;
+    private Vector2[] circlePoints = { new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0), new Vector2(0, 1) };
 
     Seeker seeker;
     Rigidbody2D rb;
