@@ -16,6 +16,7 @@ public class SBProtoChase : StateBaseClass
     private SBProtoStateMachine _stateMachine;
     private EnemyPathfinder _pathfinder;
     private SBProtoSightModule _sight;
+    private FearTracker _fear;
 
     private void Awake()
     {
@@ -29,6 +30,8 @@ public class SBProtoChase : StateBaseClass
         _lastSeenTime = Time.time;
         _pathfinder.SetTarget(_sight.target.position);
         _pathfinder.acceleration = speed;
+
+        _fear = _sight.target.GetComponent<FearTracker>();
     }
 
     public override void On_Update()
@@ -37,6 +40,11 @@ public class SBProtoChase : StateBaseClass
         if (visibility != SBProtoSightModule.Visibility.None)
         {
             _lastSeenTime = Time.time;
+        }
+
+        if (_fear)
+        {
+            _fear.AddFear(visibility != SBProtoSightModule.Visibility.None ? 0.8f : 0.3f);
         }
 
         if (visibility != SBProtoSightModule.Visibility.None
