@@ -10,8 +10,9 @@ public static class Loader
     {
         MainMenu,
         LoadingScene,
-        GameScene,
-        JunoVersion
+        Dungeon,
+        Village,
+        DeathScene
     }
 
     private static Action onLoaderCallback;
@@ -20,11 +21,11 @@ public static class Loader
         //Action is stored, then is called from function LoaderCallback
         onLoaderCallback = () =>
         {
-            SceneManager.LoadScene(scene.ToString());
+            SceneManager.LoadScene(scene.ToString()+"_2-9-24");
         };
 
         //Load Loading Scene which calls on the function that runs Action
-        SceneManager.LoadScene(Scene.LoadingScene.ToString());
+        SceneManager.LoadScene(Scene.LoadingScene.ToString()+"_2-9-24");
     }
 
     public static void LoaderCallback()

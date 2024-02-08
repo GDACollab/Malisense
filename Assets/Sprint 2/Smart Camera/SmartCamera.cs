@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class scr : MonoBehaviour
@@ -20,7 +21,9 @@ public class scr : MonoBehaviour
     }
     
     private void LateUpdate() {
-        mainCamera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, mainCamera.transform.position.z);
+        if(player!=null){
+            mainCamera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, mainCamera.transform.position.z);
+        }
     }
     
     private void setAspectRatio(){

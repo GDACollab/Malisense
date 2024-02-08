@@ -4,9 +4,14 @@ using System.Threading;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class V_KeyboardInteractiontion2 : MonoBehaviour
 {
+    PlayerInput playerInput;
+	InputAction moveAction;
+    InputAction selectAction;
+    
     [SerializeField] GameObject currentListSelected;
     [SerializeField] GameObject test;
 
@@ -38,7 +43,10 @@ public class V_KeyboardInteractiontion2 : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
+            playerInput = GetComponent<PlayerInput>();
+		    moveAction = playerInput.actions.FindAction("8 Directions Movement");
+            selectAction = playerInput.actions.FindAction("Select");
         }
         else
         {
@@ -54,15 +62,16 @@ public class V_KeyboardInteractiontion2 : MonoBehaviour
     }
     private void simpleMovement()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered))
         {
             DaSCRIPT.moveInList(-1);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered))
         {
             DaSCRIPT.moveInList(1);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || selectAction.triggered)
         {
             DaSCRIPT.selectObject();
         }

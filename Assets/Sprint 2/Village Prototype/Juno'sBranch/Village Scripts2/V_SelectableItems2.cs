@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class V_SelectableItems2 : MonoBehaviour
 {   
+    [Header("Temp Playtest Vars")]
+    public GameObject dungeonMessage;
+    public GameObject whoopsNoBackButton;
+    
     //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> SELECTABLES = new List<GameObject>();
     [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
     [SerializeField] private int listIndex;
     [SerializeField] private bool currentlySelected = false;
     [SerializeField] private bool hasEntered = false;
+    [SerializeField] private bool hasSelected = false;
     GameObject selectedGameObject;
     [SerializeField] private GameObject theFunnyArrow;
 
@@ -37,6 +42,7 @@ public class V_SelectableItems2 : MonoBehaviour
         thisObject = gameObject;
         defaultCameraScale = mainCamera.orthographicSize;
         cameraStartPosition = mainCamera.transform.position;
+        selectedGameObject = SELECTABLES[0];
     }
 
     private void Update()
@@ -88,13 +94,29 @@ public class V_SelectableItems2 : MonoBehaviour
 
     public void selectObject()
     {
+        if(hasSelected){
+            return;
+        }
+        else{
+            hasSelected = true;
+        }
         if (selectedGameObject == null)
         {
             Debug.LogError("No selected GameObject.");
             return;
         }
 
-        if (hasEntered) return;
+        if (hasEntered){
+            hasEntered = false;
+            Vector3 temp = cameraStartPosition;
+            cameraStartPosition = cameraTargetPosition;
+            cameraTargetPosition = temp;
+            isCenteringCamera = true;
+            DefaultZoom();
+            
+            StartCoroutine(FadeToBlack());
+            return;
+        };
         hasEntered = true;
 
         // Set target position for camera zoom
@@ -129,6 +151,7 @@ public class V_SelectableItems2 : MonoBehaviour
         Vector3 currentPosition = theFunnyArrow.transform.position;
         Vector3 newPosition = new Vector3(targetXPosition, currentPosition.y, currentPosition.z);
         theFunnyArrow.transform.position = newPosition;
+        dungeonMessage.SetActive(listIndex == 2);
     }
 
     private void ifSelected()
@@ -156,9 +179,9 @@ public class V_SelectableItems2 : MonoBehaviour
             yield return null;
         }
 
-        if (listIndex == 4)
+        if (listIndex == 2)
         {
-            Loader.Load(Loader.Scene.GameScene);
+            Loader.Load(Loader.Scene.Dungeon);
         }
 
     }
@@ -168,7 +191,12 @@ public class V_SelectableItems2 : MonoBehaviour
     {
         Color objectColor = fadeOutUIImage.color;
         float fadeAmount;
-        ActivateUI(listIndex);
+        if(hasEntered){
+            ActivateUI(listIndex);
+        }
+        else{
+            DeActivateUI(listIndex);
+        }
 
         yield return new WaitForSeconds(2.0f);
 
@@ -179,6 +207,7 @@ public class V_SelectableItems2 : MonoBehaviour
             fadeOutUIImage.color = objectColor;
             yield return null;
         }
+        hasSelected = false;
     }
 
     private void ActivateUI(int index)
@@ -193,6 +222,15 @@ public class V_SelectableItems2 : MonoBehaviour
         if (index >= 0 && index < UI_ELEMENTS.Count)
         {
             UI_ELEMENTS[index].SetActive(true);
+        }
+    }
+    
+    private void DeActivateUI(int index)
+    {
+        // Deactivate all UI elements
+        foreach (var uiElement in UI_ELEMENTS)
+        {
+            uiElement.SetActive(false);
         }
     }
 
