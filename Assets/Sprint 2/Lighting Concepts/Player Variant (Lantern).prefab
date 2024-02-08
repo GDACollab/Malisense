@@ -62,11 +62,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1472522112509067470, guid: 0668e23151a599c429c7f0e88f605295, type: 3}
       propertyPath: walkingSpeed
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5559615288276582193, guid: 0668e23151a599c429c7f0e88f605295, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 6277540497783236804, guid: 0668e23151a599c429c7f0e88f605295, type: 3}
       propertyPath: m_Name
-      value: Player Variant
+      value: Player Variant (Lantern)
       objectReference: {fileID: 0}
     - target: {fileID: 6277540497783236804, guid: 0668e23151a599c429c7f0e88f605295, type: 3}
       propertyPath: m_TagString
