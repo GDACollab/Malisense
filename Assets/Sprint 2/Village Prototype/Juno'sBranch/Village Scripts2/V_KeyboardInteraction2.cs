@@ -46,7 +46,7 @@ public class V_KeyboardInteractiontion2 : MonoBehaviour
             // DontDestroyOnLoad(gameObject);
             playerInput = GetComponent<PlayerInput>();
 		    moveAction = playerInput.actions.FindAction("8 Directions Movement");
-            selectAction = playerInput.actions.FindAction("Select");
+            selectAction = playerInput.actions.FindAction("Interact");
         }
         else
         {

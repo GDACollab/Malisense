@@ -10,12 +10,16 @@ public class PlayerControl : MonoBehaviour
 	InputAction moveAction;
 	InputAction sprintAction;
 	InputAction sneakAction;
+	InputAction hideMessage;
+	InputAction setEnemy;
 
 	// Rigid Body
 	Rigidbody2D rb;
 
 	// Stamina Script
 	PlayerStamina playerStamina;
+
+	private JoshPlayer player;
 
 	// Movement
 	[Header("Movement")]
@@ -29,20 +33,30 @@ public class PlayerControl : MonoBehaviour
 	public bool isMoving;
 	public bool isSprinting;
 	public bool isSneaking;
+	
+	public Transform triangle;
+	public GameObject controlMessage;
+	public GameObject enemy;
 
 	void Start()
 	{
 		// Set input system variables
+		player = GetComponent<JoshPlayer>();
 		playerInput = GetComponent<PlayerInput>();
 		moveAction = playerInput.actions.FindAction("8 Directions Movement");
 		sprintAction = playerInput.actions.FindAction("Sprint");
 		sneakAction = playerInput.actions.FindAction("Sneak");
+		hideMessage = playerInput.actions.FindAction("Hide Message");
+		setEnemy = playerInput.actions.FindAction("Set Enemy");
+		
+		triangle = transform.GetChild(0);
 
 		// Set rigid body variables
 		rb = GetComponent<Rigidbody2D>();
 
 		// Set stamina script variables
 		playerStamina = GetComponent<PlayerStamina>();
+		enemy = GameObject.FindGameObjectWithTag("Enemy");
 	}
 
 	private void FixedUpdate()
@@ -61,9 +75,9 @@ public class PlayerControl : MonoBehaviour
 			isMoving = false;
 
 		// Rotation
-		float angle = Vector2.SignedAngle(Vector2.right, direction) - 90;
+		float angle = Vector2.SignedAngle(Vector2.right, new Vector2(moveX, moveY)) - 90;
 		if (direction.magnitude > 0)
-			rb.MoveRotation(angle);
+			triangle.up = direction;
 	}
 
 	void Update()
@@ -84,14 +98,26 @@ public class PlayerControl : MonoBehaviour
 		}
 
 		// Sneaking
-		if (sneakAction.ReadValue<float>() > 0f && !isSprinting)
-		{
-			adjustedSpeed *= sneakRatio;
-			isSneaking = true;
+		// if (sneakAction.ReadValue<float>() > 0f && !isSprinting)
+		// {
+		// 	adjustedSpeed *= sneakRatio;
+		// 	isSneaking = true;
+		// }
+		// else
+		// {
+		// 	isSneaking = false;
+		// }
+		
+		if(hideMessage.triggered){
+			controlMessage.SetActive(!controlMessage.activeSelf);
 		}
-		else
+		if(setEnemy.triggered){
+			enemy.SetActive(!enemy.activeSelf);
+		}
+		// Apply carried object effect
+		if (player.newInventory.carriedObject != null)
 		{
-			isSneaking = false;
+			adjustedSpeed *= 0.4f;
 		}
 	}
 }

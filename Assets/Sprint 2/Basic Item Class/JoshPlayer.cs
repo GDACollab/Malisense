@@ -22,8 +22,8 @@ public class JoshPlayer : MonoBehaviour
     void Start()
     {
         input = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody2D>();
         triangle = transform.GetChild(0).gameObject;
+        rb = GetComponent<Rigidbody2D>();
         interactAction = input.actions.FindAction("Interact");
         setDownAction = input.actions.FindAction("SetDown");
     }
@@ -40,12 +40,16 @@ public class JoshPlayer : MonoBehaviour
         {
             if (newInventory.carriedObject)
             {
+                newInventory.carriedObject.transform.parent = null;
+                newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 newInventory.carriedObject = null;
             }
         }
 
         if (newInventory.carriedObject)
         {
+            newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            newInventory.carriedObject.transform.parent = triangle.transform.parent;
             newInventory.carriedObject.transform.position = triangle.transform.position;
             newInventory.carriedObject.transform.rotation = triangle.transform.rotation;
         }
@@ -53,7 +57,7 @@ public class JoshPlayer : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (interactAction.ReadValue<float>() > 0f)
+        if (interactAction.triggered)
         {
             var item = other.GetComponent<ItemPickup>();
             var heavyItem = other.GetComponent<HeavyItem>();

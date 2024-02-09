@@ -12,16 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: hi
   m_EditorClassIdentifier: Assembly-CSharp::InventoryBase/Inventory
-  size: 5
-  inventory:
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
+  size: 0
+  inventory: []
   carriedObject: {fileID: 0}

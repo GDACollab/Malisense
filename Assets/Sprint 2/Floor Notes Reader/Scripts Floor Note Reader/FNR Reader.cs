@@ -26,6 +26,7 @@ public class FNRManager : MonoBehaviour
         this.Body.text = body;
 
         FNRWindow.SetActive(true);
+        Darken_Background.SetActive(true);
     }
 
     // hide the Floor Note Reader
