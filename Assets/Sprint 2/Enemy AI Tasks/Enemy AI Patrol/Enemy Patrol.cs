@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.UIElements;
 
 public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField]
     float enemyPatrolSpeed;
-    Vector3[] waypoints = new Vector3[3]; // Points to make patrol path
+    public List<Vector3> waypointsL = new  List<Vector3>(); // Points to make patrol path
     Vector3 targetPos;
     Vector3 velocity;
-    int index = 0;
+    int index;
+    int length;
     
     void Start()
     {
-        waypoints[0] = new Vector3(3, 0, 0);
-        waypoints[1] = new Vector3(3, 3, 0);
-        waypoints[2] = new Vector3(0, 0, 0);
-        targetPos = waypoints[index];
+        targetPos = waypointsL[index];
         enemyPatrolSpeed = 1.5f;
+        length = waypointsL.Count;
+        index = length - 1;
     }
 
     
@@ -33,15 +34,15 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (transform.position == targetPos) // Goes to the next waypoint if the current one is reached
         {
-            if (index < 2)
+            if (index > 0)
             {
-                index++;
+                index--;
             }
             else
             {
-                index = 0;
+                index = length - 1;
             }
-            targetPos = waypoints[index];
+            targetPos = waypointsL[index];
         }
         // Finds the vector the enemy needs to get to the next waypoint
         velocity = Vector3.MoveTowards(transform.position, targetPos, enemyPatrolSpeed * Time.deltaTime); 
