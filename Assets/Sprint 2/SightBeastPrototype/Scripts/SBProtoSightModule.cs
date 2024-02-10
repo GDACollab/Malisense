@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEditor;
+using Unity.VisualScripting;
 
 public class SBProtoSightModule : MonoBehaviour
 {
     [Tooltip("Radius that this creature can see.")]
     public float visionRadius;
+
+    [Tooltip("Initial vision cone angle size")]
+    [Range(0, 360)]
+    public float visionArcSize;
+    [Range(0, 360)]
+    public float visionAngle;
+
 
     [Tooltip("A mask of layers that should block vision")]
     public LayerMask wallLayers;
@@ -16,6 +25,7 @@ public class SBProtoSightModule : MonoBehaviour
 
     [Tooltip("The radius of the target. Higher values mean the sight beast can see further around walls.")]
     public float targetRadius;
+
 
     bool FasterLineSegmentIntersection(Vector2 fromA, Vector2 toA, Vector2 fromB, Vector2 toB)
     {
@@ -50,11 +60,11 @@ public class SBProtoSightModule : MonoBehaviour
         Vector2 castStart = transform.position;
 
         // Test against all shadow casters
-        foreach(var sc in shadowCasters)
+        foreach (var sc in shadowCasters)
         {
             var shadowPath = sc.shapePath;
 
-            for(int i = 0; i < shadowPath.Length; i++)
+            for (int i = 0; i < shadowPath.Length; i++)
             {
                 var shadowStart = sc.transform.TransformPoint(shadowPath[i]);
                 var shadowEnd = sc.transform.TransformPoint(shadowPath[(i + 1) % shadowPath.Length]);
@@ -69,7 +79,15 @@ public class SBProtoSightModule : MonoBehaviour
 
     public Visibility GetVisibility(Vector2 position, float radius)
     {
+        // Exit if player exceeds view distance
         if (Vector2.Distance(transform.position, position) > visionRadius) return Visibility.None;
+
+        // Exit if player is not within view range
+        Vector3 dir = new Vector3(Mathf.Cos(Mathf.Deg2Rad * visionAngle), Mathf.Sin(Mathf.Deg2Rad * visionAngle), 0);
+        Vector3 dirToTarget = (target.position - transform.position).normalized;
+        float angle = Vector2.Angle(dir, dirToTarget);
+        //Debug.Log(Time.time + ": Angle:" + angle + "Target: " + visionArcSize/2);
+        if (angle > (visionArcSize / 2)) return Visibility.None;
 
         var perpendicular = Vector2.Perpendicular(position - (Vector2)transform.position).normalized;
         int count = 0;
@@ -93,4 +111,22 @@ public class SBProtoSightModule : MonoBehaviour
         Partial,
         None
     }
+
+    public Vector3 DirFromAngle(float angleInDegrees)
+    {
+        return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
+    }
+
+#if UNITY_EDITOR
+    // Depict vision cone
+    private void OnDrawGizmos()
+    {
+        Handles.color = new Color(128, 00, 255);
+        Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.right, 360, visionRadius);
+
+        // Draw boundry lines
+        Handles.DrawLine(transform.position, transform.position + DirFromAngle(-visionArcSize / 2 + visionAngle) * visionRadius);
+        Handles.DrawLine(transform.position, transform.position + DirFromAngle(visionArcSize / 2 + visionAngle) * visionRadius);
+    }
+#endif
 }

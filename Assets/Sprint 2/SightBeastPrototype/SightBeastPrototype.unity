@@ -7857,10 +7857,19 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 0.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
+  - {x: -10.467508, y: -3.2891922, z: 0}
+  - {x: -10.089602, y: -4.312893, z: 0}
+  - {x: -9.592318, y: -5.408459, z: 0}
+  - {x: -8.947503, y: -6.3768706, z: 0}
+  - {x: -8.299489, y: -7.3097186, z: 0}
+  - {x: -7.511623, y: -8.06944, z: 0}
+  - {x: -6.269006, y: -9.074928, z: 0}
+  - {x: -5.240309, y: -9.680686, z: 0}
+  - {x: -4.31347, y: -10.130943, z: 0}
+  - {x: 2.1127057, y: -0.15155268, z: 0}
+  - {x: 1.878966, y: 1.8357722, z: 0}
+  - {x: 1.1110831, y: 2.5160604, z: 0}
+  - {x: 0.14929307, y: 2.5195937, z: 0}
 --- !u!1001 &931603972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8131,11 +8140,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 526825880682367731, guid: c8ce2ec36af9d8342bbb3f79cb735ee7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.38
+      value: 14.69
       objectReference: {fileID: 0}
     - target: {fileID: 526825880682367731, guid: c8ce2ec36af9d8342bbb3f79cb735ee7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 526825880682367731, guid: c8ce2ec36af9d8342bbb3f79cb735ee7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8950,8 +8959,8 @@ MonoBehaviour:
   - {fileID: 2112197737}
   speed: 17
   alertDuration: 10
-  minIdleTime: 3
-  maxIdleTime: 6
+  minIdleTime: 6000
+  maxIdleTime: 9000
 --- !u!114 &1923672986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8981,6 +8990,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionRadius: 11
+  visionArcSize: 360
+  visionAngle: 0
   wallLayers:
     serializedVersion: 2
     m_Bits: 1
