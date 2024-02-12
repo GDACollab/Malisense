@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class JournalManager : MonoBehaviour
 {
@@ -8,14 +9,22 @@ public class JournalManager : MonoBehaviour
 
     private bool JournalActive = false;
     
+    PlayerInput playerInput;
+	InputAction journalAction;
+    
+    private void Start() {
+        playerInput = GetComponent<PlayerInput>();
+		journalAction = playerInput.actions.FindAction("Journal Action");
+    }
+    
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J) && !JournalActive)
+        if (journalAction.triggered && !JournalActive)
         {
             JournalUI.gameObject.SetActive(true);
             JournalActive = true;
         }
-        else if (Input.GetKeyDown(KeyCode.J) && JournalActive)
+        else if (journalAction.triggered && JournalActive)
         {
             JournalUI.gameObject.SetActive(false);  
             JournalActive = false;

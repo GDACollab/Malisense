@@ -74,6 +74,11 @@ public class EnemyMovement : StateBaseClass
         {
             currentWaypoint++;  // Move on to next waypoint
         }
+        
+        // Rotation
+        float angle = Vector2.SignedAngle(Vector2.right, direction) - 90;
+        if (direction.magnitude > 0)
+            rb.MoveRotation(angle);
 
         // ----- Flip Sprite -----
         // Flip left

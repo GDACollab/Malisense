@@ -16,6 +16,11 @@ public class MainMenu : MonoBehaviour
     {
         StartCoroutine(FadeToBlackAndLoadScene());
     }
+    
+    public void SkipVillage()
+    {
+        StartCoroutine(FadeToBlackAndLoadDungeon());
+    }
 
     public void OnApplicationQuit()
     {
@@ -26,7 +31,14 @@ public class MainMenu : MonoBehaviour
     {
         fadeOutUIImage.gameObject.SetActive(true);
         yield return StartCoroutine(FadeToBlack());
-        Loader.Load(Loader.Scene.JunoVersion); 
+        Loader.Load(Loader.Scene.Village); 
+    }
+    
+    IEnumerator FadeToBlackAndLoadDungeon()
+    {
+        fadeOutUIImage.gameObject.SetActive(true);
+        yield return StartCoroutine(FadeToBlack());
+        Loader.Load(Loader.Scene.Dungeon);
     }
 
     IEnumerator FadeToBlack()

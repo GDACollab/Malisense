@@ -9,6 +9,7 @@ public class PlayerDeathContactEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Player died due to contact to enemy");
+            Loader.Load(Loader.Scene.DeathScene);
         }
     }
 }

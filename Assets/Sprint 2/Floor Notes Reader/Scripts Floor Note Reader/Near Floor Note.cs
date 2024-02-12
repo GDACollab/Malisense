@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class NearFloorNote : MonoBehaviour
 {
@@ -13,10 +14,29 @@ public class NearFloorNote : MonoBehaviour
     public Sprite notSelected;
     public Sprite selected;
 
-    public GameObject FloorNotePopup;
+    public FNRManager FloorNotePopup;
+    [TextArea(15,20)]
+    public string noteTitle = "Title";
+    [TextArea(15,20)]
+    public string noteBody = "Body";
+    
     public KeyCode InteractButton;
     bool NoteActive = false; // not sure if this is needed
+    
+    private PlayerInput playerInput;
+    private InputAction selectAction;
 
+    void Start()
+    {
+        Note = this.gameObject;
+        Player = GameObject.FindGameObjectWithTag("Player");
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        // Set input system variables
+        playerInput = Player.GetComponent<PlayerInput>();
+        selectAction = playerInput.actions.FindAction("Interact");
+        
+    }
 
     private void Update()
     {
@@ -30,10 +50,14 @@ public class NearFloorNote : MonoBehaviour
             spriteRenderer.sprite = notSelected;
         }
         // if near note and key pressed down, popup the window
-        if (isNear && Input.GetKeyDown(InteractButton) && !NoteActive)
+        if (isNear && !NoteActive && selectAction.triggered)
         {
-            FloorNotePopup.SetActive(true);
+            FloorNotePopup.showFNR(noteTitle, noteBody);
             NoteActive = true; 
+        }
+        else if(NoteActive && selectAction.triggered){
+            FloorNotePopup.hideFNR();
+            NoteActive = false; 
         }
     }
 

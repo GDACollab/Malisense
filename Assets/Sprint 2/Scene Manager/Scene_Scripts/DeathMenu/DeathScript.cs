@@ -23,7 +23,7 @@ public class DeathScript : MonoBehaviour
         //Play Audio with FMOD - Need to research Library
 
         yield return StartCoroutine(ImageFade());
-        Loader.Load(Loader.Scene.GameScene); 
+        Loader.Load(Loader.Scene.Dungeon); 
     }
 
     IEnumerator ImageFade()

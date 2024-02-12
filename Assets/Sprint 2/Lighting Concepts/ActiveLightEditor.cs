@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ActiveLight))]
 public class ActiveLightEditor : Editor
 {
@@ -40,3 +41,4 @@ public class ActiveLightEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
