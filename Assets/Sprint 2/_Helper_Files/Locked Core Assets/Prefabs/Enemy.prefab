@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 620180552038090911}
   - component: {fileID: 4361278910717339455}
   - component: {fileID: 4461813916616751564}
+  - component: {fileID: 3256860441328507344}
   - component: {fileID: 2187735537590383946}
   m_Layer: 0
   m_Name: Enemy
@@ -229,6 +230,23 @@ MonoBehaviour:
   pathUpdateRate: 0.5
   GFX: {fileID: 9138862161024647362}
   reachedEndOfPath: 0
+--- !u!114 &3256860441328507344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8646597992690969897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 233e74ab3adc24f98ad4a07b06bc91a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 100
+  nextWaypointDistance: 1
+  circleRadius: 1
+  GFX: {fileID: 0}
 --- !u!114 &2187735537590383946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,4 +262,4 @@ MonoBehaviour:
   currentState: 0
   patrol: {fileID: 0}
   chasing: {fileID: 4461813916616751564}
-  alert: {fileID: 0}
+  alert: {fileID: 3256860441328507344}
