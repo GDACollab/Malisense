@@ -21,11 +21,11 @@ public static class Loader
         //Action is stored, then is called from function LoaderCallback
         onLoaderCallback = () =>
         {
-            SceneManager.LoadScene(scene.ToString()+"_2-9-24");
+            SceneManager.LoadScene(scene.ToString());
         };
 
         //Load Loading Scene which calls on the function that runs Action
-        SceneManager.LoadScene(Scene.LoadingScene.ToString()+"_2-9-24");
+        SceneManager.LoadScene(Scene.LoadingScene.ToString());
     }
 
     public static void LoaderCallback()
