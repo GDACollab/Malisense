@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class JoshPlayer : MonoBehaviour
+public class DerekPlayerController : MonoBehaviour
 {
     public PlayerInput input;
     public InputAction interactAction;
