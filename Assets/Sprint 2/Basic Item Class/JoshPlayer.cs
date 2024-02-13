@@ -11,6 +11,7 @@ public class JoshPlayer : MonoBehaviour
     public InputAction setDownAction;
     public Rigidbody2D rb;
     public GameObject triangle;
+    public Animator animator;
     
     // TODO add drop Big item IA
     
@@ -59,12 +60,14 @@ public class JoshPlayer : MonoBehaviour
     {
         if (interactAction.triggered)
         {
+            animator.SetTrigger("interact");
             var item = other.GetComponent<ItemPickup>();
             var heavyItem = other.GetComponent<HeavyItem>();
             var door = other.GetComponent<Door>();
 
             if (door && newInventory.carriedObject)
             {
+
                 Destroy(newInventory.carriedObject.gameObject);
                 newInventory.carriedObject = null;
                 Destroy(other.gameObject);
