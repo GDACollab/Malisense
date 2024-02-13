@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+namespace Sprint_3.CORE_BUILD.LOCKED_CORE_ASSETS.Scripts.Player_Scripts.Item_Logic
 {
-    public ItemBase item;
+    public class ItemPickup : MonoBehaviour
+    {
+        public ItemBase item;
+    }
 }

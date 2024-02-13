@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+
 public class InventoryBase : MonoBehaviour
 {
-    
    
     [SerializeField] private int size;
     public List<InventorySlot> inventory;
         
     public HeavyItem carriedObject;
+    public Artifact currentArtifact;
 
         
     // happens when editor is updated
@@ -171,6 +172,7 @@ public class InventoryBase : MonoBehaviour
 }
 
 // could also be a struct prolly
+
 [System.Serializable]
 public class InventorySlot
 {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Sprint_3.CORE_BUILD.LOCKED_CORE_ASSETS.Scripts.Player_Scripts.Item_Logic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -48,6 +49,7 @@ public class JoshPlayer : MonoBehaviour
         {
             newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
             newInventory.carriedObject.transform.parent = triangle.transform.parent;
+            
             newInventory.carriedObject.transform.position = triangle.transform.position;
             newInventory.carriedObject.transform.rotation = triangle.transform.rotation;
         }
