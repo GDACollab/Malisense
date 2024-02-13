@@ -31,6 +31,7 @@ public class StateMachine_Updated : MonoBehaviour
     void Start()
     {
         currentState = State.Patrolling;
+        switchState(State.Chasing);
     }
 
     void switchState(State newState)
