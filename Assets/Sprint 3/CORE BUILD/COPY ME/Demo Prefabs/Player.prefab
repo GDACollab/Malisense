@@ -135,15 +135,12 @@ GameObject:
   - component: {fileID: 8214671929761907343}
   - component: {fileID: 7036378875398640745}
   - component: {fileID: 8991262894912836698}
-  - component: {fileID: 5040117273452872383}
   - component: {fileID: 1870973374249702398}
-  - component: {fileID: 2974335318787191899}
-  - component: {fileID: 1630636335686229970}
   - component: {fileID: 2279670278616363904}
+  - component: {fileID: 8668597487598958490}
   - component: {fileID: 7315903718944372396}
   - component: {fileID: 5559615288276582193}
   - component: {fileID: 289846585642092184}
-  - component: {fileID: 560886605995353793}
   - component: {fileID: 6080851665411731469}
   m_Layer: 0
   m_Name: Player
@@ -187,7 +184,7 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   isSneaking: 0
-  triangle: {fileID: 0}
+  triangle: {fileID: 5397364737053256248}
   controlMessage: {fileID: 0}
   enemy: {fileID: 0}
 --- !u!114 &1704471422706644489
@@ -261,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7408fdcc5122c465cacb7fc8a5f426bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
+  input: {fileID: 2279670278616363904}
   interactAction:
     m_Name: Interact
     m_Type: 0
@@ -283,22 +280,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   triangle: {fileID: 131963359574473401}
   newInventory: {fileID: 11400000, guid: cd6736c5446610146b105231fc7ac2f2, type: 2}
---- !u!114 &5040117273452872383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277540497783236804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e95b9746d5e682349bfcf107e8c8fe60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lingerDuration: 1
-  smoothness: 1
-  canBeJumpscared: 1
-  resetDuration: 5
 --- !u!114 &1870973374249702398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,53 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c54838abe336943b168b1de2e8ceaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2974335318787191899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277540497783236804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca8d3d1692c8e77439423a1d019c5974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  JournalUI: {fileID: 0}
---- !u!114 &1630636335686229970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277540497783236804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7408fdcc5122c465cacb7fc8a5f426bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  input: {fileID: 0}
-  interactAction:
-    m_Name: Interact
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ec22fc74-89b1-4718-9694-93a0af3c7be4
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  setDownAction:
-    m_Name: Set Down
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bb8fed6d-e075-4e8c-843a-c0fc63104f3a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  rb: {fileID: 0}
-  triangle: {fileID: 0}
-  newInventory: {fileID: 11400000, guid: cd6736c5446610146b105231fc7ac2f2, type: 2}
 --- !u!114 &2279670278616363904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +322,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &8668597487598958490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6277540497783236804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062073fe972044885a8d4efed7e0c829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 0
+  inventory: []
+  carriedObject: {fileID: 0}
 --- !u!50 &7315903718944372396
 Rigidbody2D:
   serializedVersion: 4
@@ -512,41 +461,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.041, y: 2.048}
   m_EdgeRadius: 0
---- !u!70 &560886605995353793
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277540497783236804}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 4, y: 4}
-  m_Direction: 1
 --- !u!70 &6080851665411731469
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
