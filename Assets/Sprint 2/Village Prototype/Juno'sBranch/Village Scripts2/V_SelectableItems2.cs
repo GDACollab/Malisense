@@ -7,7 +7,6 @@ public class V_SelectableItems2 : MonoBehaviour
 {   
     [Header("Temp Playtest Vars")]
     public GameObject dungeonMessage;
-    public GameObject whoopsNoBackButton;
     
     //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> SELECTABLES = new List<GameObject>();

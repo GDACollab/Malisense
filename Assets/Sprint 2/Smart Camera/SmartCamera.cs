@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class scr : MonoBehaviour
+public class SmartCamera : MonoBehaviour
 {
     Camera mainCamera;
-    public GameObject player;
+    private GameObject player;
     
     void Start () 
     {

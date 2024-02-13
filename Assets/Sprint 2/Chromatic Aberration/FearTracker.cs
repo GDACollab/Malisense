@@ -26,7 +26,7 @@ public class FearTracker : MonoBehaviour
     public float FearIntensity => _smoothedFear;
     private float _lastFearTime = float.NegativeInfinity;
     private float _unsmoothedFear;
-    [SerializeField] private float _smoothedFear;
+    private float _smoothedFear;
     private float _vel;
 
     /// <summary>
