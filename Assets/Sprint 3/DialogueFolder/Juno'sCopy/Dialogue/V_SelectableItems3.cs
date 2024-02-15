@@ -12,7 +12,7 @@ public class V_SelectableItems3 : MonoBehaviour
     [SerializeField] private List<GameObject> SELECTABLES = new List<GameObject>();
     [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
     [SerializeField] private int listIndex;
-    [SerializeField] private bool currentlySelected = false;
+    [SerializeField] public bool currentlySelected = false;
     [SerializeField] private bool hasEntered = false;
     [SerializeField] private bool hasSelected = false;
     GameObject selectedGameObject;
@@ -220,7 +220,10 @@ public class V_SelectableItems3 : MonoBehaviour
         // Activate the UI element that corresponds to the selected object
         if (index >= 0 && index < UI_ELEMENTS.Count)
         {
+            //UI Activate
             UI_ELEMENTS[index].SetActive(true);
+
+            //Activate Ink
         }
     }
     
