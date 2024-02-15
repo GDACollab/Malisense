@@ -37,8 +37,12 @@ public class DialogueManager : MonoBehaviour
             V_SelectableItems3 selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3>();
             if (selectableScript != null && selectableScript.currentlySelected)
             {
-                // If currentlySelected is true, show the dialogue panel
-                dialoguePanel.SetActive(true);
+                TextAsset currentInk = selectableScript.CurrentInkTextAsset;
+                // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
+                if (currentInk != null)
+                {
+                    EnterDialogueMode(currentInk);
+                }
             }
             else
             {
@@ -48,7 +52,10 @@ public class DialogueManager : MonoBehaviour
         }
 
         //If Currently Selected and Input Space bar
-        if 
+        if (isPlaying && Input.GetKeyDown(KeyCode.Space))
+            {
+                ContinueStory();
+            }
     }
 
 
