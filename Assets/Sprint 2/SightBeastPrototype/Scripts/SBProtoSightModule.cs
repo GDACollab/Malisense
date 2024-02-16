@@ -77,13 +77,20 @@ public class SBProtoSightModule : MonoBehaviour
         return true;
     }
 
+    public void LookAt(Vector3 lookTarget)
+    {
+        Vector3 dir = (lookTarget - transform.position).normalized;
+        float angleToTarget = Vector2.SignedAngle(transform.right, dir);
+        visionAngle = (angleToTarget + 360) % 360;
+    }
+
     public Visibility GetVisibility(Vector2 position, float radius)
     {
         // Exit if player exceeds view distance
         if (Vector2.Distance(transform.position, position) > visionRadius) return Visibility.None;
 
         // Exit if player is not within view range
-        Vector3 dir = new Vector3(Mathf.Cos(Mathf.Deg2Rad * visionAngle), Mathf.Sin(Mathf.Deg2Rad * visionAngle), 0);
+        Vector3 dir = DirFromAngle(visionAngle);
         Vector3 dirToTarget = (target.position - transform.position).normalized;
         float angle = Vector2.Angle(dir, dirToTarget);
         //Debug.Log(Time.time + ": Angle:" + angle + "Target: " + visionArcSize/2);
