@@ -8140,11 +8140,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 526825880682367731, guid: c8ce2ec36af9d8342bbb3f79cb735ee7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.69
+      value: 14.45
       objectReference: {fileID: 0}
     - target: {fileID: 526825880682367731, guid: c8ce2ec36af9d8342bbb3f79cb735ee7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.29
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 526825880682367731, guid: c8ce2ec36af9d8342bbb3f79cb735ee7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8959,8 +8959,8 @@ MonoBehaviour:
   - {fileID: 2112197737}
   speed: 17
   alertDuration: 10
-  minIdleTime: 6000
-  maxIdleTime: 9000
+  minIdleTime: 5
+  maxIdleTime: 10
 --- !u!114 &1923672986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8990,7 +8990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionRadius: 11
-  visionArcSize: 360
+  visionArcSize: 90
   visionAngle: 0
   wallLayers:
     serializedVersion: 2
