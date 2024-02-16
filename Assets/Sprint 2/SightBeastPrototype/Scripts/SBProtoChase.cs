@@ -37,20 +37,27 @@ public class SBProtoChase : StateBaseClass
     public override void On_Update()
     {
         var visibility = _sight.GetTargetVisibility();
+        // Target not visable
         if (visibility != SBProtoSightModule.Visibility.None)
         {
             _lastSeenTime = Time.time;
         }
 
+        // Fear Functionality
         if (_fear)
         {
             _fear.AddFear(visibility != SBProtoSightModule.Visibility.None ? 0.8f : 0.3f);
         }
 
+        // Begin chase
         if (visibility != SBProtoSightModule.Visibility.None
             || _lastSeenTime + seeAroundWallsTime > Time.time)
         {
+            // Move towards target
             _pathfinder.SetTarget(_sight.target.position);
+
+            // Look towards target
+            //_sight.LookAt(_sight.target.position);
         }
 
         if(_pathfinder.AtGoal
