@@ -1,5 +1,5 @@
 {
-    "name": "NewControls",
+    "name": "Controls",
     "maps": [
         {
             "name": "Player",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Set Enemy",
+                    "name": "Set Enemies",
                     "type": "Button",
                     "id": "c59d6e9d-6fd3-4710-90dd-f1ee2edca410",
                     "expectedControlType": "Button",
@@ -383,7 +383,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Set Enemy",
+                    "action": "Set Enemies",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -394,7 +394,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Set Enemy",
+                    "action": "Set Enemies",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
