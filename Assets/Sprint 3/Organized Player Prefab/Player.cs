@@ -54,6 +54,9 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Transform interactBody;
     private InteractionSelector interactArea;
+    private Animator playerAnimation;
+    private float animationXScale;
+    private float animationXPos;
     
     void Start()
     {
@@ -79,6 +82,10 @@ public class Player : MonoBehaviour
         
         // Get inventory
         newInventory = GetComponent<InventoryBase>();
+        
+        playerAnimation = GetComponentInChildren<Animator>();
+        animationXScale = playerAnimation.transform.localScale.x;
+        animationXPos = playerAnimation.transform.localPosition.x;
         
         // Get the enemy to deactivate
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -130,16 +137,38 @@ public class Player : MonoBehaviour
             float moveY = moveAction.ReadValue<Vector2>().y;
             Vector2 direction = new Vector2(moveX, moveY).normalized;
             rb.velocity = direction * adjustedSpeed;
+            float flip = animationXScale;
+            float flop = animationXPos;
+            if(moveX<0){
+                flip = animationXScale;
+                flop = animationXPos;
+                playerAnimation.transform.localScale = new Vector3(flip,playerAnimation.transform.localScale.y,playerAnimation.transform.localScale.z);
+                playerAnimation.transform.localPosition = new Vector3(flop, playerAnimation.transform.localPosition.y,playerAnimation.transform.localPosition.z);
+            } 
+            else if(moveX>0){
+                flip = -animationXScale;
+                flop = -animationXPos;
+                playerAnimation.transform.localScale = new Vector3(flip,playerAnimation.transform.localScale.y,playerAnimation.transform.localScale.z);
+                playerAnimation.transform.localPosition = new Vector3(flop, playerAnimation.transform.localPosition.y,playerAnimation.transform.localPosition.z);
+            }
+            
+            
 
             // Set isMoving
-            if (moveX != 0 || moveY != 0)
+            if (moveX != 0 || moveY != 0){
                 isMoving = true;
-            else
+                playerAnimation.Play("Base Layer.New Animation", 0);
+            }
+            else{
                 isMoving = false;
+                // playerAnimation.StopPlayback();
+                playerAnimation.Play("Base Layer.Idle Animation", 0);
+            }
 
             // Rotation
-            if (direction.magnitude > 0)
+            if (direction.magnitude > 0){
                 interactBody.up = direction;
+            }
         }
         else{
             rb.velocity = Vector2.zero;
