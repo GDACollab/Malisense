@@ -20,13 +20,14 @@ public class scr_noiseDetect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(OverlapCircle() > 0)
+        //if(OverlapCircle() > 0)
     }
     private bool OnCOllideTrue()
     {
-           //enemy
-           //if enemy touching sound
-           //   debug.log
+        //enemy
+        //if enemy touching sound
+        //   debug.log
+        return false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
