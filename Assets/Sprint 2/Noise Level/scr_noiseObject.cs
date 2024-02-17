@@ -9,6 +9,9 @@ public class scr_noiseObject : MonoBehaviour
     //increase x and y size to a 'max' over time
     //After hitting max, quickly fade, and delete self
 
+    //Note: If you want to view the size, you can set the color of the sprite to be not see through (ie for the RGBA, A > 0)
+    //To change it back, set the color to see-through again! (ie A = 0)
+
     public Transform self;
     public float growthTime = 0.25f; //Time to grow to max
     public float deathTime = 0; //Time to fade into deletion after hitting max
