@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 835094824901037287}
   - component: {fileID: 3581816680611174912}
   - component: {fileID: 1124996451519182383}
+  - component: {fileID: 5009869704440550285}
   m_Layer: 0
   m_Name: Noise Object
   m_TagString: Untagged
@@ -95,7 +96,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 5032859555972340647}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d0152e9f6ed2f0e478e7f18cb45f3617, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -115,7 +116,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -138,3 +139,17 @@ MonoBehaviour:
   deathTime: 0.05
   diameter: 4
   timeStore: 0
+--- !u!114 &5009869704440550285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032859555972340647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89fa17fcd297b1f4f905b8ee6fde321b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachine: {fileID: 0}
+  noiseSensitivity: 1
