@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3594347005072640853}
   - component: {fileID: 148290006012591371}
   - component: {fileID: 1807694618761945595}
+  - component: {fileID: -1778631512175720808}
+  - component: {fileID: -5257397808221413971}
   m_Layer: 0
   m_Name: thrownDynamite
   m_TagString: Untagged
@@ -120,9 +122,69 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6094193529435412265}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 205d3aa0f753e1d42aec802e05c899b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 5
+  force: 2
+--- !u!114 &-1778631512175720808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094193529435412265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e495c0af1f0304b892bfba4270ff1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+--- !u!114 &-5257397808221413971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094193529435412265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a446a433c003d4d9d7f9e52b6fe55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.9954787
+      outSlope: 0.9954787
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.50227094
+      value: 0.5
+      inSlope: -0.0045419633
+      outSlope: -0.0045419633
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.0045626
+      outSlope: -1.0045626
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  duration: 1
+  heightY: 3
