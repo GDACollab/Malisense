@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // If needed
+using Ink.Runtime; // Make sure you have this using directive for Ink script
 
 public class V_SelectableItems3 : MonoBehaviour
 {   
@@ -11,6 +13,7 @@ public class V_SelectableItems3 : MonoBehaviour
     //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> SELECTABLES = new List<GameObject>();
     [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
+    [SerializeField] private List<TextAsset> InkScripts = new List<TextAsset>(); // List for Inkle Stuff :3
     [SerializeField] private int listIndex;
     [SerializeField] public bool currentlySelected = false;
     [SerializeField] private bool hasEntered = false;
@@ -29,12 +32,14 @@ public class V_SelectableItems3 : MonoBehaviour
     private Vector3 cameraStartPosition;
     private Vector3 cameraTargetPosition;
     private bool isCenteringCamera;
-
     private GameObject thisObject;
 
     //UI Stuff
     public Image fadeOutUIImage; // Reference to the UI Image
     public float fadeSpeed = 0.5f;
+
+    //Inkle
+    public TextAsset CurrentInkTextAsset;
 
     private void Start()
     {
@@ -42,6 +47,7 @@ public class V_SelectableItems3 : MonoBehaviour
         defaultCameraScale = mainCamera.orthographicSize;
         cameraStartPosition = mainCamera.transform.position;
         selectedGameObject = SELECTABLES[0];
+        CurrentInkTextAsset = InkScripts[0];
     }
 
     private void Update()
@@ -88,6 +94,8 @@ public class V_SelectableItems3 : MonoBehaviour
         }
 
         selectedGameObject = SELECTABLES[listIndex];
+        CurrentInkTextAsset = InkScripts[listIndex];
+
         itemSelected();
     }
 
