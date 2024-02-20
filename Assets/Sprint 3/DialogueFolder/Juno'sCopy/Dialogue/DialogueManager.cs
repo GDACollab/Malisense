@@ -27,35 +27,36 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
-        
-            if (isPlaying)
+        //If Currently Selected and Input Space bar
+        if (isPlaying && Input.GetKeyDown(KeyCode.L))
+        {
+            ContinueStory();
+        }
+
+        if (isPlaying)
         {
             return;
         }
         
-            V_SelectableItems3 selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3>();
+        V_SelectableItems3 selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3>();
 
-            if (selectableScript != null && selectableScript.hasEntered)
-            {
+        if (selectableScript != null && selectableScript.activateInk)
+        {
                 TextAsset currentInk = selectableScript.CurrentInkTextAsset;
                 // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
                 if (currentInk != null)
                 {
                 EnterDialogueMode(currentInk);
                 }
-            }
-            else
-            {
+        }
+        else
+        {
                 // If currentlySelected is false, hide the dialogue panel
                 dialoguePanel.SetActive(false);
-            }
+        }
         
 
-        //If Currently Selected and Input Space bar
-        if (isPlaying && Input.GetKeyDown(KeyCode.Space))
-            {
-                ContinueStory();
-            }
+        
     }
 
 
