@@ -40,6 +40,7 @@ public class V_SelectableItems3 : MonoBehaviour
 
     //Inkle
     public TextAsset CurrentInkTextAsset;
+    public bool activateInk;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class V_SelectableItems3 : MonoBehaviour
         cameraStartPosition = mainCamera.transform.position;
         selectedGameObject = SELECTABLES[0];
         CurrentInkTextAsset = InkScripts[0];
+        activateInk = false;
     }
 
     private void Update()
@@ -230,8 +232,8 @@ public class V_SelectableItems3 : MonoBehaviour
         {
             //UI Activate
             UI_ELEMENTS[index].SetActive(true);
-
-            //Activate Ink
+            //Ink Activate
+            activateInk = true;
         }
     }
     

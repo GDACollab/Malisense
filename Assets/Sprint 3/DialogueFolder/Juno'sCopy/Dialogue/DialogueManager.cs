@@ -28,7 +28,10 @@ public class DialogueManager : MonoBehaviour
     public void Update()
     {
         
-
+            if (isPlaying)
+        {
+            return;
+        }
         
             V_SelectableItems3 selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3>();
 
@@ -38,7 +41,6 @@ public class DialogueManager : MonoBehaviour
                 // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
                 if (currentInk != null)
                 {
-                Debug.Log(selectableScript.CurrentInkTextAsset);
                 EnterDialogueMode(currentInk);
                 }
             }
