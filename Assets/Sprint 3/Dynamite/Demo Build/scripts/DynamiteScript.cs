@@ -1,43 +1,32 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class DynamiteScript : MonoBehaviour
 {
-    private Camera camera;
-
-    [SerializeField] GameObject DynamitePrefab;
-    
-    
-    public GameObject playerPosition;
-    public GameObject thrown_Dynamite;
-    Vector2 mousePosition;
-
+    private Vector3 mousePosition;
+    private Camera mainCamera;
+    private Rigidbody2D rb;
+    public float force;
 
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        rb = GetComponent<Rigidbody2D>();
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 direction = mousePosition - transform.position;
+        Vector3 rotation = transform.position - mousePosition;
+        rb.velocity = new Vector2(direction.x, direction.y)* force;
+        Debug.Log(rb.velocity);
+        float dynamiteRotation = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, dynamiteRotation + 90);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
-        {
-            thrown_Dynamite = Instantiate(DynamitePrefab);
-            thrown_Dynamite.transform.position = playerPosition.transform.position;
-            Debug.Log(mousePosition);
-        }
     }
-
-
 }
