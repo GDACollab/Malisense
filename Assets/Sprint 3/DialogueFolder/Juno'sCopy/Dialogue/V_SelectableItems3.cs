@@ -16,7 +16,7 @@ public class V_SelectableItems3 : MonoBehaviour
     [SerializeField] private List<TextAsset> InkScripts = new List<TextAsset>(); // List for Inkle Stuff :3
     [SerializeField] private int listIndex;
     [SerializeField] public bool currentlySelected = false;
-    [SerializeField] private bool hasEntered = false;
+    [SerializeField] public bool hasEntered = false;
     [SerializeField] private bool hasSelected = false;
     GameObject selectedGameObject;
     [SerializeField] private GameObject theFunnyArrow;

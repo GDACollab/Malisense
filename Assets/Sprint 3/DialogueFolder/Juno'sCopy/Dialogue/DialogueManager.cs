@@ -17,31 +17,29 @@ public class DialogueManager : MonoBehaviour
 
     private static DialogueManager instance;
 
-    private bool isPlaying;
+    [SerializeField] private bool isPlaying;
 
     void Start()
     {
-        isPlaying = true;
+        isPlaying = false;
         dialoguePanel.SetActive(false);
     }
 
     public void Update()
     {
-        if (!isPlaying)
-        {
-            return;
-        }
+        
 
-        if (selectableItemsGameObject != null)
-        {
+        
             V_SelectableItems3 selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3>();
-            if (selectableScript != null && selectableScript.currentlySelected)
+
+            if (selectableScript != null && selectableScript.hasEntered)
             {
                 TextAsset currentInk = selectableScript.CurrentInkTextAsset;
                 // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
                 if (currentInk != null)
                 {
-                    EnterDialogueMode(currentInk);
+                Debug.Log(selectableScript.CurrentInkTextAsset);
+                EnterDialogueMode(currentInk);
                 }
             }
             else
@@ -49,7 +47,7 @@ public class DialogueManager : MonoBehaviour
                 // If currentlySelected is false, hide the dialogue panel
                 dialoguePanel.SetActive(false);
             }
-        }
+        
 
         //If Currently Selected and Input Space bar
         if (isPlaying && Input.GetKeyDown(KeyCode.Space))
