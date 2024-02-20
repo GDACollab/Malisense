@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// https://www.youtube.com/watch?v=DwGdoURXZag
 public class DynamiteCurveScript : MonoBehaviour
 {
     public AnimationCurve curve;
@@ -9,7 +10,7 @@ public class DynamiteCurveScript : MonoBehaviour
     [SerializeField] private float duration = 1.0f;
     [SerializeField] private float heightY = 3.0f;
 
-    public IEnumerable Curve(Vector3 start, Vector2 target)
+    public IEnumerator Curve(Vector3 start, Vector2 target)
     {
         float timePassed = 0f;
 

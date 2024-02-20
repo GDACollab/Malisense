@@ -1,30 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Compression;
+using System.Runtime.CompilerServices;
 using System.Transactions;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-
+// https://github.com/Tycro-Games/Parabolic-demo/blob/main/Parabolic%20Trajectory/Assets/Scripts/tower/Projectiles/ProjectileArcTarget.cs
 public class DynamiteMovement : MonoBehaviour
 {
-    private Vector3 mousePosition;
-    private Camera mainCamera;
 
-    public int speed;
+    private Vector2 mousePosition;
+    private Camera mainCamera;
+    private DynamiteCurveScript arcMovement = null;
+    private Vector3 target;
+    private IEnumerator Move()
+    {
+        yield return StartCoroutine(arcMovement.Curve(transform.position, target));
+        Destroy(gameObject);
+    }
 
     private void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-    }
-    private void Update()
-    {
-        
+        arcMovement = GetComponent<DynamiteCurveScript>();
+        target = mousePosition;
 
-        Vector2 position = Vector2.MoveTowards(transform.position, mousePosition, Time.deltaTime * speed);
-
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, (mousePosition - transform.position).normalized);
-
-        transform.SetPositionAndRotation(position, rotation);
+        StartCoroutine(Move());
     }
 }
