@@ -7,38 +7,45 @@ public class WhisperingBellArtifact : MonoBehaviour
     public Artifact whisperingBell;
     public GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
+    public float whisperingBellCooldown = 30.0f;
+    public float whisperingBellDuration = 5.0f;
+
     // Checks if the artifact is on cooldown
-    public bool isCoolDown(Artifact artifact)
+    public bool IsCoolDown(Artifact artifact)
     {
-        // Need set it to actual time
-        if (artifact.cooldown > 0.0 && artifact.cooldown < 31.0) return true;
+        if (artifact.cooldown > 0.0f && artifact.cooldown < whisperingBellCooldown) return true;
         return false;
     }
 
-    public void whisperBellAction(Artifact artifact)
+    // Creates ripple effect on all enemies for a duration of 5 seconds
+    public void WhisperBellAction(Artifact artifact)
     {
-        // Need to set to time in sec
-        while(artifact.duration < 5.0)
+        while(artifact.duration < whisperingBellDuration)
         {
-            for (int i = 0; i < enemies.Length; i++)
+            foreach(GameObject enemy in enemies)
             {
-                return;
+
             }
-            artifact.duration++;
+            artifact.duration+= Time.deltaTime;
         }
-        artifact.duration = 0;
-        artifact.cooldown++;
+        artifact.duration = 0.0f;
+        artifact.cooldown += Time.deltaTime;
     }
+
     // Update is called once per frame
     void Update()
-    {  
-        if (!isCoolDown(whisperingBell))
+    {
+        // If button pressed and item is not on cooldown
+        if (Input.GetKeyDown(KeyCode.C) && !IsCoolDown(whisperingBell)){ // Temporary key press, needs to be connected to player controller
+            WhisperBellAction(whisperingBell);
+        }
+        if (!IsCoolDown(whisperingBell)) // Reset Cooldown when possible
         {
-            whisperingBell.cooldown = 0;
+            whisperingBell.cooldown = 0.0f;
         }
         else
         {
-            whisperingBell.cooldown++;
+            whisperingBell.cooldown+= Time.deltaTime;
         }
     }
 }
