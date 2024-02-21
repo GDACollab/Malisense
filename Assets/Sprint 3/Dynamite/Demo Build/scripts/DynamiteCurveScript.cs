@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // https://www.youtube.com/watch?v=DwGdoURXZag
+// go watch the video for an explanation for how this works lol
 public class DynamiteCurveScript : MonoBehaviour
 {
     public AnimationCurve curve;

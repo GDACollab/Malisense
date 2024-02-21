@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 7315903718944372396}
   - component: {fileID: 5559615288276582193}
   - component: {fileID: 289846585642092184}
-  - component: {fileID: 3500480349163057640}
   - component: {fileID: 6080851665411731469}
   m_Layer: 0
   m_Name: Player
@@ -464,20 +463,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.041, y: 2.048}
   m_EdgeRadius: 0
---- !u!114 &3500480349163057640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277540497783236804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce97e7828a8ffd742a13f82cc169ee70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thrownDynamitePrefab: {fileID: 6094193529435412265, guid: 0361c4ae6450e6144b17e3467b1f6537, type: 3}
-  player: {fileID: 692372581050402871}
 --- !u!70 &6080851665411731469
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
