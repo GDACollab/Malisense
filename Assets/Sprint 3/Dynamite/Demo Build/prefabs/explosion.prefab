@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 4668522223683094591}
   - component: {fileID: 3594347005072640853}
   - component: {fileID: 148290006012591371}
-  - component: {fileID: -1778631512175720808}
-  - component: {fileID: -5257397808221413971}
+  - component: {fileID: 4634664006968919905}
   m_Layer: 0
-  m_Name: thrownDynamite
+  m_Name: explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1f0f86f70c34b984ea9e12727fa3184b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 33e5fac5b0fd1584195c91274a9fccbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,7 +113,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &-1778631512175720808
+--- !u!114 &4634664006968919905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,56 +122,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6094193529435412265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42e495c0af1f0304b892bfba4270ff1f, type: 3}
+  m_Script: {fileID: 11500000, guid: dbea0a110aad8934d8444e49b1f5c391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
-  rotationSpeed: 6
-  ExplosionPrefab: {fileID: 6094193529435412265, guid: e6993036f298a034790d5346b97c8a58, type: 3}
---- !u!114 &-5257397808221413971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094193529435412265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a446a433c003d4d9d7f9e52b6fe55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.9954787
-      outSlope: 0.9954787
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.50227094
-      value: 0.5
-      inSlope: -0.0045419633
-      outSlope: -0.0045419633
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -1.0045626
-      outSlope: -1.0045626
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  duration: 0.75
-  heightY: 3
+  time: 1
+  magnitude: 3
+  explosionDuration: 1

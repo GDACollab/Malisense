@@ -19,12 +19,14 @@ public class DynamiteMovement : MonoBehaviour
     [Tooltip("Speed in which dynamite spins in the air")]
     [SerializeField] public float rotationSpeed;
 
+    [SerializeField] public GameObject ExplosionPrefab;
     // moves the dynamite, uses the dynamite curve script to calculate curve
     // destroys dynamite once it reaches destination
     private IEnumerator Move()
     {
         yield return StartCoroutine(arcMovement.Curve(transform.position, target));
         Destroy(gameObject);
+        Instantiate(ExplosionPrefab, target, Quaternion.identity);
     }
 
     // set up to call move(), moves dynamite in direction of player's triangle
