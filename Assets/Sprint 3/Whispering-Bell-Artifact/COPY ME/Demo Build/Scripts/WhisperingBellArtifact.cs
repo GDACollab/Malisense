@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WhisperingBellArtifact : MonoBehaviour
 {
-    public Artifact whisperingBell;
-    public GameObject[] enemies;
+    private Artifact whisperingBell;
+    private GameObject[] enemies;
 
     [Tooltip("Set the cooldown for the whispering bell artifact")]
     [SerializeField] public float whisperingBellCooldown;
@@ -39,16 +40,18 @@ public class WhisperingBellArtifact : MonoBehaviour
         artifact.cooldown += Time.deltaTime;
     }
 
-    void Start()
+    private void Start()
     {
+        whisperingBell = new Artifact(); // Temp call
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // If button pressed and item is not on cooldown
-        if (Input.GetKeyDown(KeyCode.C) && !IsCoolDown(whisperingBell)){ // Temporary key press, needs to be connected to player controller
+        if (Input.GetKeyDown(KeyCode.C)) {  // && !IsCoolDown(whisperingBell)){ // Temporary key press, needs to be connected to player controller
+            Debug.Log("Yippe");
             // TODO: add a call to make the pulse effect
             WhisperBellAction(whisperingBell);
         }
@@ -58,7 +61,7 @@ public class WhisperingBellArtifact : MonoBehaviour
         }
         else
         {
-            whisperingBell.cooldown += Time.deltaTime;
+        whisperingBell.cooldown += Time.deltaTime;
         }
     }
 }

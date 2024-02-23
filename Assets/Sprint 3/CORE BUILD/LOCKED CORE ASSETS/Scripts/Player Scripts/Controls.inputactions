@@ -1,5 +1,5 @@
 {
-    "name": "NewControls",
+    "name": "Controls",
     "maps": [
         {
             "name": "Player",
@@ -395,6 +395,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "Set Enemy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Inventory",
+            "id": "19248651-6de0-4988-8597-d6548796a765",
+            "actions": [
+                {
+                    "name": "Select Artifact",
+                    "type": "Button",
+                    "id": "b978af3e-370f-4191-a45e-8c13b9f2064b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0fe69b4f-3303-47c8-babb-1626a1742536",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select Artifact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a208344-2e3c-4a5b-85a9-1d3ff8a06cb3",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select Artifact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
