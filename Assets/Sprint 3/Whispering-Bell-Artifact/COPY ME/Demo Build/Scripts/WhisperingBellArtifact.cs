@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class WhisperingBellArtifact : MonoBehaviour
 {
-    private Artifact whisperingBell;
     private GameObject[] enemies;
-    private PlayerInput playerInput;
-    InputAction activateBell;
 
     [Tooltip("Set the cooldown for the whispering bell artifact")]
     [SerializeField] public float whisperingBellCooldown;
@@ -16,37 +12,33 @@ public class WhisperingBellArtifact : MonoBehaviour
     [Tooltip("Set how long the effects of the whispering bell artifact last on enemies")]
     [SerializeField] public float whisperingBellDuration;
 
-    [Tooltip("Set the location and name of the Target Prefab")]
-    [SerializeField] public GameObject enemyVisualizer;
+    [SerializeField] public GameObject enemyPulseEffect;
+
+    private float currentBellCooldown = 0f;
+    private float currentBellDuration = 0f;  
 
     // Checks if the artifact is on cooldown
-    public bool IsCoolDown(Artifact artifact)
+    public bool IsCoolDown()
     {
-        if (artifact.cooldown > 0.0f && artifact.cooldown < whisperingBellCooldown) return true;
+        if (currentBellCooldown > 0.0f && currentBellCooldown < whisperingBellCooldown) return true;
         return false;
     }
 
     // Creates ripple effect on all enemies for a duration of 5 seconds
-    public void WhisperBellAction(Artifact artifact)
+    public void WhisperBellAction()
     {
+        currentBellDuration += 1;
         foreach (GameObject enemy in enemies)
         {
             Transform targetEnemy = enemy.transform;
-            Instantiate(enemyVisualizer, targetEnemy.position, targetEnemy.rotation); // Create target
+            Instantiate(enemyPulseEffect, targetEnemy.position, targetEnemy.rotation); // Create target
         }
-        while (artifact.duration < whisperingBellDuration)
-        {
-            artifact.duration += Time.deltaTime;
-        }
-        artifact.duration = 0.0f;
-        artifact.cooldown += Time.deltaTime;
+        currentBellDuration += Time.deltaTime;
     }
 
     private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        whisperingBell = new Artifact(); // Temp call
-        activateBell = playerInput.actions.FindAction("Select Artifact");
+        
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
     }
@@ -54,19 +46,30 @@ public class WhisperingBellArtifact : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Debug.Log("Updating my script");
+        if (currentBellDuration > 0.0f)
+        {
+            currentBellDuration += Time.deltaTime;
+        }
+        else if (currentBellCooldown > 5.0f)    
+        {
+            currentBellCooldown += Time.deltaTime;
+            currentBellDuration = 0.0f;
+        }
         // If button pressed and item is not on cooldown
-        if (activateBell.triggered && !IsCoolDown(whisperingBell)){ // Temporary key press, needs to be connected to player controller
+        if (currentBellCooldown == 0.0f){ // Temporary key press, needs to be connected to player controller
             // TODO: add a call to make the pulse effect
-            Debug.Log("Bell");
-           // WhisperBellAction(whisperingBell);
+            Debug.Log("Bell Activated");
+            WhisperBellAction();
         }
-        if (!IsCoolDown(whisperingBell)) // Reset Cooldown when possible
+        if (currentBellCooldown > whisperingBellCooldown) // Reset Cooldown when possible
         {
-            whisperingBell.cooldown = 0.0f;
+            Debug.Log("Reset Bell Cooldown");
+            currentBellCooldown = 0.0f;
         }
-        else
+        else if (currentBellCooldown > 0.0f)
         {
-        whisperingBell.cooldown += Time.deltaTime;
+        currentBellCooldown += Time.deltaTime;
         }
     }
 }
