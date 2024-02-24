@@ -15,8 +15,10 @@ public class VisualizeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Transform targetEnemy = transform.parent;
         wbTime += Time.deltaTime;
-        // Need to update to follow enemy
+        Vector3 targetPos = targetEnemy.position + Vector3.up;
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 5f);
         if (wbTime >= wbDuration) Destroy(gameObject);
     }
 }

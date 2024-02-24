@@ -15,61 +15,45 @@ public class WhisperingBellArtifact : MonoBehaviour
     [SerializeField] public GameObject enemyPulseEffect;
 
     private float currentBellCooldown = 0f;
-    private float currentBellDuration = 0f;  
-
-    // Checks if the artifact is on cooldown
-    public bool IsCoolDown()
-    {
-        if (currentBellCooldown > 0.0f && currentBellCooldown < whisperingBellCooldown) return true;
-        return false;
-    }
+    private float currentBellDuration = 0f;
+    private bool isActivated = false; // Prevents multiple activations before the end of the duration
 
     // Creates ripple effect on all enemies for a duration of 5 seconds
     public void WhisperBellAction()
     {
-        currentBellDuration += 1;
+        isActivated = true;
         foreach (GameObject enemy in enemies)
         {
             Transform targetEnemy = enemy.transform;
-            Instantiate(enemyPulseEffect, targetEnemy.position, targetEnemy.rotation); // Create target
+            GameObject pulseObject = Instantiate(enemyPulseEffect, targetEnemy.position, targetEnemy.rotation); // Create target
+            pulseObject.transform.parent = enemy.transform;
         }
         currentBellDuration += Time.deltaTime;
     }
 
     private void Start()
     {
-        
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
     }
 
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log("Updating my script");
-        if (currentBellDuration > 0.0f)
+        Debug.Log(currentBellDuration);
+        Debug.Log(currentBellCooldown);
+        if (currentBellDuration > 0.0f) currentBellDuration += Time.deltaTime;
+        if (currentBellDuration >= 5.0f)    
         {
-            currentBellDuration += Time.deltaTime;
-        }
-        else if (currentBellCooldown > 5.0f)    
-        {
+            isActivated = false;
             currentBellCooldown += Time.deltaTime;
             currentBellDuration = 0.0f;
         }
-        // If button pressed and item is not on cooldown
-        if (currentBellCooldown == 0.0f){ // Temporary key press, needs to be connected to player controller
-            // TODO: add a call to make the pulse effect
+        if (currentBellCooldown == 0.0f && currentBellDuration == 0.0f && !isActivated){ // Temporary key press, needs to be connected to player controller
+            // TODO: add a call to make the player ripple effect
             Debug.Log("Bell Activated");
             WhisperBellAction();
         }
-        if (currentBellCooldown > whisperingBellCooldown) // Reset Cooldown when possible
-        {
-            Debug.Log("Reset Bell Cooldown");
-            currentBellCooldown = 0.0f;
-        }
-        else if (currentBellCooldown > 0.0f)
-        {
-        currentBellCooldown += Time.deltaTime;
-        }
+        if (currentBellCooldown > whisperingBellCooldown)currentBellCooldown = 0.0f;
+        else if (currentBellCooldown > 0.0f) currentBellCooldown += Time.deltaTime;
     }
 }
