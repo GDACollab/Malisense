@@ -16,7 +16,7 @@ public class V_KeyboardInteractiontion2 : MonoBehaviour
     [SerializeField] GameObject test;
 
     private int currentIndex;
-    private V_SelectableItems2 DaSCRIPT;
+    private V_SelectableItems3 DaSCRIPT;
 
 
     private static V_KeyboardInteractiontion2 _instance;
@@ -63,16 +63,19 @@ public class V_KeyboardInteractiontion2 : MonoBehaviour
     private void simpleMovement()
     {
         
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered))
+        if ((moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered))
         {
+            Debug.Log("move -1");
             DaSCRIPT.moveInList(-1);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered))
+        else if ((moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered))
         {
+            Debug.Log("move 1");
             DaSCRIPT.moveInList(1);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || selectAction.triggered)
+        else if (selectAction.triggered)
         {
+            Debug.Log("select");
             DaSCRIPT.selectObject();
         }
     }
@@ -81,7 +84,7 @@ public class V_KeyboardInteractiontion2 : MonoBehaviour
     private void getGameObjectList()
     {
         //USE LATER
-        DaSCRIPT = currentListSelected.GetComponent<V_SelectableItems2>();
+        DaSCRIPT = currentListSelected.GetComponent<V_SelectableItems3>();
     }
 
     public GameObject currentlySelectedObject() //For Other script to check if its listed
