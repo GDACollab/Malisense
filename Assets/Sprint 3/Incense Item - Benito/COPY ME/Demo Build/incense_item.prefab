@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1614248646145954709}
   - component: {fileID: -935425734308075411}
   - component: {fileID: 5269947194413556704}
+  - component: {fileID: -6549291531931627274}
   m_Layer: 0
   m_Name: incense_item
   m_TagString: Untagged
@@ -60,3 +61,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseObject: {fileID: 5032859555972340647, guid: 1b4fee9aff0937e4cbcee0bd6551cb20, type: 3}
+--- !u!114 &-6549291531931627274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315651385435373631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147b508ab798ac34aa348da5ba513181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stinkPerSec: 0
+  isStinkEmitter: 1
+  stinkEmitPerSec: 15
+  stink: 100
