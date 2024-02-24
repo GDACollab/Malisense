@@ -1,5 +1,5 @@
 {
-    "name": "NewControls",
+    "name": "Controls",
     "maps": [
         {
             "name": "Player",
@@ -72,6 +72,15 @@
                     "name": "Set Enemy",
                     "type": "Button",
                     "id": "c59d6e9d-6fd3-4710-90dd-f1ee2edca410",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "0ab042c2-4632-4453-800a-23a22ae6c7bc",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -395,6 +404,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Set Enemy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d00af102-ab61-42f5-b721-062e8fde85f4",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
