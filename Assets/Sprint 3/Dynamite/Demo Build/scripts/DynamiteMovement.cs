@@ -13,13 +13,16 @@ public class DynamiteMovement : MonoBehaviour
     private DynamiteCurveScript arcMovement = null;
     private Vector3 target;
 
-    [Tooltip("Set the distance the dynamite is thrown. Multiplicative, setting it to 1 will throw dynamite on the player's triangle.")]
-    [SerializeField] public float distance;
+    [Tooltip("Set the distance the dynamite is thrown from the player.")]
+    public float distance;
+
+    [Tooltip("The minimum distance the dynamite can land away from a wall.")]
+    public float radius = 0.25f;
 
     [Tooltip("Speed in which dynamite spins in the air")]
-    [SerializeField] public float rotationSpeed;
+    public float rotationSpeed;
 
-    [SerializeField] public GameObject ExplosionPrefab;
+    public GameObject ExplosionPrefab;
     // moves the dynamite, uses the dynamite curve script to calculate curve
     // destroys dynamite once it reaches destination
     private IEnumerator Move()
@@ -32,10 +35,14 @@ public class DynamiteMovement : MonoBehaviour
     // set up to call move(), moves dynamite in direction of player's triangle
     private void Start()
     {
-        directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle").Find("Triangle");
+        directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle/Triangle");
         arcMovement = GetComponent<DynamiteCurveScript>();
+
         Vector3 direction = -(transform.position - directionalTriangle.position).normalized;
-        target = transform.position + (direction * distance);
+
+        // TODO: Physics2D.GetLayerCollisionMask(gameObject.layer) would work better than hardcoding GetMask here, but merging tags is hard
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, direction, distance, LayerMask.GetMask("Dungeon"));
+        target = hit.transform ? hit.centroid : transform.position + direction * distance; ;
 
         // rotation setup
         playerPosition = GameObject.FindGameObjectWithTag("Player").transform;
