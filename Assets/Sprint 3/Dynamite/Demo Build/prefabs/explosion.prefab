@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 148290006012591371}
   - component: {fileID: 4634664006968919905}
   - component: {fileID: 7618875630524855574}
-  - component: {fileID: 5310454561784344975}
   m_Layer: 0
   m_Name: explosion
   m_TagString: Untagged
@@ -128,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenShakeDuration: 0.25
-  magnitude: 2
+  screenShakeMagnitude: 0.2
   explosionDuration: 1
   noise: {fileID: 7618875630524855574}
   noise_level: 12
@@ -145,17 +144,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseObject: {fileID: 5032859555972340647, guid: 1b4fee9aff0937e4cbcee0bd6551cb20, type: 3}
---- !u!114 &5310454561784344975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094193529435412265}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5b08f12ad72714690992c7be300431, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  screenShakeTime: 0
-  magnitude: 0

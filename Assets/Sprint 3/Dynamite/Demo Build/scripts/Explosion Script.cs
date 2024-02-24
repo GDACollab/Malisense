@@ -8,7 +8,7 @@ public class ExplosionScript : MonoBehaviour
 {
     private SmartCamera cam;
     public float screenShakeDuration;
-    public float magnitude;
+    public float screenShakeMagnitude;
     [Tooltip("How long the explosion prefab will last")]
     [SerializeField] public float explosionDuration;
     public scr_noise noise;
@@ -18,9 +18,8 @@ public class ExplosionScript : MonoBehaviour
 
     private void Start()
     {
-        cam = Camera.main.GetComponent<SmartCamera>();
         noise.MakeSound(transform.position, noise_level);
-        ScreenShake();
+        Camera.main.GetComponent<SmartCamera>().ScreenShake(screenShakeDuration, screenShakeMagnitude);
     }
 
     private void Update()
@@ -29,11 +28,5 @@ public class ExplosionScript : MonoBehaviour
         if (explosionTime >= explosionDuration) { 
             Destroy(gameObject);
         }
-    }
-
-    public void ScreenShake() {
-        cam.screenShakeTime = screenShakeDuration;
-        cam.magnitude = magnitude;
-        //Debug.Log("dynamite spawned");
     }
 }
