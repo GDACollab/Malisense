@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -935425734308075411}
   - component: {fileID: 5269947194413556704}
   - component: {fileID: -6549291531931627274}
+  - component: {fileID: 7113714875132982840}
   m_Layer: 0
   m_Name: incense_item
   m_TagString: Untagged
@@ -75,5 +76,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stinkPerSec: 0
   isStinkEmitter: 1
-  stinkEmitPerSec: 15
+  stinkEmitPerSec: -15
   stink: 100
+--- !u!114 &7113714875132982840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315651385435373631}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c2b9c5f29f6f34d83fd9972763d6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
