@@ -46,6 +46,6 @@ public class DynamiteMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(new Vector3(0, 0, rotationSpeed));
+        transform.Rotate(new Vector3(0, 0, rotationSpeed * Time.deltaTime));
     }
 }

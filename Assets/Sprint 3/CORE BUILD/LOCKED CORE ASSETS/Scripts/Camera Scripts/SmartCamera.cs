@@ -7,6 +7,8 @@ public class SmartCamera : MonoBehaviour
 {
     Camera mainCamera;
     private GameObject player;
+    public float screenShakeTime;
+    public float magnitude;
     
     void Start () 
     {
@@ -23,6 +25,13 @@ public class SmartCamera : MonoBehaviour
     private void LateUpdate() {
         if(player!=null){
             mainCamera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, mainCamera.transform.position.z);
+        }
+        screenShakeTime -= Time.deltaTime;
+        if (screenShakeTime > 0) {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+            
+            mainCamera.transform.position += new Vector3(x, y, 0f);
         }
     }
     
