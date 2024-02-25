@@ -243,6 +243,7 @@ public class V_SelectableItems3 : MonoBehaviour
         foreach (var uiElement in UI_ELEMENTS)
         {
             uiElement.SetActive(false);
+            activateInk = false;
         }
     }
 
