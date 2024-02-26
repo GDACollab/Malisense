@@ -156,9 +156,10 @@ public class V_SelectableItems3 : MonoBehaviour
     private void itemSelected()
     {
         float targetXPosition = selectedGameObject.transform.position.x;
+        float targetYPosition = selectedGameObject.transform.position.y;
 
         Vector3 currentPosition = theFunnyArrow.transform.position;
-        Vector3 newPosition = new Vector3(targetXPosition, currentPosition.y, currentPosition.z);
+        Vector3 newPosition = new Vector3(targetXPosition, targetYPosition + 1, currentPosition.z);
         theFunnyArrow.transform.position = newPosition;
         dungeonMessage.SetActive(listIndex == 2);
     }
