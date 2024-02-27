@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Sprint_3.CORE_BUILD.LOCKED_CORE_ASSETS.Scripts.Player_Scripts.Item_Logic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,12 +15,12 @@ public class JoshPlayer : MonoBehaviour
     public Rigidbody2D rb;
     public GameObject triangle;
 
-    [SerializeField] 
+    [SerializeField]
     public GameObject invObject;
-    
+
     [HideInInspector]
     public InventoryBase newInventory;
-        
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,11 +36,6 @@ public class JoshPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!newInventory.carriedObject)
-        {
-            return;
-        }
-
         if (setDownAction.ReadValue<float>() > 0f)
         {
             if (newInventory.carriedObject)
@@ -54,55 +50,56 @@ public class JoshPlayer : MonoBehaviour
         {
             newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
             newInventory.carriedObject.transform.parent = triangle.transform.parent;
-            
+
             newInventory.carriedObject.transform.position = triangle.transform.position;
             newInventory.carriedObject.transform.rotation = triangle.transform.rotation;
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (GetComponent<CapsuleCollider2D>())
-        {
-            
-        }
         if (interactAction.triggered)
         {
-            print("hi");
-            var item = other.GetComponent<ItemPickup>();
-            var heavyItem = other.GetComponent<HeavyItem>();
-            var door = other.GetComponent<Door>();
-            var doorSwitch = other.GetComponent<SwitchController>();
+            Vector2 pos = triangle.transform.position;
+            Collider2D[] candidates = Physics2D.OverlapCircleAll(pos, 2f);
 
-            if (doorSwitch)
+            foreach (Collider2D obj in candidates
+                .OrderBy(collider => Vector2.Distance(collider.ClosestPoint(pos), pos)))
             {
-                doorSwitch.ActivateSwitch();
-                return;
-            }
+                var item = obj.GetComponent<ItemPickup>();
+                var heavyItem = obj.GetComponent<HeavyItem>();
+                var door = obj.GetComponent<Door>();
+                var doorSwitch = obj.GetComponent<SwitchController>();
 
-            if (door && newInventory.carriedObject)
-            {
-                Destroy(newInventory.carriedObject.gameObject);
-                newInventory.carriedObject = null;
-                Destroy(other.gameObject);
-                return;
-            }
-            
-            if (!item)
-            {
-                if (!heavyItem)
+                if (doorSwitch)
                 {
-                    return;
+                    doorSwitch.ActivateSwitch();
+                    break;
                 }
-
-                newInventory.carriedObject = heavyItem;
-                return;
-            };
-
-            bool success = newInventory.AddItem(item.item, 1);
-            if (success)
-            {
-                Destroy(other.gameObject);
+                else if (door)
+                {
+                    if (newInventory.carriedObject)
+                    {
+                        Destroy(newInventory.carriedObject.gameObject);
+                        newInventory.carriedObject = null;
+                        Destroy(door.gameObject);
+                        break;
+                    }
+                }
+                else if (heavyItem)
+                {
+                    if (!newInventory.carriedObject)
+                    {
+                        newInventory.carriedObject = heavyItem;
+                        break;
+                    }
+                }
+                else if (item)
+                {
+                    bool success = newInventory.AddItem(item.item, 1);
+                    if (success)
+                    {
+                        Destroy(obj.gameObject);
+                        break;
+                    }
+                }
             }
         }
     }
