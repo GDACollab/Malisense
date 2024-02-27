@@ -13,7 +13,7 @@ public class scr_playerNoiseTrack : MonoBehaviour
     float timeCheck = 0;
     public float walkLoudness;
     public float sprintLoudness;
-    public float sneakLoudness;
+    //public float sneakLoudness;
 
     // Update is called once per frame
     void Update()
@@ -25,7 +25,7 @@ public class scr_playerNoiseTrack : MonoBehaviour
             {                                   //(and repetition if there has been too much lag)
                 float size = walkLoudness; // Decide size of noiceObject based on current state
                 if (player.GetComponent<PlayerControl>().isSprinting) { size = sprintLoudness; }
-                else if(player.GetComponent<PlayerControl>().isSneaking) { size = sneakLoudness; }
+                //else if(player.GetComponent<PlayerControl>().isSneaking) { size = sneakLoudness; }
                 noiseSystem.MakeSound(player.transform.position,size); //Send command to create sound object
                 timeCheck -= NoiseFrequency; //decrement timeCheck to prevent infinite loop!
             }

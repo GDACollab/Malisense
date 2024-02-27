@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class scr_noiseDetect : MonoBehaviour
 {
-    public StateMachine stateMachine;
+    //public StateMachine stateMachine;
     //How many sounds can occur in the monster's vicinity before it starts chasing you
     public int noiseSensitivity = 1;
     int noiseCounter = 0;
