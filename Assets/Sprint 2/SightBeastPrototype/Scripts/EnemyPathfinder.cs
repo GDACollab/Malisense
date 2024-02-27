@@ -111,6 +111,8 @@ public class EnemyPathfinder : MonoBehaviour
         if (AtGoal)
             return;
 
+        AdvancePathWaypoint();
+
         var obstacle = Physics2D.Linecast(_rb2d.position, _targetPosition, obstacleLayers);
         if (obstacle.transform == null)
         {
@@ -123,7 +125,5 @@ public class EnemyPathfinder : MonoBehaviour
             if(_path != null)
                 MoveTowards(_path.vectorPath[_pathWaypoint]);
         }
-
-        AdvancePathWaypoint();
     }
 }

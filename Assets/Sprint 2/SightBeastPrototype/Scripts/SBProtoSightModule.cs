@@ -26,6 +26,15 @@ public class SBProtoSightModule : MonoBehaviour
     [Tooltip("The radius of the target. Higher values mean the sight beast can see further around walls.")]
     public float targetRadius;
 
+    [Tooltip("The light that should face towards the player.")]
+    public Light2D visionLight;
+
+    private float visionArcMargin;
+
+    private void Start()
+    {
+        visionArcMargin = visionLight.pointLightOuterAngle / visionLight.pointLightInnerAngle;
+    }
 
     bool FasterLineSegmentIntersection(Vector2 fromA, Vector2 toA, Vector2 fromB, Vector2 toB)
     {
@@ -122,6 +131,13 @@ public class SBProtoSightModule : MonoBehaviour
     public Vector3 DirFromAngle(float angleInDegrees)
     {
         return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
+    }
+
+    private void LateUpdate()
+    {
+        visionLight.pointLightInnerAngle = visionArcSize;
+        visionLight.pointLightOuterAngle = visionArcSize * visionArcMargin;
+        visionLight.transform.eulerAngles = new Vector3(0f, 0f, visionAngle - 90f);
     }
 
 #if UNITY_EDITOR
