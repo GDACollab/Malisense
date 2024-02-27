@@ -279,7 +279,8 @@ MonoBehaviour:
     m_Flags: 0
   rb: {fileID: 0}
   triangle: {fileID: 131963359574473401}
-  newInventory: {fileID: 11400000, guid: cd6736c5446610146b105231fc7ac2f2, type: 2}
+  invObject: {fileID: 0}
+  newInventory: {fileID: 0}
 --- !u!114 &1870973374249702398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   size: 0
   inventory: []
   carriedObject: {fileID: 0}
+  currentArtifact: {fileID: 0}
 --- !u!50 &7315903718944372396
 Rigidbody2D:
   serializedVersion: 4

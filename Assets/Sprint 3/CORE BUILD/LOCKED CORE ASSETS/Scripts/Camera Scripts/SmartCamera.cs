@@ -7,6 +7,9 @@ public class SmartCamera : MonoBehaviour
 {
     Camera mainCamera;
     private GameObject player;
+    private float shakeTimeLeft;
+    private float shakeTotalTime;
+    private float shakeMagnitude;
     
     void Start () 
     {
@@ -21,9 +24,22 @@ public class SmartCamera : MonoBehaviour
     }
     
     private void LateUpdate() {
-        if(player!=null){
-            mainCamera.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, mainCamera.transform.position.z);
+        if (!player) return;
+
+        // Track player
+        Vector3 pos = player.transform.position;
+        pos.z = transform.position.z;
+
+        // Do screen shake
+        if (shakeTimeLeft > 0)
+        {
+            shakeTimeLeft -= Time.deltaTime;
+            float intensity = shakeMagnitude * (shakeTimeLeft / shakeTotalTime);
+            pos.x += Random.Range(-1f, 1f) * intensity;
+            pos.y += Random.Range(-1f, 1f) * intensity;
         }
+
+        transform.position = pos;
     }
     
     private void setAspectRatio(){
@@ -62,6 +78,16 @@ public class SmartCamera : MonoBehaviour
 
                 mainCamera.rect = rect;
             }
+        }
+    }
+
+    public void ScreenShake(float duration, float magnitude)
+    {
+        if (shakeTimeLeft <= 0f || magnitude > shakeMagnitude)
+        {
+            shakeTimeLeft = duration;
+            shakeTotalTime = duration;
+            shakeMagnitude = magnitude;
         }
     }
 }
