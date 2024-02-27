@@ -47,7 +47,7 @@ public class PlayerControl : MonoBehaviour
 		sprintAction = playerInput.actions.FindAction("Sprint");
 		sneakAction = playerInput.actions.FindAction("Sneak");
 		hideMessage = playerInput.actions.FindAction("Hide Message");
-		setEnemy = playerInput.actions.FindAction("Set Enemy");
+		setEnemy = playerInput.actions.FindAction("Set Enemies");
 		
 		triangle = transform.GetChild(0);
 
@@ -115,7 +115,7 @@ public class PlayerControl : MonoBehaviour
 			enemy.SetActive(!enemy.activeSelf);
 		}
 		// Apply carried object effect
-		if (player.newInventory.carriedObject != null)
+		if (player.newInventory != null && player.newInventory.carriedObject != null)
 		{
 			adjustedSpeed *= 0.4f;
 		}
