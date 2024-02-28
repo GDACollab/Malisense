@@ -16,6 +16,9 @@ public class SBProtoSightModule : MonoBehaviour
     [Range(0, 360)]
     public float visionAngle;
 
+    [Tooltip("The time it takes to turn from one angle to another, measured in seconds.")]
+    public float visionTurnTime = 0.5f;
+
 
     [Tooltip("A mask of layers that should block vision")]
     public LayerMask wallLayers;
@@ -30,6 +33,7 @@ public class SBProtoSightModule : MonoBehaviour
     public Light2D visionLight;
 
     private float visionArcMargin;
+    private float visionAngVel;
 
     private void Start()
     {
@@ -68,6 +72,13 @@ public class SBProtoSightModule : MonoBehaviour
     {
         Vector2 castStart = transform.position;
 
+        // Exit if player is not within view range
+        Vector3 dir = DirFromAngle(visionAngle);
+        Vector3 dirToTarget = castEnd - castStart;
+        float angle = Vector2.Angle(dir, dirToTarget);
+
+        if (angle > (visionArcSize / 2)) return false;
+
         // Test against all shadow casters
         foreach (var sc in shadowCasters)
         {
@@ -90,20 +101,14 @@ public class SBProtoSightModule : MonoBehaviour
     {
         Vector3 dir = (lookTarget - transform.position).normalized;
         float angleToTarget = Vector2.SignedAngle(transform.right, dir);
-        visionAngle = (angleToTarget + 360) % 360;
+
+        visionAngle = Mathf.SmoothDampAngle(visionAngle, angleToTarget, ref visionAngVel, visionTurnTime);
     }
 
     public Visibility GetVisibility(Vector2 position, float radius)
     {
         // Exit if player exceeds view distance
         if (Vector2.Distance(transform.position, position) > visionRadius) return Visibility.None;
-
-        // Exit if player is not within view range
-        Vector3 dir = DirFromAngle(visionAngle);
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        float angle = Vector2.Angle(dir, dirToTarget);
-        //Debug.Log(Time.time + ": Angle:" + angle + "Target: " + visionArcSize/2);
-        if (angle > (visionArcSize / 2)) return Visibility.None;
 
         var perpendicular = Vector2.Perpendicular(position - (Vector2)transform.position).normalized;
         int count = 0;
@@ -142,7 +147,7 @@ public class SBProtoSightModule : MonoBehaviour
 
 #if UNITY_EDITOR
     // Depict vision cone
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Handles.color = new Color(128, 00, 255);
         Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.right, 360, visionRadius);

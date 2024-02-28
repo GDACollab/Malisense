@@ -22,7 +22,7 @@ public class EnemyPathfinder : MonoBehaviour
     private int _pathWaypoint;
     private Seeker _seeker;
     private SBProtoSightModule _sight;
-    
+
     private Rigidbody2D _rb2d;
 
     public bool AtGoal => Vector2.Distance(_rb2d.position, _targetPosition) < goalDistance;
@@ -48,7 +48,7 @@ public class EnemyPathfinder : MonoBehaviour
         // Recalculate path on an interval
         var delay = new WaitForSeconds(recalculateInterval);
 
-        while(true)
+        while (true)
         {
             if (AtGoal || !_seeker.IsDone())
             {
@@ -64,7 +64,7 @@ public class EnemyPathfinder : MonoBehaviour
 
     private void OnPathComplete(Path path)
     {
-        if(!path.error)
+        if (!path.error)
         {
             _path = path;
             _pathWaypoint = 0;
@@ -106,6 +106,8 @@ public class EnemyPathfinder : MonoBehaviour
         }
     }
 
+    private RaycastHit2D[] _hitResults = new RaycastHit2D[1];
+
     private void FixedUpdate()
     {
         if (AtGoal)
@@ -113,8 +115,13 @@ public class EnemyPathfinder : MonoBehaviour
 
         AdvancePathWaypoint();
 
-        var obstacle = Physics2D.Linecast(_rb2d.position, _targetPosition, obstacleLayers);
-        if (obstacle.transform == null)
+        int hits = _rb2d.Cast(
+            direction: (_targetPosition - _rb2d.position).normalized,
+            results: _hitResults,
+            distance: Vector2.Distance(_rb2d.position, _targetPosition)
+        );
+
+        if (hits == 0)
         {
             // Accelerate directly towards target
             MoveTowards(_targetPosition);
@@ -122,7 +129,7 @@ public class EnemyPathfinder : MonoBehaviour
         else
         {
             // Accelerate towards waypoint
-            if(_path != null)
+            if (_path != null)
                 MoveTowards(_path.vectorPath[_pathWaypoint]);
         }
     }

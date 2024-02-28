@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class SBProtoAnimations : MonoBehaviour
 {
-    public SBProtoStateMachine stateMachine;
+    public StateMachine_Updated stateMachine;
 
     private Animator _animator;
 
@@ -16,7 +16,7 @@ public class SBProtoAnimations : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _animator.SetBool("Alert", stateMachine.currentState == SBProtoStateMachine.State.Alert);
-        _animator.SetBool("Chasing", stateMachine.currentState == SBProtoStateMachine.State.Chasing);
+        _animator.SetBool("Alert", stateMachine.currentState == StateMachine_Updated.State.Alert);
+        _animator.SetBool("Chasing", stateMachine.currentState == StateMachine_Updated.State.Chasing);
     }
 }

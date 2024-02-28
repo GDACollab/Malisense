@@ -2,15 +2,15 @@ using UnityEngine;
 using Pathfinding;
 using System.Linq;
 
-[RequireComponent(typeof(SBProtoStateMachine))]
+[RequireComponent(typeof(StateMachine_Updated))]
 [RequireComponent(typeof(EnemyPathfinder))]
 [RequireComponent(typeof(SBProtoSightModule))]
-public class SBProtoPatrolRandom : StateBaseClass
+public class SBProtoPatrol : StateBaseClass
 {
     public SBProtoPatrolArea[] searchPoints = new SBProtoPatrolArea[0];
 
     [Tooltip("Rate of acceleration.")]
-    public float speed = 200f;
+    public float speed = 20f;
 
     [Tooltip("If the player is sighted twice within this duration, then skip straight to chase mode.")]
     public float alertDuration = 10f;
@@ -24,13 +24,13 @@ public class SBProtoPatrolRandom : StateBaseClass
     private float _idleTimeLeft;
     private float _lastSeenTime = float.NegativeInfinity;
 
-    private SBProtoStateMachine _stateMachine;
+    private StateMachine_Updated _stateMachine;
     private EnemyPathfinder _pathfinder;
     private SBProtoSightModule _sight;
 
     private void Awake()
     {
-        _stateMachine = GetComponent<SBProtoStateMachine>();
+        _stateMachine = GetComponent<StateMachine_Updated>();
         _pathfinder = GetComponent<EnemyPathfinder>();
         _sight = GetComponent<SBProtoSightModule>();
     }
@@ -85,11 +85,11 @@ public class SBProtoPatrolRandom : StateBaseClass
         {
             if(_lastSeenTime + alertDuration > Time.time)
             {
-                _stateMachine.SwitchState(SBProtoStateMachine.State.Chasing);
+                _stateMachine.currentState = StateMachine_Updated.State.Chasing;
             }
             else
             {
-                _stateMachine.SwitchState(SBProtoStateMachine.State.Alert);
+                _stateMachine.currentState = StateMachine_Updated.State.Alert;
             }
 
             _lastSeenTime = Time.time;

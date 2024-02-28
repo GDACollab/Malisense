@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SBProtoStateMachine))]
+[RequireComponent(typeof(StateMachine_Updated))]
 [RequireComponent(typeof(EnemyPathfinder))]
 [RequireComponent(typeof(SBProtoSightModule))]
 public class SBProtoAlert : StateBaseClass
@@ -16,13 +16,13 @@ public class SBProtoAlert : StateBaseClass
 
     private float _gracePeriodRemaining;
 
-    private SBProtoStateMachine _stateMachine;
+    private StateMachine_Updated _stateMachine;
     private EnemyPathfinder _pathfinder;
     private SBProtoSightModule _sight;
 
     private void Awake()
     {
-        _stateMachine = GetComponent<SBProtoStateMachine>();
+        _stateMachine = GetComponent<StateMachine_Updated>();
         _pathfinder = GetComponent<EnemyPathfinder>();
         _sight = GetComponent<SBProtoSightModule>();
     }
@@ -54,13 +54,13 @@ public class SBProtoAlert : StateBaseClass
             // Make chase!
             if (_sight.GetTargetVisibility() != SBProtoSightModule.Visibility.None)
             {
-                _stateMachine.SwitchState(SBProtoStateMachine.State.Chasing);
+                _stateMachine.currentState = StateMachine_Updated.State.Chasing;
             }
 
             // Go back to patrol mode
             else if (_pathfinder.AtGoal)
             {
-                _stateMachine.SwitchState(SBProtoStateMachine.State.Patrolling);
+                _stateMachine.currentState = StateMachine_Updated.State.Patrolling;
             }
         }
     }
