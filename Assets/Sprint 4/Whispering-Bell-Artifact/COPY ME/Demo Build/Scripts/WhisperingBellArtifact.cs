@@ -6,6 +6,8 @@ public class WhisperingBellArtifact : MonoBehaviour
 {
     private GameObject[] enemies;
 
+    private bool blockAction = false;
+
     [Tooltip("Set the cooldown for the whispering bell artifact")]
     [SerializeField] public float whisperingBellCooldown;
 
@@ -28,13 +30,14 @@ public class WhisperingBellArtifact : MonoBehaviour
             pulseObject.transform.parent = enemy.transform;
         }
         WhisperingBell.duration += Time.deltaTime;
+        blockAction = true;
         
     }
 
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (WhisperingBell.cooldown == 0.0f && WhisperingBell.cooldown == 0.0f) enabled = true;
+        if (WhisperingBell.cooldown > 0.0f || WhisperingBell.duration > 0.0f) Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -43,7 +46,8 @@ public class WhisperingBellArtifact : MonoBehaviour
         if (WhisperingBell.cooldown > whisperingBellCooldown)
         {
             WhisperingBell.cooldown = 0.0f;
-            enabled = false;
+            WhisperingBell.duration = 0.0f;
+            Destroy(gameObject);
         }
         if (WhisperingBell.duration > 0.0f) WhisperingBell.duration += Time.deltaTime;
         if (WhisperingBell.duration >= 5.0f)    
@@ -51,7 +55,7 @@ public class WhisperingBellArtifact : MonoBehaviour
             WhisperingBell.cooldown += Time.deltaTime;
             WhisperingBell.duration = 0.0f;
         } 
-        if (WhisperingBell.cooldown == 0.0f && WhisperingBell.duration == 0.0f){ // Temporary key press, needs to be connected to player controller
+        if (WhisperingBell.cooldown == 0.0f && WhisperingBell.duration == 0.0f && !blockAction){ // Temporary key press, needs to be connected to player controller
             // TODO: add a call to make the player ripple effect
             Debug.Log("Bell Activated");
             WhisperBellAction();
