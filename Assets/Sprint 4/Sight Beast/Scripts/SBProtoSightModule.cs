@@ -32,13 +32,23 @@ public class SBProtoSightModule : MonoBehaviour
     [Tooltip("The light that should face towards the player.")]
     public Light2D visionLight;
 
+    [Tooltip("How much to contract the vision cone when in chase mode, with lower values meaning a smaller arc.")]
+    public float chaseArcMultiplier = 0.5f;
+
     private float visionArcMargin;
+    private float visionArcVel;
+    private float smoothedVisionArcSize;
+
     private float visionAngVel;
     private float visionAngleTarget;
 
+    private StateMachine_Updated _stateMachine;
+
     private void Start()
     {
+        _stateMachine = GetComponent<StateMachine_Updated>();
         visionArcMargin = visionLight.pointLightOuterAngle / visionLight.pointLightInnerAngle;
+        smoothedVisionArcSize = visionArcSize;
     }
 
     bool FasterLineSegmentIntersection(Vector2 fromA, Vector2 toA, Vector2 fromB, Vector2 toB)
@@ -146,12 +156,19 @@ public class SBProtoSightModule : MonoBehaviour
     private void Update()
     {
         visionAngle = Mathf.SmoothDampAngle(visionAngle, visionAngleTarget, ref visionAngVel, visionTurnTime);
+
+        float arcMultiplier = 1f;
+        if (_stateMachine)
+        {
+            arcMultiplier = _stateMachine.currentState == StateMachine_Updated.State.Chasing ? chaseArcMultiplier : 1f;
+        }
+        smoothedVisionArcSize = Mathf.SmoothDamp(smoothedVisionArcSize, visionArcSize * arcMultiplier, ref visionArcVel, visionTurnTime);
     }
 
     private void LateUpdate()
     {
-        visionLight.pointLightInnerAngle = visionArcSize;
-        visionLight.pointLightOuterAngle = visionArcSize * visionArcMargin;
+        visionLight.pointLightInnerAngle = smoothedVisionArcSize;
+        visionLight.pointLightOuterAngle = smoothedVisionArcSize * visionArcMargin;
         visionLight.transform.eulerAngles = new Vector3(0f, 0f, visionAngle - 90f);
     }
 
