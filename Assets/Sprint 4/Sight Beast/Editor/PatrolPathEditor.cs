@@ -13,6 +13,8 @@ public class PatrolPathEditor : Editor
         var areas = FindObjectsOfType<SBProtoPatrolArea>();
         var targets = this.targets.OfType<PatrolPath>();
 
+        var areaProperty = serializedObject.FindProperty(nameof(PatrolPath.areas));
+
         // Draw a rectangle around each area
         Handles.color = Color.red;
         foreach(var area in areas)
@@ -28,10 +30,14 @@ public class PatrolPathEditor : Editor
         Handles.matrix = Matrix4x4.identity;
         foreach(var target in targets)
         {
-            for (int i = 0; i < target.areas.Count; i++)
+            if (target.areas.Length == 0) continue;
+
+            for (int i = 0; i < target.areas.Length; i++)
             {
+                if (target.areas[i] == null || target.areas[(i + 1) % target.areas.Length] == null) continue;
+
                 Vector2 start = target.areas[i].transform.position;
-                Vector2 end = target.areas[(i + 1) % target.areas.Count].transform.position;
+                Vector2 end = target.areas[(i + 1) % target.areas.Length].transform.position;
                 Vector2 dir = (end - start).normalized;
                 end -= dir * 1f;
                 Handles.DrawLine(start, end);
@@ -45,7 +51,7 @@ public class PatrolPathEditor : Editor
         Handles.BeginGUI();
         foreach (var area in areas)
         {
-            if (targets.All(target => target.areas.Count > 0 && target.areas[^1] == area)
+            if (targets.All(target => target.areas.Length > 0 && target.areas[^1] == area)
                 || SceneVisibilityManager.instance.IsHidden(area.gameObject))
             {
                 continue;
@@ -61,21 +67,22 @@ public class PatrolPathEditor : Editor
 
                 foreach (var target in targets)
                 {
-                    if (target.areas.Count == 0 || target.areas[^1] != area)
-                        target.areas.Add(area);
+                    if (target.areas.Length == 0 || target.areas[^1] != area)
+                    {
+                        areaProperty.InsertArrayElementAtIndex(areaProperty.arraySize);
+                        areaProperty.GetArrayElementAtIndex(areaProperty.arraySize - 1).objectReferenceValue = area;
+                    }
                 }
+
+                serializedObject.ApplyModifiedProperties();
             }
         }
 
         GUILayout.BeginArea(new Rect(10f, Screen.height - 80f, 100f, 30f));
         if(GUILayout.Button("Clear Path"))
         {
-            Undo.RecordObjects(this.targets, "Clear patrol path");
-
-            foreach(var target in targets)
-            {
-                target.areas.Clear();
-            }
+            areaProperty.ClearArray();
+            serializedObject.ApplyModifiedProperties();
         }
         GUILayout.EndArea();
 

@@ -1,6 +1,6 @@
 using UnityEngine;
-using Pathfinding;
 using System.Linq;
+using Array = System.Array;
 
 [RequireComponent(typeof(StateMachine_Updated))]
 [RequireComponent(typeof(EnemyPathfinder))]
@@ -62,7 +62,7 @@ public class SBProtoPatrol : StateBaseClass
 
     private SBProtoPatrolArea GetNextArea()
     {
-        return patrolPath.areas[_pathIndex++ % patrolPath.areas.Count];
+        return patrolPath.areas[_pathIndex++ % patrolPath.areas.Length];
     }
 
     public override void Init()
@@ -73,7 +73,7 @@ public class SBProtoPatrol : StateBaseClass
 
         // Start at the closest path point when entering patrol state
         var startArea = patrolPath.FindClosestArea(transform.position);
-        _pathIndex = patrolPath.areas.IndexOf(startArea);
+        _pathIndex = Array.IndexOf(patrolPath.areas, startArea);
     }
 
     public override void On_Update()
@@ -88,7 +88,7 @@ public class SBProtoPatrol : StateBaseClass
             {
                 _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
 
-                if (patrolPath && patrolPath.areas.Count > 0)
+                if (patrolPath && patrolPath.areas.Length > 0)
                 {
                     SBProtoPatrolArea nextArea = randomPath ? GetRandomArea() : GetNextArea();
                     _pathfinder.SetTarget(nextArea.GetRandomPoint());

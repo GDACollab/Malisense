@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PatrolPath : MonoBehaviour
 {
-    public List<SBProtoPatrolArea> areas = new();
+    public SBProtoPatrolArea[] areas = new SBProtoPatrolArea[0];
 
     public SBProtoPatrolArea FindClosestArea(Vector2 position)
     {
@@ -12,6 +12,8 @@ public class PatrolPath : MonoBehaviour
 
         foreach(var area in areas)
         {
+            if (area == null) continue;
+
             var localPoint = area.transform.InverseTransformPoint(position);
             var localClosest = Vector2.Min(area.size / 2f, Vector2.Max(-area.size / 2f, localPoint));
 
