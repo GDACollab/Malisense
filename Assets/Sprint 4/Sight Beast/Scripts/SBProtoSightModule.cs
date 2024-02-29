@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEditor;
-using Unity.VisualScripting;
 
 public class SBProtoSightModule : MonoBehaviour
 {
@@ -13,7 +12,8 @@ public class SBProtoSightModule : MonoBehaviour
     [Tooltip("Initial vision cone angle size")]
     [Range(0, 360)]
     public float visionArcSize;
-    [Range(0, 360)]
+
+    [HideInInspector]
     public float visionAngle;
 
     [Tooltip("The time it takes to turn from one angle to another, measured in seconds.")]
@@ -34,6 +34,7 @@ public class SBProtoSightModule : MonoBehaviour
 
     private float visionArcMargin;
     private float visionAngVel;
+    private float visionAngleTarget;
 
     private void Start()
     {
@@ -97,12 +98,16 @@ public class SBProtoSightModule : MonoBehaviour
         return true;
     }
 
+    public void LookInDirection(Vector2 direction)
+    {
+        if (direction.sqrMagnitude == 0f) return;
+
+        visionAngleTarget = Vector2.SignedAngle(transform.right, direction);
+    }
+
     public void LookAt(Vector3 lookTarget)
     {
-        Vector3 dir = (lookTarget - transform.position).normalized;
-        float angleToTarget = Vector2.SignedAngle(transform.right, dir);
-
-        visionAngle = Mathf.SmoothDampAngle(visionAngle, angleToTarget, ref visionAngVel, visionTurnTime);
+        LookInDirection((lookTarget - transform.position).normalized);
     }
 
     public Visibility GetVisibility(Vector2 position, float radius)
@@ -136,6 +141,11 @@ public class SBProtoSightModule : MonoBehaviour
     public Vector3 DirFromAngle(float angleInDegrees)
     {
         return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
+    }
+
+    private void Update()
+    {
+        visionAngle = Mathf.SmoothDampAngle(visionAngle, visionAngleTarget, ref visionAngVel, visionTurnTime);
     }
 
     private void LateUpdate()

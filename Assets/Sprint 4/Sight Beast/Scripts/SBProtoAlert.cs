@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(StateMachine_Updated))]
@@ -14,11 +15,19 @@ public class SBProtoAlert : StateBaseClass
     [Tooltip("How close an enemy needs to be to the waypoint to move on to next one.")]
     public float nextWaypointDistance = 3f;
 
+    [Tooltip("How long the enemy spends looking around once it reaches the player's last known location.")]
+    public float lookAroundTime = 2f;
+
+    [Tooltip("How many times a second the enemy turns its vision cone once it reaches the player's last known location.")]
+    public float lookAroundSpeed = 4f;
+
     private float _gracePeriodRemaining;
 
     private StateMachine_Updated _stateMachine;
     private EnemyPathfinder _pathfinder;
     private SBProtoSightModule _sight;
+
+    private Coroutine _lookAroundCoroutine;
 
     private void Awake()
     {
@@ -46,6 +55,8 @@ public class SBProtoAlert : StateBaseClass
             {
                 _pathfinder.SetTarget(_sight.target.position);
             }
+
+            _sight.LookAt(_sight.target.position);
         }
         else
         {
@@ -54,14 +65,45 @@ public class SBProtoAlert : StateBaseClass
             // Make chase!
             if (_sight.GetTargetVisibility() != SBProtoSightModule.Visibility.None)
             {
-                _stateMachine.currentState = StateMachine_Updated.State.Chasing;
+                ExitToState(StateMachine_Updated.State.Chasing);
             }
 
-            // Go back to patrol mode
+            // Go back to patrol mode after a short animation
             else if (_pathfinder.AtGoal)
             {
-                _stateMachine.currentState = StateMachine_Updated.State.Patrolling;
+                if (_lookAroundCoroutine == null)
+                    _lookAroundCoroutine = StartCoroutine(LookAround());
+            }
+            else
+            {
+                _sight.LookInDirection(_pathfinder.direction);
             }
         }
+    }
+
+    private void ExitToState(StateMachine_Updated.State state)
+    {
+        if (_lookAroundCoroutine != null)
+        {
+            StopCoroutine(_lookAroundCoroutine);
+            _lookAroundCoroutine = null;
+        }
+        _stateMachine.currentState = state;
+    }
+
+    private IEnumerator LookAround()
+    {
+        float timeLeft = lookAroundTime;
+        while(timeLeft > 0f)
+        {
+            // Look in a random direction
+            float rad = Random.value * Mathf.PI * 2f;
+            _sight.LookInDirection(new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)));
+
+            yield return new WaitForSeconds(Mathf.Min(1f / lookAroundSpeed, timeLeft));
+            timeLeft -= 1f / lookAroundSpeed;
+        }
+
+        ExitToState(StateMachine_Updated.State.Patrolling);
     }
 }

@@ -213,7 +213,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.41
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 6.89
   m_LightVolumeIntensity: 1
@@ -234,10 +234,10 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 90
-  m_PointLightOuterAngle: 95
-  m_PointLightInnerRadius: 7.25
-  m_PointLightOuterRadius: 10.88
+  m_PointLightInnerAngle: 120
+  m_PointLightOuterAngle: 130
+  m_PointLightInnerRadius: 3.25
+  m_PointLightOuterRadius: 13
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 8493179897296922661}
   - component: {fileID: 2703888350949712623}
   - component: {fileID: 421906813107729564}
+  - component: {fileID: 1219489192654737068}
   m_Layer: 8
   m_Name: Sight Beast
   m_TagString: Untagged
@@ -406,7 +407,7 @@ MonoBehaviour:
   recalculateInterval: 0.5
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 521
   visuals: {fileID: 7399970916169899145}
   direction: {x: 0, y: 0}
 --- !u!114 &753788516304195369
@@ -437,11 +438,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322e6c044a9d6e547ac37e176a889a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  searchPoints: []
-  speed: 10
+  patrolPath: {fileID: 1219489192654737068}
+  speed: 18
   alertDuration: 10
-  minIdleTime: 3
-  maxIdleTime: 6
+  minIdleTime: 2
+  maxIdleTime: 4
+  randomPath: 0
 --- !u!114 &8493179897296922661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +459,8 @@ MonoBehaviour:
   gracePeriod: 0.5
   speed: 28
   nextWaypointDistance: 0.5
+  lookAroundTime: 2
+  lookAroundSpeed: 1.5
 --- !u!114 &2703888350949712623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,14 +488,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionRadius: 11
-  visionArcSize: 90
+  visionArcSize: 120
   visionAngle: 0
+  visionTurnTime: 0.25
   wallLayers:
     serializedVersion: 2
     m_Bits: 1
   target: {fileID: 0}
   targetRadius: 0.1
   visionLight: {fileID: 6677776976504815584}
+--- !u!114 &1219489192654737068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86aafe2119fa6bf43a1a70395f534891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areas: []
 --- !u!1 &5704342065390394418
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,8 @@
 using Pathfinding;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Seeker))]
-[RequireComponent(typeof(SBProtoSightModule))]
 public class EnemyPathfinder : MonoBehaviour
 {
     public float acceleration = 10f;
@@ -21,7 +19,6 @@ public class EnemyPathfinder : MonoBehaviour
     private Path _path;
     private int _pathWaypoint;
     private Seeker _seeker;
-    private SBProtoSightModule _sight;
 
     private Rigidbody2D _rb2d;
 
@@ -36,7 +33,6 @@ public class EnemyPathfinder : MonoBehaviour
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
-        _sight = GetComponent<SBProtoSightModule>();
 
         _targetPosition = _rb2d.position;
 
@@ -73,11 +69,10 @@ public class EnemyPathfinder : MonoBehaviour
 
     private void MoveTowards(Vector2 target)
     {
-        Vector2 direction = (target - _rb2d.position).normalized;
+        direction = (target - _rb2d.position).normalized;
         Vector2 force = direction * acceleration;
 
         _rb2d.AddForce(force);
-        _sight.LookAt(target);
 
         // Turn sprite
         if (Mathf.Abs(target.x - _rb2d.position.x) >= 0.01f)

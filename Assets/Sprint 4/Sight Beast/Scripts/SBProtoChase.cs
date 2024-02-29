@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(StateMachine_Updated))]
@@ -58,6 +59,16 @@ public class SBProtoChase : StateBaseClass
 
             // Look towards target
             //_sight.LookAt(_sight.target.position);
+        }
+
+        // Look either at the player, or in the direction of motion
+        if (visibility != SBProtoSightModule.Visibility.None)
+        {
+            _sight.LookAt(_sight.target.position);
+        }
+        else
+        {
+            _sight.LookInDirection(_pathfinder.direction);
         }
 
         if(_pathfinder.AtGoal
