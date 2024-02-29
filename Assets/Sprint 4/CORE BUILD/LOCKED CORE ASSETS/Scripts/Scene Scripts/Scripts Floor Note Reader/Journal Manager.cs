@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class JournalManager : MonoBehaviour
 {
-    public Canvas JournalUI;
+    public GameObject JournalUI;
 
     private bool JournalActive = false;
     

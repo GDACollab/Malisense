@@ -10,16 +10,16 @@ public class InteractionSelector : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collider) {
         other = collider;
         isInteractable = true;
-        if(collider.GetComponent<NearFloorNote>()){
-            collider.GetComponent<NearFloorNote>().isNear = true;
+        if(collider.GetComponent<FloorNote>()){
+            collider.GetComponent<FloorNote>().isNear = true;
         }
     }
     
     private void OnTriggerExit2D(Collider2D collider)
     {
         isInteractable = false;
-        if(collider.GetComponent<NearFloorNote>()){
-            collider.GetComponent<NearFloorNote>().isNear = false;
+        if(collider.GetComponent<FloorNote>()){
+            collider.GetComponent<FloorNote>().isNear = false;
         }
     }
 }
