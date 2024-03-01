@@ -5,8 +5,10 @@ using UnityEngine;
 public class WhisperingBellArtifact : MonoBehaviour
 {
     private GameObject[] enemies;
+    private GameObject player;
+    //public PulseEffect pulse = null;
 
-    private bool blockAction = false;
+    private bool blockAction = false; // prevents from adding to the duration again
 
     [Tooltip("Set the cooldown for the whispering bell artifact")]
     [SerializeField] public float whisperingBellCooldown;
@@ -22,7 +24,7 @@ public class WhisperingBellArtifact : MonoBehaviour
     // Creates ripple effect on all enemies for a duration of 5 seconds
     public void WhisperBellAction()
     {
-        Debug.Log("Do action");
+        //pulse.setPulseActive();
         foreach (GameObject enemy in enemies)
         {
             Transform targetEnemy = enemy.transform;
@@ -37,7 +39,8 @@ public class WhisperingBellArtifact : MonoBehaviour
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (WhisperingBell.cooldown > 0.0f || WhisperingBell.duration > 0.0f) Destroy(gameObject);
+        //pulse = GetComponent<PulseEffect>();
+        if (WhisperingBell.cooldown > 0.0f || WhisperingBell.duration > 0.0f) Destroy(gameObject); // If the bell is currently running, can't do anything right now
     }
 
     // Update is called once per frame
