@@ -279,11 +279,14 @@ public class V_SelectableItems3New : MonoBehaviour
 			UI_ELEMENTS[index].SetActive(true);
 			//Ink Activate
 			activateInk = true;
-		}
+
+            currentlySelected = true;
+        }
 	}
 
 	private void DeActivateUI(int index)
 	{
+		currentlySelected = false;
 		// Deactivate all UI elements
 		foreach (var uiElement in UI_ELEMENTS)
 		{
