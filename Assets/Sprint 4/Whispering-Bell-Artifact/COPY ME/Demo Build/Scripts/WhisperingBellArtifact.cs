@@ -6,7 +6,8 @@ public class WhisperingBellArtifact : MonoBehaviour
 {
     private GameObject[] enemies;
     private GameObject player;
-    //public PulseEffect pulse = null;
+
+    [SerializeField] public GameObject pulseEffect;
 
     private bool blockAction = false; // prevents from adding to the duration again
 
@@ -24,7 +25,7 @@ public class WhisperingBellArtifact : MonoBehaviour
     // Creates ripple effect on all enemies for a duration of 5 seconds
     public void WhisperBellAction()
     {
-        //pulse.setPulseActive();
+        Instantiate(pulseEffect, player.transform.position, player.transform.rotation);
         foreach (GameObject enemy in enemies)
         {
             Transform targetEnemy = enemy.transform;
@@ -39,7 +40,7 @@ public class WhisperingBellArtifact : MonoBehaviour
     private void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //pulse = GetComponent<PulseEffect>();
+        player = GameObject.FindGameObjectWithTag("Player");
         if (WhisperingBell.cooldown > 0.0f || WhisperingBell.duration > 0.0f) Destroy(gameObject); // If the bell is currently running, can't do anything right now
     }
 
