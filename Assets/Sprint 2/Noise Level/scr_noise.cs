@@ -32,6 +32,7 @@ public class scr_noise : MonoBehaviour
         noise = Instantiate(noiseObject,pos,Quaternion.identity);
         //Warning: if the object has no scr_noiseObject, then the game will crash
         noise.GetComponent<scr_noiseObject>().diameter = size; //This grabs the component scr_noiseObject in noise, and sets the diamter variable in it to size
+        noise.GetComponent<scr_noiseObject>().parent = gameObject;
 
     }
 }
