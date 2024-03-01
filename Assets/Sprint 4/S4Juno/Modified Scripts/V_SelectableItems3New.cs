@@ -37,9 +37,10 @@ public class V_SelectableItems3New : MonoBehaviour
 	[SerializeField] public bool currentlySelected = false;
 	[SerializeField] public bool hasEntered = false;
 	[SerializeField] private bool hasSelected = false;
+    [SerializeField] private bool movePointer = true;
 
-	//Camera Zoom Variables
-	public Camera mainCamera;
+    //Camera Zoom Variables
+    public Camera mainCamera;
 	public float buildingZoomScale;
 	public float zoomTimeSeconds;
 	private float defaultCameraScale;
@@ -88,7 +89,7 @@ public class V_SelectableItems3New : MonoBehaviour
 	private void Update()
 	{
 
-		if (!currentlySelected) return;
+		if (!movePointer) return;
 
 		if (zooming)
 		{
@@ -266,8 +267,9 @@ public class V_SelectableItems3New : MonoBehaviour
 
 	private void ActivateUI(int index)
 	{
-		// Deactivate all UI elements
-		foreach (var uiElement in UI_ELEMENTS)
+        Debug.Log("ActivateUI");
+        // Deactivate all UI elements
+        foreach (var uiElement in UI_ELEMENTS)
 		{
 			uiElement.SetActive(false);
 		}
@@ -280,20 +282,21 @@ public class V_SelectableItems3New : MonoBehaviour
 			//Ink Activate
 			activateInk = true;
 
-            currentlySelected = true;
+            currentlySelected = false;
         }
 	}
 
 	private void DeActivateUI(int index)
 	{
-		currentlySelected = false;
+        Debug.Log("DeActivateUI");
 		// Deactivate all UI elements
 		foreach (var uiElement in UI_ELEMENTS)
 		{
 			uiElement.SetActive(false);
 			activateInk = false;
 		}
-	}
+        currentlySelected = true;
+    }
 
 
 }
