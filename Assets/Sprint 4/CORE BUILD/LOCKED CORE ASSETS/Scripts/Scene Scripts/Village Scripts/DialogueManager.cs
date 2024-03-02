@@ -55,25 +55,22 @@ public class DialogueManager : MonoBehaviour
                 EnterDialogueMode(currentInk);
                 }
         }
-        
-
-        
-        
-
-        
+  
     }
 
 
-
+    private string currentInkFileName = "";
     public void EnterDialogueMode(TextAsset inkJson)
     {
-        currentStory = new Ink.Runtime.Story(inkJson.text);
+        if (currentStory == null || currentInkFileName != inkJson.name)
+        {
+            currentStory = new Ink.Runtime.Story(inkJson.text);
+            currentInkFileName = inkJson.name; // Update the current ink file name
+        }
+
         isPlaying = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
-
-        
-
     }
 
     private void ExitDialogueMode()
@@ -81,6 +78,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        currentInkFileName = "";
     }
 
     private void ContinueStory()
