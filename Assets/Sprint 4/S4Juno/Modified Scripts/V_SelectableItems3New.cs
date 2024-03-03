@@ -39,22 +39,13 @@ public class V_SelectableItems3New : MonoBehaviour
 	[SerializeField] private bool hasSelected = false;
     [SerializeField] private bool movePointer = true;
 
-    //Camera Zoom Variables
-    public Camera mainCamera;
-	public float buildingZoomScale;
-	public float zoomTimeSeconds;
-	private float defaultCameraScale;
-	public bool zooming;
-	private float zoomScaleStart, zoomScaleGoal;
-	private float secondsPassed; // seconds passed since starting the lerp
-	private Vector3 cameraStartPosition;
-	private Vector3 cameraTargetPosition;
-	private bool isCenteringCamera;
+ 
 	private GameObject thisObject;
 
 	//UI Stuff
 	public Image fadeOutUIImage; // Reference to the UI Image
-	public float fadeSpeed = 0.5f;
+	public float fadeSpeed = 2f;
+    [SerializeField] public bool black = false;
 
 	//Inkle
 	public TextAsset CurrentInkTextAsset;
@@ -80,8 +71,6 @@ public class V_SelectableItems3New : MonoBehaviour
 
 
 		thisObject = gameObject;
-		defaultCameraScale = mainCamera.orthographicSize;
-		cameraStartPosition = mainCamera.transform.position;
 		CurrentInkTextAsset = InkScripts[0];
 		activateInk = false;
 	}
@@ -90,28 +79,7 @@ public class V_SelectableItems3New : MonoBehaviour
 	{
 
 		if (!movePointer) return;
-
-		if (zooming)
-		{
-			float t = Mathf.Clamp01(secondsPassed / zoomTimeSeconds); // Ensure t is between 0 and 1
-			mainCamera.orthographicSize = Mathf.Lerp(zoomScaleStart, zoomScaleGoal, t);
-
-			if (isCenteringCamera)
-			{
-				mainCamera.transform.position = Vector3.Lerp(cameraStartPosition, cameraTargetPosition, t);
-			}
-
-			secondsPassed += Time.deltaTime;
-
-			if (secondsPassed >= zoomTimeSeconds)
-			{
-				zooming = false;
-				isCenteringCamera = false;
-				StartCoroutine(FadeToClear());
-			}
-		}
-
-
+		
 
 	}
 
@@ -154,41 +122,15 @@ public class V_SelectableItems3New : MonoBehaviour
 		if (hasEntered)
 		{
 			hasEntered = false;
-			Vector3 temp = cameraStartPosition;
-			cameraStartPosition = cameraTargetPosition;
-			cameraTargetPosition = temp;
-			isCenteringCamera = true;
-			DefaultZoom();
-
 			StartCoroutine(FadeToBlack());
 			return;
 		};
 		hasEntered = true;
-
-		// Set target position for camera zoom
-		cameraTargetPosition = selectedBuilding.zoomPoint.position;
-		cameraStartPosition = mainCamera.transform.position;
-		isCenteringCamera = true;
-		Zoom(buildingZoomScale);
-
-		// UI Fading - Coroutine
 		StartCoroutine(FadeToBlack());
-		// Villager UI Appears
-		// Reset Camera
+
 	}
 
-	private void Zoom(float newScale)
-	{
-		zoomScaleStart = mainCamera.orthographicSize;
-		zoomScaleGoal = newScale;
-		secondsPassed = 0;
-		zooming = true;
-	}
 
-	private void DefaultZoom()
-	{
-		Zoom(defaultCameraScale);
-	}
 
 	private void itemSelected()
 	{
@@ -221,7 +163,8 @@ public class V_SelectableItems3New : MonoBehaviour
 
 	private IEnumerator FadeToBlack()
 	{
-		Color objectColor = fadeOutUIImage.color;
+        print("FadingToBlack");
+        Color objectColor = fadeOutUIImage.color;
 		float fadeAmount;
 
 		while (fadeOutUIImage.color.a < 1)
@@ -236,12 +179,15 @@ public class V_SelectableItems3New : MonoBehaviour
 		{
 			Loader.Load(Loader.Scene.Dungeon);
 		}
+		black = true;
 
-	}
+        StartCoroutine(FadeToClear());
+    }
 
 
 	private IEnumerator FadeToClear()
 	{
+		print("FadingToClear");
 		Color objectColor = fadeOutUIImage.color;
 		float fadeAmount;
 		if (hasEntered)
