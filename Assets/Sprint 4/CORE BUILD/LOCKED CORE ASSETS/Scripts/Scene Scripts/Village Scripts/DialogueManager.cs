@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
+    [SerializeField] private int currentChoiceIndex = -1;
 
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
@@ -45,10 +46,43 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
+        int previousChoiceIndex = currentChoiceIndex;
+
         //If Currently Selected and Input Space bar
-        if (isPlaying && Input.GetKeyDown(KeyCode.L))
+        if (isPlaying)
         {
-            ContinueStory();
+            // Check if there are any choices to navigate
+            if (currentStory.currentChoices.Count > 0)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    // Navigate up in the choices list
+                    currentChoiceIndex--;
+                    if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                    // Optionally, call a function to update the UI here
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    // Navigate down in the choices list
+                    currentChoiceIndex++;
+                    if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                    // Optionally, call a function to update the UI here
+                }
+
+                // Select a choice with the Enter key
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                {
+                    MakeChoice(currentChoiceIndex);
+                }
+            }
+            else
+            {
+                // If there are no choices, pressing Enter continues the story
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                {
+                    ContinueStory();
+                }
+            }
         }
 
 
@@ -78,12 +112,21 @@ public class DialogueManager : MonoBehaviour
     private string currentInkFileName = "";
     public void EnterDialogueMode(TextAsset inkJson)
     {
-        if (currentStory == null || currentInkFileName != inkJson.name)
-        {
-            currentStory = new Ink.Runtime.Story(inkJson.text);
-            currentInkFileName = inkJson.name; // Update the current ink file name
-        }
 
+        if (currentInkFileName == inkJson.name)
+        {
+
+            Debug.Log("RETURN");
+            // The story is already loaded and can continue, so just activate the UI
+            isPlaying = true;
+            dialoguePanel.SetActive(true);
+            // Optionally, update the UI here if needed (e.g., refresh choice buttons)
+            return; // Skip reinitializing the story
+        }
+        Debug.Log(" Not RETURN " + currentInkFileName + " Names " + inkJson.name);
+        // Load a new story or restart the current one
+        currentStory = new Ink.Runtime.Story(inkJson.text);
+        currentInkFileName = inkJson.name; // Update the current ink file name
         isPlaying = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
@@ -94,7 +137,6 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        currentInkFileName = "";
     }
 
     private void ContinueStory()
@@ -136,4 +178,39 @@ public class DialogueManager : MonoBehaviour
         }
 
     }
+
+    private void UpdateChoiceSelectionVisuals()
+    {
+        for (int i = 0; i < choices.Length; i++)
+        {
+            if (i == currentChoiceIndex)
+            {
+                // Highlight the current choice
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow; // Example of highlighting
+            }
+            else
+            {
+                // Revert other choices to their normal state
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.white; // Example of normal state
+            }
+        }
+    }
+
+    private void MakeChoice(int choiceIndex)
+    {
+        // Check if the choiceIndex is valid for the current choices
+        if (choiceIndex >= 0 && choiceIndex < currentStory.currentChoices.Count)
+        {
+            // Tell the story to choose the selected choice
+            currentStory.ChooseChoiceIndex(choiceIndex);
+
+            // Reset the choice index as we're moving to the next part of the story
+            currentChoiceIndex = -1;
+
+            // Continue the story after making a choice
+            ContinueStory();
+        }
+    }
+
+
 }
