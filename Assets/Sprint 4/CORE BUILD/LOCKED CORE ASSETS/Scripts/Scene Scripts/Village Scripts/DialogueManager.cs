@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private bool isPlaying;
     [SerializeField] V_SelectableItems3New selectableScript;
 
+    private string currentInkFileName = "";
     void Start()
     {
         isPlaying = false;
@@ -47,21 +48,21 @@ public class DialogueManager : MonoBehaviour
     public void Update()
     {
         int previousChoiceIndex = currentChoiceIndex;
-
+        UpdateChoiceSelectionVisuals();
         //If Currently Selected and Input Space bar
         if (isPlaying)
         {
             // Check if there are any choices to navigate
             if (currentStory.currentChoices.Count > 0)
             {
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     // Navigate up in the choices list
                     currentChoiceIndex--;
                     if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
                     // Optionally, call a function to update the UI here
                 }
-                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     // Navigate down in the choices list
                     currentChoiceIndex++;
@@ -88,6 +89,7 @@ public class DialogueManager : MonoBehaviour
 
         if (!selectableScript.activateInk)
         {
+            currentInkFileName = "";
             ExitDialogueMode();
         }
 
@@ -109,7 +111,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    private string currentInkFileName = "";
+    
     public void EnterDialogueMode(TextAsset inkJson)
     {
 
