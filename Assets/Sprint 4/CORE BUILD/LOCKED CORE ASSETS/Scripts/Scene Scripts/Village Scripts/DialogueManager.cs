@@ -7,12 +7,17 @@ using Ink.Runtime;
 
 public class DialogueManager : MonoBehaviour
 {
+
+    [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] public GameObject selectableItemsGameObject;
 
-    // Start is called before the first frame update
+    [Header("Choices UI")]
+    [SerializeField] private GameObject[] choices;
+    private TextMeshProUGUI[] choicesText;
 
+    // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
 
     private static DialogueManager instance;
@@ -25,6 +30,17 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
+
+        //Get all choices texts
+        choicesText = new TextMeshProUGUI[choices.Length];
+        int index = 0;
+        foreach( GameObject choice in choices)
+        {
+            choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
+            index++;
+        }
+
+
     }
 
     public void Update()
@@ -86,10 +102,38 @@ public class DialogueManager : MonoBehaviour
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
+
+            DisplayChoices();
         }
         else
         {
             ExitDialogueMode();
         }
+    }
+
+    private void DisplayChoices()
+    {
+        List<Ink.Runtime.Choice> currentChoices = currentStory.currentChoices;
+
+        if (currentChoices.Count > choices.Length)
+        {
+            Debug.LogError("More choices than UI can support");
+        }
+
+        //Enable Options
+        int index = 0;
+        foreach (Ink.Runtime.Choice choice in currentChoices)
+        {
+            choices[index].gameObject.SetActive(true);
+            choicesText[index].text = choice.text;
+            index++;
+        }
+
+        //Hide all other options
+        for (int i = index;  i < choices.Length; i++)
+        {
+            choices[i].gameObject.SetActive(false);
+        }
+
     }
 }

@@ -2355,7 +2355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &564863806
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2431,7 +2431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &570049259
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3343,6 +3343,10 @@ MonoBehaviour:
   dialoguePanel: {fileID: 564863805}
   dialogueText: {fileID: 406351828}
   selectableItemsGameObject: {fileID: 127951903}
+  choices:
+  - {fileID: 1046494621}
+  - {fileID: 570049258}
+  - {fileID: 1963582758}
   isPlaying: 0
   selectableScript: {fileID: 0}
 --- !u!1 &1022978294
@@ -3595,7 +3599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1046494622
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5604,7 +5608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1963582759
 RectTransform:
   m_ObjectHideFlags: 0
