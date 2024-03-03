@@ -27,6 +27,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] V_SelectableItems3New selectableScript;
 
     private string currentInkFileName = "";
+
+
+
+
     void Start()
     {
         isPlaying = false;
@@ -110,8 +114,6 @@ public class DialogueManager : MonoBehaviour
   
     }
 
-
-    
     public void EnterDialogueMode(TextAsset inkJson)
     {
 
