@@ -120,10 +120,10 @@ public class SBProtoSightModule : MonoBehaviour
         LookInDirection((lookTarget - transform.position).normalized);
     }
 
-    public Visibility GetVisibility(Vector2 position, float radius)
+    public bool CanSee(Vector2 position, float radius)
     {
         // Exit if player exceeds view distance
-        if (Vector2.Distance(transform.position, position) > visionRadius) return Visibility.None;
+        if (Vector2.Distance(transform.position, position) > visionRadius) return false;
 
         var perpendicular = Vector2.Perpendicular(position - (Vector2)transform.position).normalized;
         int count = 0;
@@ -134,19 +134,10 @@ public class SBProtoSightModule : MonoBehaviour
         if (CanSee(position + perpendicular * radius, shadowCasters)) count++;
         if (CanSee(position - perpendicular * radius, shadowCasters)) count++;
 
-        if (count >= 2) return Visibility.Full;
-        else if (count >= 1) return Visibility.Partial;
-        else return Visibility.None;
+        return count > 0;
     }
 
-    public Visibility GetTargetVisibility() => GetVisibility(target.position, targetRadius);
-
-    public enum Visibility
-    {
-        Full,
-        Partial,
-        None
-    }
+    public bool CanSeeTarget() => CanSee(target.position, targetRadius);
 
     public Vector3 DirFromAngle(float angleInDegrees)
     {

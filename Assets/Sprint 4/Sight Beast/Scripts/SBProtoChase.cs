@@ -37,9 +37,9 @@ public class SBProtoChase : StateBaseClass
 
     public override void On_Update()
     {
-        var visibility = _sight.GetTargetVisibility();
+        var seesTarget = _sight.CanSeeTarget();
         // Target not visable
-        if (visibility != SBProtoSightModule.Visibility.None)
+        if (seesTarget)
         {
             _lastSeenTime = Time.time;
         }
@@ -47,12 +47,11 @@ public class SBProtoChase : StateBaseClass
         // Fear Functionality
         if (_fear)
         {
-            _fear.AddFear(visibility != SBProtoSightModule.Visibility.None ? 0.8f : 0.3f);
+            _fear.AddFear(seesTarget ? 0.8f : 0.3f);
         }
 
         // Begin chase
-        if (visibility != SBProtoSightModule.Visibility.None
-            || _lastSeenTime + seeAroundWallsTime > Time.time)
+        if (seesTarget || _lastSeenTime + seeAroundWallsTime > Time.time)
         {
             // Move towards target
             _pathfinder.SetTarget(_sight.target.position);
@@ -62,7 +61,7 @@ public class SBProtoChase : StateBaseClass
         }
 
         // Look either at the player, or in the direction of motion
-        if (visibility != SBProtoSightModule.Visibility.None)
+        if (seesTarget)
         {
             _sight.LookAt(_sight.target.position);
         }

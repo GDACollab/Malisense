@@ -99,7 +99,7 @@ public class SBProtoPatrol : StateBaseClass
         _sight.LookInDirection(_pathfinder.direction);
 
         // Switch to alert state
-        if (_sight.GetTargetVisibility() != SBProtoSightModule.Visibility.None)
+        if (_sight.CanSeeTarget())
         {
             if(_lastSeenTime + alertDuration > Time.time)
             {

@@ -51,7 +51,7 @@ public class SBProtoAlert : StateBaseClass
             // Delay before investigating the sight
             _gracePeriodRemaining = Mathf.Max(_gracePeriodRemaining - Time.deltaTime, 0f);
 
-            if (_sight.GetTargetVisibility() != SBProtoSightModule.Visibility.None)
+            if (_sight.CanSeeTarget())
             {
                 _pathfinder.SetTarget(_sight.target.position);
             }
@@ -63,7 +63,7 @@ public class SBProtoAlert : StateBaseClass
             _pathfinder.acceleration = speed;
 
             // Make chase!
-            if (_sight.GetTargetVisibility() != SBProtoSightModule.Visibility.None)
+            if (_sight.CanSeeTarget())
             {
                 ExitToState(StateMachine_Updated.State.Chasing);
             }
