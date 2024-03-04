@@ -44,8 +44,7 @@ public class V_SelectableItems3New : MonoBehaviour
 
 	//UI Stuff
 	public Image fadeOutUIImage; // Reference to the UI Image
-	public float fadeSpeed = 2f;
-    [SerializeField] public bool black = false;
+    [SerializeField] public float fadeSpeed = 12f;
 
 	//Inkle
 	public TextAsset CurrentInkTextAsset;
@@ -179,7 +178,6 @@ public class V_SelectableItems3New : MonoBehaviour
 		{
 			Loader.Load(Loader.Scene.Dungeon);
 		}
-		black = true;
 
         StartCoroutine(FadeToClear());
     }
