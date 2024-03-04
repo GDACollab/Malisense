@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class soundBeast_noiseDetect : MonoBehaviour
 {
+    public StateMachine_Updated stateMachine;
+    private int soundCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        stateMachine = GetComponent<StateMachine_Updated>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //When the gameObject entes another gameObject with the 'isTrigger' in a collider2D turned on
@@ -26,7 +28,8 @@ public class soundBeast_noiseDetect : MonoBehaviour
         {
             // get the noise object and check that it has the noiseobject script
             scr_noiseObject noise = collision.GetComponent<scr_noiseObject>();
-            if (noise == null) {
+            if (noise == null)
+            {
                 Debug.LogError("ERROR: could not find scr_noiseObject in detected noise object \"" + collision.name + "\"");
                 return;
             }
@@ -35,13 +38,17 @@ public class soundBeast_noiseDetect : MonoBehaviour
             //check radius for noise level
             float loudness = noise.diameter;
             Vector2 noisePos = noise.transform.position;
-            if (noise.parent.tag == "Player") {
-                // INSERT FUNCTION CALL TO PASS OFF LOUDNESS AND NOISEPOS
-                //Debug.Log("\tloudness: " + loudness);
-                //Debug.Log("\tnoisepos: " + noisePos);
+            if (noise.parent.tag == "Player")
+            {
+                soundCount++;
+                if (soundCount == 1)
+                {
+                    stateMachine.switchState(stateMachine.Alert);
+                }
             }
 
 
         }
     }
 }
+

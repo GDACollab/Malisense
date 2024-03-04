@@ -31,10 +31,10 @@ public class StateMachine_Updated : MonoBehaviour
     void Start()
     {
         currentState = State.Patrolling;
-        switchState(State.Chasing);
+        initState(State.Chasing);
     }
 
-    void switchState(State newState)
+    private void initState(State newState)
     {
         currentState = newState;
 
@@ -55,14 +55,15 @@ public class StateMachine_Updated : MonoBehaviour
         }
     }
 
-    void Update()
-    { 
-        switch (currentState)
+    public void switchState(State newState)
+    {
+        switch (newState)
         {
             case State.Patrolling:
                 alertInit = false;
                 chaseInit = false;
-                if(!patrolInit){
+                if (!patrolInit)
+                {
                     patrol.Init();
                     patrolInit = true;
                 }
@@ -71,16 +72,18 @@ public class StateMachine_Updated : MonoBehaviour
             case State.Alert:
                 patrolInit = false;
                 chaseInit = false;
-                if(!alertInit){
+                if (!alertInit)
+                {
                     alert.Init();
                     alertInit = true;
                 }
-                if(alert != null) { alert.On_Update(); }
+                if (alert != null) { alert.On_Update(); }
                 break;
             case State.Chasing:
                 patrolInit = false;
                 alertInit = false;
-                if(!chaseInit){
+                if (!chaseInit)
+                {
                     chasing.Init();
                     chaseInit = true;
                 }
@@ -88,4 +91,10 @@ public class StateMachine_Updated : MonoBehaviour
                 break;
         }
     }
+
+    void Update()
+    {
+        switchState(currentState);
+    }
 }
+
