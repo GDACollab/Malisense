@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class WhisperingBellArtifact : MonoBehaviour
@@ -36,6 +37,14 @@ public class WhisperingBellArtifact : MonoBehaviour
         blockAction = true;
         
     }
+
+    // When using editor, clears all previous runtime values of the object
+    private void OnValidate()
+    {
+        WhisperingBell.duration = 0.0f;
+        WhisperingBell.cooldown = 0.0f;
+    }
+
 
     private void Start()
     {
