@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 6240276867591110056}
   - component: {fileID: -7031163867455105192}
   - component: {fileID: 7131271958413982425}
-  - component: {fileID: -7575367224278799894}
+  - component: {fileID: -111022995268608595}
+  - component: {fileID: 7479393718550146800}
   m_Layer: 0
   m_Name: Sound Enemy
   m_TagString: Enemy
@@ -184,7 +185,7 @@ MonoBehaviour:
   currentState: 0
   patrol: {fileID: 0}
   chasing: {fileID: 0}
-  alert: {fileID: -7575367224278799894}
+  alert: {fileID: -111022995268608595}
 --- !u!114 &7131271958413982425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   machine: {fileID: -7031163867455105192}
---- !u!114 &-7575367224278799894
+--- !u!114 &-111022995268608595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,14 +208,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 5829510989317764509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 233e74ab3adc24f98ad4a07b06bc91a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 77eae76a95f8e9d449bc8bfea1d77cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 100
-  nextWaypointDistance: 1
-  circleRadius: 1
-  GFX: {fileID: 4525005867879534864}
+  detectionRadius: 10
+  circleRadius: 3
+  circleTime: 3
+  machine: {fileID: -7031163867455105192}
+  pathUpdateRate: 0.5
+--- !u!114 &7479393718550146800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5829510989317764509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7cc0338579c4f47af03c20d29da5df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8079039715885045378
 GameObject:
   m_ObjectHideFlags: 0
