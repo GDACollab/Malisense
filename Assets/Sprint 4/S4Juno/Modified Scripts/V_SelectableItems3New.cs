@@ -9,7 +9,6 @@ using Ink.Runtime;      // Make sure you have this using directive for Ink scrip
 public class Building
 {
 	public GameObject light;
-	public Transform zoomPoint;
 }
 
 public class V_SelectableItems3New : MonoBehaviour
