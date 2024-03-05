@@ -13,20 +13,18 @@ public class Building
 
 public class V_SelectableItems3New : MonoBehaviour
 {
-	
-	[Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
 
+    //Building Selection
+    enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
+    [Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
 	[Tooltip("0: Scholar, 1: Custodian, 3: Crypt Keeper, 4: Church, 5: Mayor")]
 	[SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
-
-	enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
 	[Tooltip("Determines which building is selected at the start of the scene.")]
 	[SerializeField] Buildings initialSelectedBuilding;
-
 	int selectedBuildingIndex;
 	Building selectedBuilding;
-
-
+	
+	//TMP Variables
 	[Header("Temp Playtest Variables")]
 	public GameObject dungeonMessage;
 
@@ -37,8 +35,6 @@ public class V_SelectableItems3New : MonoBehaviour
 	[SerializeField] public bool hasEntered = false;
 	[SerializeField] private bool hasSelected = false;
     [SerializeField] private bool movePointer = true;
-
- 
 	private GameObject thisObject;
 
 	//UI Stuff
@@ -75,10 +71,7 @@ public class V_SelectableItems3New : MonoBehaviour
 
 	private void Update()
 	{
-
 		if (!movePointer) return;
-		
-
 	}
 
 	public void moveInList(int move)
@@ -99,7 +92,7 @@ public class V_SelectableItems3New : MonoBehaviour
 		CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
 
 		itemSelected();
-	}
+	}//NEEDS TO BE UPDATED FOR InputAction
 
 	public void selectObject()
 	{
@@ -126,9 +119,7 @@ public class V_SelectableItems3New : MonoBehaviour
 		hasEntered = true;
 		StartCoroutine(FadeToBlack());
 
-	}
-
-
+	} 
 
 	private void itemSelected()
 	{
@@ -145,7 +136,7 @@ public class V_SelectableItems3New : MonoBehaviour
 		}
 
 		dungeonMessage.SetActive(selectedBuildingIndex == 2);
-	}
+	}//Turns on Light 
 
 	private void ifSelected()
 	{
@@ -157,10 +148,9 @@ public class V_SelectableItems3New : MonoBehaviour
 		{
 			currentlySelected = false;
 		}
-	}
-
-	private IEnumerator FadeToBlack()
-	{
+	} //Checks ifSelected
+	private IEnumerator FadeToBlack() //Coroutine Function
+    {
         print("FadingToBlack");
         Color objectColor = fadeOutUIImage.color;
 		float fadeAmount;
@@ -181,9 +171,8 @@ public class V_SelectableItems3New : MonoBehaviour
         StartCoroutine(FadeToClear());
     }
 
-
-	private IEnumerator FadeToClear()
-	{
+	private IEnumerator FadeToClear() //Coroutine Function
+    {
 		print("FadingToClear");
 		Color objectColor = fadeOutUIImage.color;
 		float fadeAmount;
@@ -208,7 +197,7 @@ public class V_SelectableItems3New : MonoBehaviour
 		hasSelected = false;
 	}
 
-	private void ActivateUI(int index)
+	private void ActivateUI(int index) //Activates UI Function
 	{
         Debug.Log("ActivateUI");
         // Deactivate all UI elements
@@ -229,8 +218,8 @@ public class V_SelectableItems3New : MonoBehaviour
         }
 	}
 
-	private void DeActivateUI(int index)
-	{
+	private void DeActivateUI(int index)  //Deactivates UI Function
+    {
         Debug.Log("DeActivateUI");
 		// Deactivate all UI elements
 		foreach (var uiElement in UI_ELEMENTS)
