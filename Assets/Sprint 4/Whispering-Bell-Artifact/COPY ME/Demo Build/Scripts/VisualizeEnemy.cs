@@ -18,7 +18,7 @@ public class VisualizeEnemy : MonoBehaviour
         Transform targetEnemy = transform.parent;
         wbTime += Time.deltaTime;
         Vector3 targetPos = targetEnemy.position + Vector3.up;
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 5f);
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 3f);
         if (wbTime >= wbDuration) Destroy(gameObject);
     }
 }

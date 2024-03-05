@@ -98,7 +98,7 @@ public class Hotbar : MonoBehaviour
     public void OnUseArtifact()
     {
         if (inventory.carriedObject) return;
-        Debug.Log("Artifact activated");
+        
         Use(inventory.currentArtifact);
     }
 
