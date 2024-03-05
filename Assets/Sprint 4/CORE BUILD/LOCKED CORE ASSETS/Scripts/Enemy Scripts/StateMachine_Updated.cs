@@ -18,72 +18,54 @@ public class StateMachine_Updated : MonoBehaviour
         Chasing
     }
 
+    // Tracks which state the monster is in or is about to switch to
     public State currentState;
+
+    // Tracks the last state that Init was called on
+    private State lastState;
 
     public StateBaseClass patrol;
     public StateBaseClass chasing;
     public StateBaseClass alert;
 
-    private bool alertInit = false;
-    private bool patrolInit = false;
-    private bool chaseInit = false;
-
     void Start()
     {
-        currentState = State.Patrolling;
-        switchState(State.Chasing);
+        switchState(currentState);
     }
 
     public void switchState(State newState)
     {
         currentState = newState;
+        lastState = newState;
 
         switch (newState)
         {
             case State.Patrolling:
                 patrol.Init();
-                patrolInit = true;
                 break;
             case State.Alert:
                 alert.Init();
-                alertInit = true;
                 break;
             case State.Chasing:
                 chasing.Init();
-                chaseInit = true;
                 break;
         }
     }
 
     void Update()
-    { 
+    {
+        if (lastState != currentState)
+            switchState(currentState);
+
         switch (currentState)
         {
             case State.Patrolling:
-                alertInit = false;
-                chaseInit = false;
-                if(!patrolInit){
-                    patrol.Init();
-                    patrolInit = true;
-                }
                 if (patrol != null) { patrol.On_Update(); }
                 break;
             case State.Alert:
-                patrolInit = false;
-                chaseInit = false;
-                if(!alertInit){
-                    alert.Init();
-                    alertInit = true;
-                }
                 if(alert != null) { alert.On_Update(); }
                 break;
             case State.Chasing:
-                patrolInit = false;
-                alertInit = false;
-                if(!chaseInit){
-                    chasing.Init();
-                    chaseInit = true;
-                }
                 if (chasing != null) { chasing.On_Update(); }
                 break;
         }
