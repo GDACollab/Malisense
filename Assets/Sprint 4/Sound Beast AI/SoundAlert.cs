@@ -28,14 +28,16 @@ public class SoundAlert : StateBaseClass
         isCircling = false;
 
         // Start pathfinding to player's position
+    
         aiPath.destination = player.position;
+        aiPath.SearchPath();
     }
 
 
 
     public override void On_Update()
     {
-        if (!isCircling && aiPath.reachedEndOfPath)
+        if (!aiPath.pathPending && !isCircling && aiPath.reachedEndOfPath)
         {
             // Start circling around player's position
             isCircling = true;
@@ -44,7 +46,7 @@ public class SoundAlert : StateBaseClass
             angle = 0;
         }
 
-        if (isCircling)
+        if (!aiPath.pathPending && isCircling)
         {
             // Check for circling time
             if (Time.time - circleStartTime > circleTime)
@@ -73,11 +75,12 @@ public class SoundAlert : StateBaseClass
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("NoiseObject") && isCircling)
+        if (collision.tag == "NoiseObject" && !aiPath.pathPending && isCircling)
         {
             // Switch to chase state
+            isCircling = false;
             machine.switchState(StateMachine_Improved.State.Chasing);
         }
     }
