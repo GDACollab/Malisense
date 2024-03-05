@@ -98,7 +98,7 @@ public class Hotbar : MonoBehaviour
     public void OnUseArtifact()
     {
         if (inventory.carriedObject) return;
-
+        
         Use(inventory.currentArtifact);
     }
 

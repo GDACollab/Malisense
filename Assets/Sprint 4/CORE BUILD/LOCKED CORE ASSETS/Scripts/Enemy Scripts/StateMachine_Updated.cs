@@ -33,7 +33,7 @@ public class StateMachine_Updated : MonoBehaviour
         switchState(currentState);
     }
 
-    void switchState(State newState)
+    public void switchState(State newState)
     {
         currentState = newState;
         lastState = newState;

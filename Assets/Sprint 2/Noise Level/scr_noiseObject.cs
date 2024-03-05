@@ -13,6 +13,7 @@ public class scr_noiseObject : MonoBehaviour
     //To change it back, set the color to see-through again! (ie A = 0)
 
     public Transform self;
+    public GameObject parent; // used by noise detectors to determine what made the sound
     public float growthTime = 0.25f; //Time to grow to max
     public float deathTime = 0; //Time to fade into deletion after hitting max
     public float diameter = 4;
