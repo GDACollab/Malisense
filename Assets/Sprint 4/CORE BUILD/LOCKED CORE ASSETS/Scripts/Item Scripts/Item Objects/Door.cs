@@ -15,4 +15,14 @@ public class Door : MonoBehaviour
     {
         
     }
+
+    void OnDisable()
+    {
+        var collider = GetComponent<Collider2D>();
+        var astar = FindObjectOfType<AstarPath>();
+        if (collider && astar)
+        {
+            astar.UpdateGraphs(collider.bounds);
+        }
+    }
 }
