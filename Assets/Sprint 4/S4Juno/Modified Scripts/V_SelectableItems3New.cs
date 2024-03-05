@@ -5,27 +5,20 @@ using UnityEngine.UI;
 using TMPro;			// If needed
 using Ink.Runtime;      // Make sure you have this using directive for Ink script
 
-[System.Serializable]		// this lets me fill in the following two fields in the inspector
-public class Building
-{
-	public GameObject light;
-	public Transform zoomPoint;
-}
-
 public class V_SelectableItems3New : MonoBehaviour
 {
 	
 	[Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
 
 	[Tooltip("0: Scholar, 1: Custodian, 3: Crypt Keeper, 4: Church, 5: Mayor")]
-	[SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
+	[SerializeField] GameObject[] buildingLights = new GameObject[5];        // we know that there's only going to be 5 buildings, so we can use an array
 
 	enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
 	[Tooltip("Determines which building is selected at the start of the scene.")]
 	[SerializeField] Buildings initialSelectedBuilding;
 
 	int selectedBuildingIndex;
-	Building selectedBuilding;
+	GameObject selectedBuildingLight;
 
 
 	[Header("Temp Playtest Variables")]
@@ -54,19 +47,19 @@ public class V_SelectableItems3New : MonoBehaviour
 	{
 		// Building Selection:
 		// Turn off every building's light
-		foreach (Building building in buildings)
+		foreach (GameObject light in buildingLights)
 		{
-			building.light.SetActive(false);
+			light.SetActive(false);
 		}
 
 		// Set selectedBuildingIndex to the index of the building that's initially selected at the start of the scene
 		selectedBuildingIndex = (int)initialSelectedBuilding;
 
-		// Set selectedBuilding to the building associated with selectedBuildingIndex
-		selectedBuilding = buildings[selectedBuildingIndex];
+		// Set selectedBuildingLight to the building light associated with selectedBuildingIndex
+		selectedBuildingLight = buildingLights[selectedBuildingIndex];
 
 		// Turn on the light of the selected building 
-		buildings[selectedBuildingIndex].light.SetActive(true);
+		buildingLights[selectedBuildingIndex].SetActive(true);
 
 
 		thisObject = gameObject;
@@ -89,14 +82,14 @@ public class V_SelectableItems3New : MonoBehaviour
 		selectedBuildingIndex += move;
 		if (selectedBuildingIndex < 0)
 		{
-			selectedBuildingIndex = buildings.Length - 1;
+			selectedBuildingIndex = buildingLights.Length - 1;
 		}
-		else if (selectedBuildingIndex >= buildings.Length)
+		else if (selectedBuildingIndex >= buildingLights.Length)
 		{
 			selectedBuildingIndex = 0;
 		}
 
-		selectedBuilding = buildings[selectedBuildingIndex];
+		selectedBuildingLight = buildingLights[selectedBuildingIndex];
 		CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
 
 		itemSelected();
@@ -112,7 +105,7 @@ public class V_SelectableItems3New : MonoBehaviour
 		{
 			hasSelected = true;
 		}
-		if (selectedBuilding == null)
+		if (selectedBuildingLight == null)
 		{
 			Debug.LogError("No selected GameObject.");
 			return;
@@ -134,14 +127,14 @@ public class V_SelectableItems3New : MonoBehaviour
 	private void itemSelected()
 	{
 		// Turn on the light of the building that's selected
-		selectedBuilding.light.SetActive(true);
+		selectedBuildingLight.SetActive(true);
 
 		// Turn off the lights of all the other buildings
-		foreach (Building building in buildings)
+		foreach (GameObject light in buildingLights)
 		{
-			if (building != selectedBuilding)
+			if (light != selectedBuildingLight)
 			{
-				building.light.SetActive(false);
+				light.SetActive(false);
 			}
 		}
 
