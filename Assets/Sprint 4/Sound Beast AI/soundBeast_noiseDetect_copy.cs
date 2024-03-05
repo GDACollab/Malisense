@@ -28,7 +28,6 @@ public class soundBeast_noiseDetect_copy : MonoBehaviour
             float loudness = noise.diameter;
             Vector2 noisePos = noise.transform.position;
             if (noise.parent.tag == "Player") {
-                // Pass the noise position to the Sound_Alert script
                 machine.switchState(StateMachine_Improved.State.Alert);
             }
         }

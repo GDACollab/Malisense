@@ -4,15 +4,13 @@ using Unity.VisualScripting;
 
 public class SoundAlert : StateBaseClass
 {
-    public float detectionRadius = 10f;
     public float circleRadius = 3f;
     public float circleTime = 3f; // Time to circle around the player's position
     public StateMachine_Improved machine;
-    public float pathUpdateRate = 0.5f;     // Time between pathfinder updates
 
     private Transform player;
     private AIPath aiPath;
-    private bool isCircling = false;
+    public bool isCircling = false;
     private float circleStartTime;
     private Vector3 circleCenter;
     //get the noisePos variable from the soundBeast_noiseDetect_copy script and use it to pass the noise position to the Sound_Alert script
@@ -46,17 +44,24 @@ public class SoundAlert : StateBaseClass
             {
                 // Stop circling
                 isCircling = false;
-                aiPath.destination = transform.position; // Stop moving
                 machine.switchState(StateMachine_Improved.State.Patrolling);
             }
+            /*
+             * THIS CODE DOES NOT WORK AS INTENDED BUT ITS PLACEHOLDER FOR THE 
+             * CIRCLE AROUND PLAYER FUNCTIONALITY
+             * 
+             * You can uncomment this code to test
             else
             {
-                // Circle around player's position
+                //rotate in place
+
                 float angle = (Time.time - circleStartTime) * aiPath.maxSpeed; // Adjust speed of circling
                 float x = Mathf.Cos(angle) * circleRadius + circleCenter.x;
                 float z = Mathf.Sin(angle) * circleRadius + circleCenter.z;
                 transform.position = new Vector3(x, transform.position.y, z);
+
             }
+            */
         }
     }
 
