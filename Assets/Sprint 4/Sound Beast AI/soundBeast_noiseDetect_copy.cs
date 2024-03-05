@@ -29,6 +29,7 @@ public class soundBeast_noiseDetect_copy : MonoBehaviour
             Vector2 noisePos = noise.transform.position;
             if (noise.parent.tag == "Player") {
                 machine.switchState(StateMachine_Improved.State.Alert);
+                //machine.switchState(StateMachine_Improved.State.Patrolling);
             }
         }
     }
