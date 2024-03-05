@@ -34,7 +34,7 @@ public class StateMachine_Updated : MonoBehaviour
         switchState(State.Chasing);
     }
 
-    void switchState(State newState)
+    public void switchState(State newState)
     {
         currentState = newState;
 
