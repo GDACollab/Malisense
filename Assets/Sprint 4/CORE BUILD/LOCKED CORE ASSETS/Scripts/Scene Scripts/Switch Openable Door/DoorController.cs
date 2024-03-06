@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {    
+    [SerializeField] private bool startOpen = false;
     public GameObject door;
     public GameObject[] switches;
 
@@ -13,7 +14,8 @@ public class DoorController : MonoBehaviour
     void Start()
     {
         // Ensure that the door is initially closed
-        CloseDoor();
+        door = this.gameObject;
+        SetDoor(startOpen);
     }
 
     // Update is called once per frame
@@ -46,6 +48,15 @@ public class DoorController : MonoBehaviour
                 // Increase the count of activated switches
                 activatedSwitchCount++;
             }
+        }
+    }
+    
+    private void SetDoor(bool open){
+        if(open){
+            OpenDoor();
+        }
+        else{
+            CloseDoor();
         }
     }
 
