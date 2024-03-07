@@ -3601,6 +3601,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3248422126335376348, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
+      propertyPath: m_text
+      value: Body
+      objectReference: {fileID: 0}
     - target: {fileID: 3444066053626379293, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3618,6 +3622,10 @@ PrefabInstance:
       value: 'SPACE to Close
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715207656275581018, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
+      propertyPath: m_text
+      value: Title
       objectReference: {fileID: 0}
     - target: {fileID: 5715207656275581018, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
       propertyPath: m_enableAutoSizing
@@ -3749,7 +3757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8770773230272596809, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8865079879753463004, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3773,7 +3781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9009247797260257241, guid: 389d9703992d70a4da77b0b4d87dd969, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -250,8 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   intensity: 0.699
-  radius: 30
-  innerRadius: 5
+  radius: 15
+  innerRadius: 4
   wallLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.5
+  radius: 0.75
   height: 2
   canMove: 1
   maxSpeed: 1
@@ -332,7 +332,7 @@ MonoBehaviour:
   repathRateCompatibility: NaN
   canSearchCompability: 0
   orientation: 1
-  enableRotation: 1
+  enableRotation: 0
   autoRepath:
     mode: 2
     interval: 0.5
@@ -365,7 +365,7 @@ MonoBehaviour:
   speed: 200
   nextWaypointDistance: 3
   pathUpdateRate: 0.5
-  GFX: {fileID: 6478435864062710483}
+  GFX: {fileID: 123062008065344346}
   reachedEndOfPath: 0
 --- !u!114 &565101980152854720
 MonoBehaviour:

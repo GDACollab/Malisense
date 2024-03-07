@@ -8,6 +8,8 @@ using Pathfinding;
 [RequireComponent(typeof(PatrolPath))]
 public class soundBeast_noiseDetect_copy : StateBaseClass
 {
+    // ### PLEASE FIX SCRIPT AFTER VS ###
+    
     public StateMachine_Improved machine;
     public PatrolPath patrolPath;
     private AIPath aiPath;

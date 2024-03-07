@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7766653828464704798}
   - component: {fileID: 7036378875398640745}
   - component: {fileID: 8668597487598958490}
+  - component: {fileID: -6985141994639194260}
   - component: {fileID: 2279670278616363904}
   - component: {fileID: 7315903718944372396}
   - component: {fileID: 5559615288276582193}
@@ -148,6 +149,9 @@ MonoBehaviour:
   minimumToSprint: 0.25
   objectSlowdownRatio: 0.4
   newInventory: {fileID: 0}
+  NoiseFrequency: 0.2
+  walkLoudness: 3
+  sprintLoudness: 12
   StaminaBar: {fileID: 0}
   isMoving: 0
   isSprinting: 0
@@ -199,6 +203,19 @@ MonoBehaviour:
   inventory: []
   carriedObject: {fileID: 0}
   currentArtifact: {fileID: 0}
+--- !u!114 &-6985141994639194260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6277540497783236804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071e70b1942a4324ab733d4204e6f4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseObject: {fileID: 0}
 --- !u!114 &2279670278616363904
 MonoBehaviour:
   m_ObjectHideFlags: 0
