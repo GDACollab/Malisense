@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -31,7 +32,16 @@ public class Player : MonoBehaviour
     [Header("Inventory")]
     [Tooltip("Percentage of speed reduction while carrying an object")][SerializeField] float objectSlowdownRatio = 0.4f;
     [HideInInspector] public InventoryBase newInventory;
-
+    
+    // Sound 
+    [Header("Sound")]
+    [SerializeField] float NoiseFrequency = 0.2f;
+    [SerializeField] float walkLoudness = 3f;
+    [SerializeField] float sprintLoudness = 12f;
+    //public float sneakLoudness;
+    private float timeCheck = 0;
+    private scr_noise noiseSystem;
+    
     // Maybe Seperate UI Script?
     // UI Elements
     [Header("UI Elements")]
@@ -46,10 +56,13 @@ public class Player : MonoBehaviour
     // Stamina States
     [HideInInspector] public bool isExhausted = false; // makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
     bool isReading = false;
-
+    
+    // Player Sprite
+    private SpriteRenderer playerSprite;
     // Input System
     private PlayerInput playerInput;
-    private InputAction moveAction, sprintAction, sneakAction, hideMessage, setEnemies, interactAction, setDownAction;
+    private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
+    private InputAction hideMessage, setEnemies, hideFootsteps;
     // Rigid Body and interaction variables
     private Rigidbody2D rb;
     private Transform interactBody;
@@ -62,8 +75,6 @@ public class Player : MonoBehaviour
         moveAction = playerInput.actions.FindAction("8 Directions Movement");
         sprintAction = playerInput.actions.FindAction("Sprint");
         sneakAction = playerInput.actions.FindAction("Sneak");
-        hideMessage = playerInput.actions.FindAction("Hide Message");
-        setEnemies = playerInput.actions.FindAction("Set Enemies");
         interactAction = playerInput.actions.FindAction("Interact");
         setDownAction = playerInput.actions.FindAction("SetDown");
 
@@ -79,7 +90,18 @@ public class Player : MonoBehaviour
 
         // Get inventory
         newInventory = GetComponent<InventoryBase>();
-
+        
+        // Get sound object
+        noiseSystem = GetComponent<scr_noise>();
+        
+        // Get player sprite
+        playerSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        
+        // Get temp input options
+        hideMessage = playerInput.actions.FindAction("Hide Message");
+        setEnemies = playerInput.actions.FindAction("Set Enemies");
+        hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
+        
         // Get the enemies to deactivate
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
@@ -97,6 +119,7 @@ public class Player : MonoBehaviour
         {
             StaminaManager();
             InventoryManager();
+            SoundManager();
         }
     }
 
@@ -126,6 +149,10 @@ public class Player : MonoBehaviour
                 enemy.SetActive(!enemy.activeSelf);
             }
         }
+        if (hideFootsteps.triggered)
+        {
+            noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled = !noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled;
+        }
     }
 
     private void BasicMovement()
@@ -144,7 +171,15 @@ public class Player : MonoBehaviour
                 isMoving = true;
             else
                 isMoving = false;
-
+            
+            // Flip Sprite
+            if(moveX > 0){
+                playerSprite.flipX = true;
+            }
+            else if(moveX < 0){
+                playerSprite.flipX = false;
+            }
+            
             // Rotation
             if (direction.magnitude > 0)
                 interactBody.up = direction;
@@ -238,15 +273,15 @@ public class Player : MonoBehaviour
             newInventory.carriedObject.transform.rotation = interactBody.transform.rotation;
         }
 
-        if (setDownAction.ReadValue<float>() > 0f)
-        {
-            if (newInventory.carriedObject)
-            {
-                newInventory.carriedObject.transform.parent = null;
-                newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
-                newInventory.carriedObject = null;
-            }
-        }
+        // if (setDownAction.ReadValue<float>() > 0f)
+        // {
+        //     if (newInventory.carriedObject)
+        //     {
+        //         newInventory.carriedObject.transform.parent = null;
+        //         newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        //         newInventory.carriedObject = null;
+        //     }
+        // }
     }
 
     private void InteractionManager()
@@ -319,6 +354,26 @@ public class Player : MonoBehaviour
             newInventory.carriedObject.transform.parent = null;
             newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
             newInventory.carriedObject = null;
+        }
+    }
+    
+    private void SoundManager(){
+        if (isMoving) //When the player is moving
+        {
+            timeCheck += Time.deltaTime; //increment time
+            while (timeCheck >= NoiseFrequency) //When enough time has passed
+            {                                   //(and repetition if there has been too much lag)
+                float size = walkLoudness; // Decide size of noiceObject based on current state
+                if (isSprinting) { size = sprintLoudness; }
+                //else if(player.GetComponent<PlayerControl>().isSneaking) { size = sneakLoudness; }
+                noiseSystem.MakeSound(transform.position,size); //Send command to create sound object
+                timeCheck -= NoiseFrequency; //decrement timeCheck to prevent infinite loop!
+            }
+        }
+        else //When not moving
+        {
+            //Make sure time is increased such that when the player moves again, they instantly make sound
+            timeCheck = Mathf.Min(NoiseFrequency, timeCheck += Time.deltaTime);
         }
     }
 }

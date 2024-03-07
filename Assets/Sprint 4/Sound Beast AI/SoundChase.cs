@@ -11,7 +11,7 @@ public class SoundChase : StateBaseClass
     public float nextWaypointDistance = 3f; // How close an enemy needs to be to the waypoint to move on to next one
     public float pathUpdateRate = 0.5f;     // Time between pathfinder updates
 
-    public Transform GFX;
+    public SpriteRenderer GFX;
 
     Path path;
     int currentWaypoint = 0;
@@ -22,8 +22,10 @@ public class SoundChase : StateBaseClass
 
     public override void Init()
     {
+        target = GameObject.FindWithTag("Player").transform;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        GFX = GetComponentInChildren<SpriteRenderer>();
 
         // Update pathfinding
         InvokeRepeating("UpdatePath",   // Method name
@@ -76,20 +78,20 @@ public class SoundChase : StateBaseClass
         }
         
         // Rotation
-        float angle = Vector2.SignedAngle(Vector2.right, direction) - 90;
-        if (direction.magnitude > 0)
-            rb.MoveRotation(angle);
+        // float angle = Vector2.SignedAngle(Vector2.right, direction) - 90;
+        // if (direction.magnitude > 0)
+        //     rb.MoveRotation(angle);
 
         // ----- Flip Sprite -----
         // Flip left
         if (force.x >= 0.01f)
         {
-            GFX.localScale = new Vector3(-1f, 1f, 1f);
+            GFX.flipX = true;
         }
         // Flip right
         else if (force.x <= -0.01f)
         {
-            GFX.localScale = new Vector3(1f, 1f, 1f);
+            GFX.flipX = false;
         }
     }
 }

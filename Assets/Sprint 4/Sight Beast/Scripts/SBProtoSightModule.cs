@@ -49,6 +49,7 @@ public class SBProtoSightModule : MonoBehaviour
         _stateMachine = GetComponent<StateMachine_Updated>();
         visionArcMargin = visionLight.pointLightOuterAngle / visionLight.pointLightInnerAngle;
         smoothedVisionArcSize = visionArcSize;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     bool FasterLineSegmentIntersection(Vector2 fromA, Vector2 toA, Vector2 fromB, Vector2 toB)

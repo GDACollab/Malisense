@@ -24,6 +24,10 @@ public class FearSource : MonoBehaviour
     [Tooltip("Indicates the layers that count as blocking line of sight.")]
     public LayerMask wallLayers = -1;
 
+    private void Start() {
+        target = GameObject.FindWithTag("Player").GetComponent<FearTracker>();
+    }
+
     private bool CanSee(Vector2 point)
     {
         var hit = Physics2D.Raycast(

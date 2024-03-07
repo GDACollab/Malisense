@@ -42,15 +42,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Hide Message",
-                    "type": "Value",
-                    "id": "040a405d-7375-4406-93a7-28b93e745851",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "SetDown",
                     "type": "Button",
                     "id": "d8315170-1e34-4c4e-b04e-4f5d69e9bcf9",
@@ -69,9 +60,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Hide Message",
+                    "type": "Value",
+                    "id": "040a405d-7375-4406-93a7-28b93e745851",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Set Enemies",
                     "type": "Button",
                     "id": "c59d6e9d-6fd3-4710-90dd-f1ee2edca410",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hide Footsteps",
+                    "type": "Button",
+                    "id": "8fe56df9-2d06-4a13-92de-d0a7d673c200",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -312,28 +321,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8d97587b-b3e4-4d7c-8abf-e855313e6ba0",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Hide Message",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "08a2d6db-3811-4f8f-aeb7-8d8ffb268cc4",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Hide Message",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "00b306b9-a6c4-41e3-8fb4-e7c2fe2e8dac",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -395,6 +382,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Set Enemies",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d97587b-b3e4-4d7c-8abf-e855313e6ba0",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hide Message",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08a2d6db-3811-4f8f-aeb7-8d8ffb268cc4",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hide Message",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "471a1288-151f-4c87-86b4-99441fe6f300",
+                    "path": "<Keyboard>/quote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hide Footsteps",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -639,7 +659,7 @@
                 {
                     "name": "",
                     "id": "d576140a-4210-4ebe-9b19-736a99bbf0db",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

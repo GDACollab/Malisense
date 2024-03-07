@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 835094824901037287}
   - component: {fileID: 3581816680611174912}
   - component: {fileID: 1124996451519182383}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Noise Object
   m_TagString: NoiseObject
   m_Icon: {fileID: 0}
@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   self: {fileID: 8713269884549721177}
+  parent: {fileID: 0}
   growthTime: 0.25
   deathTime: 0.05
   diameter: 4
