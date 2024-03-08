@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Ink.Runtime;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -28,11 +29,17 @@ public class DialogueManager : MonoBehaviour
 
     private string currentInkFileName = "";
 
-
+    PlayerInput playerInput;
+    InputAction moveAction;
+    InputAction selectAction;
 
 
     void Start()
     {
+        playerInput = FindFirstObjectByType<PlayerInput>().GetComponent<PlayerInput>();
+        moveAction = playerInput.actions.FindAction("8 Directions Movement");
+        selectAction = playerInput.actions.FindAction("Interact");
+
         isPlaying = false;
         dialoguePanel.SetActive(false);
         selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
@@ -40,13 +47,11 @@ public class DialogueManager : MonoBehaviour
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
-        foreach( GameObject choice in choices)
+        foreach (GameObject choice in choices)
         {
             choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
-
-
     }
 
     public void Update()
@@ -59,14 +64,14 @@ public class DialogueManager : MonoBehaviour
             // Check if there are any choices to navigate
             if (currentStory.currentChoices.Count > 0)
             {
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered)
                 {
                     // Navigate up in the choices list
                     currentChoiceIndex--;
                     if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
                     // Optionally, call a function to update the UI here
                 }
-                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                else if (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered)
                 {
                     // Navigate down in the choices list
                     currentChoiceIndex++;
@@ -75,7 +80,7 @@ public class DialogueManager : MonoBehaviour
                 }
 
                 // Select a choice with the Enter key
-                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                if (selectAction.triggered)
                 {
                     MakeChoice(currentChoiceIndex);
                 }
@@ -83,7 +88,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 // If there are no choices, pressing Enter continues the story
-                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                if (selectAction.triggered)
                 {
                     ContinueStory();
                 }
@@ -94,24 +99,24 @@ public class DialogueManager : MonoBehaviour
         if (!selectableScript.activateInk)
         {
             currentInkFileName = "";
-            ExitDialogueMode();
+            ClearDialogueMode();
         }
 
         if (isPlaying)
         {
             return;
         }
-        
+
         if (selectableScript != null && selectableScript.activateInk)
         {
-                TextAsset currentInk = selectableScript.CurrentInkTextAsset;
-                // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
-                if (currentInk != null)
-                {
+            TextAsset currentInk = selectableScript.CurrentInkTextAsset;
+            // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
+            if (currentInk != null)
+            {
                 EnterDialogueMode(currentInk);
-                }
+            }
         }
-  
+
     }
 
     public void EnterDialogueMode(TextAsset inkJson)
@@ -137,6 +142,14 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void ExitDialogueMode()
+    {
+        isPlaying = false;
+        dialoguePanel.SetActive(false);
+        dialogueText.text = "";
+        selectableScript.selectObject();
+    }
+
+    private void ClearDialogueMode()
     {
         isPlaying = false;
         dialoguePanel.SetActive(false);
@@ -176,11 +189,11 @@ public class DialogueManager : MonoBehaviour
         }
 
         //Hide all other options
-        for (int i = index;  i < choices.Length; i++)
+        for (int i = index; i < choices.Length; i++)
         {
             choices[i].gameObject.SetActive(false);
         }
-
+        currentChoiceIndex = 0;
     }
 
     private void UpdateChoiceSelectionVisuals()
