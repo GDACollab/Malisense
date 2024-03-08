@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class LampController : MonoBehaviour
 {
@@ -20,14 +21,14 @@ public class LampController : MonoBehaviour
     public void TurnOn()
     {
         // Activate the "Light" and "Volumetric" objects
-        lightObject.SetActive(true);
-        volumetricObject.SetActive(true);
+        lightObject.GetComponent<Light2D>().enabled = true;
+        volumetricObject.GetComponent<Light2D>().enabled = true;
     }
 
     public void TurnOff()
     {
         // Deactivate the "Light" and "Volumetric" objects
-        lightObject.SetActive(false);
-        volumetricObject.SetActive(false);
+        lightObject.GetComponent<Light2D>().enabled = false;
+        volumetricObject.GetComponent<Light2D>().enabled = false;
     }
 }
