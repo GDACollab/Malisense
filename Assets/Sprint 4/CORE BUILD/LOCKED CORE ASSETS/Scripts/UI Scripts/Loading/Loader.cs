@@ -16,15 +16,21 @@ public static class Loader
     }
 
     private static Action onLoaderCallback;
+
+    public static void Initialize()
+    {
+        SceneManager.LoadScene((int)Scene.LoadingScene);
+    }
+
     public static void Load(Scene scene)
     {
-        //Action is stored, then is called from function LoaderCallback
+        // Action is stored, then is called from function LoaderCallback
         onLoaderCallback = () =>
         {
             SceneManager.LoadScene((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
         };
 
-        //Load Loading Scene which calls on the function that runs Action
+        // Load Loading Scene which calls on the function that runs Action
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
 
