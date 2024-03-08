@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 2549279616727408896}
   - component: {fileID: 4775267470979191083}
   - component: {fileID: 6712122794904433265}
-  - component: {fileID: 8055001074038939325}
   - component: {fileID: 5116860816034670284}
   - component: {fileID: 8423103316164220843}
   - component: {fileID: 7164127832594482819}
@@ -236,25 +235,6 @@ MonoBehaviour:
   pathUpdateRate: 0.5
   GFX: {fileID: 6478435864062710483}
   reachedEndOfPath: 0
---- !u!114 &8055001074038939325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5119404684320211155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73631d4f3c119a8448dff367b548c7ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  intensity: 0.699
-  radius: 15
-  innerRadius: 4
-  wallLayers:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &5116860816034670284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  chaseTimer: 5
   speed: 200
   nextWaypointDistance: 3
   pathUpdateRate: 0.5

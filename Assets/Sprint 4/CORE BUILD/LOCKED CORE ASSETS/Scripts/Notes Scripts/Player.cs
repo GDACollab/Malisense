@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool isExhausted = false; // makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
     bool isReading = false;
     
+    // Global Teapot
+    private GlobalTeapot globalTeapot;
     // Player Sprite
     private SpriteRenderer playerSprite;
     // Input System
@@ -97,6 +99,9 @@ public class Player : MonoBehaviour
         // Get player sprite
         playerSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
         
+        // Get Global Teapot
+        globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
+        
         // Get temp input options
         hideMessage = playerInput.actions.FindAction("Hide Message");
         setEnemies = playerInput.actions.FindAction("Set Enemies");
@@ -129,6 +134,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Player died due to contact to enemy");
+            globalTeapot.villageInk = 2;
             Loader.Load(Loader.Scene.DeathScene);
         }
     }
@@ -321,6 +327,10 @@ public class Player : MonoBehaviour
             // Read note
             else if (note)
             {
+                if(note.name == "End Artifact"){
+                    globalTeapot.villageInk = 3;
+                    Loader.Load(Loader.Scene.Village);
+                }
                 canMove = false;
                 isReading = true;
                 note.ActivateNote();
