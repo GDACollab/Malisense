@@ -701,15 +701,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Left Click",
-                    "type": "Value",
-                    "id": "e11e1089-d7cc-40d1-8fd7-6c6d189e799e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -908,17 +899,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3051c7c2-7399-4cfa-a27b-3ec8ed27a3e3",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
