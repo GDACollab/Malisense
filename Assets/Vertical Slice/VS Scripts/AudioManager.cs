@@ -7,45 +7,51 @@ using FMODUnity;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-
-    int monsterAlertState;
+    public EventInstance currentPlaying;
+    //int monsterAlertState;
+    protected FMOD.Studio.PLAYBACK_STATE playbackState;
 
     [Header("Volumes (sliders)")]
     [Range(0f, 1f)]
     public float masterVolume = 0.5f;
+    //[Range(0f, 1f)]
+    /*public float musicVolume = 0.5f;
     [Range(0f, 1f)]
-    public float musicVolume = 0.5f;
-    [Range(0f, 1f)]
-    public float sfxVolume = 0.5f;
+    public float sfxVolume = 0.5f;*/
 
-    [Header("FMOD Music")]
+    [Header("FMOD OST")]
     [Tooltip("FMOD Event Path for the menu music")]
-    public string menuMusic = "event:/Music/MenuMusic";
+    public string menuOST = "event:/VS_Malisense/Menu";
 
+    [Tooltip("FMOD Event Path for the dungeon ambience")]
+    public string dungeonOST = "event:/VS_Malisense/Dun_Ambience";
+
+    [Header("FMOD DUNGEON(SFX) Event Path Strings")]
+    public string monsterScream = "event:/VS_Malisense/Monster_Scream";
     [Header("FMOD UI(SFX) Event Path Strings")]
     public string selectUI = "event:/SFX/UI & Menu/UI Select";
     public string sliderUI = "event:/SFX/UI & Menu/UI Slider Feedback";
-
-    private EventInstance currentMusic;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Persist between scenes
+            DontDestroyOnLoad(gameObject); // persist between scenes
         }
         else
         {
             Destroy(gameObject);
         }
 
-        Loader.Initialize(); // Start loading when AudioManager is initialized
+        PlayOST(menuOST);
+        //Loader.Initialize(); // start loading when AudioManager is initialized
+
     }
 
     void Start()
     {
-        Play(menuMusic); // Play menu music when AudioManager starts
+        Play(menuOST); // Play menu music when AudioManager starts
     }
 
     public void Play(string path)
@@ -62,18 +68,50 @@ public class AudioManager : MonoBehaviour
         instance.start();
         instance.release();
 
-        if (path == menuMusic)
+    }
+    public void PlayOST(string path){
+        Debug.Log("[Audio Manager] Playing Song: " + path);
+        if (currentPlaying.isValid()) {
+            StartCoroutine(RestOfPlayOST(path));
+        }
+        else
         {
-            currentMusic = instance;
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
+                return;
+            }
+
+            EventInstance song = RuntimeManager.CreateInstance(path);
+            currentPlaying = song;
+            song.start();
+            song.release();
         }
     }
+    public IEnumerator RestOfPlayOST(string path){
+        Debug.Log(currentPlaying);
+        currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        currentPlaying.getPlaybackState(out playbackState);
+        while(playbackState != FMOD.Studio.PLAYBACK_STATE.STOPPED){
+            currentPlaying.getPlaybackState(out playbackState);
+            yield return null;
+        }
 
-    public void StopCurrentMusic()
-    {
-        if (currentMusic.isValid())
+        EventDescription eventDescription;
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
+        if (result != FMOD.RESULT.OK)
         {
-            currentMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            currentMusic.release();
+            Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1);
+            EventInstance song = RuntimeManager.CreateInstance(path);
+            currentPlaying = song;
+            song.start();
+            song.release();
         }
     }
 
@@ -91,7 +129,7 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("MasterVolume", masterVolume);
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("MusicVolume", musicVolume);
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("SFXVolume", sfxVolume);
+        //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("MusicVolume", musicVolume);
+        //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("SFXVolume", sfxVolume);
     }
 }

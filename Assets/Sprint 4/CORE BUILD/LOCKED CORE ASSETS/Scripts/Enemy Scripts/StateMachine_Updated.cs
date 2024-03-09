@@ -27,10 +27,11 @@ public class StateMachine_Updated : MonoBehaviour
     public StateBaseClass patrol;
     public StateBaseClass chasing;
     public StateBaseClass alert;
-
+    private AudioManager audioManager;
     void Start()
     {
         switchState(currentState);
+        audioManager = GameObject.FindGameObjectWithTag("GlobalTeapot").GetComponent<AudioManager>();
     }
 
     public void switchState(State newState)
@@ -47,6 +48,7 @@ public class StateMachine_Updated : MonoBehaviour
                 alert.Init();
                 break;
             case State.Chasing:
+                audioManager.Play(audioManager.monsterScream);
                 chasing.Init();
                 break;
         }

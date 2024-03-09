@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9085800722210102193}
   - component: {fileID: 4241208189207889398}
+  - component: {fileID: 4924827947121429571}
   m_Layer: 0
   m_Name: Global Teapot
   m_TagString: Global Teapot
@@ -45,3 +46,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   villageInk: 0
+  audioManager: {fileID: 4924827947121429571}
+--- !u!114 &4924827947121429571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109551239909308692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f74af2088d96646a12408f3d708eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterVolume: 0.5
+  menuOST: event:/VS_Malisense/Menu
+  dungeonOST: event:/VS_Malisense/Dun_Ambience
+  monsterScream: event:/VS_Malisense/Monster_Scream
+  selectUI: event:/SFX/UI & Menu/UI Select
+  sliderUI: event:/SFX/UI & Menu/UI Slider Feedback

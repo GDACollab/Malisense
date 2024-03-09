@@ -14,11 +14,11 @@ public static class Loader
         Dungeon = 3, // This refers to the scene in Build Settings at index 3
         DeathScene = 4, // This refers to the scene in Build Settings at index 4
     }
-
     private static Action onLoaderCallback;
 
     public static void Initialize()
     {
+        //SceneManager.LoadScene((int)Scene.MainMenu);
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
 

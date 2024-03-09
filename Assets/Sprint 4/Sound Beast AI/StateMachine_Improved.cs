@@ -27,10 +27,11 @@ public class StateMachine_Improved : MonoBehaviour
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
-
+    private AudioManager audioManager;
     void Start()
     {
         currentState = State.Patrolling;
+        audioManager = GameObject.FindGameObjectWithTag("GlobalTeapot").GetComponent<AudioManager>();
         initState(currentState);
     }
 
@@ -85,6 +86,7 @@ public class StateMachine_Improved : MonoBehaviour
                 alertInit = false;
                 if (!chaseInit)
                 {
+                    audioManager.Play(audioManager.monsterScream);
                     chasing.Init();
                     chaseInit = true;
                 }
