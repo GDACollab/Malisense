@@ -31,7 +31,7 @@ public class StateMachine_Updated : MonoBehaviour
     void Start()
     {
         switchState(currentState);
-        audioManager = GameObject.FindGameObjectWithTag("GlobalTeapot").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
 
     public void switchState(State newState)

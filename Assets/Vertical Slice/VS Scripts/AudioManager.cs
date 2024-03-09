@@ -6,7 +6,8 @@ using FMODUnity;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    //public static AudioManager instance;
+    private Dictionary<string, EventInstance> playingInstances = new Dictionary<string, EventInstance>();
     public EventInstance currentPlaying;
     //int monsterAlertState;
     protected FMOD.Studio.PLAYBACK_STATE playbackState;
@@ -32,23 +33,6 @@ public class AudioManager : MonoBehaviour
     public string selectUI = "event:/SFX/UI & Menu/UI Select";
     public string sliderUI = "event:/SFX/UI & Menu/UI Slider Feedback";
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // persist between scenes
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        PlayOST(menuOST);
-        //Loader.Initialize(); // start loading when AudioManager is initialized
-
-    }
-
     void Start()
     {
         Play(menuOST); // Play menu music when AudioManager starts
@@ -72,6 +56,7 @@ public class AudioManager : MonoBehaviour
     public void PlayOST(string path){
         Debug.Log("[Audio Manager] Playing Song: " + path);
         if (currentPlaying.isValid()) {
+            Debug.Log("Current playing is valid");
             StartCoroutine(RestOfPlayOST(path));
         }
         else
@@ -86,12 +71,14 @@ public class AudioManager : MonoBehaviour
 
             EventInstance song = RuntimeManager.CreateInstance(path);
             currentPlaying = song;
+            Debug.Log(currentPlaying);
             song.start();
             song.release();
         }
     }
     public IEnumerator RestOfPlayOST(string path){
-        Debug.Log(currentPlaying);
+        Debug.Log(currentPlaying + " (rest of Play OST)");
+        //currentPlaying.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         currentPlaying.getPlaybackState(out playbackState);
         while(playbackState != FMOD.Studio.PLAYBACK_STATE.STOPPED){

@@ -50,11 +50,14 @@ public class V_SelectableItems3New : MonoBehaviour
     GlobalTeapot globalTeapot;
     int ckTea;
     int clergyTea;
+    private AudioManager audioManager;
 
     private void Start()
     {
         // Get the Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
+        audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
+        audioManager.PlayOST(audioManager.dungeonOST);
         ckTea = globalTeapot.villageInk;
         clergyTea = globalTeapot.villageInk;
         

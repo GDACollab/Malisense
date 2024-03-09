@@ -290,10 +290,10 @@ MonoBehaviour:
   m_Name: FMODStudioSettings
   m_EditorClassIdentifier: 
   switchSettingsMigration: 1
-  HasSourceProject: 0
-  HasPlatforms: 0
-  sourceProjectPath: 
-  sourceBankPath: 
+  HasSourceProject: 1
+  HasPlatforms: 1
+  sourceProjectPath: Assets/Vertical Slice/VS FMOD/VS_FMODMalisense.01/VS_FMODMalisense.01.fspro
+  sourceBankPath: Assets/Vertical Slice/VS FMOD/VS_FMODMalisense.01/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -314,7 +314,8 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks: []
+  MasterBanks:
+  - Master
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264

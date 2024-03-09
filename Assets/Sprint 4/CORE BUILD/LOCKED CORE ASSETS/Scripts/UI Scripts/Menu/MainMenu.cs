@@ -10,7 +10,11 @@ public class MainMenu : MonoBehaviour
 {
     public Image fadeOutUIImage; // Reference to the UI Image
     public float fadeSpeed = 0.5f;
-
+    public AudioManager audioManager;
+    void Awake(){
+        audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
+        audioManager.PlayOST(audioManager.menuOST);
+    }
     //Functions ======================================================================================
     public void PlayGame()
     {

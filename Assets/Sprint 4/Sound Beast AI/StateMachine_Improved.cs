@@ -31,7 +31,7 @@ public class StateMachine_Improved : MonoBehaviour
     void Start()
     {
         currentState = State.Patrolling;
-        audioManager = GameObject.FindGameObjectWithTag("GlobalTeapot").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
         initState(currentState);
     }
 

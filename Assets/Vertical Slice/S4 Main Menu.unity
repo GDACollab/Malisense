@@ -208,7 +208,6 @@ GameObject:
   m_Component:
   - component: {fileID: 88319219}
   - component: {fileID: 88319218}
-  - component: {fileID: 88319217}
   - component: {fileID: 88319220}
   - component: {fileID: 88319221}
   m_Layer: 0
@@ -218,14 +217,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &88319217
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88319216}
-  m_Enabled: 1
 --- !u!20 &88319218
 Camera:
   m_ObjectHideFlags: 0
@@ -635,18 +626,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4924827947121429571, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: PlayOST
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: event:/VS_Malisense/Dun_Ambience
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &228527957
@@ -7669,6 +7648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeOutUIImage: {fileID: 892316684}
   fadeSpeed: 0.8
+  audioManager: {fileID: 0}
 --- !u!1 &1785919142
 GameObject:
   m_ObjectHideFlags: 0
