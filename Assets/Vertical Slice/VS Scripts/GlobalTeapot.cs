@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class GlobalTeapot : MonoBehaviour
@@ -9,6 +10,8 @@ public class GlobalTeapot : MonoBehaviour
     
     public int villageInk = 0;
     public AudioManager audioManager;
+    public Loader.Scene currentScene = Loader.Scene.DeathScene;
+    
     private void Awake() 
     { 
         if (Instance != null && Instance != this) 
@@ -21,5 +24,9 @@ public class GlobalTeapot : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         } 
         audioManager = GetComponent<AudioManager>();
+    }
+    
+    private void Update() {
+        currentScene = Loader.GetCurrentScene();
     }
 }

@@ -15,6 +15,7 @@ public static class Loader
         DeathScene = 4, // This refers to the scene in Build Settings at index 4
     }
     private static Action onLoaderCallback;
+    private static Scene currentScene = Scene.MainMenu;
 
     public static void Initialize()
     {
@@ -27,9 +28,11 @@ public static class Loader
         // Action is stored, then is called from function LoaderCallback
         onLoaderCallback = () =>
         {
+            currentScene = scene;
             SceneManager.LoadScene((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
         };
-
+        
+        currentScene = Scene.LoadingScene;
         // Load Loading Scene which calls on the function that runs Action
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
@@ -41,5 +44,10 @@ public static class Loader
             onLoaderCallback();
             onLoaderCallback = null;
         }
+    }
+    
+    public static Scene GetCurrentScene(){
+        
+        return currentScene;
     }
 }
