@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour
+public class DoorController : MonoBehaviour, SwitchInteractable
 {    
     // ### PLEASE FIX SCRIPT AFTER VS ###
     
     [SerializeField] private bool startOpen = false;
-    public GameObject[] switches;
 
+    private bool doorstate;
     private SpriteRenderer doorSprite;
     private Collider2D doorCollider;
-    private int activatedSwitchCount = 0;
+    //private int activatedSwitchCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,13 @@ public class DoorController : MonoBehaviour
         SetDoor(startOpen);
     }
 
+    public void SwitchInteract()
+    {
+        SetDoor(!doorstate);
+    }
+
     // Update is called once per frame
+    /*
     void Update()
     {
         // Check for switch activation
@@ -55,19 +61,19 @@ public class DoorController : MonoBehaviour
             }
         }
     }
-    
+    */
     private void SetDoor(bool open){
-        if(open){
-            OpenDoor();
-        }
-        else{
-            CloseDoor();
-        }
+
+        doorstate = open;
+        doorSprite.enabled = !open;
+        doorCollider.enabled = !open;
+
     }
 
     void OpenDoor()
     {
         // You can implement the door opening animation or any other door opening logic here
+        doorstate = true;
         doorSprite.enabled = false; // Deactivate the door or set its state to "open"
         doorCollider.enabled = false;
     }
@@ -75,6 +81,7 @@ public class DoorController : MonoBehaviour
     void CloseDoor()
     {
         // You can implement the door closing animation or any other door closing logic here
+        doorstate = false;
         doorSprite.enabled = true; // Activate the door or set its state to "closed"
         doorCollider.enabled = true;
     }
