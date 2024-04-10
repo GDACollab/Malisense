@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour, SwitchInteractable
-{    
+public class DoorController : MonoBehaviour //, SwitchInteractable
+{
     // ### PLEASE FIX SCRIPT AFTER VS ###
-    
+
+    [SerializeField] public List<SwitchController> switchList = new List<SwitchController>();
     [SerializeField] private bool startOpen = false;
 
+    private bool[] switchState;
     private bool doorstate;
     private SpriteRenderer doorSprite;
     private Collider2D doorCollider;
@@ -20,11 +23,22 @@ public class DoorController : MonoBehaviour, SwitchInteractable
         doorSprite = GetComponent<SpriteRenderer>();
         doorCollider = GetComponent<Collider2D>();
         SetDoor(startOpen);
+
+        //Set up switch stuff
+        switchState = new bool[switchList.Count];
+        for(int i = 0; i < switchList.Count; i++)
+        {
+            switchState[i] = false;
+            switchList[i].addDoor(this);
+        }
     }
 
-    public void SwitchInteract()
+    public void SwitchInteract(SwitchController curSwitch)
     {
-        SetDoor(!doorstate);
+        //SetDoor(!doorstate);
+
+        switchState[switchList.IndexOf(curSwitch)] = curSwitch.IsActivated();
+        SetDoor(!switchState.Contains(false)); //If no switches are false, door opens
     }
 
     // Update is called once per frame

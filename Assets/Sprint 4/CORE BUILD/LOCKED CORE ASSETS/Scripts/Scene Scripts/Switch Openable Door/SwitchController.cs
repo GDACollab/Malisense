@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class SwitchController : MonoBehaviour
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
     [SerializeField] [Tooltip("Press these switches when this switch is pressed")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These object will do there defined behavior when switch is pressed.")] private DoorController[] doors;
+    [SerializeField] [Tooltip("These object will do there defined behavior when switch is pressed.")] private List<DoorController> doors = new List<DoorController>();
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
@@ -38,7 +39,7 @@ public class SwitchController : MonoBehaviour
             //Iterate through each target (most likely a door) and calls 
             foreach (var door in doors)
             {
-                door.SwitchInteract();
+                door.SwitchInteract(this);
             }
         }
         else if (!isActivated){
@@ -51,7 +52,7 @@ public class SwitchController : MonoBehaviour
             }
             foreach (var door in doors)
             {
-                door.SwitchInteract();
+                door.SwitchInteract(this);
             }
         }
         
@@ -77,5 +78,13 @@ public class SwitchController : MonoBehaviour
     public bool IsActivated()
     {
         return isActivated;
+    }
+
+    public void addDoor(DoorController door)
+    {
+        //If this causes an error, change it to be a list
+        Debug.Log("attempting to add door to switch.");
+        doors.Add(door);
+        Debug.Log("Done attempting to add (1 of) the doors.s");
     }
 }
