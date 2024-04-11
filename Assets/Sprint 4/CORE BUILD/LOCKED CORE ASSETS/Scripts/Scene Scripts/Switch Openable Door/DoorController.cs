@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour, SwitchInteractable
-{    
+{
     // ### PLEASE FIX SCRIPT AFTER VS ###
-    
+    private enum DType
+    {
+        SingleSwitch,
+        MultiSwitch,
+    }
+
     [SerializeField] private bool startOpen = false;
+    [SerializeField] private int SwitchCounter = 1;
+    [SerializeField] private DType DoorType = DType.SingleSwitch;
 
     private bool doorstate;
     private SpriteRenderer doorSprite;
@@ -22,9 +29,24 @@ public class DoorController : MonoBehaviour, SwitchInteractable
         SetDoor(startOpen);
     }
 
-    public void SwitchInteract()
+    public void SwitchInteract(bool state)
     {
-        SetDoor(!doorstate);
+        switch (DoorType) {
+            case (DType.SingleSwitch):
+
+                SetDoor(!doorstate);
+                break;
+
+            case (DType.MultiSwitch):
+
+                if(state) SwitchCounter--;
+                else SwitchCounter++;
+
+                if (SwitchCounter <= 0) SetDoor(!startOpen);
+                else SetDoor(startOpen);
+                break;
+
+        }
     }
 
     // Update is called once per frame
@@ -65,7 +87,7 @@ public class DoorController : MonoBehaviour, SwitchInteractable
     private void SetDoor(bool open){
 
         doorstate = open;
-        doorSprite.enabled = !open;
+        doorSprite.enabled = !open; // Deactivate the door or set its state to "open"
         doorCollider.enabled = !open;
 
     }
@@ -73,16 +95,12 @@ public class DoorController : MonoBehaviour, SwitchInteractable
     void OpenDoor()
     {
         // You can implement the door opening animation or any other door opening logic here
-        doorstate = true;
-        doorSprite.enabled = false; // Deactivate the door or set its state to "open"
-        doorCollider.enabled = false;
+        SetDoor(true);
     }
 
     void CloseDoor()
     {
         // You can implement the door closing animation or any other door closing logic here
-        doorstate = false;
-        doorSprite.enabled = true; // Activate the door or set its state to "closed"
-        doorCollider.enabled = true;
+        SetDoor(false);
     }
 }

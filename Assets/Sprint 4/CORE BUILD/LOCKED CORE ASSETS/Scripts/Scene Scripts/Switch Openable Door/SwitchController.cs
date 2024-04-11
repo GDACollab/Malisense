@@ -38,7 +38,7 @@ public class SwitchController : MonoBehaviour
             //Iterate through each target (most likely a door) and calls 
             foreach (var door in doors)
             {
-                door.SwitchInteract();
+                door.SwitchInteract(isActivated);
             }
         }
         else if (!isActivated){
@@ -51,7 +51,7 @@ public class SwitchController : MonoBehaviour
             }
             foreach (var door in doors)
             {
-                door.SwitchInteract();
+                door.SwitchInteract(isActivated);
             }
         }
         
