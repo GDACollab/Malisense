@@ -7,6 +7,7 @@ public class DoorController : MonoBehaviour //, SwitchInteractable
 {
     // ### PLEASE FIX SCRIPT AFTER VS ###
 
+    [SerializeField] public bool needsAllSwitches = true;
     [SerializeField] public List<SwitchController> switchList = new List<SwitchController>();
     [SerializeField] private bool startOpen = false;
 
@@ -38,7 +39,11 @@ public class DoorController : MonoBehaviour //, SwitchInteractable
         //SetDoor(!doorstate);
 
         switchState[switchList.IndexOf(curSwitch)] = curSwitch.IsActivated();
-        SetDoor(!switchState.Contains(false)); //If no switches are false, door opens
+        if (needsAllSwitches) //All switches need to be on
+            SetDoor(!switchState.Contains(false)); //If no switches are false, door opens
+        else //One switch needs to be on
+            SetDoor(switchState.Contains(true)); //If one switch is true, door opens
+
     }
 
     // Update is called once per frame
