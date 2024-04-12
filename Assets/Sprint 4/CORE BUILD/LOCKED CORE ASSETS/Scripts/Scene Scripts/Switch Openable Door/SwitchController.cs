@@ -9,23 +9,24 @@ using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.InputSystem.Controls.AxisControl;
 
 /*###Switch Interactable Interface###
- * Implements an interface to be used for all objects
- *
+ * Implements an interface to be used for all objects that are interactable with the switch.
+ * This is done to make the utility of the switch expandable in the future in case this switch will have multiple uses beyond doors. 
+ * All you need to do is add ISwitchable to any MonoBehavior class inheriting MonoBehavior in the following syntax: class classname: MonoBehavior, ISwitchable
+ * Then define the function of SwitchInteract(bool Activated) in that class. Afterward you can add that object to targets and the SwitchInteract function will trigger.
  */
 public interface ISwitchable
 {
-    void SwitchInteract(bool state);
+    void SwitchInteract(bool Activated);
 }
 
 
 public class SwitchController : MonoBehaviour
 {
-    // ### PLEASE FIX SCRIPT AFTER VS ###
     
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
-    [SerializeField] [Tooltip("Press these switches when this switch is pressed")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These object will do there defined behavior when switch is pressed.")] private MonoBehaviour[] targets;
+    [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for MultiSwitch Doors)")] private SwitchController[] syncSwitches;
+    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private MonoBehaviour[] targets;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
@@ -50,7 +51,8 @@ public class SwitchController : MonoBehaviour
             foreach(var nswitch in syncSwitches){
                 nswitch.ForceToggleSwitch();
             }
-            //Iterate through each target (most likely a door) and calls 
+            //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
+            //Calls SwitchInteract on each target
             foreach (var target in targets)
             {
                 ISwitchable t = target as ISwitchable;
@@ -66,12 +68,13 @@ public class SwitchController : MonoBehaviour
             foreach(var nswitch in syncSwitches){
                 nswitch.ForceToggleSwitch();
             }
+            //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
+            //Calls SwitchInteract on each target
             foreach (var target in targets)
             {
                 ISwitchable t = target as ISwitchable;
                 t?.SwitchInteract(isActivated);
             }
-            //targets.ForEach(c => (c as ISwitchInteractable)?.SwitchInteract(isActivated));
         }
         
 

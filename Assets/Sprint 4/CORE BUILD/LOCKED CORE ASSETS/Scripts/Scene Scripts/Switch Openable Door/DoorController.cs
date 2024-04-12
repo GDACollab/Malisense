@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour, ISwitchable
 {
-    // ### PLEASE FIX SCRIPT AFTER VS ###
+    // Defines 2 door behaviors: SingleSwitch and MultiSwitch
     private enum DType
     {
         SingleSwitch,
@@ -12,8 +12,8 @@ public class DoorController : MonoBehaviour, ISwitchable
     }
 
     [SerializeField] private bool startOpen = false;
-    [SerializeField] private DType DoorType = DType.SingleSwitch;
-    [SerializeField] private int MultiSwitchCounter = 2;
+    [SerializeField] [Tooltip("#SingleSwitch: any switch that references the door will open/close it on one press. \n #MultiSwitch: MultiSwitchCounter amount of switches that reference the door need to be activated to open/close the door.")] private DType DoorType = DType.SingleSwitch;
+    [SerializeField] [Tooltip("(Unused for SingleSwitch doors)This is the amount of switches that need to be activated when DoorType is set to MultiSwitch.")] private int MultiSwitchCounter = 2;
 
     private bool doorstate;
     private SpriteRenderer doorSprite;
@@ -29,7 +29,14 @@ public class DoorController : MonoBehaviour, ISwitchable
         SetDoor(startOpen);
     }
 
-    public void SwitchInteract(bool state)
+    /* Defines ISwitchable Interace function with function defined by 2 types
+     * -(if enum DoorType = SingleSwitch) any switch that references the door will change its state on activation
+     * -(if enum DoorType = MultiSwitch) any switch that references the door will subtract MultiSwitch door counter
+     * by 1 on activation and increase it by one when not activated. When MultiCounter is equal to or less than 0
+     * the door will change state from startOpen.
+     */
+
+    public void SwitchInteract(bool Activated)
     {
         switch (DoorType) {
             case (DType.SingleSwitch):
@@ -39,7 +46,7 @@ public class DoorController : MonoBehaviour, ISwitchable
 
             case (DType.MultiSwitch):
 
-                if(state) MultiSwitchCounter--;
+                if(Activated) MultiSwitchCounter--;
                 else MultiSwitchCounter++;
 
                 if (MultiSwitchCounter <= 0) SetDoor(!startOpen);
@@ -48,46 +55,12 @@ public class DoorController : MonoBehaviour, ISwitchable
 
         }
     }
-
-    // Update is called once per frame
-    /*
-    void Update()
-    {
-        // Check for switch activation
-        CheckSwitches();
-
-
-        // Check if all switches are activated to open the door
-        if (activatedSwitchCount == switches.Length)
-        {
-            OpenDoor();
-        }
-        else
-        {
-            //Reset the activated switch count
-            activatedSwitchCount = 0;
-            CloseDoor();
-        }
-    }
-
-    void CheckSwitches()
-    {
-        activatedSwitchCount = 0;
-        foreach (GameObject switchObj in switches)
-        {
-            SwitchController switchController = switchObj.GetComponent<SwitchController>();
-            if (switchController != null && switchController.IsActivated())
-            {
-                // Increase the count of activated switches
-                activatedSwitchCount++;
-            }
-        }
-    }
-    */
+    // Open or Closes door depending on boolean open.
+   
     private void SetDoor(bool open){
 
         doorstate = open;
-        doorSprite.enabled = !open; // Deactivate the door or set its state to "open"
+        doorSprite.enabled = !open;
         doorCollider.enabled = !open;
 
     }
