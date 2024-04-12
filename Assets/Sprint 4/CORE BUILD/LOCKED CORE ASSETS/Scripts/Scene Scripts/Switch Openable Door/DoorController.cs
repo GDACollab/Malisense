@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour, SwitchInteractable
+public class DoorController : MonoBehaviour, ISwitchable
 {
     // ### PLEASE FIX SCRIPT AFTER VS ###
     private enum DType
@@ -12,8 +12,8 @@ public class DoorController : MonoBehaviour, SwitchInteractable
     }
 
     [SerializeField] private bool startOpen = false;
-    [SerializeField] private int SwitchCounter = 1;
     [SerializeField] private DType DoorType = DType.SingleSwitch;
+    [SerializeField] private int MultiSwitchCounter = 2;
 
     private bool doorstate;
     private SpriteRenderer doorSprite;
@@ -39,10 +39,10 @@ public class DoorController : MonoBehaviour, SwitchInteractable
 
             case (DType.MultiSwitch):
 
-                if(state) SwitchCounter--;
-                else SwitchCounter++;
+                if(state) MultiSwitchCounter--;
+                else MultiSwitchCounter++;
 
-                if (SwitchCounter <= 0) SetDoor(!startOpen);
+                if (MultiSwitchCounter <= 0) SetDoor(!startOpen);
                 else SetDoor(startOpen);
                 break;
 
@@ -92,13 +92,13 @@ public class DoorController : MonoBehaviour, SwitchInteractable
 
     }
 
-    void OpenDoor()
+    public void OpenDoor()
     {
         // You can implement the door opening animation or any other door opening logic here
         SetDoor(true);
     }
 
-    void CloseDoor()
+    public void CloseDoor()
     {
         // You can implement the door closing animation or any other door closing logic here
         SetDoor(false);

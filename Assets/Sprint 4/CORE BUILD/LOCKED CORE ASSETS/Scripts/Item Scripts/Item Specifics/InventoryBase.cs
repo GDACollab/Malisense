@@ -17,6 +17,7 @@ public class InventoryBase : MonoBehaviour
 
         
     // happens when editor is updated
+
     private void OnValidate()
     {
         // Set inventory size

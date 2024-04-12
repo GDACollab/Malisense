@@ -3,8 +3,9 @@
  * Implements an interface to be used for all objects
  * 
  * 
- */
-public interface SwitchInteractable
+ *
+public interface ISwitchInteractable
 {
     void SwitchInteract(bool state);
 }
+*/
