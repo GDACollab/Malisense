@@ -29,8 +29,23 @@ public class DoorController : MonoBehaviour //, SwitchInteractable
         switchState = new bool[switchList.Count];
         for(int i = 0; i < switchList.Count; i++)
         {
-            switchState[i] = false;
+            switchState[i] = switchList[i].IsActivated();
             switchList[i].addDoor(this);
+        }
+        // Warning: if at any future point the ability for doors to require switches to be off is added,
+        // the following code could undo startOpen setting for switches with multiple doors
+        if (startOpen)
+        {
+            if (!needsAllSwitches && !switchState.Contains(true)) //if one switch needs to be true, and no switches are true
+                switchList[0].ActivateSwitch();
+            else if (needsAllSwitches && switchState.Contains(false)) //if all switches needs to be true, and at least one switch is true
+            {
+                for (int i = 0; i < switchList.Count; i++)
+                {
+                    if(!switchList[i].IsActivated())
+                        switchList[i].ActivateSwitch();
+                }
+            }
         }
     }
 
