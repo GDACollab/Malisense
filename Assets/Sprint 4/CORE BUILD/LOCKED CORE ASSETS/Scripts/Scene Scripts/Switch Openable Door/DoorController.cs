@@ -18,7 +18,6 @@ public class DoorController : MonoBehaviour, ISwitchable
     private bool doorstate;
     private SpriteRenderer doorSprite;
     private Collider2D doorCollider;
-    //private int activatedSwitchCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +28,7 @@ public class DoorController : MonoBehaviour, ISwitchable
         SetDoor(startOpen);
     }
 
-    /* Defines ISwitchable Interace function with function defined by 2 types
+    /* Defines ISwitchable SwitchInteract function defined by 2 types
      * -(if enum DoorType = SingleSwitch) any switch that references the door will change its state on activation
      * -(if enum DoorType = MultiSwitch) any switch that references the door will subtract MultiSwitch door counter
      * by 1 on activation and increase it by one when not activated. When MultiCounter is equal to or less than 0
