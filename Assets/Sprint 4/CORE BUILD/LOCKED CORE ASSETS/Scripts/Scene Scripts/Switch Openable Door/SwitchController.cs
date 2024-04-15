@@ -16,7 +16,8 @@ using static UnityEngine.InputSystem.Controls.AxisControl;
  */
 public interface ISwitchable
 {
-    void SwitchInteract(bool Activated);
+    void SwitchInit(bool activated);
+    void SwitchInteract(bool activated);
 }
 
 
@@ -25,7 +26,7 @@ public class SwitchController : MonoBehaviour
     
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
-    [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for MultiSwitch Doors)")] private SwitchController[] syncSwitches;
+    [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
     [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private MonoBehaviour[] targets;
     public LampController lamp;
     private bool isActivated = false;
@@ -39,17 +40,21 @@ public class SwitchController : MonoBehaviour
             lamp.TurnOn();
             switchSprite.flipY = true;
         }
+        //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
+        foreach (var target in targets)
+        {
+            ISwitchable t = target as ISwitchable;
+            t?.SwitchInit(isActivated);
+        }
     }
     
     // Called when the switch is clicked or activated
     public void ActivateSwitch()
     {
         if(isActivated && !oneTimeSwitch){
-            lamp.TurnOff();
-            switchSprite.flipY = false;
-            isActivated = false;
+            FlipSwitch();
             foreach(var nswitch in syncSwitches){
-                nswitch.ForceToggleSwitch();
+                nswitch.FlipSwitch();
             }
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
             //Calls SwitchInteract on each target
@@ -61,12 +66,9 @@ public class SwitchController : MonoBehaviour
 
         }
         else if (!isActivated){
-            lamp.TurnOn();
-            switchSprite.flipY = true;
-            // Toggle the switch state
-            isActivated = true;
-            foreach(var nswitch in syncSwitches){
-                nswitch.ForceToggleSwitch();
+            FlipSwitch();
+            foreach (var nswitch in syncSwitches){
+                nswitch.FlipSwitch();
             }
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
             //Calls SwitchInteract on each target
@@ -82,22 +84,29 @@ public class SwitchController : MonoBehaviour
         // You can add a visual feedback or animation for switch activation here
     }
     
-    public void ForceToggleSwitch(){
-        if(isActivated){
-            lamp.TurnOff();
-            switchSprite.flipY = false;
-            isActivated = false;
-        }
-        else{
-            lamp.TurnOn();
-            switchSprite.flipY = true;
-            isActivated = true;
-        }
+    public void FlipSwitch(){
+        SetSwitch(!isActivated);
     }
 
     // Check if the switch is activated
     public bool IsActivated()
     {
         return isActivated;
+    }
+
+    public void SetSwitch(bool activated)
+    {
+        if (activated)
+        {
+            lamp.TurnOn();
+            switchSprite.flipY = true;
+            isActivated = true;
+        }
+        else
+        {
+            lamp.TurnOff();
+            switchSprite.flipY = false;
+            isActivated = false;
+        }
     }
 }

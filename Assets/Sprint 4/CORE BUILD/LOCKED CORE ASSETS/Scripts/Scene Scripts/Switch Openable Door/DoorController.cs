@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour, ISwitchable
 {
-    // Defines 2 door behaviors: SingleSwitch and MultiSwitch
+    // Defines 2 door behaviors: OnActivation and OnAllActivated
     private enum DType
     {
-        SingleSwitch,
-        MultiSwitch,
+        OnActivation,
+        OnAllActivated,
     }
 
-    [SerializeField] private bool startOpen = false;
-    [SerializeField] [Tooltip("#SingleSwitch: any switch that references the door will open/close it on one press. \n #MultiSwitch: MultiSwitchCounter amount of switches that reference the door need to be activated to open/close the door.")] private DType DoorType = DType.SingleSwitch;
-    [SerializeField] [Tooltip("(Unused for SingleSwitch doors)This is the amount of switches that need to be activated when DoorType is set to MultiSwitch.")] private int MultiSwitchCounter = 2;
+    [SerializeField] [Tooltip("Initial state of the door or whether the door starts open or closed")] private bool startOpen = false;
+    [SerializeField] [Tooltip("#OnActivation: any switch that targets the door will open/close it on one press. \n #OnAllActivated: All switches that target the door need to be activated at once to open/close the door.")] private DType DoorType = DType.OnActivation;
 
+    private int OnAllCounter = 0;
     private bool doorstate;
     private SpriteRenderer doorSprite;
     private Collider2D doorCollider;
@@ -28,27 +28,37 @@ public class DoorController : MonoBehaviour, ISwitchable
         SetDoor(startOpen);
     }
 
-    /* Defines ISwitchable SwitchInteract function defined by 2 types
-     * -(if enum DoorType = SingleSwitch) any switch that references the door will change its state on activation
-     * -(if enum DoorType = MultiSwitch) any switch that references the door will subtract MultiSwitch door counter
-     * by 1 on activation and increase it by one when not activated. When MultiCounter is equal to or less than 0
-     * the door will change state from startOpen.
+    /* Defines ISwitchable SwitchInit
+     * 
      */
+    public void SwitchInit(bool activated)
+    {
 
-    public void SwitchInteract(bool Activated)
+        if (DoorType == DType.OnAllActivated)
+        {
+            if (!activated) OnAllCounter++;
+        }
+    }
+    /* Defines ISwitchable SwitchInteract function defined by 2 types
+ * -(if enum DoorType = OnActivation) any switch that references the door will change its state on activation
+ * -(if enum DoorType = OnAllActivated) any switch that references the door will subtract OnAllActivated door counter
+ * by 1 on activation and increase it by one when not activated. When MultiCounter is equal to or less than 0
+ * the door will change state from startOpen.
+ */
+    public void SwitchInteract(bool activated)
     {
         switch (DoorType) {
-            case (DType.SingleSwitch):
+            case (DType.OnActivation):
 
                 SetDoor(!doorstate);
                 break;
 
-            case (DType.MultiSwitch):
+            case (DType.OnAllActivated):
 
-                if(Activated) MultiSwitchCounter--;
-                else MultiSwitchCounter++;
+                if(activated) OnAllCounter--;
+                else OnAllCounter++;
 
-                if (MultiSwitchCounter <= 0) SetDoor(!startOpen);
+                if (OnAllCounter <= 0) SetDoor(!startOpen);
                 else SetDoor(startOpen);
                 break;
 
