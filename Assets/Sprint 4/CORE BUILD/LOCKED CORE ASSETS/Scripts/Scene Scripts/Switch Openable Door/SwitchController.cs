@@ -17,6 +17,8 @@ using static UnityEngine.InputSystem.Controls.AxisControl;
 public interface ISwitchable
 {
     void SwitchInit(bool activated);
+    void SwitchValidateAdd(SwitchController sw);
+    void SwitchValidateRemove(SwitchController sw);
     void SwitchInteract(bool activated);
 }
 
@@ -27,12 +29,42 @@ public class SwitchController : MonoBehaviour
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
     [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private MonoBehaviour[] targets;
+    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] public List<MonoBehaviour> targets;
+    private List<MonoBehaviour> oldtargets;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
+    
+    private void OnValidate()
+    {
+        List<MonoBehaviour> ISwitches = new List<MonoBehaviour>(targets);
 
+        if(oldtargets == null) oldtargets = new List<MonoBehaviour>();
+        foreach (var target in oldtargets)
+        {
+            if (target == null) continue;
+            else if (!targets.Contains(target))
+            {
+                ISwitchable t = target as ISwitchable;
+                t?.SwitchValidateRemove(this);
+            }
+        }
+        
+        foreach (var target in targets)
+        {
+            if (target == null) continue;
+            else if (target is not ISwitchable t) ISwitches.Remove(target);
+            else if (!oldtargets.Contains(target))
+            {
+                t.SwitchValidateAdd(this);
+            }
+        }
 
+        targets = new List<MonoBehaviour>(ISwitches);
+        oldtargets = new List<MonoBehaviour>(targets);
+
+    }
+    
     private void Start() {
         switchSprite = GetComponent<SpriteRenderer>();
         isActivated = startActivated;
@@ -107,6 +139,29 @@ public class SwitchController : MonoBehaviour
             lamp.TurnOff();
             switchSprite.flipY = false;
             isActivated = false;
+        }
+    }
+    bool IsSwitchable(MonoBehaviour s) 
+    {
+        if (s == null) return true;
+        else return (s is ISwitchable);
+    }
+    public void RemoveTarget(MonoBehaviour target)
+    {
+        if (targets.Contains(target))
+        {
+            targets.Remove(target);
+            oldtargets.Remove(target);
+        }
+
+    }
+    public void AddTarget(MonoBehaviour target)
+    {
+        if (oldtargets == null) oldtargets = new List<MonoBehaviour>();
+        if (!targets.Contains(target))
+        {
+            targets.Add(target);
+            oldtargets.Add(target);
         }
     }
 }
