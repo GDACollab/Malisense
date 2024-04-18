@@ -1323,33 +1323,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412238714}
-  - component: {fileID: 412238713}
+  - component: {fileID: 412238716}
   - component: {fileID: 412238715}
   m_Layer: 0
-  m_Name: Player Input Parser
+  m_Name: Player Input Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &412238713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412238712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: def4dc3ccb0666a4195ebb37c7e4dc4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuInteractables:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  playerInput: {fileID: 412238715}
 --- !u!4 &412238714
 Transform:
   m_ObjectHideFlags: 0
@@ -1378,7 +1360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: dde836942fe358e40871da1de0c38af5, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1389,12 +1371,122 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc60430d-de81-4e21-9717-3b3ab9810ea0
+    m_ActionName: Player/8 Directions Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65cc8520-8236-45a2-bc3e-c7434b3e7c35
+    m_ActionName: Player/Sprint[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9cbb0e3b-8203-4c15-a40f-661063302a4b
+    m_ActionName: Player/Sneak[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f867f0c-299e-4332-bb43-aba3a08c28b3
+    m_ActionName: Player/Interact[/Keyboard/space,/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d8315170-1e34-4c4e-b04e-4f5d69e9bcf9
+    m_ActionName: Player/SetDown[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 46c9acae-0f5f-43ea-bc6d-8ab3580fadc5
+    m_ActionName: Player/Journal Action[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 040a405d-7375-4406-93a7-28b93e745851
+    m_ActionName: Player/Hide Message[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c59d6e9d-6fd3-4710-90dd-f1ee2edca410
+    m_ActionName: Player/Set Enemies[/Keyboard/semicolon]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8fe56df9-2d06-4a13-92de-d0a7d673c200
+    m_ActionName: Player/Hide Footsteps[/Keyboard/quote]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bbace2ae-1272-435d-b638-1554d12e8df9
+    m_ActionName: Inventory/Slot 1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2ee89c28-28f3-4daf-92c2-a42f3e96696c
+    m_ActionName: Inventory/Slot 2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6abfa86f-ceff-4f7c-8439-ba7264594956
+    m_ActionName: Inventory/Slot 3[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5124e30e-6dd2-4108-ba64-73b0e3c1bbf8
+    m_ActionName: Inventory/Scroll[/Mouse/scroll/down,/Mouse/scroll/up]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 28bd1e0a-92de-4bc6-a863-16e252d25b0d
+    m_ActionName: Inventory/Use Item[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ebb8f62a-7260-4506-881f-0f2aa4d66b2f
+    m_ActionName: Inventory/Use Artifact[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 412238716}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c78db7f7-5c33-4181-8dc4-cd129ae99b43
+    m_ActionName: UI/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 412238716}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0436c1ba-00b6-4617-9d38-30ad442d3c66
+    m_ActionName: UI/Select[/Keyboard/enter,/Keyboard/space,/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &412238716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412238712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def4dc3ccb0666a4195ebb37c7e4dc4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuSelectables:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerInput: {fileID: 412238715}
 --- !u!1 &433716119
 GameObject:
   m_ObjectHideFlags: 0
@@ -8980,8 +9072,8 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 88319219}
   - {fileID: 412238714}
+  - {fileID: 88319219}
   - {fileID: 2010354202}
   - {fileID: 322620005}
   - {fileID: 1272589175}

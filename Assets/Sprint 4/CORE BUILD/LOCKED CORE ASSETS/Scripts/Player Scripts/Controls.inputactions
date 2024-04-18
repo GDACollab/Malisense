@@ -695,7 +695,7 @@
                 },
                 {
                     "name": "Select",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "0436c1ba-00b6-4617-9d38-30ad442d3c66",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -705,7 +705,7 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
+                    "name": "WASD [Keyboard] (2D Vector)",
                     "id": "69abe7d7-91f5-4426-8b76-31a8735b0466",
                     "path": "2DVector",
                     "interactions": "",
@@ -760,7 +760,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Arrow Keys [Keyboard] (2D Vector)",
                     "id": "8e72ebf1-bebe-48be-b682-0e6bb8a1a645",
                     "path": "2DVector",
                     "interactions": "",
@@ -815,7 +815,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Left Stick [Gamepad] (2D Vector)",
                     "id": "09dcec77-c64f-490a-8899-883c7e9ffeb5",
                     "path": "2DVector",
                     "interactions": "",
@@ -871,6 +871,17 @@
                 },
                 {
                     "name": "",
+                    "id": "81af5a56-5729-412c-866b-1b36f500232b",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e9f36a54-5cdf-40e9-9a99-00ad970c51dc",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -882,8 +893,8 @@
                 },
                 {
                     "name": "",
-                    "id": "2b0fe849-9dd4-43c2-afec-63c6ae525a12",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "6ac32247-087d-4355-9c6b-20faf9a5f68c",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -893,8 +904,8 @@
                 },
                 {
                     "name": "",
-                    "id": "6ac32247-087d-4355-9c6b-20faf9a5f68c",
-                    "path": "<Keyboard>/f",
+                    "id": "2b0fe849-9dd4-43c2-afec-63c6ae525a12",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
