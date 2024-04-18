@@ -1326,7 +1326,7 @@ GameObject:
   - component: {fileID: 412238716}
   - component: {fileID: 412238715}
   m_Layer: 0
-  m_Name: Player Input Manager
+  m_Name: Main Menu Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1435,7 +1435,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 412238716}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -1451,7 +1451,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 412238716}
-        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: Select
         m_Mode: 0
         m_Arguments:
@@ -1481,12 +1481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def4dc3ccb0666a4195ebb37c7e4dc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuSelectables:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  playerInput: {fileID: 412238715}
 --- !u!1 &433716119
 GameObject:
   m_ObjectHideFlags: 0
