@@ -29,8 +29,10 @@ public class SwitchController : MonoBehaviour
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
     [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] public List<MonoBehaviour> targets;
-    private List<MonoBehaviour> oldtargets;
+    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) " +
+        "will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] public List<MonoBehaviour> targets;
+
+    [HideInInspector] [SerializeField]private List<MonoBehaviour> oldtargets;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
