@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8215102121573843778}
   - component: {fileID: 2952098854370272748}
-  - component: {fileID: 1860516142559632504}
   - component: {fileID: 1726866498819990649}
   - component: {fileID: 8861831747987376254}
+  - component: {fileID: 4656295700078512736}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -70,11 +70,11 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 9
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16319
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -86,14 +86,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1860516142559632504
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8642210136558698120}
-  m_Enabled: 1
 --- !u!114 &1726866498819990649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +109,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -150,3 +142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5b08f12ad72714690992c7be300431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4656295700078512736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642210136558698120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
