@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -11,6 +13,7 @@ public class Player : MonoBehaviour
     [Header("Temp Variables (Remove before Final Build)")]
     public GameObject controlMessage;
     public GameObject[] enemies;
+    public UnityEvent testFunctions;
     // ### END TEMP VARIABLES ###
 
     // Movement
@@ -64,7 +67,7 @@ public class Player : MonoBehaviour
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
-    private InputAction hideMessage, setEnemies, hideFootsteps;
+    private InputAction hideMessage, setEnemies, hideFootsteps, activateFunctions; // Test inputs remove before final build please
     // Rigid Body and interaction variables
     private Rigidbody2D rb;
     private Transform interactBody;
@@ -106,6 +109,7 @@ public class Player : MonoBehaviour
         hideMessage = playerInput.actions.FindAction("Hide Message");
         setEnemies = playerInput.actions.FindAction("Set Enemies");
         hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
+        activateFunctions = playerInput.actions.FindAction("Activate Functions");
         
         // Get the enemies to deactivate
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -158,6 +162,11 @@ public class Player : MonoBehaviour
         if (hideFootsteps.triggered)
         {
             noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled = !noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled;
+        }
+        if(activateFunctions.triggered){
+            if (testFunctions.GetPersistentEventCount()>0){
+                testFunctions.Invoke();
+            }
         }
     }
 
