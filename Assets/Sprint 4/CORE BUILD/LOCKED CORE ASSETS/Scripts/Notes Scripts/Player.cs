@@ -295,7 +295,8 @@ public class Player : MonoBehaviour
         // Check if the object the player is facing is interactable
         if (interactArea.isInteractable)
         {
-            var other = interactArea.other;
+
+            var other = interactArea.getInteractable();
             // Find what object of item it is
             var item = other.GetComponent<ItemPickup>();
             var heavyItem = other.GetComponent<HeavyItem>();
