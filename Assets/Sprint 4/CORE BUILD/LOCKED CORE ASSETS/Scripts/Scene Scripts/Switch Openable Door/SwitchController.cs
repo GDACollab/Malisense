@@ -21,16 +21,32 @@ public interface ISwitchable
 }
 
 
+
+
 public class SwitchController : MonoBehaviour
 {
 
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
     [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private MonoBehaviour[] targets;
+    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private List<MonoBehaviour> targets;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
+
+    //Remove non ISwitchable objects from targets
+    private void OnValidate()
+    {
+        targets.RemoveAll(NotSwitchable);
+    }
+
+    //Checks if target is a Not a member of ISwitchable while also not being null
+    public bool NotSwitchable(MonoBehaviour target) => Swable(target) == null && target != null;
+    
+
+    //Converts target to a ISwitcable interface object, null if not
+    public ISwitchable Swable(MonoBehaviour target) => target as ISwitchable;
+
 
 
     private void Start()
@@ -43,11 +59,8 @@ public class SwitchController : MonoBehaviour
             switchSprite.flipY = true;
         }
         //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
-        foreach (var target in targets)
-        {
-            ISwitchable t = target as ISwitchable;
-            t?.SwitchInit(isActivated);
-        }
+        foreach (var target in targets) Swable(target)?.SwitchInit(isActivated);
+
     }
 
     // Called when the switch is clicked or activated
@@ -55,34 +68,30 @@ public class SwitchController : MonoBehaviour
     {
         if (isActivated && !oneTimeSwitch)
         {
+            // Flips self
             FlipSwitch();
-            foreach (var nswitch in syncSwitches)
-            {
-                nswitch.FlipSwitch();
-            }
+
+            //Flips activations in all switches in syncswitches
+            foreach (var nswitch in syncSwitches) nswitch.FlipSwitch();
+
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
             //Calls SwitchInteract on each target
-            foreach (var target in targets)
-            {
-                ISwitchable t = target as ISwitchable;
-                t?.SwitchInteract(isActivated);
-            }
+            foreach (var target in targets) Swable(target)?.SwitchInteract(isActivated);
 
         }
         else if (!isActivated)
         {
+            // Flips self
             FlipSwitch();
-            foreach (var nswitch in syncSwitches)
-            {
-                nswitch.FlipSwitch();
-            }
+
+            //Flips activations in all switches in syncswitches
+            foreach (var nswitch in syncSwitches) nswitch.FlipSwitch();
+
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
             //Calls SwitchInteract on each target
-            foreach (var target in targets)
-            {
-                ISwitchable t = target as ISwitchable;
-                t?.SwitchInteract(isActivated);
-            }
+
+            foreach (var target in targets) Swable(target)?.SwitchInteract(isActivated);
+            
         }
 
 
@@ -90,16 +99,14 @@ public class SwitchController : MonoBehaviour
         // You can add a visual feedback or animation for switch activation here
     }
 
+    //Sets switch to not activated and turns switch
     public void FlipSwitch()
     {
         SetSwitch(!isActivated);
     }
 
     // Check if the switch is activated
-    public bool IsActivated()
-    {
-        return isActivated;
-    }
+    public bool IsActivated() => isActivated;
 
     public void SetSwitch(bool activated)
     {
@@ -116,4 +123,5 @@ public class SwitchController : MonoBehaviour
             isActivated = false;
         }
     }
+
 }
