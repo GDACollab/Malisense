@@ -27,6 +27,7 @@ public class DoorController : MonoBehaviour, ISwitchable
     
     void OnValidate()
     {
+        Debug.Log("Door: Validate Start");
         OldSwitchList ??= new List<SwitchController>();
         foreach (var s in OldSwitchList)
         {

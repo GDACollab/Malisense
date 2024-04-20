@@ -39,6 +39,7 @@ public class SwitchController : MonoBehaviour
     
     private void OnValidate()
     {
+        Debug.Log("Switch: Validate Start");
         List<MonoBehaviour> ISwitches = new List<MonoBehaviour>(targets);
 
         if(oldtargets == null) oldtargets = new List<MonoBehaviour>();
