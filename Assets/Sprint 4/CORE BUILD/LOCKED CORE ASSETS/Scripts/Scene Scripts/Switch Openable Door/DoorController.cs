@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour
-{    
-    // ### PLEASE FIX SCRIPT AFTER VS ###
-    
-    [SerializeField] private bool startOpen = false;
-    public GameObject[] switches;
+public class DoorController : MonoBehaviour, ISwitchable
+{
+    // Defines 2 door behaviors: OnActivation and OnAllActivated
+    private enum DType
+    {
+        OnActivation,
+        OnAllActivated,
+    }
 
+    [SerializeField] [Tooltip("Initial state of the door or whether the door starts open or closed")] private bool startOpen = false;
+    [SerializeField] [Tooltip("#OnActivation: any switch that targets the door will open/close it on one press. \n #OnAllActivated: All switches that target the door need to be activated at once to open/close the door.")] private DType DoorType = DType.OnActivation;
+
+    private int OnAllCounter = 0;
+    private bool doorstate;
     private SpriteRenderer doorSprite;
     private Collider2D doorCollider;
-    private int activatedSwitchCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -22,60 +28,63 @@ public class DoorController : MonoBehaviour
         SetDoor(startOpen);
     }
 
-    // Update is called once per frame
-    void Update()
+    /* Defines ISwitchable SwitchInit
+     * 
+     */
+    public void SwitchInit(bool activated)
     {
-        // Check for switch activation
-        CheckSwitches();
 
-
-        // Check if all switches are activated to open the door
-        if (activatedSwitchCount == switches.Length)
+        if (DoorType == DType.OnAllActivated)
         {
-            OpenDoor();
-        }
-        else
-        {
-            //Reset the activated switch count
-            activatedSwitchCount = 0;
-            CloseDoor();
+            if (!activated) OnAllCounter++;
         }
     }
-
-    void CheckSwitches()
+    /* Defines ISwitchable SwitchInteract function defined by 2 types
+ * -(if enum DoorType = OnActivation) any switch that references the door will change its state on activation
+ * -(if enum DoorType = OnAllActivated) any switch that references the door will subtract OnAllActivated door counter
+ * by 1 on activation and increase it by one when not activated. When MultiCounter is equal to or less than 0
+ * the door will change state from startOpen.
+ */
+    public void SwitchInteract(bool activated)
     {
-        activatedSwitchCount = 0;
-        foreach (GameObject switchObj in switches)
+        switch (DoorType)
         {
-            SwitchController switchController = switchObj.GetComponent<SwitchController>();
-            if (switchController != null && switchController.IsActivated())
-            {
-                // Increase the count of activated switches
-                activatedSwitchCount++;
-            }
+            case (DType.OnActivation):
+
+                SetDoor(!doorstate);
+                break;
+
+            case (DType.OnAllActivated):
+
+                if (activated) OnAllCounter--;
+                else OnAllCounter++;
+
+                if (OnAllCounter <= 0) SetDoor(!startOpen);
+                else SetDoor(startOpen);
+                break;
+
         }
     }
-    
-    private void SetDoor(bool open){
-        if(open){
-            OpenDoor();
-        }
-        else{
-            CloseDoor();
-        }
+    // Open or Closes door depending on boolean open.
+
+    private void SetDoor(bool open)
+    {
+
+        doorstate = open;
+        doorSprite.enabled = !open;
+        doorCollider.enabled = !open;
+
     }
 
-    void OpenDoor()
+    public void OpenDoor()
     {
         // You can implement the door opening animation or any other door opening logic here
-        doorSprite.enabled = false; // Deactivate the door or set its state to "open"
-        doorCollider.enabled = false;
+        SetDoor(true);
     }
 
-    void CloseDoor()
+    public void CloseDoor()
     {
         // You can implement the door closing animation or any other door closing logic here
-        doorSprite.enabled = true; // Activate the door or set its state to "closed"
-        doorCollider.enabled = true;
+        SetDoor(false);
     }
 }
