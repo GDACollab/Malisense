@@ -17,61 +17,28 @@ using static UnityEngine.InputSystem.Controls.AxisControl;
 public interface ISwitchable
 {
     void SwitchInit(bool activated);
-    void SwitchValidateAdd(SwitchController sw);
-    void SwitchValidateRemove(SwitchController sw);
     void SwitchInteract(bool activated);
 }
 
 
 public class SwitchController : MonoBehaviour
 {
-    
+
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
     [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) " +
-        "will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] public List<MonoBehaviour> targets;
-
-    [HideInInspector] [SerializeField]private List<MonoBehaviour> oldtargets;
+    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private MonoBehaviour[] targets;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
-    
-    private void OnValidate()
+
+
+    private void Start()
     {
-        Debug.Log("Switch: Validate Start");
-        List<MonoBehaviour> ISwitches = new List<MonoBehaviour>(targets);
-
-        if(oldtargets == null) oldtargets = new List<MonoBehaviour>();
-        foreach (var target in oldtargets)
-        {
-            if (target == null) continue;
-            else if (!targets.Contains(target))
-            {
-                ISwitchable t = target as ISwitchable;
-                t?.SwitchValidateRemove(this);
-            }
-        }
-        
-        foreach (var target in targets)
-        {
-            if (target == null) continue;
-            else if (target is not ISwitchable t) ISwitches.Remove(target);
-            else if (!oldtargets.Contains(target))
-            {
-                t.SwitchValidateAdd(this);
-            }
-        }
-
-        targets = new List<MonoBehaviour>(ISwitches);
-        oldtargets = new List<MonoBehaviour>(targets);
-
-    }
-    
-    private void Start() {
         switchSprite = GetComponent<SpriteRenderer>();
         isActivated = startActivated;
-        if(isActivated){
+        if (isActivated)
+        {
             lamp.TurnOn();
             switchSprite.flipY = true;
         }
@@ -82,13 +49,15 @@ public class SwitchController : MonoBehaviour
             t?.SwitchInit(isActivated);
         }
     }
-    
+
     // Called when the switch is clicked or activated
     public void ActivateSwitch()
     {
-        if(isActivated && !oneTimeSwitch){
+        if (isActivated && !oneTimeSwitch)
+        {
             FlipSwitch();
-            foreach(var nswitch in syncSwitches){
+            foreach (var nswitch in syncSwitches)
+            {
                 nswitch.FlipSwitch();
             }
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
@@ -100,9 +69,11 @@ public class SwitchController : MonoBehaviour
             }
 
         }
-        else if (!isActivated){
+        else if (!isActivated)
+        {
             FlipSwitch();
-            foreach (var nswitch in syncSwitches){
+            foreach (var nswitch in syncSwitches)
+            {
                 nswitch.FlipSwitch();
             }
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
@@ -113,13 +84,14 @@ public class SwitchController : MonoBehaviour
                 t?.SwitchInteract(isActivated);
             }
         }
-        
+
 
         //ADD SOUND EFFECT HERE
         // You can add a visual feedback or animation for switch activation here
     }
-    
-    public void FlipSwitch(){
+
+    public void FlipSwitch()
+    {
         SetSwitch(!isActivated);
     }
 
@@ -142,29 +114,6 @@ public class SwitchController : MonoBehaviour
             lamp.TurnOff();
             switchSprite.flipY = false;
             isActivated = false;
-        }
-    }
-    bool IsSwitchable(MonoBehaviour s) 
-    {
-        if (s == null) return true;
-        else return (s is ISwitchable);
-    }
-    public void RemoveTarget(MonoBehaviour target)
-    {
-        if (targets.Contains(target))
-        {
-            targets.Remove(target);
-            oldtargets.Remove(target);
-        }
-
-    }
-    public void AddTarget(MonoBehaviour target)
-    {
-        if (oldtargets == null) oldtargets = new List<MonoBehaviour>();
-        if (!targets.Contains(target))
-        {
-            targets.Add(target);
-            oldtargets.Add(target);
         }
     }
 }
