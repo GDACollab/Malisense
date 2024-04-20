@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 /*
@@ -28,10 +29,12 @@ public class StateMachine_Updated : MonoBehaviour
     public StateBaseClass chasing;
     public StateBaseClass alert;
     private AudioManager audioManager;
+    private StudioEventEmitter emitter;
     void Start()
     {
         switchState(currentState);
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
+        emitter = GetComponent<StudioEventEmitter>();
     }
 
     public void switchState(State newState)
@@ -71,5 +74,9 @@ public class StateMachine_Updated : MonoBehaviour
                 if (chasing != null) { chasing.On_Update(); }
                 break;
         }
+    }
+    
+    public void PlayScream(){
+        audioManager.PlayScream(emitter);
     }
 }
