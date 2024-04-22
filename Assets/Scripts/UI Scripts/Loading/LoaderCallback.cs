@@ -33,7 +33,7 @@ public class LoaderCallback : MonoBehaviour
         fadeOutUIImage.gameObject.SetActive(false);
 
         // Set the delay duration (in seconds)
-        float delayDuration = 5.0f;
+        float delayDuration = 0.1f;
 
         // Wait for the specified duration
         yield return new WaitForSeconds(delayDuration);
