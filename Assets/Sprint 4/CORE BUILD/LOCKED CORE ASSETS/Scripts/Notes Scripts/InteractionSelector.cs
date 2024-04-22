@@ -26,7 +26,7 @@ public class InteractionSelector : MonoBehaviour
         else if (a.GetComponent<ItemPickup>()) aPrio = 5;
         else aPrio = -1;
 
-        if (b.GetComponent<Door>()) bPrio = 1;
+        if (a.GetComponent<Door>()) bPrio = 1;
         else if (b.GetComponent<FloorNote>()) bPrio = 2;
         else if (b.GetComponent<SwitchController>()) bPrio = 3;
         else if (b.GetComponent<HeavyItem>()) bPrio = 4;

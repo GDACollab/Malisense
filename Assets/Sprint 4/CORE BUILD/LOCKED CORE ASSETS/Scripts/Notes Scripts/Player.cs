@@ -294,6 +294,11 @@ public class Player : MonoBehaviour
     {
         // get list of all interactable objects, in order of priority
         List<GameObject> interactions = interactArea.getInteractables();
+        if (interactions == null) {
+            Debug.Log("no interactions found");
+            interactArea.removeInteracts();
+            return;
+        }
         
         // Put down carried object
         if (!interactArea.isInteractable() && newInventory.carriedObject)
@@ -304,9 +309,10 @@ public class Player : MonoBehaviour
             interactArea.removeInteracts();
             return;
         }
-
+        
         // run through each object in the list until we find the highest priority interaction we can do
         foreach (GameObject other in interactions) {
+            
 
             // Find what object of item it is
             var item = other.GetComponent<ItemPickup>();
@@ -373,7 +379,6 @@ public class Player : MonoBehaviour
             else if (heavyItem)
             {
                 interactArea.removeInteracts();
-                Debug.Log("after interact remove");
                 newInventory.carriedObject = heavyItem;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 newInventory.carriedObject.transform.parent = interactBody.transform.parent;
