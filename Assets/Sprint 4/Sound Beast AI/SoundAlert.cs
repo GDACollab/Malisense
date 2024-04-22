@@ -77,7 +77,9 @@ public class SoundAlert : StateBaseClass
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "NoiseObject" && !aiPath.pathPending && isCircling)
+        if (collision.tag == "NoiseObject" 
+            && !aiPath.pathPending 
+            && isCircling)
         {
             // Switch to chase state
             isCircling = false;
