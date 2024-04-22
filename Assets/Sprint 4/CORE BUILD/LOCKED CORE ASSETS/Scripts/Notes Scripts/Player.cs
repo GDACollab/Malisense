@@ -292,10 +292,22 @@ public class Player : MonoBehaviour
 
     private void InteractionManager()
     {
-        // Check if the object the player is facing is interactable
-        if (interactArea.isInteractable)
+        // get list of all interactable objects, in order of priority
+        List<GameObject> interactions = interactArea.getInteractables();
+        
+        // Put down carried object
+        if (!interactArea.isInteractable() && newInventory.carriedObject)
         {
-            var other = interactArea.other;
+            newInventory.carriedObject.transform.parent = null;
+            newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
+            newInventory.carriedObject = null;
+            interactArea.removeInteracts();
+            return;
+        }
+
+        // run through each object in the list until we find the highest priority interaction we can do
+        foreach (GameObject other in interactions) {
+
             // Find what object of item it is
             var item = other.GetComponent<ItemPickup>();
             var heavyItem = other.GetComponent<HeavyItem>();
@@ -303,30 +315,44 @@ public class Player : MonoBehaviour
             var doorSwitch = other.GetComponent<SwitchController>();
             var note = other.GetComponent<FloorNote>();
 
+            // INTERACTIONS ELSE IF LIST
+            // NOTE - all entries must begin by calling interactArea.removeInteracts() and break at the end
+
             // Stop reading
             if (isReading)
             {
+                // if we are reading, we want to make sure that we can deactivate the note, 
+                // the if statement makes sure that while reading we loop through until we find the note
+                if (note == null) continue;
+
+                interactArea.removeInteracts();
                 note.DeactivateNote();
                 isReading = false;
                 canMove = true;
+                break;
             }
             // Open door
             else if (door && newInventory.carriedObject)
             {
+                interactArea.removeInteracts();
                 Destroy(newInventory.carriedObject.gameObject);
                 newInventory.carriedObject = null;
-                Destroy(other.gameObject);
+                Destroy(door.gameObject);
+                break;
             }
             // Put down carried object
             else if (newInventory.carriedObject)
             {
+                interactArea.removeInteracts();
                 newInventory.carriedObject.transform.parent = null;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 newInventory.carriedObject = null;
+                break;
             }
             // Read note
             else if (note)
             {
+                interactArea.removeInteracts();
                 if(note.name == "End Artifact"){
                     globalTeapot.villageInk = 3;
                     Loader.Load(Loader.Scene.Village);
@@ -334,37 +360,40 @@ public class Player : MonoBehaviour
                 canMove = false;
                 isReading = true;
                 note.ActivateNote();
+                break;
             }
             // Activate switch
             else if (doorSwitch)
             {
+                interactArea.removeInteracts();
                 doorSwitch.ActivateSwitch();
+                break;
             }
             // Pick up heavy item
             else if (heavyItem)
             {
+                interactArea.removeInteracts();
+                Debug.Log("after interact remove");
                 newInventory.carriedObject = heavyItem;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 newInventory.carriedObject.transform.parent = interactBody.transform.parent;
                 newInventory.carriedObject.transform.position = interactBody.transform.position;
+                break;
             }
             // Pick up regular item
             else if (item)
             {
+                interactArea.removeInteracts();
                 bool success = newInventory.AddItem(item.item, 1);
                 if (success)
                 {
-                    Destroy(other.gameObject);
+                    Destroy(item.gameObject);
                 }
+                break;
             }
         }
-        // Put down carried object
-        else if (newInventory.carriedObject)
-        {
-            newInventory.carriedObject.transform.parent = null;
-            newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
-            newInventory.carriedObject = null;
-        }
+        interactArea.removeInteracts();
+        
     }
     
     private void SoundManager(){
