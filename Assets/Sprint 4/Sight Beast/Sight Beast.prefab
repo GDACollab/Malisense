@@ -270,12 +270,12 @@ GameObject:
   - component: {fileID: 4813974590947511624}
   - component: {fileID: 1877318938981332856}
   - component: {fileID: 6115236165451100336}
-  - component: {fileID: 753788516304195369}
-  - component: {fileID: 3257812141911982038}
-  - component: {fileID: 8493179897296922661}
-  - component: {fileID: 2703888350949712623}
-  - component: {fileID: 421906813107729564}
   - component: {fileID: 1219489192654737068}
+  - component: {fileID: 6519638445488620212}
+  - component: {fileID: 3196582113618833869}
+  - component: {fileID: 4179440197986460598}
+  - component: {fileID: -1788361034846400081}
+  - component: {fileID: -2143965568594709404}
   m_Layer: 8
   m_Name: Sight Beast
   m_TagString: Enemy
@@ -410,94 +410,6 @@ MonoBehaviour:
     m_Bits: 521
   visuals: {fileID: 7399970916169899145}
   direction: {x: 0, y: 0}
---- !u!114 &753788516304195369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252077317078807248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29966feb3d2e4beda7d2423c1b6acea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  patrol: {fileID: 3257812141911982038}
-  chasing: {fileID: 2703888350949712623}
-  alert: {fileID: 8493179897296922661}
---- !u!114 &3257812141911982038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252077317078807248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 322e6c044a9d6e547ac37e176a889a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPath: {fileID: 1219489192654737068}
-  speed: 18
-  alertDuration: 10
-  minIdleTime: 2
-  maxIdleTime: 4
-  randomPath: 0
---- !u!114 &8493179897296922661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252077317078807248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 921f4e7178e842043b2bb0183b050046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gracePeriod: 0.5
-  speed: 28
-  nextWaypointDistance: 0.5
-  lookAroundTime: 2
-  lookAroundSpeed: 1.5
---- !u!114 &2703888350949712623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252077317078807248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 530b88e5616941e42b373231be6372fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 31
-  seeAroundWallsTime: 2
---- !u!114 &421906813107729564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252077317078807248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 663c4fb89fc454848af84d2788689735, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visionRadius: 11
-  visionArcSize: 120
-  visionAngle: 0
-  visionTurnTime: 0.25
-  wallLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  target: {fileID: 0}
-  targetRadius: 0.1
-  visionLight: {fileID: 6677776976504815584}
-  chaseArcMultiplier: 0.5
 --- !u!114 &1219489192654737068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +423,94 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   areas: []
+--- !u!114 &6519638445488620212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696e06af400764e619d6d8b2e5b10d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  patrol: {fileID: 4179440197986460598}
+  chasing: {fileID: -2143965568594709404}
+  alert: {fileID: -1788361034846400081}
+--- !u!114 &3196582113618833869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d9f31de5fd4a81ba083ebeb16038f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRadius: 11
+  visionArcSize: 120
+  visionAngle: 0
+  visionTurnTime: 0.25
+  wallLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  target: {fileID: 0}
+  targetRadius: 0.1
+  visionLight: {fileID: 6677776976504815584}
+  chaseArcMultiplier: 0.5
+--- !u!114 &4179440197986460598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce900e1f94fbd4d1c9cd752a312a71fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPath: {fileID: 1219489192654737068}
+  speed: 18
+  alertDuration: 10
+  minIdleTime: 2
+  maxIdleTime: 4
+  randomPath: 0
+--- !u!114 &-1788361034846400081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2367975fa3e4061b0fbd7ab617b8eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gracePeriod: 0.5
+  speed: 200
+  nextWaypointDistance: 3
+  lookAroundTime: 2
+  lookAroundSpeed: 4
+--- !u!114 &-2143965568594709404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d26299966554c449bfe606e02cf61e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 31
+  seeAroundWallsTime: 2
 --- !u!1 &5704342065390394418
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7399970916169899145}
   - component: {fileID: 7929056975138697904}
-  - component: {fileID: 9183844021184035081}
+  - component: {fileID: 1316880669396713818}
   m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
@@ -568,7 +568,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9183844021184035081
+--- !u!114 &1316880669396713818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -577,7 +577,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5704342065390394418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da5d20c670ec2534ab9ab1f73513480c, type: 3}
+  m_Script: {fileID: 11500000, guid: 68913520dcf664c0489334094f4a5ecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 753788516304195369}
+  stateMachine: {fileID: 6519638445488620212}
