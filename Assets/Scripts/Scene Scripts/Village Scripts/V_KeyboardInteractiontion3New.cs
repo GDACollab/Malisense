@@ -8,10 +8,6 @@ using UnityEngine.InputSystem;
 
 public class V_KeyboardInteractiontion3New : MonoBehaviour
 {
-    PlayerInput playerInput;
-    InputAction moveAction;
-    InputAction selectAction;
-
     [SerializeField] GameObject currentListSelected;
 
     private int currentIndex;
@@ -43,9 +39,6 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
         {
             _instance = this;
             // DontDestroyOnLoad(gameObject);
-            playerInput = GetComponent<PlayerInput>();
-            moveAction = playerInput.actions.FindAction("8 Directions Movement");
-            selectAction = playerInput.actions.FindAction("Interact");
         }
         else
         {
@@ -56,21 +49,29 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
 
     private void Update()
     {
-        simpleMovement();
         getGameObjectList();
     }
-    private void simpleMovement()
-    {
 
-        if (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered)
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
-            DaSCRIPT.moveInList(-1);
+            Vector2 inputVector = context.ReadValue<Vector2>();
+
+            if (inputVector.x < 0f)             // left
+            {
+                DaSCRIPT.moveInList(-1);
+            }
+            else if (inputVector.x > 0f)        // right
+            {
+                DaSCRIPT.moveInList(1);
+            }
         }
-        else if (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered)
-        {
-            DaSCRIPT.moveInList(1);
-        }
-        else if (selectAction.triggered)
+    }
+
+    public void Select(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
             if (!DaSCRIPT.hasEntered)
             {
@@ -78,7 +79,6 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
             }
         }
     }
-
 
     private void getGameObjectList()
     {

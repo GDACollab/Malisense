@@ -29,17 +29,9 @@ public class DialogueManager : MonoBehaviour
 
     private string currentInkFileName = "";
 
-    PlayerInput playerInput;
-    InputAction moveAction;
-    InputAction selectAction;
-
 
     void Start()
     {
-        playerInput = FindFirstObjectByType<PlayerInput>().GetComponent<PlayerInput>();
-        moveAction = playerInput.actions.FindAction("8 Directions Movement");
-        selectAction = playerInput.actions.FindAction("Interact");
-
         isPlaying = false;
         dialoguePanel.SetActive(false);
         selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
@@ -58,43 +50,6 @@ public class DialogueManager : MonoBehaviour
     {
         int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-        //If Currently Selected and Input Space bar
-        if (isPlaying)
-        {
-            // Check if there are any choices to navigate
-            if (currentStory.currentChoices.Count > 0)
-            {
-                if (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered)
-                {
-                    // Navigate up in the choices list
-                    currentChoiceIndex--;
-                    if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                    // Optionally, call a function to update the UI here
-                }
-                else if (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered)
-                {
-                    // Navigate down in the choices list
-                    currentChoiceIndex++;
-                    if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                    // Optionally, call a function to update the UI here
-                }
-
-                // Select a choice with the Enter key
-                if (selectAction.triggered)
-                {
-                    MakeChoice(currentChoiceIndex);
-                }
-            }
-            else
-            {
-                // If there are no choices, pressing Enter continues the story
-                if (selectAction.triggered)
-                {
-                    ContinueStory();
-                }
-            }
-        }
-
 
         if (!selectableScript.activateInk)
         {
@@ -116,7 +71,49 @@ public class DialogueManager : MonoBehaviour
                 EnterDialogueMode(currentInk);
             }
         }
+    }
 
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            // Check if there are any choices to navigate
+            if (currentStory.currentChoices.Count > 0)
+            {
+                Vector2 inputVector = context.ReadValue<Vector2>();
+
+                if (inputVector.x < 0f)                                         // left
+                {
+                    // Navigate up in the choices list
+                    currentChoiceIndex--;
+                    if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                    // Optionally, call a function to update the UI here
+                }
+                else if (inputVector.x > 0f)                                    // right
+                {
+                    // Navigate down in the choices list
+                    currentChoiceIndex++;
+                    if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                    // Optionally, call a function to update the UI here
+                }
+            }
+        }
+    }
+
+    public void Select(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            // Check if there are any choices to navigate
+            if (currentStory.currentChoices.Count > 0)
+            {
+                MakeChoice(currentChoiceIndex);
+            }
+            else
+            {
+                ContinueStory();
+            }
+        }
     }
 
     public void EnterDialogueMode(TextAsset inkJson)
