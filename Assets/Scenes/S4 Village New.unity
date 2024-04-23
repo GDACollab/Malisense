@@ -712,7 +712,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88c1002811ff3424a95fde7acb9766f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1297,7 +1297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88c1002811ff3424a95fde7acb9766f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88c1002811ff3424a95fde7acb9766f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3196,7 +3196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88c1002811ff3424a95fde7acb9766f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3494,7 +3494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88c1002811ff3424a95fde7acb9766f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4333,7 +4333,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88c1002811ff3424a95fde7acb9766f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4704,7 +4704,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1850888068}
   - component: {fileID: 1850888070}
-  - component: {fileID: 1850888071}
   - component: {fileID: 1850888072}
   m_Layer: 0
   m_Name: Interactions
@@ -4758,20 +4757,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1850888071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850888066}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9c16967954d7674fa752a58abe82929, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentListSelected: {fileID: 0}
-  test: {fileID: 0}
 --- !u!114 &1850888072
 MonoBehaviour:
   m_ObjectHideFlags: 0
