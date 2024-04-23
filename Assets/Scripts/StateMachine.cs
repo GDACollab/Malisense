@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Newest State machine by Vishrut
-
 /*
 *Build an enemy base class as a state machine that returns either patrolling, Alert, and chasing.
 *Put the 3 states into the inspector in a dropdown that sets the state of the enemy.
