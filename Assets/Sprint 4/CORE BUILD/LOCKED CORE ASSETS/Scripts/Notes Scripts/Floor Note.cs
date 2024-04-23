@@ -8,6 +8,7 @@ public class FloorNote : MonoBehaviour
     public GameObject Note;
     public GameObject Player;
     public bool isNear = false;
+    public static bool isPaused = false;
 
     [Header("Note Sprites")]
     public SpriteRenderer spriteRenderer;
@@ -52,8 +53,12 @@ public class FloorNote : MonoBehaviour
         // if near note and key pressed down, popup the window
     public void ActivateNote(){
         FloorNotePopup.showFNR(noteTitle, noteBody);
+        Time.timeScale = 0f;
+        isPaused = true;
     }
     public void DeactivateNote(){
         FloorNotePopup.hideFNR();
+        Time.timeScale = 1f;
+        isPaused = false;
     }
 }
