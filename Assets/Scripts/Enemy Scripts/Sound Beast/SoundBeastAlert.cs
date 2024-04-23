@@ -80,6 +80,9 @@ public class SoundBeastAlert : StateBaseClass
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        if (aiPath == null || collision == null) return;
+
         if (collision.tag == "NoiseObject" && !aiPath.pathPending && isCircling)
         {
             // Switch to chase state

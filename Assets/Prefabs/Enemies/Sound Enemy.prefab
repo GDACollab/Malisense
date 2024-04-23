@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6478435864062710483}
   - component: {fileID: 123062008065344346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sound Beast Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,14 +96,13 @@ GameObject:
   - component: {fileID: 4711781909362132195}
   - component: {fileID: 2549279616727408896}
   - component: {fileID: 4775267470979191083}
-  - component: {fileID: 6712122794904433265}
   - component: {fileID: 3616636663561123818}
   - component: {fileID: 565101980152854720}
   - component: {fileID: 2919274549453870410}
   - component: {fileID: 504572050949679027}
   - component: {fileID: -3145252187212049895}
   - component: {fileID: 3718408590041961421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sound Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -119,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 5119404684320211155}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2, y: 7.01, z: 0}
+  m_LocalPosition: {x: -2.2, y: 7.01, z: 10}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -206,7 +205,7 @@ Rigidbody2D:
   m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9124a52ebfdc8524498f223ab2f36adc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -216,25 +215,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &6712122794904433265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5119404684320211155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7fef275e54070f98553672564d5fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 600
-  nextWaypointDistance: 1
-  pathUpdateRate: 0.5
-  GFX: {fileID: 6478435864062710483}
-  reachedEndOfPath: 0
+  m_Constraints: 4
 --- !u!114 &3616636663561123818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6988e324aa9dd4c669522cbc51a46060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPath: {fileID: 0}
+  patrolPath: {fileID: 565101980152854720}
   maxSpeed: 2
   alertDuration: 10
   minIdleTime: 3
@@ -370,7 +351,7 @@ GameObject:
   - component: {fileID: 1205154590663223961}
   - component: {fileID: 9074427267050353676}
   - component: {fileID: 5822741770269264506}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sound Beast Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

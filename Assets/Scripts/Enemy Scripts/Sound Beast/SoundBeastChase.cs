@@ -61,7 +61,7 @@ public class SoundBeastChase : StateBaseClass
 
     public override void On_Update()
     {
-        if (path == null)
+        if (path == null || path.vectorPath == null)
             return;
 
         // If exceeded current amount of waypoints in the path
