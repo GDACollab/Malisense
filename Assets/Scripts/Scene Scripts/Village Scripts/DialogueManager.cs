@@ -75,26 +75,30 @@ public class DialogueManager : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            // Check if there are any choices to navigate
-            if (currentStory.currentChoices.Count > 0)
-            {
-                Vector2 inputVector = context.ReadValue<Vector2>();
+        if (isPlaying)
+        {  // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
 
-                if (inputVector.x < 0f)                                         // left
+            if (context.performed)
+            {
+                // Check if there are any choices to navigate
+                if (currentStory.currentChoices.Count > 0)
                 {
-                    // Navigate up in the choices list
-                    currentChoiceIndex--;
-                    if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                    // Optionally, call a function to update the UI here
-                }
-                else if (inputVector.x > 0f)                                    // right
-                {
-                    // Navigate down in the choices list
-                    currentChoiceIndex++;
-                    if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                    // Optionally, call a function to update the UI here
+                    Vector2 inputVector = context.ReadValue<Vector2>();
+
+                    if (inputVector.x < 0f)                                         // left
+                    {
+                        // Navigate up in the choices list
+                        currentChoiceIndex--;
+                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                        // Optionally, call a function to update the UI here
+                    }
+                    else if (inputVector.x > 0f)                                    // right
+                    {
+                        // Navigate down in the choices list
+                        currentChoiceIndex++;
+                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                        // Optionally, call a function to update the UI here
+                    }
                 }
             }
         }
@@ -102,16 +106,19 @@ public class DialogueManager : MonoBehaviour
 
     public void Select(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            // Check if there are any choices to navigate
-            if (currentStory.currentChoices.Count > 0)
+        if (isPlaying)
+        {  // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+            if (context.performed)
             {
-                MakeChoice(currentChoiceIndex);
-            }
-            else
-            {
-                ContinueStory();
+                // Check if there are any choices to navigate
+                if (currentStory.currentChoices.Count > 0)
+                {
+                    MakeChoice(currentChoiceIndex);
+                }
+                else
+                {
+                    ContinueStory();
+                }
             }
         }
     }
