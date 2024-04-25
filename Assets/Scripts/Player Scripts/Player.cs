@@ -303,11 +303,7 @@ public class Player : MonoBehaviour
     {
         // get list of all interactable objects, in order of priority
         List<GameObject> interactions = interactArea.getInteractables();
-        if (interactions == null) {
-            Debug.Log("no interactions found");
-            interactArea.removeInteracts();
-            return;
-        }
+        
         
         // Put down carried object
         if (!interactArea.isInteractable() && newInventory.carriedObject)
@@ -315,6 +311,12 @@ public class Player : MonoBehaviour
             newInventory.carriedObject.transform.parent = null;
             newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
             newInventory.carriedObject = null;
+            interactArea.removeInteracts();
+            return;
+        }
+
+        if (interactions == null) {
+            Debug.Log("no interactions found");
             interactArea.removeInteracts();
             return;
         }
@@ -380,6 +382,7 @@ public class Player : MonoBehaviour
             // Activate switch
             else if (doorSwitch)
             {
+                Debug.Log("activating switch");
                 interactArea.removeInteracts();
                 doorSwitch.ActivateSwitch();
                 break;
