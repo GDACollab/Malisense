@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{220937bf-bd03-4e6d-9c68-8453ab5a6929}">
+		<property name="name">
+			<value>CONTEXT</value>
+		</property>
+		<relationship name="folder">
+			<destination>{2e712f6e-3e08-49f3-8142-fcba344d7e06}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{432dab5b-5e61-4622-9a70-51140b32171a}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{432dab5b-5e61-4622-9a70-51140b32171a}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>4</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Dungeon_Ambience</value>
+			<value>Mon_Scream</value>
+			<value>Mon_Detection</value>
+			<value>END</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
