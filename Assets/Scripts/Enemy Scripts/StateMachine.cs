@@ -9,13 +9,14 @@ time meaning checking one state will uncheck another state.
 *Allow other programmers to add scripts that handle the above states in the inspector.
 */
 
-public class StateMachine : MonoBehaviour
+public class StateMachine : MonoBehaviour, ISwitchable
 {
     public enum State
     {
         Patrolling,
         Alert,
-        Chasing
+        Chasing,
+        Distracted
     }
 
     public State currentState;
@@ -23,14 +24,18 @@ public class StateMachine : MonoBehaviour
     public StateBaseClass patrol;
     public StateBaseClass chasing;
     public StateBaseClass alert;
+    public StateBaseClass distracted;
 
+    public bool Statue;
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
+    private bool distractInit = false;
     private AudioManager audioManager;
     void Start()
     {
-        currentState = State.Patrolling;
+        if(Statue) currentState = State.Distracted;
+        else currentState = State.Patrolling;
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
 
@@ -41,6 +46,7 @@ public class StateMachine : MonoBehaviour
             case State.Patrolling:
                 alertInit = false;
                 chaseInit = false;
+                distractInit = false;
                 if (!patrolInit)
                 {
                     patrol.Init();
@@ -51,6 +57,7 @@ public class StateMachine : MonoBehaviour
             case State.Alert:
                 patrolInit = false;
                 chaseInit = false;
+                distractInit = false;
                 if (!alertInit)
                 {
                     alert.Init();
@@ -61,6 +68,7 @@ public class StateMachine : MonoBehaviour
             case State.Chasing:
                 patrolInit = false;
                 alertInit = false;
+                distractInit = false;
                 if (!chaseInit)
                 {
                     audioManager.Play(audioManager.monsterScream);
@@ -69,6 +77,31 @@ public class StateMachine : MonoBehaviour
                 }
                 if (chasing != null) { chasing.On_Update(); }
                 break;
+            case State.Distracted:
+                patrolInit = false;
+                alertInit = false;
+                chaseInit = false;
+                if (!distractInit)
+                {
+                    distracted.Init();
+                    distractInit = true;
+                }
+                if (distracted != null) { distracted.On_Update(); }
+                break;
         }
     }
+
+    public bool IsStatue() => Statue;
+
+    public void SwitchInit(bool activated)
+    {
+
+    }
+    public void SwitchInteract(bool activated)
+    {
+        gameObject.tag = "Enemy";
+        currentState = State.Alert;
+        Debug.Log("Monster Working");
+    }
 }
+
