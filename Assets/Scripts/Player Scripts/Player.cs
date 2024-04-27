@@ -1,3 +1,4 @@
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,8 +65,11 @@ public class Player : MonoBehaviour
     private GlobalTeapot globalTeapot;
     // Player Sprite
     private SpriteRenderer playerSprite;
+    // Player Animator
+    private Animator playerAnimator;
     // Input System
     private PlayerInput playerInput;
+    
     private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
     private InputAction hideMessage, setEnemies, hideFootsteps, activateFunctions; // Test inputs remove before final build please
     // Rigid Body and interaction variables
@@ -101,7 +105,10 @@ public class Player : MonoBehaviour
         
         // Get player sprite
         playerSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        
+
+        // Get player animator
+        playerAnimator = transform.GetChild(2).GetComponent<Animator>();
+
         // Get Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         
@@ -215,6 +222,7 @@ public class Player : MonoBehaviour
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!isExhausted))
         {
             isSprinting = true;
+            playerAnimator.SetBool("sprinting", true);
             adjustedSpeed *= sprintRatio;   // Adjust Speed
             currentStamina -= staminaDepletion * Time.deltaTime;        // deplete stamina
             if (currentStamina < 0f)
@@ -225,6 +233,7 @@ public class Player : MonoBehaviour
         else
         {
             isSprinting = false;
+            playerAnimator.SetBool("sprinting", false);
             if (currentStamina < maxStamina)
             {                            // regen stamina
                 currentStamina += staminaRegen * Time.deltaTime;
