@@ -7,6 +7,7 @@ public class FNRManager : MonoBehaviour
     [Header("Canvas and Window Slots")]
     public GameObject FNRWindow;
     public GameObject Darken_Background;
+    public GameObject Floor_Note_Popup_Image;
     [Header("Text")]
     public TextMeshProUGUI Title;
     public TextMeshProUGUI Body;
@@ -27,6 +28,7 @@ public class FNRManager : MonoBehaviour
 
         FNRWindow.SetActive(true);
         Darken_Background.SetActive(true);
+        Floor_Note_Popup_Image.SetActive(true);
     }
 
     // hide the Floor Note Reader
@@ -34,5 +36,6 @@ public class FNRManager : MonoBehaviour
     {
         FNRWindow.SetActive(false);
         Darken_Background.SetActive(false);
+        Floor_Note_Popup_Image.SetActive(false);
     }
 }

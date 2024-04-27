@@ -53,12 +53,19 @@ public class FloorNote : MonoBehaviour
         // if near note and key pressed down, popup the window
     public void ActivateNote(){
         FloorNotePopup.showFNR(noteTitle, noteBody);
+        if (Time.timeScale != 0f) 
+        {
+            Time.timeScale = 0f;
+        }
     }
     public void DeactivateNote(){
         FloorNotePopup.hideFNR();
         if (disappear)
         {
             Object.Destroy(Note);
+        if (Time.timeScale == 0f) 
+        {
+            Time.timeScale = 1f;
         }
     }
 }
