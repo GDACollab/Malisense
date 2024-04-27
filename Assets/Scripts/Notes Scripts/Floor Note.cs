@@ -63,6 +63,7 @@ public class FloorNote : MonoBehaviour
         if (disappear)
         {
             Object.Destroy(Note);
+        }
         if (Time.timeScale == 0f) 
         {
             Time.timeScale = 1f;
