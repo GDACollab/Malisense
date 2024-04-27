@@ -19,16 +19,35 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
 
-    // Start is called before the first frame update
-    private Ink.Runtime.Story currentStory;
+	[Header("Input")]
+	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
+	[SerializeField] float moveRepeatDelay = 0.5f;
+	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
+	[SerializeField] float moveRepeatRate = 0.1f;
+	bool firstInput = true;
+	float moveTimer = 0f;
+	Controls controls;
+
+	// Start is called before the first frame update
+	private Ink.Runtime.Story currentStory;
 
     private static DialogueManager instance;
 
+    [Header("Other")]
     [SerializeField] private bool isPlaying;
     [SerializeField] V_SelectableItems3New selectableScript;
 
     private string currentInkFileName = "";
 
+
+    void Awake()
+    {
+		// Input
+		controls = new Controls();
+		controls.UI.Enable();
+        controls.UI.Move.performed += Move;
+		controls.UI.Select.performed += Select;
+	}
 
     void Start()
     {
@@ -50,6 +69,7 @@ public class DialogueManager : MonoBehaviour
     {
         int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
+		HeldDownMovementInput();
 
         if (!selectableScript.activateInk)
         {
@@ -73,42 +93,102 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void Move(InputAction.CallbackContext context)
+    void HeldDownMovementInput()
     {
-        if (isPlaying)
-        {  // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+		// Decrement moveRepeatCooldown
+		if (moveTimer > 0f)
+		{
+			moveTimer -= Time.deltaTime;
 
-            if (context.performed)
-            {
-                // Check if there are any choices to navigate
-                if (currentStory.currentChoices.Count > 0)
-                {
-                    Vector2 inputVector = context.ReadValue<Vector2>();
+			if (moveTimer < 0f)
+			{
+				moveTimer = 0f;
+			}
+		}
 
-                    if (inputVector.x < 0f)                                         // left
-                    {
-                        // Navigate up in the choices list
-                        currentChoiceIndex--;
-                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                        // Optionally, call a function to update the UI here
-                    }
-                    else if (inputVector.x > 0f)                                    // right
-                    {
-                        // Navigate down in the choices list
-                        currentChoiceIndex++;
-                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                        // Optionally, call a function to update the UI here
-                    }
-                }
-            }
-        }
+		// Check if we can move
+		if (moveTimer <= 0f)
+		{
+			// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+			if (isPlaying)
+			{
+				// Check if there are any choices to navigate
+				if (currentStory.currentChoices.Count > 0)
+				{
+					Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
+
+					// Check for horizontal input
+					if (inputVector.x != 0f)
+					{
+						// Put move on moveRepeatRate cooldown
+						firstInput = false;
+						moveTimer = moveRepeatRate;
+
+						if (inputVector.x < 0f)                                         // left
+						{
+							// Navigate up in the choices list
+							currentChoiceIndex--;
+							if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+							// Optionally, call a function to update the UI here
+						}
+						else if (inputVector.x > 0f)                                    // right
+						{
+							// Navigate down in the choices list
+							currentChoiceIndex++;
+							if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+							// Optionally, call a function to update the UI here
+						}
+					}
+				}
+			}
+		}
     }
 
-    public void Select(InputAction.CallbackContext context)
+	public void Move(InputAction.CallbackContext context)
+	{
+		if (context.performed)
+		{
+			// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+			if (isPlaying)
+            {  
+			   // Check if there are any choices to navigate
+				if (currentStory.currentChoices.Count > 0)
+				{
+					Vector2 inputVector = context.ReadValue<Vector2>();
+
+                    // Check for horizontal input
+                    if (inputVector.x != 0f)
+                    {
+						if (inputVector.x < 0f)                                         // left
+						{
+							// Navigate up in the choices list
+							currentChoiceIndex--;
+							if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+							// Optionally, call a function to update the UI here
+						}
+						else if (inputVector.x > 0f)                                    // right
+						{
+							// Navigate down in the choices list
+							currentChoiceIndex++;
+							if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+							// Optionally, call a function to update the UI here
+						}
+
+						// Put move back on moveRepeatDelay cooldown
+						firstInput = true;
+						moveTimer = moveRepeatDelay;
+					}
+				}
+			}	
+		}
+	}
+
+	void Select(InputAction.CallbackContext context)
     {
         if (isPlaying)
-        {  // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-            if (context.performed)
+		// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+		{
+			if (context.performed)
             {
                 // Check if there are any choices to navigate
                 if (currentStory.currentChoices.Count > 0)

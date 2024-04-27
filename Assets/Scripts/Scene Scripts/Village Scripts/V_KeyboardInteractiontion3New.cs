@@ -8,6 +8,17 @@ using UnityEngine.InputSystem;
 
 public class V_KeyboardInteractiontion3New : MonoBehaviour
 {
+    [Header("Input")]
+	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
+	[SerializeField] float moveRepeatDelay = 0.5f;
+	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
+	[SerializeField] float moveRepeatRate = 0.1f;
+    bool firstInput = true;
+    float moveTimer = 0f;
+    Controls controls;
+
+
+    [Header("Lists")]
     [SerializeField] GameObject currentListSelected;
 
     private int currentIndex;
@@ -44,43 +55,97 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // Input
+        controls = new Controls();
+        controls.UI.Enable();
+        controls.UI.Move.performed += Move;
+        controls.UI.Select.performed += Select;
     }
 
 
     private void Update()
     {
         getGameObjectList();
+		HeldDownMovementInput();
     }
 
-    public void Move(InputAction.CallbackContext context)
+    void HeldDownMovementInput()
     {
-        if (context.performed)
+		// Decrement moveRepeatCooldown
+		if (moveTimer > 0f)
         {
-            Vector2 inputVector = context.ReadValue<Vector2>();
+			moveTimer -= Time.deltaTime;
 
-            if (inputVector.x < 0f)             // left
+            if (moveTimer < 0f)
             {
-                DaSCRIPT.moveInList(-1);
-            }
-            else if (inputVector.x > 0f)        // right
-            {
-                DaSCRIPT.moveInList(1);
+				moveTimer = 0f;
             }
         }
-    }
 
-    public void Select(InputAction.CallbackContext context)
-    {
-        if (context.performed)
+        // Check if we can move
+        if (moveTimer <= 0f)
         {
-            if (!DaSCRIPT.hasEntered)
-            {
-                DaSCRIPT.selectObject();
-            }
-        }
-    }
+			Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
 
-    private void getGameObjectList()
+            // Check for horizontal input
+			if (inputVector.x != 0f)
+			{
+				// Put move on moveRepeatRate cooldown
+				firstInput = false;
+				moveTimer = moveRepeatRate;
+
+				// Move
+				if (inputVector.x < 0f)             // left
+				{
+					DaSCRIPT.moveInList(-1);
+				}
+				else if (inputVector.x > 0f)        // right
+				{
+					DaSCRIPT.moveInList(1);
+				}
+			}
+		}
+	}
+
+    void Move(InputAction.CallbackContext context)
+    {
+		if (context.performed)
+		{
+			Vector2 inputVector = context.ReadValue<Vector2>();
+
+			// Check for horizontal input
+			if (inputVector.x != 0f)
+            {
+				// Move
+				if (inputVector.x < 0f)             // left
+				{
+					DaSCRIPT.moveInList(-1);
+				}
+				else if (inputVector.x > 0f)        // right
+				{
+					DaSCRIPT.moveInList(1);
+				}
+
+				// Put move back on moveRepeatDelay cooldown
+                firstInput = true;
+				moveTimer = moveRepeatDelay;
+			}
+		}
+	}
+
+	void Select(InputAction.CallbackContext context)
+	{
+		if (context.performed)
+		{
+			if (!DaSCRIPT.hasEntered)
+			{
+				DaSCRIPT.selectObject();
+			}
+		}
+	}
+
+	private void getGameObjectList()
     {
         //USE LATER
         DaSCRIPT = currentListSelected.GetComponent<V_SelectableItems3New>();
