@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,8 +74,9 @@ public class DoorController : MonoBehaviour, ISwitchable
         doorstate = open;
         doorSprite.enabled = !open;
         doorCollider.enabled = !open;
-
+        AstarPath.active.UpdateGraphs(new GraphUpdateObject(gameObject.GetComponent<PolygonCollider2D>().bounds));
     }
+
 
     public void OpenDoor()
     {

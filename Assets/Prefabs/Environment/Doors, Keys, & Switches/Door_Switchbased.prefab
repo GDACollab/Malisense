@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1599361701924622066}
   - component: {fileID: 1060745926655753273}
   - component: {fileID: 6764793999214167645}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door_Switchbased
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,10 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6666f47a32fed94ca23052234707941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 8290041445005185098}
-  switches:
-  - {fileID: 0}
-  - {fileID: 0}
+  startOpen: 0
+  DoorType: 0
 --- !u!60 &6764793999214167645
 PolygonCollider2D:
   m_ObjectHideFlags: 0
