@@ -8,6 +8,7 @@ public class PauseManager : MonoBehaviour
 {
     private static PauseManager instance;
     public Canvas pauseCanvas;
+    [SerializeField] GameObject optionsMenu;
     public static bool isPaused;
     PlayerInput playerInput;
     InputAction pauseButton;
@@ -34,6 +35,14 @@ public class PauseManager : MonoBehaviour
         pauseButton.performed += ctx => TogglePause();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    }
+
     void TogglePause()
     {
         if (isPaused)
@@ -51,6 +60,13 @@ public class PauseManager : MonoBehaviour
         pauseCanvas.enabled = true;
         Time.timeScale = 0f;
         isPaused = true;
+    }
+
+    public void Options()
+    {
+        pauseCanvas.enabled = false;
+        optionsMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void ResumeGame()
