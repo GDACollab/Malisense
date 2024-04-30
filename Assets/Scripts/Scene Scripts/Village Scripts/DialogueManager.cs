@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
+    private int defaultHeight = 115;
 
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
@@ -204,11 +205,16 @@ public class DialogueManager : MonoBehaviour
             {
                 // Highlight the current choice
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow; // Example of highlighting
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // expand box to see rest of text
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().alignment = TextAlignmentOptions.Bottom; // aligntext at the bottom, so it expands up
             }
             else
             {
                 // Revert other choices to their normal state
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.white; // Example of normal state
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.Ellipsis; //return box to normal size
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().alignment = TextAlignmentOptions.TopLeft; // reset alignment
+                choices[i].GetComponent<vertical>().rect.height = defaultHeight;
             }
         }
     }
