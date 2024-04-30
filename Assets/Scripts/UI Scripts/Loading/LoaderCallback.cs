@@ -26,12 +26,9 @@ public class LoaderCallback : MonoBehaviour
         yield return FadeToBlack(); // Fades current scene to black
         fadeOutUIImage.gameObject.SetActive(false);
 
-        // Set the delay duration (in seconds) between black->next scene
-        float delayDuration = 0.1f;
-
         // Wait for the specified duration
-
-        yield return new WaitForSeconds(delayDuration);
+        yield return new WaitForSeconds(5.0f);
+        //yield return WaitOnLoadScene();
 
         yield return StartCoroutine(LoadNextScene());
 
@@ -60,6 +57,17 @@ public class LoaderCallback : MonoBehaviour
         {
             objectColor.a += fadeSpeed * Time.deltaTime;
             fadeOutUIImage.color = objectColor;
+            yield return null;
+        }
+    }
+
+    // Waits on LoadingScreen for as long as it needs to
+    private IEnumerator WaitOnLoadScene()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync((int)Loader.Scene.LoadingScene);
+        fadeOutUIImage.gameObject.SetActive(true);
+        while (!operation.isDone)
+        {
             yield return null;
         }
     }
