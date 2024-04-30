@@ -9,12 +9,15 @@ public class SoundBeastAlert : StateBaseClass
     public float circleRadius = 3f;
     public float circleTime = 10f; // Time to circle around the player's position
     public float angularSpeed = 0.7f;
+
+    public float AlertSpeed = 5f;
+
     private float angle = 0;
     private StateMachine machine;
-
+    private bool movedtooutside = false;
     private Transform player;
     private AIPath aiPath;
-    public bool isCircling = false;
+    private bool isCircling = false;
     private float circleStartTime;
     private Vector3 circleCenter;
     private Rigidbody2D rb;
@@ -29,9 +32,10 @@ public class SoundBeastAlert : StateBaseClass
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
         isCircling = false;
+        circleCenter = player.position;
 
         // Start pathfinding to player's position
-    
+        aiPath.maxSpeed = AlertSpeed;
         aiPath.destination = player.position;
         aiPath.SearchPath();
     }
@@ -43,10 +47,9 @@ public class SoundBeastAlert : StateBaseClass
         if (!aiPath.pathPending && !isCircling && aiPath.reachedEndOfPath)
         {
             // Start circling around player's position
-            isCircling = true;
-            circleCenter = rb.position;
             circleStartTime = Time.time;
             angle = 0;
+            isCircling = true;
         }
 
         if (!aiPath.pathPending && isCircling)
@@ -63,12 +66,24 @@ public class SoundBeastAlert : StateBaseClass
             else
             {
                 //rotate in place
-
-                angle += Time.deltaTime * angularSpeed; // Adjust speed of circling
-                angle %= 2 * Mathf.PI;
-                float x = Mathf.Cos(angle) * circleRadius + circleCenter.x;
-                float y = Mathf.Sin(angle) * circleRadius + circleCenter.y;
-                transform.position = new Vector2(x, y);
+                float x = circleCenter.x + Mathf.Cos(angle) * circleRadius;
+                float y = circleCenter.y + Mathf.Sin(angle) * circleRadius;
+                if (movedtooutside != true)
+                {
+                    aiPath.destination = new Vector3(x, y, 0);
+                    aiPath.SearchPath();
+                    if (aiPath.reachedEndOfPath)
+                    {
+                        movedtooutside = true;
+                    }
+                }
+                if (movedtooutside == true && aiPath.reachedEndOfPath && !aiPath.pathPending)
+                {
+                    float x1 = circleCenter.x + Mathf.Cos(angle) * circleRadius;
+                    float y1 = circleCenter.y + Mathf.Sin(angle) * circleRadius;
+                    transform.position = new Vector3(x1, y1, 0);
+                    angle += angularSpeed * Time.deltaTime;
+                }
 
             }
             
