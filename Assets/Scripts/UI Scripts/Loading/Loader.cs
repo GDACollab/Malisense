@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Loader 
+public static class Loader
 {   
     public enum Scene
     {
@@ -16,10 +16,10 @@ public static class Loader
     }
     private static Action onLoaderCallback;
     private static Scene currentScene = Scene.MainMenu;
+    private static Scene nextScene = Scene.LoadingScene;
 
     public static void Initialize()
     {
-        //SceneManager.LoadScene((int)Scene.MainMenu);
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
 
@@ -29,12 +29,14 @@ public static class Loader
         onLoaderCallback = () =>
         {
             currentScene = scene;
+            Debug.Log("OnLoaderCallback");
             SceneManager.LoadScene((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
         };
         
         currentScene = Scene.LoadingScene;
+        nextScene = scene;
         // Load Loading Scene which calls on the function that runs Action
-        SceneManager.LoadScene((int)Scene.LoadingScene);
+         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
 
     public static void LoaderCallback()
@@ -49,5 +51,10 @@ public static class Loader
     public static Scene GetCurrentScene(){
         
         return currentScene;
+    }
+
+    public static Scene GetNextScene()
+    {
+        return nextScene;
     }
 }
