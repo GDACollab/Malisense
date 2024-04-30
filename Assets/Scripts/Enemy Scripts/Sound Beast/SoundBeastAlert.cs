@@ -14,10 +14,11 @@ public class SoundBeastAlert : StateBaseClass
 
     private float angle = 0;
     private StateMachine machine;
-    private bool movedtooutside = false;
+    public bool movedToOutside = false; // debug public
     private Transform player;
     private AIPath aiPath;
-    private bool isCircling = false;
+    public bool isCircling = false; // debug public
+    public bool isMovingToOutside = false; // debug public
     private float circleStartTime;
     private Vector3 circleCenter;
     private Rigidbody2D rb;
@@ -32,6 +33,7 @@ public class SoundBeastAlert : StateBaseClass
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
         isCircling = false;
+        movedToOutside = false;
         circleCenter = player.position;
 
         // Start pathfinding to player's position
@@ -66,21 +68,29 @@ public class SoundBeastAlert : StateBaseClass
             else
             {
                 //rotate in place
-                float x = circleCenter.x + Mathf.Cos(angle) * circleRadius;
-                float y = circleCenter.y + Mathf.Sin(angle) * circleRadius;
-                if (movedtooutside != true)
+                
+                if (movedToOutside != true )
                 {
-                    aiPath.destination = new Vector3(x, y, 0);
-                    aiPath.SearchPath();
-                    if (aiPath.reachedEndOfPath)
+                    if (!isMovingToOutside)
                     {
-                        movedtooutside = true;
+                        float x = circleCenter.x + Mathf.Cos(angle) * circleRadius;
+                        float y = circleCenter.y + Mathf.Sin(angle) * circleRadius;
+                        aiPath.destination = new Vector3(x, y, 0);
+                        aiPath.SearchPath();
+                        isMovingToOutside = true;
+                    } else if  (aiPath.reachedEndOfPath && isMovingToOutside == true)
+                    {
+                        movedToOutside = true;
+                        isMovingToOutside = false;
                     }
+                    
+                  
                 }
-                if (movedtooutside == true && aiPath.reachedEndOfPath && !aiPath.pathPending)
+                if (movedToOutside == true) 
                 {
                     float x1 = circleCenter.x + Mathf.Cos(angle) * circleRadius;
                     float y1 = circleCenter.y + Mathf.Sin(angle) * circleRadius;
+                    // This should be using the A* pathfinding, not direct position modification
                     transform.position = new Vector3(x1, y1, 0);
                     angle += angularSpeed * Time.deltaTime;
                 }
