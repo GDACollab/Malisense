@@ -35,6 +35,14 @@ public class PauseManager : MonoBehaviour
         pauseButton.performed += ctx => TogglePause();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    }
+
     void TogglePause()
     {
         if (isPaused)
