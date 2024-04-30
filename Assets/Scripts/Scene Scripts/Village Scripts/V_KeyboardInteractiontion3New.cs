@@ -9,13 +9,14 @@ using UnityEngine.InputSystem;
 public class V_KeyboardInteractiontion3New : MonoBehaviour
 {
     [Header("Input")]
-	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
+    Controls controls;
+
+    [Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
 	[SerializeField] float moveRepeatDelay = 0.5f;
 	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
 	[SerializeField] float moveRepeatRate = 0.1f;
     bool firstInput = true;
     float moveTimer = 0f;
-    Controls controls;
 
 
     [Header("Lists")]
@@ -59,7 +60,7 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
         // Input
         controls = new Controls();
         controls.UI.Enable();
-        controls.UI.Move.performed += Move;
+        controls.UI.Move.canceled += Move;
         controls.UI.Select.performed += Select;
     }
 
@@ -91,9 +92,17 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
             // Check for horizontal input
 			if (inputVector.x != 0f)
 			{
-				// Put move on moveRepeatRate cooldown
-				firstInput = false;
-				moveTimer = moveRepeatRate;
+                if (firstInput)
+                {
+                    // Put move on moveRepeatDelay cooldown
+                    firstInput = false;
+                    moveTimer = moveRepeatDelay;
+                }
+                else
+                {
+                    // Put move on moveRepeatRate cooldown
+                    moveTimer = moveRepeatRate;
+                }
 
 				// Move
 				if (inputVector.x < 0f)             // left
@@ -110,28 +119,11 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
 
     void Move(InputAction.CallbackContext context)
     {
-		if (context.performed)
-		{
-			Vector2 inputVector = context.ReadValue<Vector2>();
-
-			// Check for horizontal input
-			if (inputVector.x != 0f)
-            {
-				// Move
-				if (inputVector.x < 0f)             // left
-				{
-					DaSCRIPT.moveInList(-1);
-				}
-				else if (inputVector.x > 0f)        // right
-				{
-					DaSCRIPT.moveInList(1);
-				}
-
-				// Put move back on moveRepeatDelay cooldown
-                firstInput = true;
-				moveTimer = moveRepeatDelay;
-			}
-		}
+		if (context.canceled)
+        {
+            firstInput = true;
+            moveTimer = 0f;
+        }
 	}
 
 	void Select(InputAction.CallbackContext context)
