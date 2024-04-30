@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class LoaderCallback : MonoBehaviour
 {
     private static bool isFirstUpdate = true;
-    private static bool isDone = false;
+    private static bool isDone = false; // Ensures everything is reset after finishing
     public Image fadeOutUIImage; // Reference to the UI Image
     public float fadeSpeed = 0.1f;
     static AsyncOperation operation;
@@ -19,25 +19,19 @@ public class LoaderCallback : MonoBehaviour
         if (isFirstUpdate)
         {
             isFirstUpdate = false;
-            Debug.Log("Doing routine");
             StartCoroutine(LoadingDelay());
         }
         else if (isDone)
         {
-            Debug.Log("Is Done");
+            operation = null;
             isDone = false;
             isFirstUpdate = true;
         }
         else
         {
-            if (operation != null && operation.isDone)
+            if (operation != null && operation.progress >= 0.9f)
             {
-                operation = null;
                 StartCoroutine(LoadNextScene());
-            }
-            else
-            {
-                StartCoroutine(WaitForASecond());
             }
         }
     }
@@ -45,18 +39,9 @@ public class LoaderCallback : MonoBehaviour
     private IEnumerator LoadingDelay()
     {
         yield return FadeToBlack(); // Fades current scene to black
-        //fadeOutUIImage.gameObject.SetActive(false);
 
-        // Wait for the specified duration
-        //yield return new WaitForSeconds(5.0f);
+        // Wait for the next scene to finish properly loading
         yield return StartCoroutine(WaitOnLoadScene());
-
-        yield return StartCoroutine(LoadNextScene());
-
-        // Call the loader callback after the delay
-        isDone = true;
-        Debug.Log("Trying to callback");
-        Loader.LoaderCallback();
     }
 
     // Fades current scene to black in preperation for the next Scene
@@ -65,7 +50,6 @@ public class LoaderCallback : MonoBehaviour
         Color objectColor = fadeOutUIImage.color; //Gets Object Color and Modifies values
         while (fadeOutUIImage.color.a > 0)
         {
-            Debug.Log("Fading");
             objectColor.a -= fadeSpeed * Time.deltaTime;
             fadeOutUIImage.color = objectColor;
             yield return null;
@@ -75,18 +59,20 @@ public class LoaderCallback : MonoBehaviour
     // Loads the Next Scene
     private IEnumerator LoadNextScene()
     {
-        Debug.Log("Attempt to load next");
+        
+        // Attempting to fade Loading screen to black (currently fails)
+        yield return StartCoroutine(FadeToBlack());
         Color objectColor = fadeOutUIImage.color; //Gets Object Color and Modifies values
         fadeOutUIImage.gameObject.SetActive(true);
         while (fadeOutUIImage.color.a < 1.5)
         {
-            Debug.Log("Loading Next");
             objectColor.a += fadeSpeed * Time.deltaTime;
             fadeOutUIImage.color = objectColor;
             yield return null;
         }
+
+        // Call the loader callback after the delay
         isDone = true;
-        Debug.Log("Trying to callback");
         Loader.LoaderCallback();
     }
 
@@ -95,17 +81,9 @@ public class LoaderCallback : MonoBehaviour
     {
         operation = SceneManager.LoadSceneAsync((int)Loader.GetNextScene());
         fadeOutUIImage.gameObject.SetActive(true);
-        while (!operation.isDone)
+        while (operation.progress <= 0.9)
         {
-            Debug.Log("waiting on screen");
             yield return null;
         }
-        Debug.Log("Finished Waiting on Screen");
     }
-
-    private IEnumerator WaitForASecond()
-    {
-        yield return new WaitForSeconds(0.1f);
-    }
-
 }
