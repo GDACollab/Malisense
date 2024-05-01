@@ -21,22 +21,10 @@ public class AltarScript : MonoBehaviour
         if(other.CompareTag("Player")){
             foreach(GameObject eObj in enemyObjects){
                 StateMachine enemy = eObj.GetComponent<StateMachine>();
-                // Remove if alert when alert goes to patrol automatically
-                if(enemy.currentState==StateMachine.State.Chasing || enemy.currentState==StateMachine.State.Alert){ 
-                    // enemy.switchState(StateMachine_Updated.State.Alert); 
-                    // Replace with just setting to alert when alert goes to patrol automatically
-                    StartCoroutine(CooldownEnemy(enemy)); 
+                if(enemy.currentState==StateMachine.State.Chasing){ 
+                    enemy.currentState = StateMachine.State.Alert;
                 }
             }
         }
-    }
-    
-    // Remove once alert goes to patrol automatically
-    private IEnumerator CooldownEnemy(StateMachine enemy){
-        enemy.currentState = StateMachine.State.Alert;
-        
-        yield return new WaitForSeconds(alertCooldown);
-        
-        enemy.currentState = StateMachine.State.Patrolling;
     }
 }
