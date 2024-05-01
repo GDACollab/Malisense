@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 /*
 *Build an enemy base class as a state machine that returns either patrolling, Alert, and chasing.
@@ -28,10 +29,12 @@ public class StateMachine : MonoBehaviour
     private bool patrolInit = false;
     private bool chaseInit = false;
     private AudioManager audioManager;
+    private StudioEventEmitter emitter;
     void Start()
     {
         currentState = State.Patrolling;
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
+        emitter = GetComponent<StudioEventEmitter>();
     }
 
     void Update()
@@ -63,12 +66,16 @@ public class StateMachine : MonoBehaviour
                 alertInit = false;
                 if (!chaseInit)
                 {
-                    audioManager.Play(audioManager.monsterScream);
+                    PlayScream();
                     chasing.Init();
                     chaseInit = true;
                 }
                 if (chasing != null) { chasing.On_Update(); }
                 break;
         }
+    }
+    
+    public void PlayScream(){
+        audioManager.PlayScream(emitter);
     }
 }

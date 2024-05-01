@@ -225,6 +225,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlMessage: {fileID: 0}
   enemies: []
+  testFunctions:
+    m_PersistentCalls:
+      m_Calls: []
   walkingSpeed: 6
   sprintRatio: 2
   sneakRatio: 1
@@ -284,10 +287,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062073fe972044885a8d4efed7e0c829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 0
-  inventory: []
+  size: 3
+  inventory:
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
   carriedObject: {fileID: 0}
-  currentArtifact: {fileID: 0}
+  currentArtifact: {fileID: 11400000, guid: c9b1a678494ea0442acb94ed7326ade0, type: 2}
 --- !u!114 &3672404848277679862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,7 +556,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 1672
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -579,8 +588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f626b535800efb4ab09e5faf6765cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInteractable: 0
   other: {fileID: 0}
+  objInteracts: []
 --- !u!1001 &7270045780065484804
 PrefabInstance:
   m_ObjectHideFlags: 0
