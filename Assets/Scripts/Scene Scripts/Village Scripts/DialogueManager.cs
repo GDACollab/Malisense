@@ -45,7 +45,6 @@ public class DialogueManager : MonoBehaviour
 		// Input
 		controls = new Controls();
 		controls.UI.Enable();
-        controls.UI.Move.performed += Move;
 		controls.UI.Select.performed += Select;
 	}
 
@@ -69,7 +68,7 @@ public class DialogueManager : MonoBehaviour
     {
         int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-		HeldDownMovementInput();
+		MovementInput();
 
         if (!selectableScript.activateInk)
         {
@@ -93,114 +92,90 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void HeldDownMovementInput()
+    void MovementInput()
     {
-		// Decrement moveRepeatCooldown
-		if (moveTimer > 0f)
-		{
-			moveTimer -= Time.deltaTime;
+		// Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+		// Check that there are dialogue options to choose from otherwise there's no option to move
+		if (isPlaying && currentStory.currentChoices.Count > 0)
+        {
+			// Read movement input
+			Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
 
-			if (moveTimer < 0f)
-			{
-				moveTimer = 0f;
-			}
-		}
+			// There's horizontal movement input
+			if (inputVector.x != 0f)
+            {
 
-		// Check if we can move
-		if (moveTimer <= 0f)
-		{
-			// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-			if (isPlaying)
-			{
-				// Check if there are any choices to navigate
-				if (currentStory.currentChoices.Count > 0)
-				{
-					Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
+                // Moving is on cooldown
+                if (moveTimer > 0f)
+                {
+                    moveTimer -= Time.deltaTime;
 
-					// Check for horizontal input
-					if (inputVector.x != 0f)
-					{
-						// Put move on moveRepeatRate cooldown
-						firstInput = false;
-						moveTimer = moveRepeatRate;
-
-						if (inputVector.x < 0f)                                         // left
-						{
-							// Navigate up in the choices list
-							currentChoiceIndex--;
-							if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-							// Optionally, call a function to update the UI here
-						}
-						else if (inputVector.x > 0f)                                    // right
-						{
-							// Navigate down in the choices list
-							currentChoiceIndex++;
-							if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-							// Optionally, call a function to update the UI here
-						}
-					}
-				}
-			}
-		}
-    }
-
-	public void Move(InputAction.CallbackContext context)
-	{
-		if (context.performed)
-		{
-			// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-			if (isPlaying)
-            {  
-			   // Check if there are any choices to navigate
-				if (currentStory.currentChoices.Count > 0)
-				{
-					Vector2 inputVector = context.ReadValue<Vector2>();
-
-                    // Check for horizontal input
-                    if (inputVector.x != 0f)
+                    if (moveTimer < 0f)
                     {
-						if (inputVector.x < 0f)                                         // left
-						{
-							// Navigate up in the choices list
-							currentChoiceIndex--;
-							if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-							// Optionally, call a function to update the UI here
-						}
-						else if (inputVector.x > 0f)                                    // right
-						{
-							// Navigate down in the choices list
-							currentChoiceIndex++;
-							if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-							// Optionally, call a function to update the UI here
-						}
+                        moveTimer = 0f;
+                    }
+                }
 
-						// Put move back on moveRepeatDelay cooldown
-						firstInput = true;
+                // Can Move
+                if (moveTimer <= 0f)
+                {
+					// Check if this is the first movement input after there was just no movement
+					if (firstInput)
+					{
+						// Put move on moveRepeatDelay cooldown
+						firstInput = false;
 						moveTimer = moveRepeatDelay;
 					}
-				}
-			}	
-		}
-	}
+					else
+					{
+						// Put move on moveRepeatRate cooldown
+						moveTimer = moveRepeatRate;
+					}
+
+					// Move
+					if (inputVector.x < 0f)             // left
+					{
+						// Navigate up in the choices list
+						currentChoiceIndex--;
+						if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+						// Optionally, call a function to update the UI here
+					}
+					else if (inputVector.x > 0f)        // right
+					{
+						// Navigate down in the choices list
+						currentChoiceIndex++;
+						if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+						// Optionally, call a function to update the UI here
+					}
+                }
+
+            }
+
+            // There's no horizontal movement input
+            else
+            {
+                // Reset movement so that the next movement input is instant
+                firstInput = true;
+                moveTimer = 0f;
+            }
+        }
+    }
 
 	void Select(InputAction.CallbackContext context)
     {
-        if (isPlaying)
 		// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+		if (isPlaying)
 		{
-			if (context.performed)
-            {
-                // Check if there are any choices to navigate
-                if (currentStory.currentChoices.Count > 0)
-                {
-                    MakeChoice(currentChoiceIndex);
-                }
-                else
-                {
-                    ContinueStory();
-                }
-            }
-        }
+			// Check if there are any choices to navigate
+			if (currentStory.currentChoices.Count > 0)
+			{
+				MakeChoice(currentChoiceIndex);
+			}
+			else
+			{
+				ContinueStory();
+			}
+		}
     }
 
     public void EnterDialogueMode(TextAsset inkJson)
