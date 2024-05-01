@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MainMenuController : MonoBehaviour
+public class NavigationManager : MonoBehaviour
 {
 	[Header("Event System")]
 	[SerializeField] EventSystem eventSystem;
