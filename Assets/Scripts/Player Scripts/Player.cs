@@ -73,6 +73,8 @@ public class Player : MonoBehaviour
     private Transform interactBody;
     private InteractionSelector interactArea;
 
+    [HideInInspector] public List<GameObject> activeSafeZones = new List<GameObject>();
+
     void Start()
     {
         // Set input system variables

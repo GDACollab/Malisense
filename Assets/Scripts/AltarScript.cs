@@ -10,21 +10,33 @@ public class AltarScript : MonoBehaviour
     [SerializeField][Tooltip("Time after entering altar until enemies return to patrol")] private float alertCooldown = 5f;
     
     GameObject[] enemyObjects;
+    GameObject playerObj;
+
+    private Collider2D safeCollider;
     
     // Start is called before the first frame update
     void Start()
     {
+        safeCollider = GetComponent<Collider2D>();
         enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
+        playerObj = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
-        if(other.CompareTag("Player")){
-            foreach(GameObject eObj in enemyObjects){
-                StateMachine enemy = eObj.GetComponent<StateMachine>();
-                if(enemy.currentState==StateMachine.State.Chasing){ 
-                    enemy.currentState = StateMachine.State.Alert;
-                }
+    void Update()
+    {
+        
+        Player playerScript = playerObj.GetComponent<Player>();
+        // Need to check intersection this way as collision between Safe Zone and Player has been disabled
+        if (safeCollider.bounds.Intersects(playerObj.GetComponent<Collider2D>().bounds))
+        {
+                
+            if (!playerScript.activeSafeZones.Contains(this.gameObject))
+            {
+                playerScript.activeSafeZones.Add(this.gameObject);
             }
+        } else
+        {
+            playerScript.activeSafeZones.Remove(this.gameObject);
         }
     }
 }
