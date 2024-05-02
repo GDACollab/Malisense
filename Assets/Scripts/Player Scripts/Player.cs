@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -139,6 +140,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player died due to contact to enemy");
             globalTeapot.villageInk = 2;
+            globalTeapot.hasDied = true;
             Loader.Load(Loader.Scene.DeathScene);
         }
     }
@@ -343,6 +345,7 @@ public class Player : MonoBehaviour
                 if (note == null) continue;
 
                 interactArea.removeInteracts();
+                globalTeapot.ObtainFloorNote(note.noteID);
                 note.DeactivateNote();
                 isReading = false;
                 canMove = true;

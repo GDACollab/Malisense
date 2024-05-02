@@ -28,17 +28,18 @@ public class StateMachine : MonoBehaviour
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
-    private AudioManager audioManager;
-    private StudioEventEmitter emitter;
+    private DungeonManager dungeonManager;
     void Start()
     {
         currentState = State.Patrolling;
-        audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
-        emitter = GetComponent<StudioEventEmitter>();
+        dungeonManager = FindObjectOfType<DungeonManager>();
     }
 
     void Update()
     {
+        if(currentState!=State.Chasing && chaseInit){
+            StopChase();
+        }
         switch (currentState)
         {
             case State.Patrolling:
@@ -66,7 +67,7 @@ public class StateMachine : MonoBehaviour
                 alertInit = false;
                 if (!chaseInit)
                 {
-                    PlayScream();
+                    SetChase();
                     chasing.Init();
                     chaseInit = true;
                 }
@@ -75,7 +76,11 @@ public class StateMachine : MonoBehaviour
         }
     }
     
-    public void PlayScream(){
-        audioManager.PlayScream(emitter);
+    private void SetChase(){
+        dungeonManager.AddEnemy(this);
+    }
+    
+    private void StopChase(){
+        dungeonManager.RemoveEnemy(this);
     }
 }
