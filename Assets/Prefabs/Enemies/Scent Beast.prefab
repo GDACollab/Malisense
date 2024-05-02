@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5463842739364525523}
   - component: {fileID: 3437042412423122348}
   - component: {fileID: 2096877065520059329}
+  - component: {fileID: 5485851214165889153}
   m_Layer: 0
   m_Name: Scent Beast
   m_TagString: Untagged
@@ -126,6 +127,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e46b46334ecd741b792656de960696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5485851214165889153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2109ffd73e1ad8f469e5e7eb3d96ec97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distT_Patrol2Alert: 20
+  distT_Alert2Chase: 10
+  scentT_Patrol2Alert: 50
+  scentT_Alert2Chase: 90
+  scentPerSecond: 1
+  playerScent: 0
+  playerDist: 0
 --- !u!1001 &847181753730587933
 PrefabInstance:
   m_ObjectHideFlags: 0
