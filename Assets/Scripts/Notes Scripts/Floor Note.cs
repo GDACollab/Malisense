@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class FloorNote : MonoBehaviour
 {
+    public string noteID = "";
+    
     public GameObject Note;
     public GameObject Player;
     public bool isNear = false;

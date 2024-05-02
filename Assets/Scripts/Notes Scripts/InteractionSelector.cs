@@ -45,8 +45,9 @@ public class InteractionSelector : MonoBehaviour
     public List<GameObject> getInteractables() {
         Collider2D[] touchList = new Collider2D[32];
         ContactFilter2D filter = new ContactFilter2D();
-        int numTouch = GetComponent<CapsuleCollider2D>().OverlapCollider(filter.NoFilter(), touchList);
-
+        filter.SetLayerMask(~GetComponent<CapsuleCollider2D>().excludeLayers);
+        filter.useTriggers = true;
+        int numTouch = GetComponent<CapsuleCollider2D>().OverlapCollider(filter, touchList);
         // insertion sort each collider into a list of the objects in priority order
         foreach (var touch in touchList) {
             if (touch == null) continue;
@@ -99,4 +100,16 @@ public class InteractionSelector : MonoBehaviour
         objInteracts.Clear();
     }
 
+    private void OnTriggerEnter2D(Collider2D collider) {
+        if(collider.GetComponent<FloorNote>()){
+            collider.GetComponent<FloorNote>().isNear = true;
+            }
+    }
+    
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if(collider.GetComponent<FloorNote>()){
+            collider.GetComponent<FloorNote>().isNear = false;
+        }
+    }
 }
