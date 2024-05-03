@@ -72,8 +72,12 @@ public class NavigationManager : MonoBehaviour
 					currentSelectedButton.onClick.Invoke();
 
 					// if the button is one that brings up a new screen (ex. options, credits) then set new current screen and select the new current screen's default selectable
-					SetNewCurrentScreen(eventSystem.currentSelectedGameObject);
-					SelectCurrentScreensDefaultSelectable();
+					if (isScreenChangingButton(eventSystem.currentSelectedGameObject.name))
+					{
+						SetNewCurrentScreen(eventSystem.currentSelectedGameObject);
+						SelectCurrentScreensDefaultSelectable();
+					}
+					
 				}
 			}
 		}
@@ -91,11 +95,11 @@ public class NavigationManager : MonoBehaviour
 		switch (buttonClickedName)
 		{
 			// for example, this below case means "we are on the options screen and the currently selected game object is the options button therefore if must have been clicked with the mouse"
-			case "Options":
+			case "OptionsButton":
 				if (currentScreen == Screens.OPTIONS) { return true; }
 				break;
 
-			case "Credits":
+			case "CreditsButton":
 				if (currentScreen == Screens.CREDITS1) { return true; }
 				break;
 
@@ -137,19 +141,24 @@ public class NavigationManager : MonoBehaviour
 		return false;
 	}
 
+	bool isScreenChangingButton(string buttonName)
+	{
+		return buttonName == "OptionsButton" || buttonName == "CreditsButton" || buttonName == "ReturnButton" || buttonName == "NextCreditButton" || buttonName == "BackCreditButton";
+	}
+
 	public void SetNewCurrentScreen(GameObject buttonGO)
 	// note: the buttons were instructed to call this function onclick so this function is called even when the player is using the mouse to navigate
 	{
 		string buttonGOName = buttonGO.name;
-		string buttonGOScreenName = buttonGO.transform.parent.transform.parent.name;		// needed for the next and back buttons found in the credits screens
+		string buttonGOScreenName = buttonGO.transform.parent.transform.parent.name;        // needed for the next and back buttons found in the credits screens
 
 		switch (buttonGOName)
 		{
-			case "Options":
+			case "OptionsButton":
 				currentScreen = Screens.OPTIONS;
 				break;
 
-			case "Credits":
+			case "CreditsButton":
 				currentScreen = Screens.CREDITS1;
 				break;
 

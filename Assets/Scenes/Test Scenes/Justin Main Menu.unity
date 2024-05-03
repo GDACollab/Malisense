@@ -768,12 +768,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 477077035}
+    m_SelectOnDown: {fileID: 477077035}
+    m_SelectOnLeft: {fileID: 1019836687}
+    m_SelectOnRight: {fileID: 1774557948}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1382,12 +1382,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnUp: {fileID: 290927574}
+    m_SelectOnDown: {fileID: 290927574}
+    m_SelectOnLeft: {fileID: 1019836687}
+    m_SelectOnRight: {fileID: 1774557948}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4360,12 +4360,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 2030229490}
+    m_SelectOnRight: {fileID: 290927574}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4420,7 +4420,7 @@ MonoBehaviour:
         m_MethodName: SetNewCurrentScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 793534567}
+          m_ObjectArgument: {fileID: 1019836683}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -7142,8 +7142,8 @@ RectTransform:
   - {fileID: 739843677}
   - {fileID: 290927573}
   - {fileID: 477077032}
-  - {fileID: 2030229487}
   - {fileID: 1019836684}
+  - {fileID: 2030229487}
   - {fileID: 1774557945}
   m_Father: {fileID: 2010354202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7256,12 +7256,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 290927574}
+    m_SelectOnRight: {fileID: 2030229490}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -8336,12 +8336,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1774557948}
+    m_SelectOnRight: {fileID: 1019836687}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -8396,7 +8396,7 @@ MonoBehaviour:
         m_MethodName: SetNewCurrentScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2115193514}
+          m_ObjectArgument: {fileID: 2030229486}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
