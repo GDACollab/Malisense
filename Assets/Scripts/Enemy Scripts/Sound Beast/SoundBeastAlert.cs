@@ -1,6 +1,8 @@
 using UnityEngine;
 using Pathfinding;
 using Unity.VisualScripting;
+using System.Drawing;
+using UnityEngine.Tilemaps;
 
 
 [RequireComponent(typeof(StateMachine))]
@@ -8,9 +10,13 @@ public class SoundBeastAlert : StateBaseClass
 {
     public float circleRadius = 3f;
     public float circleTime = 10f; // Time to circle around the player's position
+    public float CirclingSpeed = 2f;
     public float angularSpeed = 0.7f;
+    public TilemapCollider2D wallcollider;
+    public float AlertedSpeed = 5f;
 
-    public float AlertSpeed = 5f;
+    public LayerMask wallLayers;
+
 
     private float angle = 0;
     private StateMachine machine;
@@ -22,6 +28,8 @@ public class SoundBeastAlert : StateBaseClass
     private float circleStartTime;
     private Vector3 circleCenter;
     private Rigidbody2D rb;
+    private Vector3 movePosition;
+    private bool notcollided = false;
 
     //get the noisePos variable from the soundBeast_noiseDetect_copy script and use it to pass the noise position to the Sound_Alert script
     
@@ -37,7 +45,7 @@ public class SoundBeastAlert : StateBaseClass
         circleCenter = player.position;
 
         // Start pathfinding to player's position
-        aiPath.maxSpeed = AlertSpeed;
+        aiPath.maxSpeed = AlertedSpeed;
         aiPath.destination = player.position;
         aiPath.SearchPath();
     }
@@ -75,15 +83,29 @@ public class SoundBeastAlert : StateBaseClass
                     {
                         float x = circleCenter.x + Mathf.Cos(angle) * circleRadius;
                         float y = circleCenter.y + Mathf.Sin(angle) * circleRadius;
-                        aiPath.destination = new Vector3(x, y, 0);
-                        aiPath.SearchPath();
-                        isMovingToOutside = true;
+                        Vector3 direction = (movePosition - transform.position).normalized;    // Checking for obstacles between the enemy and the movePosition
+
+                        // Check for obstacles between the enemy and the movePosition
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Vector3.Distance(transform.position, movePosition), wallLayers);
+
+                        // If the ray hits something tagged as "Wall"
+                        if (hit.collider != null)                               // Checking for obstacles between the enemy and the movePosition
+                        {                                                          
+                            angle += angularSpeed * Time.deltaTime; 
+                             // Don't move further if there's a wall    
+                        }
+                        else
+                        {
+                            aiPath.destination = new Vector3(x, y, 0);
+                            aiPath.SearchPath();
+                            isMovingToOutside = true;
+                        }
+
                     } else if  (aiPath.reachedEndOfPath && isMovingToOutside == true)
                     {
                         movedToOutside = true;
                         isMovingToOutside = false;
                     }
-                    
                   
                 }
                 if (movedToOutside == true) 
@@ -91,8 +113,65 @@ public class SoundBeastAlert : StateBaseClass
                     float x1 = circleCenter.x + Mathf.Cos(angle) * circleRadius;
                     float y1 = circleCenter.y + Mathf.Sin(angle) * circleRadius;
                     // This should be using the A* pathfinding, not direct position modification
-                    transform.position = new Vector3(x1, y1, 0);
-                    angle += angularSpeed * Time.deltaTime;
+                    movePosition = new Vector3(x1, y1, 0);
+                    //dont move if the movePosition is inside the wall
+                    while (wallcollider.bounds.Contains(movePosition))
+                    {
+                        if (notcollided == false)
+                        {
+                            notcollided = true;
+                        }
+                        angle += angularSpeed * Time.deltaTime;
+                        x1 = circleCenter.x + Mathf.Cos(angle) * circleRadius;
+                        y1 = circleCenter.y + Mathf.Sin(angle) * circleRadius;
+                        movePosition = new Vector3(x1, y1, 0);
+                    }
+                    //move to new position that isnt in the wall
+                    if (notcollided == true)
+                    {
+                        Vector3 direction = (movePosition - transform.position).normalized;             // Checking for obstacles between the enemy and the movePosition
+
+                        // Check for obstacles between the enemy and the movePosition
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Vector3.Distance(transform.position, movePosition), wallLayers);        // Checking for obstacles between the enemy and the movePosition
+
+                        // If the ray hits something tagged as "Wall"
+                        if (hit.collider != null)                       // Checking for obstacles between the enemy and the movePosition
+                        {
+                            angle += angularSpeed * Time.deltaTime;
+                        }
+                        else
+                        {
+                            aiPath.destination = movePosition;
+                            aiPath.SearchPath();
+                            notcollided = false;
+                        }
+                    }
+                    //circle
+                    if (!wallcollider.bounds.Contains(movePosition) && notcollided == false)
+                    {
+                        Vector3 direction = (movePosition - transform.position).normalized;         // Checking for obstacles between the enemy and the movePosition
+
+                        // Check for obstacles between the enemy and the movePosition
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Vector3.Distance(transform.position, movePosition), wallLayers);        // Checking for obstacles between the enemy and the movePosition
+
+                        // If the ray hits something tagged as "Wall"
+                        if (hit.collider != null)                               // Checking for obstacles between the enemy and the movePosition
+                        {
+                            angle += angularSpeed * Time.deltaTime;
+                        }
+                        else
+                        {
+                            aiPath.maxSpeed = CirclingSpeed;
+                            aiPath.destination = movePosition;
+                            aiPath.SearchPath();
+                            if (aiPath.reachedDestination)
+                            {
+                                angle += angularSpeed * Time.deltaTime;
+
+                            }
+                        }
+
+                    }
                 }
 
             }
@@ -106,9 +185,7 @@ public class SoundBeastAlert : StateBaseClass
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (aiPath == null || collision == null) return;
-
-        if (collision.tag == "NoiseObject" && !aiPath.pathPending && isCircling)
+        if (collision.tag == "NoiseObject" && isCircling)
         {
             // Switch to chase state
             isCircling = false;
