@@ -57,9 +57,13 @@ public class PauseManager : MonoBehaviour
 
     public void PauseGame()
     {
-        pauseCanvas.enabled = true;
-        Time.timeScale = 0f;
-        isPaused = true;
+        if(!isPaused)
+        {
+            pauseCanvas.enabled = true;
+            Time.timeScale = 0f;
+            isPaused = true;
+        }
+
     }
 
     public void Options()
