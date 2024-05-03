@@ -376,6 +376,7 @@ public class Player : MonoBehaviour
                 if(note.name == "End Artifact"){
                     globalTeapot.villageInk = 3;
                     Loader.Load(Loader.Scene.Village);
+                    break;
                 }
                 canMove = false;
                 isReading = true;
