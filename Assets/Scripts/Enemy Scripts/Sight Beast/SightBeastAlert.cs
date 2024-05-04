@@ -40,7 +40,7 @@ public class SightBeastAlert : StateBaseClass
     public override void Init()
     {
         _gracePeriodRemaining = gracePeriod;
-
+        //If target was distract or awoken from being a statue when initiated, skip setting target to player
         if (distractTarget) distractTarget = false;
         else _pathfinder.SetTarget(_sight.target.position);
         _pathfinder.acceleration = 0f;
@@ -82,13 +82,14 @@ public class SightBeastAlert : StateBaseClass
             }
         }
     }
-
+    //Sets target to player position when a monster is distracted
     public void SetDistractTarget()
     {
         distractTarget = true;
         _pathfinder.SetTarget(_sight.target.position);
     }
 
+    //Sets target to it self when awoken from statue
     public void SetStatueTarget()
     {
         distractTarget = true;

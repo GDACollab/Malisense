@@ -20,6 +20,7 @@ public class StateMachine : MonoBehaviour
     }
 
     public State currentState;
+    [Tooltip("Sets which sprite the monster starts in when Statue is true.")]
     public Sprite SpriteStatue;
 
     public StateBaseClass patrol;
@@ -27,8 +28,10 @@ public class StateMachine : MonoBehaviour
     public StateBaseClass alert;
     public StateBaseClass distracted;
 
+    [Tooltip("If true monster starts as a statue at start.")]
     public bool Statue;
-    public int StatueCounter;
+    [Tooltip("Amount of activated shards to awaken the monster.")]
+    public int ActivationsToAwake;
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
@@ -38,6 +41,7 @@ public class StateMachine : MonoBehaviour
     void Start()
     {
         _statue = Statue;
+        // If statue start distracted otherwise patrol
         if(_statue) currentState = State.Distracted;
         else currentState = State.Patrolling;
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
@@ -53,7 +57,7 @@ public class StateMachine : MonoBehaviour
                 distractInit = false;
                 if (!patrolInit)
                 {
-                    Debug.Log("Patrol Start");
+                    //Debug.Log("Patrol Start");
                     patrol.Init();
                     patrolInit = true;
                 }
@@ -65,7 +69,7 @@ public class StateMachine : MonoBehaviour
                 distractInit = false;
                 if (!alertInit)
                 {
-                    Debug.Log("Alert Start");
+                    //Debug.Log("Alert Start");
                     alert.Init();
                     alertInit = true;
                 }
@@ -77,7 +81,7 @@ public class StateMachine : MonoBehaviour
                 distractInit = false;
                 if (!chaseInit)
                 {
-                    Debug.Log("Chase Start");
+                    //Debug.Log("Chase Start");
                     audioManager.Play(audioManager.monsterScream);
                     chasing.Init();
                     chaseInit = true;
@@ -90,7 +94,7 @@ public class StateMachine : MonoBehaviour
                 chaseInit = false;
                 if (!distractInit)
                 {
-                    Debug.Log("Distract Start");
+                    //Debug.Log("Distract Start");
                     distracted.Init();
                     distractInit = true;
                 }
@@ -99,8 +103,16 @@ public class StateMachine : MonoBehaviour
         }
     }
 
+    //Returns if monster is currently a statue
     public bool IsStatue() => _statue;
 
+    //awakes monster from statue
     public void AwakenStatue() => _statue = false;
+    
+    //Returns amount of switch activations to awaken statue
+    public int GetActivationsToAwake() => ActivationsToAwake;
+
+    //Returns the statue sprite
+    public Sprite GetStatueSprite() => SpriteStatue;
 }
 
