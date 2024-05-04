@@ -9,7 +9,7 @@ time meaning checking one state will uncheck another state.
 *Allow other programmers to add scripts that handle the above states in the inspector.
 */
 
-public class StateMachine : MonoBehaviour, ISwitchable
+public class StateMachine : MonoBehaviour
 {
     public enum State
     {
@@ -20,6 +20,7 @@ public class StateMachine : MonoBehaviour, ISwitchable
     }
 
     public State currentState;
+    public Sprite SpriteStatue;
 
     public StateBaseClass patrol;
     public StateBaseClass chasing;
@@ -27,14 +28,17 @@ public class StateMachine : MonoBehaviour, ISwitchable
     public StateBaseClass distracted;
 
     public bool Statue;
+    public int StatueCounter;
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
     private bool distractInit = false;
+    private bool _statue;
     private AudioManager audioManager;
     void Start()
     {
-        if(Statue) currentState = State.Distracted;
+        _statue = Statue;
+        if(_statue) currentState = State.Distracted;
         else currentState = State.Patrolling;
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
@@ -49,6 +53,7 @@ public class StateMachine : MonoBehaviour, ISwitchable
                 distractInit = false;
                 if (!patrolInit)
                 {
+                    Debug.Log("Patrol Start");
                     patrol.Init();
                     patrolInit = true;
                 }
@@ -60,6 +65,7 @@ public class StateMachine : MonoBehaviour, ISwitchable
                 distractInit = false;
                 if (!alertInit)
                 {
+                    Debug.Log("Alert Start");
                     alert.Init();
                     alertInit = true;
                 }
@@ -71,6 +77,7 @@ public class StateMachine : MonoBehaviour, ISwitchable
                 distractInit = false;
                 if (!chaseInit)
                 {
+                    Debug.Log("Chase Start");
                     audioManager.Play(audioManager.monsterScream);
                     chasing.Init();
                     chaseInit = true;
@@ -83,6 +90,7 @@ public class StateMachine : MonoBehaviour, ISwitchable
                 chaseInit = false;
                 if (!distractInit)
                 {
+                    Debug.Log("Distract Start");
                     distracted.Init();
                     distractInit = true;
                 }
@@ -91,17 +99,8 @@ public class StateMachine : MonoBehaviour, ISwitchable
         }
     }
 
-    public bool IsStatue() => Statue;
+    public bool IsStatue() => _statue;
 
-    public void SwitchInit(bool activated)
-    {
-
-    }
-    public void SwitchInteract(bool activated)
-    {
-        gameObject.tag = "Enemy";
-        currentState = State.Alert;
-        Debug.Log("Monster Working");
-    }
+    public void AwakenStatue() => _statue = false;
 }
 
