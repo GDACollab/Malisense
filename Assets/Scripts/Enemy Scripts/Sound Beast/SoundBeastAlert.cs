@@ -11,7 +11,7 @@ public class SoundBeastAlert : StateBaseClass
     public float circleRadius = 3f;
     public float circleTime = 10f; // Time to circle around the player's position
     public float CirclingSpeed = 2f;
-    public float angularSpeed = 0.7f;
+    private float angularSpeed = 0.7f;
     public TilemapCollider2D wallcollider;
     public float AlertedSpeed = 5f;
 
