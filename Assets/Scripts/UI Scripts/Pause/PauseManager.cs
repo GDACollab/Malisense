@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
 
 public class PauseManager : MonoBehaviour
 {
     private static PauseManager instance;
+    private GameObject evHandler;
+
     public Canvas pauseCanvas;
     [SerializeField] GameObject optionsMenu;
     public static bool isPaused;
@@ -45,6 +48,7 @@ public class PauseManager : MonoBehaviour
 
     void TogglePause()
     {
+
         if (isPaused)
         {
             ResumeGame();
