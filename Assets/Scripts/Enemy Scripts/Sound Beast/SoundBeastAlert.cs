@@ -83,6 +83,7 @@ public class SoundBeastAlert : StateBaseClass
                     {
                         float x = circleCenter.x + Mathf.Cos(angle) * circleRadius;
                         float y = circleCenter.y + Mathf.Sin(angle) * circleRadius;
+                        movePosition = new Vector3(x, y, 0);
                         Vector3 direction = (movePosition - transform.position).normalized;    // Checking for obstacles between the enemy and the movePosition
 
                         // Check for obstacles between the enemy and the movePosition
@@ -91,12 +92,11 @@ public class SoundBeastAlert : StateBaseClass
                         // If the ray hits something tagged as "Wall"
                         if (hit.collider != null)                               // Checking for obstacles between the enemy and the movePosition
                         {                                                          
-                            angle += angularSpeed * Time.deltaTime; 
-                             // Don't move further if there's a wall    
+                            angle += angularSpeed * Time.deltaTime;
                         }
-                        else
+                        else if (hit.collider == null)                       // Checking for obstacles between the enemy and the movePosition
                         {
-                            aiPath.destination = new Vector3(x, y, 0);
+                            aiPath.destination = movePosition;
                             aiPath.SearchPath();
                             isMovingToOutside = true;
                         }
@@ -115,6 +115,7 @@ public class SoundBeastAlert : StateBaseClass
                     // This should be using the A* pathfinding, not direct position modification
                     movePosition = new Vector3(x1, y1, 0);
                     //dont move if the movePosition is inside the wall
+                    
                     while (wallcollider.bounds.Contains(movePosition))
                     {
                         if (notcollided == false)
