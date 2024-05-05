@@ -28,11 +28,13 @@ public class StateMachine : MonoBehaviour
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
-    private DungeonManager dungeonManager;
+    private AudioManager audioManager;
+    private Player playerObj;
     void Start()
     {
         currentState = State.Patrolling;
-        dungeonManager = FindObjectOfType<DungeonManager>();
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
 
     void Update()
@@ -63,6 +65,19 @@ public class StateMachine : MonoBehaviour
                 if (alert != null) { alert.On_Update(); }
                 break;
             case State.Chasing:
+                if (playerObj.activeSafeZones.Count > 0)
+                {
+                    currentState = State.Patrolling;
+                    alertInit = false;
+                    chaseInit = false;
+                    if (!patrolInit)
+                    {
+                        patrol.Init();
+                        patrolInit = true;
+                    }
+                    if (patrol != null) { patrol.On_Update(); }
+                    break;
+                }
                 patrolInit = false;
                 alertInit = false;
                 if (!chaseInit)
