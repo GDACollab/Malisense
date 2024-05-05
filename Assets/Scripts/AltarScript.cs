@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AltarScript : MonoBehaviour
 {
+    //
     // Remove once alert goes to patrol automatically
     [Header("Time")]
     [SerializeField][Tooltip("Time after entering altar until enemies return to patrol")] private float alertCooldown = 5f;
