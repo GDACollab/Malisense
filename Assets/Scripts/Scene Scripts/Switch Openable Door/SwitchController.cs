@@ -32,12 +32,17 @@ public class SwitchController : MonoBehaviour
     [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
     [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private List<GameObject> targets;
 
+    //public UnityEvent Thing;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
     private List<ISwitchable> sw_targets;
 
-
+    //Remove non ISwitchable objects from targets
+    private void OnValidate()
+    {
+        //targets.RemoveAll(NotSwitchable);
+    }
 
     //Checks if target is a Not a member of ISwitchable while also not being null
     public bool NotSwitchable(MonoBehaviour target) => Swable(target) == null && target != null;
@@ -59,11 +64,16 @@ public class SwitchController : MonoBehaviour
         }
 
         sw_targets = new List<ISwitchable>();
-        if (targets == null) targets = new List<GameObject>();
+
         //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
         foreach (var target in targets)
         {
-            foreach (var c in target.GetComponents<MonoBehaviour>())
+            foreach(var c in target.GetComponents<MonoBehaviour>())
+        /*if (targets == null) targets = new List<GameObject>();
+        //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
+        foreach (var target in targets)
+        {
+            foreach (var c in target.GetComponents<MonoBehaviour>())*/
             {
                 var sw_comp = Swable(c);
                 if (sw_comp != null)
