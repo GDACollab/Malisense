@@ -138,13 +138,13 @@ public class StateMachine : MonoBehaviour
 
     //Returns the statue sprite
     public Sprite GetStatueSprite() => SpriteStatue;
-    /*
+    
     private void SetChase(){
         dungeonManager.AddEnemy(this);
     }
     
     private void StopChase(){
         dungeonManager.RemoveEnemy(this);
-    }*/
+    }
 }
 
