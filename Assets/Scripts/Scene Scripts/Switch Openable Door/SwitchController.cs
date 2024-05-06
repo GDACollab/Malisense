@@ -46,7 +46,7 @@ public class SwitchController : MonoBehaviour
 
     //Checks if target is a Not a member of ISwitchable while also not being null
     public bool NotSwitchable(MonoBehaviour target) => Swable(target) == null && target != null;
-    
+
 
     //Converts target to a ISwitcable interface object, null if not
     public ISwitchable Swable(MonoBehaviour target) => target as ISwitchable;
@@ -64,10 +64,16 @@ public class SwitchController : MonoBehaviour
         }
 
         sw_targets = new List<ISwitchable>();
+
         //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
         foreach (var target in targets)
         {
             foreach(var c in target.GetComponents<MonoBehaviour>())
+        /*if (targets == null) targets = new List<GameObject>();
+        //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
+        foreach (var target in targets)
+        {
+            foreach (var c in target.GetComponents<MonoBehaviour>())*/
             {
                 var sw_comp = Swable(c);
                 if (sw_comp != null)

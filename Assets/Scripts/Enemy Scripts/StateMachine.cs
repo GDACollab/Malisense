@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 /*
 *Build an enemy base class as a state machine that returns either patrolling, Alert, and chasing.
@@ -37,18 +38,27 @@ public class StateMachine : MonoBehaviour
     private bool chaseInit = false;
     private bool distractInit = false;
     private bool _statue;
+    private DungeonManager dungeonManager;
     private AudioManager audioManager;
+    private Player playerObj;
     void Start()
     {
         _statue = Statue;
         // If statue start distracted otherwise patrol
         if(_statue) currentState = State.Distracted;
         else currentState = State.Patrolling;
+        //currentState = State.Patrolling;
+        dungeonManager = FindObjectOfType<DungeonManager>();
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
 
     void Update()
     {
+        if(currentState!=State.Chasing && chaseInit){
+            StopChase();
+        }
         switch (currentState)
         {
             case State.Patrolling:
@@ -76,6 +86,19 @@ public class StateMachine : MonoBehaviour
                 if (alert != null) { alert.On_Update(); }
                 break;
             case State.Chasing:
+                if (playerObj.activeSafeZones.Count > 0)
+                {
+                    currentState = State.Patrolling;
+                    alertInit = false;
+                    chaseInit = false;
+                    if (!patrolInit)
+                    {
+                        patrol.Init();
+                        patrolInit = true;
+                    }
+                    if (patrol != null) { patrol.On_Update(); }
+                    break;
+                }
                 patrolInit = false;
                 alertInit = false;
                 distractInit = false;
@@ -83,6 +106,7 @@ public class StateMachine : MonoBehaviour
                 {
                     //Debug.Log("Chase Start");
                     audioManager.Play(audioManager.monsterScream);
+                    SetChase();
                     chasing.Init();
                     chaseInit = true;
                 }
@@ -114,5 +138,13 @@ public class StateMachine : MonoBehaviour
 
     //Returns the statue sprite
     public Sprite GetStatueSprite() => SpriteStatue;
+    /*
+    private void SetChase(){
+        dungeonManager.AddEnemy(this);
+    }
+    
+    private void StopChase(){
+        dungeonManager.RemoveEnemy(this);
+    }*/
 }
 
