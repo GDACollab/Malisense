@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.InputSystem.Controls.AxisControl;
@@ -29,20 +30,23 @@ public class SwitchController : MonoBehaviour
     [SerializeField] private bool oneTimeSwitch = false;
     [SerializeField] private bool startActivated = false;
     [SerializeField] [Tooltip("Press these switches when this switch is pressed. (Leave this empty for OnAllActivated Doors)")] private SwitchController[] syncSwitches;
-    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private List<MonoBehaviour> targets;
+    [SerializeField] [Tooltip("These objects (currently just a doorcontroller) will do there defined behavior when switch is pressed (Most likely closing/opening a door).")] private List<GameObject> targets;
+
+    //public UnityEvent Thing;
     public LampController lamp;
     private bool isActivated = false;
     private SpriteRenderer switchSprite;
+    private List<ISwitchable> sw_targets;
 
     //Remove non ISwitchable objects from targets
     private void OnValidate()
     {
-        targets.RemoveAll(NotSwitchable);
+        //targets.RemoveAll(NotSwitchable);
     }
 
     //Checks if target is a Not a member of ISwitchable while also not being null
     public bool NotSwitchable(MonoBehaviour target) => Swable(target) == null && target != null;
-    
+
 
     //Converts target to a ISwitcable interface object, null if not
     public ISwitchable Swable(MonoBehaviour target) => target as ISwitchable;
@@ -58,8 +62,27 @@ public class SwitchController : MonoBehaviour
             lamp.TurnOn();
             switchSprite.flipY = true;
         }
+
+        sw_targets = new List<ISwitchable>();
+
         //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
-        foreach (var target in targets) Swable(target)?.SwitchInit(isActivated);
+        foreach (var target in targets)
+        {
+            foreach(var c in target.GetComponents<MonoBehaviour>())
+        /*if (targets == null) targets = new List<GameObject>();
+        //Initialiises all SwitchTargets, currently used to set OnAllActivated doors to
+        foreach (var target in targets)
+        {
+            foreach (var c in target.GetComponents<MonoBehaviour>())*/
+            {
+                var sw_comp = Swable(c);
+                if (sw_comp != null)
+                {
+                    sw_targets.Add(sw_comp);
+                    sw_comp.SwitchInit(isActivated);
+                }
+            }
+        }
 
     }
 
@@ -76,7 +99,7 @@ public class SwitchController : MonoBehaviour
 
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
             //Calls SwitchInteract on each target
-            foreach (var target in targets) Swable(target)?.SwitchInteract(isActivated);
+            foreach (var target in sw_targets) target?.SwitchInteract(isActivated);
 
         }
         else if (!isActivated)
@@ -90,8 +113,8 @@ public class SwitchController : MonoBehaviour
             //Iterate through each target that implements ISwitchable interface (just doorcontrollers atm)
             //Calls SwitchInteract on each target
 
-            foreach (var target in targets) Swable(target)?.SwitchInteract(isActivated);
-            
+            foreach (var target in sw_targets) target?.SwitchInteract(isActivated);
+
         }
 
 

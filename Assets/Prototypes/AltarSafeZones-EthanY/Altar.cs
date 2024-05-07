@@ -22,11 +22,11 @@ public class Altar : MonoBehaviour
             foreach(GameObject eObj in enemyObjects){
                 StateMachine_Updated enemy = eObj.GetComponent<StateMachine_Updated>();
                 // Remove if alert when alert goes to patrol automatically
-                if(enemy.currentState==StateMachine_Updated.State.Chasing || enemy.currentState==StateMachine_Updated.State.Alert){ 
+                // if(enemy.currentState==StateMachine_Updated.State.Chasing || enemy.currentState==StateMachine_Updated.State.Alert){ 
                     // enemy.switchState(StateMachine_Updated.State.Alert); 
                     // Replace with just setting to alert when alert goes to patrol automatically
-                    StartCoroutine(CooldownEnemy(enemy)); 
-                }
+                    // StartCoroutine(CooldownEnemy(enemy)); 
+                // }
             }
         }
     }

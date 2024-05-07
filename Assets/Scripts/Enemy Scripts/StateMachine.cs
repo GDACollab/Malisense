@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 /*
 *Build an enemy base class as a state machine that returns either patrolling, Alert, and chasing.
@@ -15,34 +16,58 @@ public class StateMachine : MonoBehaviour
     {
         Patrolling,
         Alert,
-        Chasing
+        Chasing,
+        Distracted
     }
 
     public State currentState;
+    [Tooltip("Sets which sprite the monster starts in when Statue is true.")]
+    public Sprite SpriteStatue;
 
     public StateBaseClass patrol;
     public StateBaseClass chasing;
     public StateBaseClass alert;
+    public StateBaseClass distracted;
 
+    [Tooltip("If true monster starts as a statue at start.")]
+    public bool Statue;
+    [Tooltip("Amount of activated shards to awaken the monster.")]
+    public int ActivationsToAwake;
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
+    private bool distractInit = false;
+    private bool _statue;
+    private DungeonManager dungeonManager;
     private AudioManager audioManager;
+    private Player playerObj;
     void Start()
     {
-        currentState = State.Patrolling;
+        _statue = Statue;
+        // If statue start distracted otherwise patrol
+        if(_statue) currentState = State.Distracted;
+        else currentState = State.Patrolling;
+        //currentState = State.Patrolling;
+        dungeonManager = FindObjectOfType<DungeonManager>();
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
 
     void Update()
     {
+        if(currentState!=State.Chasing && chaseInit){
+            StopChase();
+        }
         switch (currentState)
         {
             case State.Patrolling:
                 alertInit = false;
                 chaseInit = false;
+                distractInit = false;
                 if (!patrolInit)
                 {
+                    //Debug.Log("Patrol Start");
                     patrol.Init();
                     patrolInit = true;
                 }
@@ -51,24 +76,75 @@ public class StateMachine : MonoBehaviour
             case State.Alert:
                 patrolInit = false;
                 chaseInit = false;
+                distractInit = false;
                 if (!alertInit)
                 {
+                    //Debug.Log("Alert Start");
                     alert.Init();
                     alertInit = true;
                 }
                 if (alert != null) { alert.On_Update(); }
                 break;
             case State.Chasing:
+                if (playerObj.activeSafeZones.Count > 0)
+                {
+                    currentState = State.Patrolling;
+                    alertInit = false;
+                    chaseInit = false;
+                    if (!patrolInit)
+                    {
+                        patrol.Init();
+                        patrolInit = true;
+                    }
+                    if (patrol != null) { patrol.On_Update(); }
+                    break;
+                }
                 patrolInit = false;
                 alertInit = false;
+                distractInit = false;
                 if (!chaseInit)
                 {
+                    //Debug.Log("Chase Start");
                     audioManager.Play(audioManager.monsterScream);
+                    SetChase();
                     chasing.Init();
                     chaseInit = true;
                 }
                 if (chasing != null) { chasing.On_Update(); }
                 break;
+            case State.Distracted:
+                patrolInit = false;
+                alertInit = false;
+                chaseInit = false;
+                if (!distractInit)
+                {
+                    //Debug.Log("Distract Start");
+                    distracted.Init();
+                    distractInit = true;
+                }
+                if (distracted != null) { distracted.On_Update(); }
+                break;
         }
     }
+
+    //Returns if monster is currently a statue
+    public bool IsStatue() => _statue;
+
+    //awakes monster from statue
+    public void AwakenStatue() => _statue = false;
+    
+    //Returns amount of switch activations to awaken statue
+    public int GetActivationsToAwake() => ActivationsToAwake;
+
+    //Returns the statue sprite
+    public Sprite GetStatueSprite() => SpriteStatue;
+    
+    private void SetChase(){
+        dungeonManager.AddEnemy(this);
+    }
+    
+    private void StopChase(){
+        dungeonManager.RemoveEnemy(this);
+    }
 }
+
