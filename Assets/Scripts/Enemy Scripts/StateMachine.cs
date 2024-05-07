@@ -28,11 +28,13 @@ public class StateMachine : MonoBehaviour
     private bool alertInit = false;
     private bool patrolInit = false;
     private bool chaseInit = false;
+    private DungeonManager dungeonManager;
     private AudioManager audioManager;
     private Player playerObj;
     void Start()
     {
         currentState = State.Patrolling;
+        dungeonManager = FindObjectOfType<DungeonManager>();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
