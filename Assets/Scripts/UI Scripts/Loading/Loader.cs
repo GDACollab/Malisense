@@ -30,7 +30,7 @@ public static class Loader
         {
             currentScene = scene;
             Debug.Log("OnLoaderCallback");
-            SceneManager.LoadScene((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
+            SceneManager.LoadSceneAsync((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
         };
         
         currentScene = Scene.LoadingScene;
