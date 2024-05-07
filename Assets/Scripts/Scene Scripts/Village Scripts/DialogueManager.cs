@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -205,16 +206,19 @@ public class DialogueManager : MonoBehaviour
             {
                 // Highlight the current choice
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow; // Example of highlighting
-                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // expand box to see rest of text
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // set overflow to allow text to expand
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().alignment = TextAlignmentOptions.Bottom; // aligntext at the bottom, so it expands up
+                choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize; //set box to exanded size
+
             }
             else
             {
                 // Revert other choices to their normal state
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.white; // Example of normal state
-                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.Ellipsis; //return box to normal size
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.Ellipsis; //reset overflow to Ellipsis
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().alignment = TextAlignmentOptions.TopLeft; // reset alignment
-                choices[i].GetComponent<vertical>().rect.height = defaultHeight;
+                choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained; //don't fit to text
+                choices[i].GetComponent<RectTransform>().sizeDelta = new Vector2(choices[i].GetComponent<RectTransform>().rect.width, defaultHeight);   //return box to normal size
             }
         }
     }
