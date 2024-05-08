@@ -7,7 +7,7 @@ using UnityEngine;
 public class Journal : ScriptableObject
 {
     [System.Serializable]
-    private struct FloorNoteObj
+    private class FloorNoteObj
     {
         public string ID;
         [field: TextArea(1,5)]
@@ -19,25 +19,23 @@ public class Journal : ScriptableObject
             Body = body;
             Obtained = false;
         }
-        
-        public FloorNoteObj(bool bad){
-            ID = "invalid";
-            Body = "invalid";
-            Obtained = bad;
-        }
-        
-        public void Obtain(){
-            Obtained = true;
-        }
     }
     
+    [SerializeField][Tooltip("Disable if adding custom notes")] private bool regenerateOnPlay = true;
     [SerializeField] private List<TextAsset> textNotes = new List<TextAsset>();
     [SerializeField] private List<FloorNoteObj> floorNotes = new List<FloorNoteObj>();
     
-    public void CreateFloorNotes(){
-        floorNotes.Clear();
-        foreach(TextAsset text in textNotes){
-            floorNotes.Add(new FloorNoteObj(text.name, text.ToString()));
+    public void CreateFloorNotes(bool force=false){
+        if(regenerateOnPlay || force){
+            floorNotes.Clear();
+            foreach(TextAsset text in textNotes){
+                floorNotes.Add(new FloorNoteObj(text.name, text.ToString()));
+            }
+        }
+        else{
+            foreach(FloorNoteObj note in floorNotes){
+                note.Obtained = false;
+            }
         }
     }
     
@@ -52,7 +50,7 @@ public class Journal : ScriptableObject
     public bool ObtainFloorNote(string id){
         int index = floorNotes.FindIndex(x=>x.ID==id);
         if(index >= 0){
-            floorNotes[index].Obtain();
+            floorNotes[index].Obtained = true;
             return true;
         }
         return false;
@@ -86,7 +84,7 @@ public class JournalEditor : Editor
         if(GUILayout.Button("Create Floor Notes"))
         {
             Journal journal = (Journal)target;
-            journal.CreateFloorNotes();
+            journal.CreateFloorNotes(true);
         }
     }
 }

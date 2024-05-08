@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Journal Action",
-                    "type": "Button",
-                    "id": "46c9acae-0f5f-43ea-bc6d-8ab3580fadc5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Hide Message",
                     "type": "Value",
                     "id": "040a405d-7375-4406-93a7-28b93e745851",
@@ -347,28 +338,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "SetDown",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "89c55c81-61d4-4682-be3a-09895834b789",
-                    "path": "<Keyboard>/j",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Journal Action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b119e223-9307-423d-9eae-e2bdbd2e8ddf",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Journal Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -721,6 +690,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "3b8a12cb-1646-4727-8fd4-e90c79420d9d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "e9ee706a-d7d5-4b5a-bf7a-45ca5c96d00c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "JournalTab",
+                    "type": "Button",
+                    "id": "d95c3d63-23c8-4a70-acab-8b44cbf0f581",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SettingsTab",
+                    "type": "Button",
+                    "id": "182cf768-7449-491d-977c-63eeddcb3abb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug",
+                    "type": "Value",
+                    "id": "256b0ea4-9563-40cc-92ba-bb07dbd16af4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -998,6 +1012,149 @@
                     "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "712b1cbc-59d7-407a-a930-814c3060dc90",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab322462-f668-47cc-b0c4-51862272e2a1",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ca873ac-b8c5-4fd2-bc85-feb8ff95195e",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b892bcc-dda5-4b79-9c23-73142e2ef6f3",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b19b9c3d-4b19-4372-af5d-0ec116dcd1b1",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5f6a640-6d08-4fbc-bdda-fb1bf2abe940",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JournalTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb19fccf-a1ac-4782-b1be-e59bfabfe9b7",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JournalTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ace8b26-5d9e-4da2-b192-11b9949b1631",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SettingsTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52bcaa33-e366-45cc-9b20-57c4c9d15517",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SettingsTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Two Modifiers",
+                    "id": "acc27d5a-7335-4f56-9e9e-d9f17e34dbea",
+                    "path": "TwoModifiers",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier 1",
+                    "id": "639f690c-8468-4c6b-b745-e762f23d9d40",
+                    "path": "<Keyboard>/period",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Modifier 2",
+                    "id": "f1328c70-7bcd-46b4-8bae-1df7a10ac94b",
+                    "path": "<Keyboard>/slash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Binding",
+                    "id": "6b99fe87-c1e4-47af-851c-db8a02065695",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
