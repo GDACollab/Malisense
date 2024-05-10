@@ -12,6 +12,8 @@ public class scr_noise : MonoBehaviour
 
     public GameObject noiseObject;
 
+    public bool noiseDistractsSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class scr_noise : MonoBehaviour
     {
         GameObject noise;
         noise = Instantiate(noiseObject,pos,Quaternion.identity);
+        noise.GetComponent<scr_noiseObject>().noiseDistractsSound = noiseDistractsSound;
         //Warning: if the object has no scr_noiseObject, then the game will crash
         noise.GetComponent<scr_noiseObject>().diameter = size; //This grabs the component scr_noiseObject in noise, and sets the diamter variable in it to size
         noise.GetComponent<scr_noiseObject>().parent = gameObject;

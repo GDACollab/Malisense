@@ -35,6 +35,7 @@ public class DynamiteMovement : MonoBehaviour
     // set up to call move(), moves dynamite in direction of player's triangle
     private void Start()
     {
+
         directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle/Triangle");
         arcMovement = GetComponent<DynamiteCurveScript>();
 
