@@ -22,25 +22,22 @@ public class LoaderCallback : MonoBehaviour
 
     private IEnumerator LoadingDelay()
     {
-        //Gets Object Color and Modifies values
-
-
         yield return StartCoroutine(FadeToBlackToLoadScene());
 
-        Loader.LoaderCallback();
+        Loader.LoaderCallback(); // Calls to load the scene after load 
 
-        while (!SceneManager.GetActiveScene().isLoaded)
+        while (!SceneManager.GetActiveScene().isLoaded) // Waits on Loading screen while other screen loads
         {
             yield return null;
         }
-        Debug.Log("Moved here");
-        yield return StartCoroutine(FadeToBlackToNextScene());
-
+        //fadeOutUIImage.gameObject.SetActive(false);
+        // yield return StartCoroutine(FadeToBlackToNextScene());
         // Call the loader callback after the delay
 
     }
     private IEnumerator FadeToBlackToLoadScene()
     {
+        fadeOutUIImage.gameObject.SetActive(true);
         Color objectColor = fadeOutUIImage.color; //Gets Object Color and Modifies values
         while (fadeOutUIImage.color.a > 0)
         {
@@ -48,14 +45,13 @@ public class LoaderCallback : MonoBehaviour
             fadeOutUIImage.color = objectColor;
             yield return null;
         }
-        fadeOutUIImage.gameObject.SetActive(false);
     }
 
     private IEnumerator FadeToBlackToNextScene()
     {
         Color objectColor = fadeOutUIImage.color; //Gets Object Color and Modifies values
         fadeOutUIImage.gameObject.SetActive(true);
-        while (fadeOutUIImage.color.a < 1)
+        while (fadeOutUIImage.color.a < 1.5)
         {
             objectColor.a += fadeSpeed * Time.deltaTime;
             fadeOutUIImage.color = objectColor;
@@ -63,6 +59,5 @@ public class LoaderCallback : MonoBehaviour
         }
         fadeOutUIImage.gameObject.SetActive(false);
     }
-
 }
 
