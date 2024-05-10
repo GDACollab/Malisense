@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3516374263435197929}
   - component: {fileID: 8202528621221622336}
-  - component: {fileID: 2496293596126523972}
+  - component: {fileID: 6105226842843951254}
+  - component: {fileID: 7491592632809509209}
+  - component: {fileID: 5097922034481060075}
   m_Layer: 0
   m_Name: Flashpowder Flash
   m_TagString: Untagged
@@ -83,7 +85,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &2496293596126523972
+--- !u!114 &6105226842843951254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,9 +94,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 2722482067113795592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f791653e5dcc64087c278bf269c99b, type: 3}
+  m_Script: {fileID: 11500000, guid: 24a446a433c003d4d9d7f9e52b6fe55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.24667358
+      value: 0.004711151
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   duration: 1
-  endColor: {r: 0, g: 0, b: 0, a: 1}
-  exponent: 1.5
+  heightY: 3
+--- !u!114 &7491592632809509209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722482067113795592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!114 &5097922034481060075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722482067113795592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b875a44487447f94d90837d4a5772140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 10
+  radius: 0.25
+  rotationSpeed: 2
+  ExplosionPrefab: {fileID: 9206162799161128134, guid: 445af2834abebc14e8bf926527f3c6c2, type: 3}
