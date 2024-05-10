@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c897fdfdabe711846a24f4e9bfb4a0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oneTimeSwitch: 0
+  startActivated: 0
+  syncSwitches: []
+  targets: []
   lamp: {fileID: 3661442210510790053}
 --- !u!212 &576659768646979963
 SpriteRenderer:
