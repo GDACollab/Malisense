@@ -24,6 +24,7 @@ public class SightBeastChase : StateBaseClass
         _stateMachine = GetComponent<StateMachine>();
         _pathfinder = GetComponent<EnemyPathfinder>();
         _sight = GetComponent<SightBeastSightModule>();
+
     }
 
     public override void Init()

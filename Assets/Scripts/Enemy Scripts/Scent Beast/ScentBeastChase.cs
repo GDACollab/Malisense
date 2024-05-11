@@ -19,6 +19,7 @@ public class ScentBeastChase : StateBaseClass
     //[Header("READ ONLY PLZ")]
     [SerializeField] private Vector2 endpoint;
     [SerializeField] private GameObject player;
+    [SerializeField] private int endPointRadius;
 
     EnemyPathfinder _pathfinder;
 
@@ -53,7 +54,7 @@ public class ScentBeastChase : StateBaseClass
             // Gizmos.DrawWireSphere(actualEndpoint, 0.5f);
 
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireCube(player.transform.position, Vector3.one * endPointRadius * 2);
+            Gizmos.DrawWireCube(player.transform.position, Vector3.one * 2);
 
             Gizmos.color = col;
             Gizmos.matrix = mat;
