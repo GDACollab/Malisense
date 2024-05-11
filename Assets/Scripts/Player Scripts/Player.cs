@@ -35,8 +35,7 @@ public class Player : MonoBehaviour
     // Inventory
     [Header("Inventory")]
     [Tooltip("Percentage of speed reduction while carrying an object")][SerializeField] float objectSlowdownRatio = 0.4f;
-    [HideInInspector] public OLD_INVENTORY inventory;
-    [SerializeField] public PlayerInventory newInventory;
+    [HideInInspector] public InventoryBase newInventory;
     
     // Sound 
     [Header("Sound")]
@@ -96,6 +95,9 @@ public class Player : MonoBehaviour
 
         // Set initial stamina
         currentStamina = maxStamina;
+
+        // Get inventory
+        newInventory = GetComponent<InventoryBase>();
         
         // Get sound object
         noiseSystem = GetComponent<scr_noise>();
