@@ -8,6 +8,7 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] public List<ItemBase> availableItems;
     [SerializeField] public PlayerInventory playerInventory;
+    [SerializeField] public GlobalTeapot teapot;
     // ref to canvas
     private GameObject _canvas;
 
@@ -20,24 +21,27 @@ public class ShopManager : MonoBehaviour
         {
             Button button = _canvas.transform.GetChild(i).Find("Button").GetComponent<Button>();
             
-            // change inv to SO so it saves across scenes
-            //button.onClick.AddListener(TryBuyItem());
+            var i1 = i;
+            print(i1);
+            button.onClick.AddListener(() => TryBuyItem(i1));
         }
     }
 
     // move to ui
-    bool TryBuyItem(int item)
+    void TryBuyItem(int item)
     {
         int index = playerInventory.FindEmptySlot();
-        
+
         if (index == -1)
         {
-            return false;
+            return;
         }
-        
-        // if player has enough money, add item
-        playerInventory.AddItem(availableItems[item], 1);
 
-        return true;
+        // if player has enough money, add item
+        if (teapot.numStoreCredits >= (int) availableItems[item].cost)
+        {
+            teapot.numStoreCredits -= (int)availableItems[item].cost;
+            playerInventory.AddItem(availableItems[item], 1);
+        }
     }
 }

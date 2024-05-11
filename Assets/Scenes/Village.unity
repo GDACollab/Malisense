@@ -575,41 +575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864b265e495654a4ca528bb775ed3aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildings:
-  - light: {fileID: 1286373384}
-  - light: {fileID: 1945619126}
-  - light: {fileID: 509536765}
-  - light: {fileID: 1022978294}
-  - light: {fileID: 1691295069}
-  initialSelectedBuilding: 3
-  dungeonMessage: {fileID: 1835241703}
-  UI_ELEMENTS:
-  - {fileID: 487022360}
-  - {fileID: 21386834}
-  - {fileID: 717845900}
-  - {fileID: 219218002}
-  - {fileID: 260985597}
-  - {fileID: 31854813}
-  InkScripts:
-  - {fileID: 4900000, guid: 38d7ee344f063c3459f252ecf9cafeb8, type: 3}
-  - {fileID: 4900000, guid: 38d7ee344f063c3459f252ecf9cafeb8, type: 3}
-  - {fileID: 4900000, guid: 4432e194a45daef4d9010447b2bd6347, type: 3}
-  - {fileID: 4900000, guid: 41e3456b099954746aaf0aee3bcf8a49, type: 3}
-  - {fileID: 4900000, guid: a05e5d152584ff741bab2f71c3541cc3, type: 3}
-  - {fileID: 4900000, guid: 252e509eb8cf90f47a0178374eadb505, type: 3}
-  - {fileID: 4900000, guid: 48aefa41fd26b1845bc1713abccda173, type: 3}
-  - {fileID: 4900000, guid: 40b1306ea6a710143aa4473d873e20a9, type: 3}
-  - {fileID: 4900000, guid: be095f0b595ef5747be8a5e326212647, type: 3}
-  - {fileID: 4900000, guid: 891ed6b5a3270ce458bc8af80491a1a5, type: 3}
-  currentlySelected: 1
-  hasEntered: 0
-  hasSelected: 0
-  movePointer: 1
-  fadeOutUIImage: {fileID: 291680188}
-  fadeSpeed: 0.5
-  CurrentInkTextAsset: {fileID: 0}
-  activateInk: 0
-  loadDungeon: 0
 --- !u!1 &199394183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,6 +1685,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global Teapot
       objectReference: {fileID: 0}
+    - target: {fileID: 4241208189207889398, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: numStoreCredits
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2285,9 +2254,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1138954812}
-  - {fileID: 12461081}
   - {fileID: 1591116131}
+  - {fileID: 12461081}
+  - {fileID: 1138954812}
   m_Father: {fileID: 1249964031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3016,17 +2985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1235235605536084a84ce32139192b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 564863805}
-  dialogueText: {fileID: 406351828}
-  selectableItemsGameObject: {fileID: 127951903}
-  choices:
-  - {fileID: 1046494621}
-  - {fileID: 199394183}
-  - {fileID: 1853069460}
-  - {fileID: 304227731}
-  currentChoiceIndex: -1
-  isPlaying: 0
-  selectableScript: {fileID: 127951905}
 --- !u!1 &1022978294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4070,6 +4028,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31f3b4608255e3f4fa6ff98eeaba0f15, type: 2}
   - {fileID: 11400000, guid: d7c6a1f21e29b1f438c22c7da625fad3, type: 2}
   playerInventory: {fileID: 11400000, guid: 0f678626b0d92441c95b46587e73887d, type: 2}
+  teapot: {fileID: 1711662666}
 --- !u!1 &1286373384
 GameObject:
   m_ObjectHideFlags: 0
@@ -5458,6 +5417,17 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1711662666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4241208189207889398, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+  m_PrefabInstance: {fileID: 403841420}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4d445d42e82ae48b9c61651a3f905d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1764347513
 GameObject:
   m_ObjectHideFlags: 0
@@ -6150,7 +6120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c599753f14b05ed418a679c937b0aadd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentListSelected: {fileID: 127951903}
 --- !u!1 &1853069460
 GameObject:
   m_ObjectHideFlags: 0
