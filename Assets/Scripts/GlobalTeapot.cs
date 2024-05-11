@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 
+/// <summary>
+/// A Very Special Teapot
+/// </summary>
 public class GlobalTeapot : MonoBehaviour
 {
     /// <summary>
     /// A Very Special Teapot
     /// </summary>
     public static GlobalTeapot Instance { get; private set; }
+    
     /// <summary>
     /// Story progress variables
     /// </summary>
@@ -19,15 +22,21 @@ public class GlobalTeapot : MonoBehaviour
         End
     }
     
-    public bool hasDied = false, hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
-    public string mayorNote1ID, mayorNote2ID, finalMayorNoteID;
-    
+    [Header("Story Variables")]
     public TeaType currProgress = TeaType.Intro;
-    
-    public int villageInk = 0;
-    public AudioManager audioManager;
+    /// <summary>
+    /// True if player has this
+    /// </summary>
+    public bool hasDied = false, hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
     public Loader.Scene currentScene = Loader.Scene.DeathScene;
+    public int villageInk = 0; // DELETE ONCE EVERYTHING IS CONNECTED PROPERLY
     
+    [Header("Note Variables")]
+    public int numNotesObtained = 0;
+    public int numStoreCredits = 0;
+    
+    [Header("Scripts Referenced")]
+    public AudioManager audioManager;
     public Journal journal;
     
     private void Awake() 
@@ -49,19 +58,26 @@ public class GlobalTeapot : MonoBehaviour
         currentScene = Loader.GetCurrentScene();
     }
     
+    /// <summary>
+    /// Obtain floor note given its ID
+    /// </summary>
+    /// <param name="id">The ID of the note</param>
     public void ObtainFloorNote(string id){
         if(id.Length<=0){
             return;
         }
-        if(id == mayorNote1ID){
+        if(id == "DN_F2_Mayor1"){
             hasMayorNote1 = true;
         }
-        else if(id == mayorNote2ID){
+        else if(id == "DN_F2_Mayor2"){
             hasMayorNote2 = true;
         }
-        else if(id == finalMayorNoteID){
+        else if(id == "MAYOR_FINAL_NOTE"){
             hasFinalMayorNote = true;
         }
-        journal.ObtainFloorNote(id);
+        if(journal.ObtainFloorNote(id)){
+            numNotesObtained++;
+            numStoreCredits++;
+        }
     }
 }
