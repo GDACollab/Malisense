@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CanvasGroup))]
 public class Hotbar : MonoBehaviour
 {
-    public InventoryBase inventory;
+    public PlayerInventory inventory;
     public RectTransform selector;
 
     [Tooltip("The time it takes for the selector to move to another slot, measured in seconds.")]

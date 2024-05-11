@@ -19,27 +19,37 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
 
-    // Start is called before the first frame update
-    private Ink.Runtime.Story currentStory;
+	[Header("Input")]
+	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
+	[SerializeField] float moveRepeatDelay = 0.5f;
+	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
+	[SerializeField] float moveRepeatRate = 0.1f;
+	bool firstInput = true;
+	float moveTimer = 0f;
+	Controls controls;
+
+	// Start is called before the first frame update
+	private Ink.Runtime.Story currentStory;
 
     private static DialogueManager instance;
 
+    [Header("Other")]
     [SerializeField] private bool isPlaying;
     [SerializeField] V_SelectableItems3New selectableScript;
 
     private string currentInkFileName = "";
 
-    PlayerInput playerInput;
-    InputAction moveAction;
-    InputAction selectAction;
 
+    void Awake()
+    {
+		// Input
+		controls = new Controls();
+		controls.UI.Enable();
+		controls.UI.Select.performed += Select;
+	}
 
     void Start()
     {
-        playerInput = FindFirstObjectByType<PlayerInput>().GetComponent<PlayerInput>();
-        moveAction = playerInput.actions.FindAction("8 Directions Movement");
-        selectAction = playerInput.actions.FindAction("Interact");
-
         isPlaying = false;
         dialoguePanel.SetActive(false);
         selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
@@ -58,43 +68,7 @@ public class DialogueManager : MonoBehaviour
     {
         int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-        //If Currently Selected and Input Space bar
-        if (isPlaying)
-        {
-            // Check if there are any choices to navigate
-            if (currentStory.currentChoices.Count > 0)
-            {
-                if (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered)
-                {
-                    // Navigate up in the choices list
-                    currentChoiceIndex--;
-                    if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                    // Optionally, call a function to update the UI here
-                }
-                else if (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered)
-                {
-                    // Navigate down in the choices list
-                    currentChoiceIndex++;
-                    if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                    // Optionally, call a function to update the UI here
-                }
-
-                // Select a choice with the Enter key
-                if (selectAction.triggered)
-                {
-                    MakeChoice(currentChoiceIndex);
-                }
-            }
-            else
-            {
-                // If there are no choices, pressing Enter continues the story
-                if (selectAction.triggered)
-                {
-                    ContinueStory();
-                }
-            }
-        }
-
+		MovementInput();
 
         if (!selectableScript.activateInk)
         {
@@ -116,7 +90,92 @@ public class DialogueManager : MonoBehaviour
                 EnterDialogueMode(currentInk);
             }
         }
+    }
 
+    void MovementInput()
+    {
+		// Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+		// Check that there are dialogue options to choose from otherwise there's no option to move
+		if (isPlaying && currentStory.currentChoices.Count > 0)
+        {
+			// Read movement input
+			Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
+
+			// There's horizontal movement input
+			if (inputVector.x != 0f)
+            {
+
+                // Moving is on cooldown
+                if (moveTimer > 0f)
+                {
+                    moveTimer -= Time.deltaTime;
+
+                    if (moveTimer < 0f)
+                    {
+                        moveTimer = 0f;
+                    }
+                }
+
+                // Can Move
+                if (moveTimer <= 0f)
+                {
+					// Check if this is the first movement input after there was just no movement
+					if (firstInput)
+					{
+						// Put move on moveRepeatDelay cooldown
+						firstInput = false;
+						moveTimer = moveRepeatDelay;
+					}
+					else
+					{
+						// Put move on moveRepeatRate cooldown
+						moveTimer = moveRepeatRate;
+					}
+
+					// Move
+					if (inputVector.x < 0f)             // left
+					{
+						// Navigate up in the choices list
+						currentChoiceIndex--;
+						if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+						// Optionally, call a function to update the UI here
+					}
+					else if (inputVector.x > 0f)        // right
+					{
+						// Navigate down in the choices list
+						currentChoiceIndex++;
+						if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+						// Optionally, call a function to update the UI here
+					}
+                }
+
+            }
+
+            // There's no horizontal movement input
+            else
+            {
+                // Reset movement so that the next movement input is instant
+                firstInput = true;
+                moveTimer = 0f;
+            }
+        }
+    }
+
+	void Select(InputAction.CallbackContext context)
+    {
+		// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+		if (isPlaying)
+		{
+			// Check if there are any choices to navigate
+			if (currentStory.currentChoices.Count > 0)
+			{
+				MakeChoice(currentChoiceIndex);
+			}
+			else
+			{
+				ContinueStory();
+			}
+		}
     }
 
     public void EnterDialogueMode(TextAsset inkJson)
