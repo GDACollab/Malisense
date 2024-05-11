@@ -101,4 +101,12 @@ public class ScentDetection : MonoBehaviour
             
         }
     }
+    
+    /// <summary>
+    /// Gets the player's scent value
+    /// </summary>
+    /// <returns>The player's scent value</returns>
+    public float GetScent(){
+        return playerScent;
+    }
 }
