@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(EnemyPathfinder))]
 
-public class SightBeastDistract : StateBaseClass, ISwitchable
+public class ScentBeastDistract : StateBaseClass, ISwitchable
 {
     // Start is called before the first frame update
     [Tooltip("Amount of time monster is distracted")] public float distractLength;
@@ -14,25 +14,21 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
     private StateMachine _stateMachine;
     private Rigidbody2D _rb2d;
     private EnemyPathfinder _pathfinder;
-    private SightBeastAlert _alert;
-    private SpriteRenderer _sightSprite;
+    private SpriteRenderer _scentSprite;
     private Sprite AwakeSprite;
     private int _statueCounter;
-    private Light2D _light;
 
     private void Awake()
     {
         _stateMachine = GetComponent<StateMachine>();
-        _alert = GetComponent<SightBeastAlert>();
         _pathfinder = GetComponent<EnemyPathfinder>();
-        
+
     }
     void Start()
     {
-        _sightSprite = GetComponentInChildren<SpriteRenderer>();
+        _scentSprite = GetComponentInChildren<SpriteRenderer>();
         _rb2d = GetComponent<Rigidbody2D>();
-        AwakeSprite = _sightSprite.sprite;
-        _light = GetComponentInChildren<Light2D>();
+        AwakeSprite = _scentSprite.sprite;
 
     }
 
@@ -44,7 +40,6 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
             _pathfinder.SetTarget(transform.position);
             _pathfinder.acceleration = 0;
             //Set target to player position at the time of being distracted
-            _alert.SetDistractTarget();
             //Stun monster
             StartCoroutine(Stunned());
         }
@@ -52,10 +47,9 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
         else
         {
             _statueCounter = _stateMachine.GetActivationsToAwake();
-            _sightSprite.sprite = _stateMachine.GetStatueSprite();
+            _scentSprite.sprite = _stateMachine.GetStatueSprite();
             //Stops enemy from hurting player while statue
             gameObject.tag = "Untagged";
-            _light.enabled = false;
             //Prevents player from pushing monster while statue
             _rb2d.mass = 10000;
         }
@@ -72,8 +66,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
         //Debug.Log("Stunned started");
         yield return new WaitForSeconds(timeLeft);
         //Debug.Log("Stunned ended");
-        _pathfinder.acceleration = _alert.speed;
-        ExitToState(StateMachine.State.Alert);
+        ExitToState(StateMachine.State.Patrolling);
     }
 
     private void ExitToState(StateMachine.State state)
@@ -99,13 +92,11 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
         if (_statueCounter <= 0)
         {
             _stateMachine.AwakenStatue();
-            _sightSprite.sprite = AwakeSprite;
+            _scentSprite.sprite = AwakeSprite;
             gameObject.tag = "Enemy";
             //Alert target is set to it self's position
-            _alert.SetStatueTarget();
-            ExitToState(StateMachine.State.Alert);
+            ExitToState(StateMachine.State.Chasing);
             _rb2d.mass = 1;
-            _light.enabled = true;
             //Debug.Log("Monster Working");
         }
     }

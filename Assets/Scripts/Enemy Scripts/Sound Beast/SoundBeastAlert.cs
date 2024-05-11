@@ -17,6 +17,8 @@ public class SoundBeastAlert : StateBaseClass
 
     public LayerMask wallLayers;
 
+    [HideInInspector] public bool distractTarget;
+
 
     private float angle = 0;
     private StateMachine machine;
@@ -42,11 +44,15 @@ public class SoundBeastAlert : StateBaseClass
         aiPath = GetComponent<AIPath>();
         isCircling = false;
         movedToOutside = false;
-        circleCenter = player.position;
+        if (distractTarget) distractTarget = false;
+        else
+        {
+            circleCenter = player.position;
+            aiPath.destination = player.position;
+        }
 
         // Start pathfinding to player's position
         aiPath.maxSpeed = AlertedSpeed;
-        aiPath.destination = player.position;
         aiPath.SearchPath();
     }
 
@@ -192,5 +198,21 @@ public class SoundBeastAlert : StateBaseClass
             isCircling = false;
             machine.currentState = StateMachine.State.Chasing;
         }
+    }
+    //Sets target to player position when a monster is distracted
+    public void SetDistractTarget()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        distractTarget = true;
+        circleCenter = player.position;
+        aiPath.destination = player.position;
+    }
+
+    //Sets target to it self when awoken from statue
+    public void SetStatueTarget()
+    {
+        distractTarget = true;
+        circleCenter = transform.position;
+        aiPath.destination = transform.position;
     }
 }
