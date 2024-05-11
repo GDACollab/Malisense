@@ -17,9 +17,12 @@ public class ScentDetection : MonoBehaviour
     public float scentT_Patrol2Alert = 50;
     public float scentT_Alert2Chase = 90;
 
-    [Header("Scent Values")]
+    [Header("Scent Buildup Values")]
 
-    public float scentPerSecond = 1;
+    public float scentPerSecond;
+    static public float scentPerSecond_Patrol = 0.75f;
+    static public float scentPerSecond_Alert = 2;
+    static public float scentPerSecond_Chase = 5;
 
     [Header("Read-only")]
 
@@ -31,6 +34,7 @@ public class ScentDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        scentPerSecond = scentPerSecond_Patrol;
         stateMac = GetComponent<StateMachine>();
         player = GameObject.FindWithTag("Player");
         playerDist = Vector2.Distance(player.transform.position, transform.position);
@@ -64,6 +68,7 @@ public class ScentDetection : MonoBehaviour
             checkPlayer();
             switch (GetComponent<StateMachine>().currentState) {
                 case StateMachine.State.Patrolling:
+                    if (scentPerSecond != scentPerSecond_Patrol) scentPerSecond = scentPerSecond_Patrol;
                     // if crossed threshold switch state
                     if (playerScent > scentT_Patrol2Alert || playerDist < distT_Patrol2Alert) {
                         stateMac.currentState = StateMachine.State.Alert;
@@ -71,6 +76,7 @@ public class ScentDetection : MonoBehaviour
                     }
                     break;
                 case StateMachine.State.Alert:
+                    if (scentPerSecond != scentPerSecond_Alert) scentPerSecond = scentPerSecond_Alert;
                     // if crossed threshold switch state
                     if (playerScent < scentT_Patrol2Alert && playerDist > distT_Patrol2Alert) {
                         stateMac.currentState = StateMachine.State.Patrolling;
@@ -81,10 +87,10 @@ public class ScentDetection : MonoBehaviour
                     }
                     break;
                 case StateMachine.State.Chasing:
+                    if (scentPerSecond != scentPerSecond_Chase) scentPerSecond = scentPerSecond_Chase;
                     // if crossed threshold switch state
                     // Chasing doesn't end untill scent is off the player
-                    if (playerScent < scentT_Alert2Chase) {
-                        //modScent(10); // jump up playerscent to increase difficulty
+                    if (playerScent < scentT_Alert2Chase && playerDist > distT_Alert2Chase) {
                         stateMac.currentState = StateMachine.State.Alert;
                         Debug.Log("Scent Beast switching from Chase -> Alert");
                     }
