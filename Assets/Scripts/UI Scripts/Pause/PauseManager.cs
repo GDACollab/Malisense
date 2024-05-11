@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Linq;
 
 public class PauseManager : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class PauseManager : MonoBehaviour
     enum Submenu {SETTINGS, JOURNAL}
     Submenu currSubMenu = Submenu.SETTINGS;
     
-    PlayerInput playerInput;
+    PlayerInput uiInput;
+    List<PlayerInput> otherInputs;
     
     GlobalTeapot globalTeapot;
     List<string> floorNotes;
@@ -27,8 +29,14 @@ public class PauseManager : MonoBehaviour
     void Start()
     {
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
-        playerInput = GetComponent<PlayerInput>();
+        uiInput = GetComponent<PlayerInput>();
+        otherInputs = FindObjectsOfType<PlayerInput>().ToList();
+        otherInputs.Remove(uiInput);
         isPaused = false;
+        masterSlider.value = globalTeapot.audioManager.masterVolume;
+        musicSlider.value = globalTeapot.audioManager.musicVolume;
+        sfxSlider.value = globalTeapot.audioManager.sfxVolume;
+        ambianceSlider.value = globalTeapot.audioManager.ambienceVolume;
     }
     
     public void UpdateVolume(){
@@ -78,8 +86,7 @@ public class PauseManager : MonoBehaviour
     {
         if(!isPaused)
         {
-            playerInput.actions.FindActionMap("Player").Disable();
-            playerInput.actions.FindActionMap("Inventory").Disable();
+            SetOtherInputs(false);
             pauseParent.SetActive(true);
             OpenSettings(true);
             floorNotes = globalTeapot.journal.GetObtainedFloorNotes();
@@ -93,8 +100,7 @@ public class PauseManager : MonoBehaviour
         pauseParent.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
-        playerInput.actions.FindActionMap("Player").Enable();
-        playerInput.actions.FindActionMap("Inventory").Enable();
+        SetOtherInputs(true);
     }
 
     
@@ -144,6 +150,7 @@ public class PauseManager : MonoBehaviour
             if(lastPageDisplayed-2<0){
                 return;
             }
+            leftArrow.SetTrigger("Pressed");
             DisplayJournalPages(lastPageDisplayed-2);
         }
     }
@@ -159,6 +166,7 @@ public class PauseManager : MonoBehaviour
     }
     
     public void Load(int ind){
+        ResumeGame();
         switch (ind)
         {
             case 0: 
@@ -173,6 +181,12 @@ public class PauseManager : MonoBehaviour
             default:
                 Loader.Load(Loader.Scene.MainMenu);
                 break;
+        }
+    }
+    
+    void SetOtherInputs(bool enable){
+        foreach(PlayerInput input in otherInputs){
+            input.enabled = enable;
         }
     }
 }
