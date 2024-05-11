@@ -29,6 +29,8 @@ public class EnemyPathfinder : MonoBehaviour
         _targetPosition = point;
     }
 
+    public Vector2 GetTargetPosition() => _targetPosition;
+
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();

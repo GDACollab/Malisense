@@ -13,6 +13,7 @@ public class scr_noiseObject : MonoBehaviour
     //Note: If you want to view the size, you can set the color of the sprite to be not see through (ie for the RGBA, A > 0)
     //To change it back, set the color to see-through again! (ie A = 0)
 
+    public bool noiseDistractsSound;
     public Transform self;
     public GameObject parent; // used by noise detectors to determine what made the sound
     public float growthTime = 0.25f; //Time to grow to max
@@ -23,6 +24,15 @@ public class scr_noiseObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach(GameObject x in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if(x.GetComponent<SightBeastPatrol>() != null)
+            {
+                x.GetComponent<SightBeastPatrol>().checkIfVisible(gameObject);
+            }
+        }
+
+
         self.transform.localScale = new Vector3(0,0,1);
     }
 
