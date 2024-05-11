@@ -117,9 +117,17 @@ public class SoundBeastPatrol : StateBaseClass
             // Check radius for noise level
             float loudness = noise.diameter;
             Vector2 noisePos = noise.transform.position;
-            if (noise.parent.tag == "Player" && machine.currentState == StateMachine.State.Patrolling)
+            Debug.Log(noise.parent.name);
+            if (noise.noiseDistractsSound == true)
             {
-                machine.currentState = StateMachine.State.Alert;
+                Debug.Log("Distracted!");
+                machine.currentState = StateMachine.State.Distracted;
+            }
+            else {
+                if (machine.currentState == StateMachine.State.Patrolling)
+                {
+                    machine.currentState = StateMachine.State.Alert;
+                }
             }
         }
     }

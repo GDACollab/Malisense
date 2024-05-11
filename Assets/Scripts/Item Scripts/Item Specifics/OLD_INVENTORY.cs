@@ -5,8 +5,7 @@ using System.Drawing;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-
-public class InventoryBase : MonoBehaviour
+public class OLD_INVENTORY : MonoBehaviour
 {
    
     [SerializeField] private int size;
@@ -20,6 +19,11 @@ public class InventoryBase : MonoBehaviour
 
     private void OnValidate()
     {
+        if (size <= 0)
+        {
+            return;
+        }
+        
         // Set inventory size
         inventory.Clear();
             
@@ -102,6 +106,18 @@ public class InventoryBase : MonoBehaviour
         print("Item " + targetItem.name + " Not Found");
         return false;
     }
+    
+    // getter
+    public int GetSize()
+    {
+        return size;
+    }
+    
+    // setter
+    public void SetSize(int newSize)
+    {
+        size = newSize;
+    }
 
     // we love overloading
     public bool RemoveItem(int targetSlot, int amount)
@@ -161,7 +177,7 @@ public class InventoryBase : MonoBehaviour
         int i = 0;
         foreach (InventorySlot slot in inventory)
         {
-            if (slot.item == null)
+            if (!slot.item)
             {
                 return i;
             }

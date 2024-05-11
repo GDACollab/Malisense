@@ -42,7 +42,7 @@ public class SightBeastPatrol : StateBaseClass
     private SBProtoPatrolArea GetRandomArea()
     {
         var areas = patrolPath.areas.Where(area => !area.Contains(transform.position));
-        if(areas.Count() == 0)
+        if (areas.Count() == 0)
         {
             areas = patrolPath.areas;
         }
@@ -78,13 +78,13 @@ public class SightBeastPatrol : StateBaseClass
 
     public override void On_Update()
     {
-        if(_pathfinder.AtGoal)
+        if (_pathfinder.AtGoal)
         {
             // Currently idle
             _idleTimeLeft -= Time.deltaTime;
 
             // When done idling, move to new area
-            if(_idleTimeLeft < 0f)
+            if (_idleTimeLeft < 0f)
             {
                 _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
 
@@ -101,7 +101,7 @@ public class SightBeastPatrol : StateBaseClass
         // Switch to alert state
         if (_sight.CanSeeTarget())
         {
-            if(_lastSeenTime + alertDuration > Time.time)
+            if (_lastSeenTime + alertDuration > Time.time)
             {
                 _stateMachine.currentState = StateMachine.State.Chasing;
             }
@@ -111,6 +111,20 @@ public class SightBeastPatrol : StateBaseClass
             }
 
             _lastSeenTime = Time.time;
+        }
+
+
+    }
+
+    public void checkIfVisible(GameObject dynamite)
+    {
+        scr_noiseObject noise = dynamite.GetComponent<scr_noiseObject>();
+        if (noise.noiseDistractsSound == true)
+        {
+            if (_sight.CanSee(dynamite.transform.position, _sight.targetRadius))
+            {
+                _stateMachine.currentState = StateMachine.State.Alert;
+            }
         }
     }
 }

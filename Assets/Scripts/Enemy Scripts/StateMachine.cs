@@ -140,11 +140,17 @@ public class StateMachine : MonoBehaviour
     public Sprite GetStatueSprite() => SpriteStatue;
     
     private void SetChase(){
-        dungeonManager.AddEnemy(this);
+        if (dungeonManager != null)
+        {
+            dungeonManager.AddEnemy(this);
+        }
     }
     
     private void StopChase(){
-        dungeonManager.RemoveEnemy(this);
+        if (dungeonManager != null)
+        {
+            dungeonManager.RemoveEnemy(this);
+        }
     }
 }
 
