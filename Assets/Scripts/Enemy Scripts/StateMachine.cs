@@ -88,15 +88,15 @@ public class StateMachine : MonoBehaviour
             case State.Chasing:
                 if (playerObj.activeSafeZones.Count > 0)
                 {
-                    currentState = State.Patrolling;
-                    alertInit = false;
+                    currentState = State.Alert;
+                    patrolInit = false;
                     chaseInit = false;
-                    if (!patrolInit)
+                    if (!alertInit)
                     {
-                        patrol.Init();
-                        patrolInit = true;
+                        alert.Init();
+                        alertInit = true;
                     }
-                    if (patrol != null) { patrol.On_Update(); }
+                    if (alert != null) { alert.On_Update(); }
                     break;
                 }
                 patrolInit = false;

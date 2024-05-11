@@ -35,6 +35,8 @@ public class SoundBeastPatrol : StateBaseClass
 
     private int _pathIndex;
 
+    private Player playerObj;
+
     private void Awake()
     {
         patrolPath = GetComponent<PatrolPath>();
@@ -78,6 +80,7 @@ public class SoundBeastPatrol : StateBaseClass
         // Start at the closest path point when entering patrol state
         var startArea = patrolPath.FindClosestArea(transform.position);
         _pathIndex = Array.IndexOf(patrolPath.areas, startArea);
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     public override void On_Update()
@@ -126,7 +129,10 @@ public class SoundBeastPatrol : StateBaseClass
             else {
                 if (machine.currentState == StateMachine.State.Patrolling)
                 {
-                    machine.currentState = StateMachine.State.Alert;
+                    if (playerObj.activeSafeZones.Count == 0)
+                    {
+                        machine.currentState = StateMachine.State.Alert;
+                    }
                 }
             }
         }

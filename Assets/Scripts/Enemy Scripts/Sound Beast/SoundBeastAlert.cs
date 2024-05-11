@@ -31,8 +31,10 @@ public class SoundBeastAlert : StateBaseClass
     private Vector3 movePosition;
     private bool notcollided = false;
 
+    private Player playerObj;
+
     //get the noisePos variable from the soundBeast_noiseDetect_copy script and use it to pass the noise position to the Sound_Alert script
-    
+
 
     public override void Init()
     {
@@ -48,6 +50,7 @@ public class SoundBeastAlert : StateBaseClass
         aiPath.maxSpeed = AlertedSpeed;
         aiPath.destination = player.position;
         aiPath.SearchPath();
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
 
@@ -186,7 +189,7 @@ public class SoundBeastAlert : StateBaseClass
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.tag == "NoiseObject" && isCircling)
+        if (collision.tag == "NoiseObject" && isCircling && playerObj.activeSafeZones.Count == 0)
         {
             // Switch to chase state
             isCircling = false;
