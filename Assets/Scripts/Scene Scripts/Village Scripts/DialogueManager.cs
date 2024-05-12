@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
+    private int defaultHeight = 115;
 
 	[Header("Input")]
 	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
@@ -262,12 +264,18 @@ public class DialogueManager : MonoBehaviour
             if (i == currentChoiceIndex)
             {
                 // Highlight the current choice
-                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow; // Example of highlighting
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.black; // Example of highlighting
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // set overflow to allow text to expand
+                choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize; //set box to exanded size
+
             }
             else
             {
                 // Revert other choices to their normal state
-                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.white; // Example of normal state
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.grey; // Example of normal state
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.Ellipsis; //reset overflow to Ellipsis
+                choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained; //don't fit to text
+                choices[i].GetComponent<RectTransform>().sizeDelta = new Vector2(choices[i].GetComponent<RectTransform>().rect.width, defaultHeight);   //return box to normal size  
             }
         }
     }
