@@ -14,11 +14,12 @@ public class NavigationManager : MonoBehaviour
 	[Header("Default Selectables")]
 	[SerializeField] Selectable mainMenuStartButton;
 	[SerializeField] Selectable optionsVolumeSlider;
+	[SerializeField] Selectable controlsReturnButton;
 	[SerializeField] Selectable credits1NextButton;
 	[SerializeField] Selectable credits2NextButton;
 	[SerializeField] Selectable credits3PreviousButton;
 
-	enum Screens { MAIN_MENU, OPTIONS, CREDITS1,  CREDITS2, CREDITS3 }
+	enum Screens { MAIN_MENU, OPTIONS, CONTROLS, CREDITS1,  CREDITS2, CREDITS3 }
 	Screens currentScreen = Screens.MAIN_MENU;
 
 
@@ -99,6 +100,10 @@ public class NavigationManager : MonoBehaviour
 				if (currentScreen == Screens.OPTIONS) { return true; }
 				break;
 
+			case "ControlsButton":
+				if (currentScreen == Screens.CONTROLS) { return true; }
+				break;
+
 			case "CreditsButton":
 				if (currentScreen == Screens.CREDITS1) { return true; }
 				break;
@@ -143,7 +148,7 @@ public class NavigationManager : MonoBehaviour
 
 	bool isScreenChangingButton(string buttonName)
 	{
-		return buttonName == "OptionsButton" || buttonName == "CreditsButton" || buttonName == "ReturnButton" || buttonName == "NextCreditButton" || buttonName == "BackCreditButton";
+		return buttonName == "OptionsButton" || buttonName == "ControlsButton" || buttonName == "CreditsButton" || buttonName == "ReturnButton" || buttonName == "NextCreditButton" || buttonName == "BackCreditButton";
 	}
 
 	public void SetNewCurrentScreen(GameObject buttonGO)
@@ -156,6 +161,10 @@ public class NavigationManager : MonoBehaviour
 		{
 			case "OptionsButton":
 				currentScreen = Screens.OPTIONS;
+				break;
+
+			case "ControlsButton":
+				currentScreen = Screens.CONTROLS;
 				break;
 
 			case "CreditsButton":
@@ -203,6 +212,10 @@ public class NavigationManager : MonoBehaviour
 
 			case Screens.OPTIONS:
 				optionsVolumeSlider.Select();
+				break;
+
+			case Screens.CONTROLS:
+				controlsReturnButton.Select();
 				break;
 
 			case Screens.CREDITS1:
