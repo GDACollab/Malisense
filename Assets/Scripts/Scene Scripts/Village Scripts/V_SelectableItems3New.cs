@@ -31,6 +31,7 @@ public class V_SelectableItems3New : MonoBehaviour
     //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
     [SerializeField] private List<TextAsset> InkScripts = new List<TextAsset>(); // List for Inkle Stuff :3
+    [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
     [SerializeField] public bool currentlySelected = false;
     [SerializeField] public bool hasEntered = false;
     [SerializeField] private bool hasSelected = false;
@@ -43,6 +44,7 @@ public class V_SelectableItems3New : MonoBehaviour
 
     //Inkle
     public TextAsset CurrentInkTextAsset;
+    public string CurrentCharacter;
     public bool activateInk;
     public bool loadDungeon = false;
     
@@ -81,10 +83,12 @@ public class V_SelectableItems3New : MonoBehaviour
 
         thisObject = gameObject;
         CurrentInkTextAsset = InkScripts[0];
+        CurrentCharacter = CharacterList[0];
         activateInk = false;
         
         if(globalTeapot.villageInk == 0){
             CurrentInkTextAsset = InkScripts[9];
+            // what should i be setting here? CurrentCharacter = CharacterList[9];
             selectedBuildingIndex = 5;
             selectObject();
         }
@@ -119,22 +123,30 @@ public class V_SelectableItems3New : MonoBehaviour
         if(selectedBuildingIndex == 2){
             if(ckTea == 0){
                 CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
+                CurrentCharacter = CharacterList[selectedBuildingIndex];
             }
             else if(ckTea == 2){
                 CurrentInkTextAsset = InkScripts[6];
+                // what should i be setting here? CurrentCharacter = CharacterList[6];
             }
             else if(ckTea == 3){
                 CurrentInkTextAsset = InkScripts[7];
+                // what should i be setting here? CurrentCharacter = CharacterList[7];
             }
-            else{
+            else
+            {
                 CurrentInkTextAsset = InkScripts[5];
+                // what should i be setting here? CurrentCharacter = CharacterList[5];
             }
         }
         else if(selectedBuildingIndex == 3 && clergyTea == 2){
             CurrentInkTextAsset = InkScripts[8];
+            // what should i be setting here?CurrentCharacter = CharacterList[8];
         }
-        else{
+        else
+        {
             CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
+            CurrentCharacter = CharacterList[selectedBuildingIndex];
         }
 
         itemSelected();

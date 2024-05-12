@@ -15,6 +15,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] public GameObject selectableItemsGameObject;
 
+    [Header("Ink File")]
+    [Tooltip("The master ink file.")]
+    [SerializeField] private TextAsset masterInk;
+
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
@@ -30,8 +34,8 @@ public class DialogueManager : MonoBehaviour
 	float moveTimer = 0f;
 	Controls controls;
 
-	// Start is called before the first frame update
-	private Ink.Runtime.Story currentStory;
+    // Start is called before the first frame update
+    private Ink.Runtime.Story currentStory;
 
     private static DialogueManager instance;
 
@@ -86,10 +90,11 @@ public class DialogueManager : MonoBehaviour
         if (selectableScript != null && selectableScript.activateInk)
         {
             TextAsset currentInk = selectableScript.CurrentInkTextAsset;
+            string currentChar = selectableScript.CurrentCharacter;
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
-            if (currentInk != null)
+            if (currentChar != null)
             {
-                EnterDialogueMode(currentInk);
+                EnterDialogueMode(currentChar);
             }
         }
     }
@@ -180,8 +185,12 @@ public class DialogueManager : MonoBehaviour
 		}
     }
 
-    public void EnterDialogueMode(TextAsset inkJson)
+    public void EnterDialogueMode(string character)
     {
+        TextAsset inkJson = masterInk;
+
+        // Load a new story or restart the current one
+        currentStory = new Ink.Runtime.Story(inkJson.text);
 
         if (currentInkFileName == inkJson.name)
         {
@@ -197,6 +206,52 @@ public class DialogueManager : MonoBehaviour
         // Load a new story or restart the current one
         currentStory = new Ink.Runtime.Story(inkJson.text);
         currentInkFileName = inkJson.name; // Update the current ink file name
+
+        // update ink variables
+        // VAR isIntro = false
+        // VAR isDeathF1 = false
+        // VAR isHub = false
+        // VAR isDeathF2 = false
+        // VAR isEnd = false
+        // VAR hasDied = false
+
+        // VAR isMayorIntro = true
+        // VAR hasMayorNote1 = false
+        // VAR hasMayorNote2 = false
+        // VAR hasFinalMayorNote = false
+
+        // VAR background = "First"
+        // VAR StickHappiness = 0
+
+        //        VAR character = "Crypt_Keeper"
+
+        //{
+        //            -character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
+        //            - character == "Stick": -> Stick // Go to Stick
+        //            - character == "Mayor": -> Mayor // Go to Mayor
+        //            - character == "Clergy": -> Clergy // Go to Clergy
+        //            - character == "Scholar": -> Scholar // Go to Scholar 
+        //            - isEnd: // Go to end
+        //         - else: Error
+        //         }
+
+
+        currentStory.variablesState["isIntro"] = "false";
+        currentStory.variablesState["isDeathF1"] = "false";
+        currentStory.variablesState["isHub"] = "false";
+        currentStory.variablesState["isDeathF2"] = "true";
+        currentStory.variablesState["isEnd"] = "false";
+        currentStory.variablesState["hasDied"] = "false";
+
+        currentStory.variablesState["isMayorIntro"] = "false";
+        currentStory.variablesState["hasMayorNote1"] = "false";
+        currentStory.variablesState["hasMayorNote2"] = "false";
+        currentStory.variablesState["hasFinalMayorNote"] = "false";
+
+        currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
+
+        currentInkFileName = inkJson.name; // Update the current ink file name         
+
         isPlaying = true;
         dialoguePanel.SetActive(true);
         ContinueStory();

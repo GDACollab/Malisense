@@ -546,6 +546,13 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 40b1306ea6a710143aa4473d873e20a9, type: 3}
   - {fileID: 4900000, guid: be095f0b595ef5747be8a5e326212647, type: 3}
   - {fileID: 4900000, guid: 891ed6b5a3270ce458bc8af80491a1a5, type: 3}
+  - {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
+  CharacterList:
+  - Scholar
+  - Stick
+  - Crypt_Keeper
+  - Clergy
+  - Mayor
   currentlySelected: 1
   hasEntered: 0
   hasSelected: 0
@@ -553,6 +560,7 @@ MonoBehaviour:
   fadeOutUIImage: {fileID: 291680188}
   fadeSpeed: 0.5
   CurrentInkTextAsset: {fileID: 0}
+  CurrentCharacter: 
   activateInk: 0
   loadDungeon: 0
 --- !u!1 &199394183
@@ -2801,6 +2809,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 564863805}
   dialogueText: {fileID: 406351828}
   selectableItemsGameObject: {fileID: 127951903}
+  masterInk: {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
   choices:
   - {fileID: 1046494621}
   - {fileID: 199394183}
