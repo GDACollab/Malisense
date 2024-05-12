@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(EnemyPathfinder))]
@@ -17,6 +18,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
     private SpriteRenderer _sightSprite;
     private Sprite AwakeSprite;
     private int _statueCounter;
+    private Light2D _light;
 
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
         _sightSprite = GetComponentInChildren<SpriteRenderer>();
         _rb2d = GetComponent<Rigidbody2D>();
         AwakeSprite = _sightSprite.sprite;
+        _light = GetComponentInChildren<Light2D>();
 
     }
 
@@ -52,6 +55,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
             _sightSprite.sprite = _stateMachine.GetStatueSprite();
             //Stops enemy from hurting player while statue
             gameObject.tag = "Untagged";
+            _light.enabled = false;
             //Prevents player from pushing monster while statue
             _rb2d.mass = 10000;
         }
@@ -101,6 +105,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
             _alert.SetStatueTarget();
             ExitToState(StateMachine.State.Alert);
             _rb2d.mass = 1;
+            _light.enabled = true;
             //Debug.Log("Monster Working");
         }
     }

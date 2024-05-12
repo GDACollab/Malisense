@@ -33,7 +33,7 @@ public class Stinker : MonoBehaviour
     {
         // checking dependencies
         if (GetComponent<Rigidbody2D>() == null) Debug.LogError("StinkerError: no rigidbody 2d detected!\n");
-        if (GetComponent<BoxCollider2D>() == null) Debug.LogError("StinkerError: no box collider 2d detected!\n");
+        if (GetComponent<CapsuleCollider2D>() == null) Debug.LogError("StinkerError: no capsule collider 2d detected!\n");
 
         // if the sleepmode isn't NeverSleep then the stink spread, using OnTriggerStay2D, stops after a small time
         if (isStinkEmitter) {

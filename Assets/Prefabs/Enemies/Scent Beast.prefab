@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: 5463842739364525523}
   - component: {fileID: 3437042412423122348}
   - component: {fileID: 2096877065520059329}
+  - component: {fileID: 5485851214165889153}
+  - component: {fileID: 2535709646859203902}
+  - component: {fileID: 5651225449475446733}
   m_Layer: 0
   m_Name: Scent Beast
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,9 +103,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 9124a52ebfdc8524498f223ab2f36adc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -110,7 +113,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -126,6 +129,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e46b46334ecd741b792656de960696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endPointRadius: 30
+  maxPathTime: 15
+  enableGizmos: 0
+  pathTimeLeft: 10
+  endpoint: {x: 0, y: 0}
+  player: {fileID: 0}
+--- !u!114 &5485851214165889153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2109ffd73e1ad8f469e5e7eb3d96ec97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distT_Patrol2Alert: 20
+  distT_Alert2Chase: 10
+  scentT_Patrol2Alert: 50
+  scentT_Alert2Chase: 90
+  scentPerSecond: 1
+  playerScent: 0
+  playerDist: 0
+--- !u!114 &2535709646859203902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &5651225449475446733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238eef22560de404c9a17e29f7f29d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 20
+  waypointDistance: 0.5
+  goalDistance: 0.5
+  recalculateInterval: 0.5
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 521
+  visuals: {fileID: 2084635950395696323}
+  direction: {x: 0.8225545, y: 0.56868625}
 --- !u!1001 &847181753730587933
 PrefabInstance:
   m_ObjectHideFlags: 0
