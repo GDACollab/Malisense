@@ -203,14 +203,17 @@ public class SoundBeastAlert : StateBaseClass
     public void SetDistractTarget()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        aiPath = GetComponent<AIPath>();
         distractTarget = true;
         circleCenter = player.position;
         aiPath.destination = player.position;
+        aiPath.canMove = false;
     }
 
     //Sets target to it self when awoken from statue
     public void SetStatueTarget()
     {
+        aiPath = GetComponent<AIPath>();
         distractTarget = true;
         circleCenter = transform.position;
         aiPath.destination = transform.position;

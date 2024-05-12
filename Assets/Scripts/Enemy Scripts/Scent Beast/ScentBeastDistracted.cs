@@ -95,7 +95,7 @@ public class ScentBeastDistract : StateBaseClass, ISwitchable
             _scentSprite.sprite = AwakeSprite;
             gameObject.tag = "Enemy";
             //Alert target is set to it self's position
-            ExitToState(StateMachine.State.Chasing);
+            ExitToState(StateMachine.State.Patrolling);
             _rb2d.mass = 1;
             //Debug.Log("Monster Working");
         }

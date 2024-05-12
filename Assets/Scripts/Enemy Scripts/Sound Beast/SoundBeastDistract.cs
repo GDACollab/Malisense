@@ -40,9 +40,8 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
         //If not statue stop monster
         if (!_stateMachine.IsStatue())
         {
-            _aiPath.destination = transform.position;
-            //Set target to player position at the time of being distracted
             _alert.SetDistractTarget();
+            //Set target to player position at the time of being distracted
             //Stun monster
             StartCoroutine(Stunned());
         }
@@ -69,6 +68,7 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
         //Debug.Log("Stunned started");
         yield return new WaitForSeconds(timeLeft);
         //Debug.Log("Stunned ended");
+        _aiPath.canMove = true;
         ExitToState(StateMachine.State.Alert);
     }
 
@@ -105,6 +105,7 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
             //Debug.Log("Monster Working");
         }
         */
+        
     }
 
 }
