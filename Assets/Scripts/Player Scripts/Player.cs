@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,12 +10,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    #region TEMP VARS REMOVE
     // ### START TEMP VARIABLES ### DELETE BEFORE FINAL BUILD
     [Header("Temp Variables (Remove before Final Build)")]
     public GameObject controlMessage;
     public GameObject[] enemies;
     public UnityEvent testFunctions;
     // ### END TEMP VARIABLES ###
+    #endregion
 
     // Movement
     [Header("Movement")]
@@ -62,6 +65,8 @@ public class Player : MonoBehaviour
     
     // Global Teapot
     private GlobalTeapot globalTeapot;
+    // Dungeon Manager
+    private DungeonManager dungeonManager;
     // Player Sprite
     private SpriteRenderer playerSprite;
     // Input System
@@ -72,6 +77,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Transform interactBody;
     private InteractionSelector interactArea;
+
+    [HideInInspector] public List<GameObject> activeSafeZones = new List<GameObject>();
 
     void Start()
     {
@@ -104,12 +111,16 @@ public class Player : MonoBehaviour
         
         // Get Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
+        // Get Dungeon Manager
+        dungeonManager = FindObjectOfType<DungeonManager>();
         
+        #region TEMP INPUTS
         // Get temp input options
         hideMessage = playerInput.actions.FindAction("Hide Message");
         setEnemies = playerInput.actions.FindAction("Set Enemies");
         hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
         activateFunctions = playerInput.actions.FindAction("Activate Functions");
+        #endregion
         
         // Get the enemies to deactivate
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -122,7 +133,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        #region TEMP INPUT UPDATE
         TempInputOptions(); // Temporary Input Options DELETE BEFORE FINAL BUILD
+        #endregion
         InputManager();
         if (canMove)
         {
@@ -138,11 +151,11 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Player died due to contact to enemy");
-            globalTeapot.villageInk = 2;
-            Loader.Load(Loader.Scene.DeathScene);
+            dungeonManager.KillPlayer();
         }
     }
 
+    #region TEMP INPUT FUNC
     // Temporary Input Options DELETE BEFORE FINAL BUILD
     private void TempInputOptions()
     {
@@ -169,6 +182,13 @@ public class Player : MonoBehaviour
             }
         }
     }
+    
+    public void ToggleCheats(int stamdepl){
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = !collider.enabled;
+        staminaDepletion = collider.enabled ? stamdepl : 0;
+    }
+    #endregion
 
     private void BasicMovement()
     {
@@ -220,6 +240,7 @@ public class Player : MonoBehaviour
             if (currentStamina < 0f)
             {                                   // check if player should now be exhausted
                 isExhausted = true;
+                StaminaBar.GetComponent<Animator>().SetBool("isExhausted", isExhausted);
             }
         }
         else
@@ -267,6 +288,7 @@ public class Player : MonoBehaviour
         if (currentStamina > maxStamina * minimumToSprint)
         {
             isExhausted = false;
+            StaminaBar.GetComponent<Animator>().SetBool("isExhausted", isExhausted);
         }
 
         // Update the stamina bar
@@ -301,10 +323,39 @@ public class Player : MonoBehaviour
 
     private void InteractionManager()
     {
-        // Check if the object the player is facing is interactable
-        if (interactArea.isInteractable)
+        // get list of all interactable objects, in order of priority
+        List<GameObject> interactions = interactArea.getInteractables();
+        
+        
+        // Stop reading
+        if (isReading)
         {
-            var other = interactArea.other;
+            interactArea.removeInteracts();
+            dungeonManager.DeactivateNote();
+            isReading = false;
+            canMove = true;
+            return;
+        }
+        // Put down carried object
+        if (!interactArea.isInteractable() && newInventory.carriedObject)
+        {
+            newInventory.carriedObject.transform.parent = null;
+            newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
+            newInventory.carriedObject = null;
+            interactArea.removeInteracts();
+            return;
+        }
+
+        if (interactions == null) {
+            Debug.Log("no interactions found");
+            interactArea.removeInteracts();
+            return;
+        }
+        
+        // run through each object in the list until we find the highest priority interaction we can do
+        foreach (GameObject other in interactions) {
+            
+
             // Find what object of item it is
             var item = other.GetComponent<ItemPickup>();
             var heavyItem = other.GetComponent<HeavyItem>();
@@ -312,68 +363,78 @@ public class Player : MonoBehaviour
             var doorSwitch = other.GetComponent<SwitchController>();
             var note = other.GetComponent<FloorNote>();
 
-            // Stop reading
-            if (isReading)
-            {
-                note.DeactivateNote();
-                isReading = false;
-                canMove = true;
-            }
+            // INTERACTIONS ELSE IF LIST
+            // NOTE - all entries must begin by calling interactArea.removeInteracts() and break at the end
+
             // Open door
-            else if (door && newInventory.carriedObject)
+            if (door && newInventory.carriedObject)
             {
+                interactArea.removeInteracts();
                 Destroy(newInventory.carriedObject.gameObject);
                 newInventory.carriedObject = null;
-                Destroy(other.gameObject);
+                Destroy(door.gameObject);
+                break;
             }
             // Put down carried object
             else if (newInventory.carriedObject)
             {
+                interactArea.removeInteracts();
                 newInventory.carriedObject.transform.parent = null;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 newInventory.carriedObject = null;
+                break;
             }
             // Read note
             else if (note)
             {
+                interactArea.removeInteracts();
+                #region REMOVE THIS 
+                // Remove this once artifacts are actually in
                 if(note.name == "End Artifact"){
-                    globalTeapot.villageInk = 3;
-                    Loader.Load(Loader.Scene.Village);
+                    IEnumerator WaitBeforeReturning(){
+                        yield return new WaitForSeconds(0.5f);
+                        dungeonManager.EndDungeon();
+                    }
+                    StartCoroutine(WaitBeforeReturning());
                 }
+                #endregion
                 canMove = false;
                 isReading = true;
-                note.ActivateNote();
+                dungeonManager.ActivateNote(note);
+                break;
             }
             // Activate switch
             else if (doorSwitch)
             {
+                Debug.Log("activating switch");
+                interactArea.removeInteracts();
                 doorSwitch.ActivateSwitch();
+                break;
             }
             // Pick up heavy item
             else if (heavyItem)
             {
+                interactArea.removeInteracts();
                 newInventory.carriedObject = heavyItem;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 newInventory.carriedObject.transform.parent = interactBody.transform.parent;
                 newInventory.carriedObject.transform.position = interactBody.transform.position;
+                break;
             }
             // Pick up regular item
             else if (item)
             {
+                interactArea.removeInteracts();
                 bool success = newInventory.AddItem(item.item, 1);
                 if (success)
                 {
-                    Destroy(other.gameObject);
+                    Destroy(item.gameObject);
                 }
+                break;
             }
         }
-        // Put down carried object
-        else if (newInventory.carriedObject)
-        {
-            newInventory.carriedObject.transform.parent = null;
-            newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
-            newInventory.carriedObject = null;
-        }
+        interactArea.removeInteracts();
+        
     }
     
     private void SoundManager(){

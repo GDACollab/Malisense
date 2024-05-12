@@ -45,9 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4d445d42e82ae48b9c61651a3f905d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDied: 0
+  hasMayorNote1: 0
+  hasMayorNote2: 0
+  hasFinalMayorNote: 0
+  currProgress: 0
   villageInk: 0
   audioManager: {fileID: 4924827947121429571}
   currentScene: 3
+  journal: {fileID: 11400000, guid: 05aa790e0c7782942998137eaa301d9a, type: 2}
 --- !u!114 &4924827947121429571
 MonoBehaviour:
   m_ObjectHideFlags: 0

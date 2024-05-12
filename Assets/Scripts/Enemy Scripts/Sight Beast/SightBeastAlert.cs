@@ -23,10 +23,11 @@ public class SightBeastAlert : StateBaseClass
 
     private float _gracePeriodRemaining;
 
+    private bool distractTarget;
+
     private StateMachine _stateMachine;
     private EnemyPathfinder _pathfinder;
     private SightBeastSightModule _sight;
-
     private Coroutine _lookAroundCoroutine;
 
     private void Awake()
@@ -39,8 +40,9 @@ public class SightBeastAlert : StateBaseClass
     public override void Init()
     {
         _gracePeriodRemaining = gracePeriod;
-        
-        _pathfinder.SetTarget(_sight.target.position);
+        //If target was distract or awoken from being a statue when initiated, skip setting target to player
+        if (distractTarget) distractTarget = false;
+        else _pathfinder.SetTarget(_sight.target.position);
         _pathfinder.acceleration = 0f;
     }
 
@@ -56,7 +58,7 @@ public class SightBeastAlert : StateBaseClass
                 _pathfinder.SetTarget(_sight.target.position);
             }
 
-            _sight.LookAt(_sight.target.position);
+            _sight.LookAt(_pathfinder.GetTargetPosition());
         }
         else
         {
@@ -79,6 +81,19 @@ public class SightBeastAlert : StateBaseClass
                 _sight.LookInDirection(_pathfinder.direction);
             }
         }
+    }
+    //Sets target to player position when a monster is distracted
+    public void SetDistractTarget()
+    {
+        distractTarget = true;
+        _pathfinder.SetTarget(_sight.target.position);
+    }
+
+    //Sets target to it self when awoken from statue
+    public void SetStatueTarget()
+    {
+        distractTarget = true;
+        _pathfinder.SetTarget(transform.position);
     }
 
     private void ExitToState(StateMachine.State state)

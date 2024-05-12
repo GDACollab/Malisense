@@ -19,6 +19,7 @@ public class EnemyPathfinder : MonoBehaviour
     private Path _path;
     private int _pathWaypoint;
     private Seeker _seeker;
+    Vector3 _visualsOriginalScale;
 
     private Rigidbody2D _rb2d;
 
@@ -29,10 +30,13 @@ public class EnemyPathfinder : MonoBehaviour
         _targetPosition = point;
     }
 
+    public Vector2 GetTargetPosition() => _targetPosition;
+
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
+        _visualsOriginalScale = visuals.localScale;
 
         _targetPosition = _rb2d.position;
 
@@ -77,7 +81,7 @@ public class EnemyPathfinder : MonoBehaviour
         // Turn sprite
         if (Mathf.Abs(target.x - _rb2d.position.x) >= 0.01f)
         {
-            visuals.localScale = new Vector3(Mathf.Sign(_rb2d.position.x - target.x), 1f, 1f);
+            visuals.localScale = new Vector3(Mathf.Sign(_rb2d.position.x - target.x)*_visualsOriginalScale.x, _visualsOriginalScale.y, _visualsOriginalScale.z);
         }
     }
 

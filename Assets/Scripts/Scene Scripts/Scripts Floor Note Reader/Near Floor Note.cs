@@ -10,6 +10,7 @@ public class NearFloorNote : MonoBehaviour
     public bool isNear = false;
 
     [Header("Note Sprites")]
+    public bool disappear = true;
     public SpriteRenderer spriteRenderer;
     public Sprite notSelected;
     public Sprite selected;
@@ -58,6 +59,10 @@ public class NearFloorNote : MonoBehaviour
         else if(NoteActive && selectAction.triggered){
             FloorNotePopup.hideFNR();
             NoteActive = false; 
+            // disappear when closed
+            if (disappear) {
+                Object.Destroy(Note);
+            }
         }
     }
 

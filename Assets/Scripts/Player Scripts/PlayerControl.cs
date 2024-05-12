@@ -19,8 +19,6 @@ public class PlayerControl : MonoBehaviour
 	// Stamina Script
 	PlayerStamina playerStamina;
 
-	private JoshPlayer player;
-
 	// Movement
 	[Header("Movement")]
 	[SerializeField] float walkingSpeed;
@@ -40,8 +38,7 @@ public class PlayerControl : MonoBehaviour
 
 	void Start()
 	{
-		// Set input system variables
-		player = GetComponent<JoshPlayer>();
+		// Set input system variable
 		playerInput = GetComponent<PlayerInput>();
 		moveAction = playerInput.actions.FindAction("8 Directions Movement");
 		sprintAction = playerInput.actions.FindAction("Sprint");
@@ -113,11 +110,6 @@ public class PlayerControl : MonoBehaviour
 		}
 		if(setEnemy.triggered){
 			enemy.SetActive(!enemy.activeSelf);
-		}
-		// Apply carried object effect
-		if (player.newInventory != null && player.newInventory.carriedObject != null)
-		{
-			adjustedSpeed *= 0.4f;
 		}
 	}
 }
