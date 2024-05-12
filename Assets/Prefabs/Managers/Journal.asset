@@ -12,15 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065dd256b9b0d534da5853dbd7eee9cc, type: 3}
   m_Name: Journal
   m_EditorClassIdentifier: 
+  regenerateOnPlay: 0
   textNotes:
-  - {fileID: 4900000, guid: 074724e77dc7ebf46acd6ff215d587fd, type: 3}
-  - {fileID: 4900000, guid: 44bdc9f51f52e8c4e9165d14d9a80d2b, type: 3}
-  - {fileID: 4900000, guid: c8b73d2df9ff5c546be0f7432d9bb1a8, type: 3}
-  - {fileID: 4900000, guid: 808ce0473f9b4a045a5e23b916a490b1, type: 3}
-  - {fileID: 4900000, guid: 9e5dc6aa285e70a4b8b7acf0c79f198d, type: 3}
-  - {fileID: 4900000, guid: 427b0713be527f44da346df049da0628, type: 3}
-  - {fileID: 4900000, guid: 023c6a47af0ffc94691447961140f2d2, type: 3}
-  - {fileID: 4900000, guid: 42987218e93784f41946b368d701814b, type: 3}
+  - {fileID: 4900000, guid: 2a2eda430f83fe44bbf286666b6c1080, type: 3}
+  - {fileID: 4900000, guid: 5b63420437b443743a7f394733c83953, type: 3}
+  - {fileID: 4900000, guid: ae00b86403ec97547ab40e5ea0969878, type: 3}
+  - {fileID: 4900000, guid: 549fe0c96bf2f0b47a8a837073eea212, type: 3}
+  - {fileID: 4900000, guid: d8fa12550284ec341a7af935f070488a, type: 3}
+  - {fileID: 4900000, guid: 4a08c2cc436271c47a5e04ae3228d7b1, type: 3}
+  - {fileID: 4900000, guid: 66e8b502d560e1a45ba61c28e1c31f7d, type: 3}
+  - {fileID: 4900000, guid: 1ed86e841c8b72049972b8492669426f, type: 3}
+  - {fileID: 4900000, guid: 67b90e2f857179d4b876e045d7fe68aa, type: 3}
+  - {fileID: 4900000, guid: 8586107e96f69f443b413ba4ee8bcc76, type: 3}
+  - {fileID: 4900000, guid: daf80bb4edfe1c348a49e7c9faacf89b, type: 3}
+  - {fileID: 4900000, guid: 231462f66119b714f87129c4358ea717, type: 3}
+  - {fileID: 4900000, guid: 1af3e0d5314a7a1489030bbe7a42d78c, type: 3}
+  - {fileID: 4900000, guid: dc0860868c835044688c10af72912dbd, type: 3}
+  - {fileID: 4900000, guid: ea65e97be86953948af6727663f6d916, type: 3}
+  - {fileID: 4900000, guid: 48fcdc1785a6c194681d8f5633998f21, type: 3}
+  - {fileID: 4900000, guid: 58978ec66a59b3e4fabf5c192db57c2d, type: 3}
+  - {fileID: 4900000, guid: 86b9ea322540b2646bd30186f87ecc91, type: 3}
+  - {fileID: 4900000, guid: 8ed5cf0bde3f6d34382a903bb7cfe7c5, type: 3}
   floorNotes:
   - ID: DN_F1_1
     <Body>k__BackingField: "We hath done it. Our kin will finally be rid of the sentient
@@ -51,10 +63,10 @@ MonoBehaviour:
     <Body>k__BackingField: "On the Crypt-Quakes:\r\nThe quakes started a little under
       a week ago and have grown stronger since. Getting down here alone was enough
       of a struggle, but if anything that may mean that our intuition was right and
-      I\u2019m getting closer to the source! *A line crosses out:* Disturbing lack
-      of any source of life around the crypts, no bugs, no bats, not even plant life.
-      Another quake just happened and I swear I heard a faint deep, slow croak, almost
-      like a deathrattle\u2026 something else is down here with me. \r\n"
+      I\u2019m getting closer to the source! <s> Disturbing lack of any source of
+      life around the crypts, no bugs, no bats, not even plant life. Another quake
+      just happened and I swear I heard a faint deep, slow croak, almost like a deathrattle\u2026
+      something else is down here with me. </s> \r\n"
     Obtained: 0
   - ID: DN_F1_4
     <Body>k__BackingField: "\u201CTo our dear healers, your persistence in your work
@@ -87,7 +99,7 @@ MonoBehaviour:
     <Body>k__BackingField: "I will declare my love at the festival! I\u2019ll open
       my heart, hide no more\u2026..I wrote her a song,  freeing all the words unsaid.
       Wish me luck\u2026\r\n"
-    Obtained: 0
+    Obtained: 1
   - ID: DN_F1_S2
     <Body>k__BackingField: "It\u2019s coming, I have fled, its risen, I\u2019m afraid
       I lack time, I\u2019m sorry my love- \r\n\r\n\r\nWhere are you? It\u2019s so
@@ -100,3 +112,163 @@ MonoBehaviour:
       see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
       I ca\r\n"
     Obtained: 0
+  - ID: DN_F2_1
+    <Body>k__BackingField: "I wish I could hear you again. I see your face\u2026but
+      you no longer smile. I wish I could hear the birds again. I wish I could hear
+      you sing again\u2026\u2026At least I don\u2019t have to hear your screams.
+      \r\n\r\n"
+    Obtained: 0
+  - ID: DN_F2_2
+    <Body>k__BackingField: "\u201CFather, I do not see how I can go on. I know I
+      shouldn\u2019t be thinking about things of this nature, but it has become hard
+      to even sleep at night. Who I see in the mirror now is not who I saw years
+      ago, very rarely do I even smile anymore. What may remedy this father? I joined
+      the church in search of a sense of family, but I\u2019ve never felt more isolated.
+      I am lost in a blindingly dark forest, I just cannot find a way out.\""
+    Obtained: 0
+  - ID: DN_F2_3
+    <Body>k__BackingField: "\u201CDemocritium, my workshopped name, is the gemstone
+      that occupies our crypts, seemingly having some kind of magical properties.
+      This was brought to my attention on my last trip down into the crypts, purely
+      by accident actually. There was a shard of the red gemstone on the ground,
+      which I put into my bag, and I eventually came into contact with, what I theorize
+      to be, the gemstone which the shard came from. When I touched it to my bag,
+      with no exaggeration, it disappeared off of my body for a second and reappeared
+      next to the gemstone. This may require some more tests on just what can and
+      cannot be teleported, but this could be life changing, no, humanity changing.\u201D"
+    Obtained: 0
+  - ID: DN_F2_4
+    <Body>k__BackingField: "To Father,\r\n\r\n\tI know your work with the church
+      is important. But I never see you around these days all I get from Mother is
+      your artifacts will save us and other high praises from her. She and I are
+      very proud but I just want you to come home once in a while. Have dinner with
+      us or something, we miss you.\r\n\r\nMay \u2587\u2587\u2587\u2587 bless you,\r\nYour
+      son \u2026\r\n"
+    Obtained: 0
+  - ID: DN_F2_5
+    <Body>k__BackingField: "The hour of salvation is nigh, brethren! Sorrow not,
+      for soon ye shalt bask in Its warm embrace. For it is It who hath come to rescue
+      us from this wretched, wicked world! Gather your lovers, your children, your
+      neighbors. \u2018Tis now when righteousness prevails\u2013when the sinners
+      shall fall and the just shall be granted entrance into Paradise. We granted
+      It a piece of ourselves, and in turn It shall grant us life Eternal.\r\n\r\nShout
+      from your windows: \u201CHave no fear, for It is here!\u201D \r\n"
+    Obtained: 0
+  - ID: DN_F2_6
+    <Body>k__BackingField: "I write this now, for I dare not speak such troublesome
+      things to my fellow Clergymen. But, I simply can not shake the growing dread
+      I feel, so I hope writing my worries down shall alleviate them slightly. \r\nThe
+      day before last, I felt an ominous chill during prayer; a horrid shiver down
+      my spine, as if it had been pierced by an icy blade. In spite of the teachings,
+      I opened my eyes. For just an instant I opened them. And\u2026\r\n\r\nI\u2019m
+      sure I must be mad but\u2026\r\n\r\nI could\u2019ve sworn the Eye\u2026 blinked.
+      I know I sound mad, but I swear, that\u2019s the only way I could describe
+      it.\r\nEver since, I\u2019ve felt a distressing fear that someone or something
+      may be watching me. Or, I suppose, will be watching me the moment I close my
+      eyes. I have never felt anything like this, and I am really quite scared. I
+      don\u2019t know what to do. I haven\u2019t been able to sleep. \r\n"
+    Obtained: 0
+  - ID: DN_F2_Mayor1
+    <Body>k__BackingField: "To \u2026..\r\n\tForgive the haste in my penmanship,
+      but premonition of what comes at this eve\u2019s festivities has stricken me
+      with a feverish anxiety. I cannot speak to the true source of this malaise,
+      only that the Church will manifest it. We\u2026 I sat in complicity with the
+      Church\u2019s true actions, but there will be no time to lament such sin in
+      remaining within the city. If there is any word of mine left to trust, it is
+      this: flee Radefell with whatever you and your family can grasp. If you treasure
+      your mind and your sense, heed these last words of mine.\r\n\r\n\tThere is
+      one final course I will seek to take before retreating to the outskirts. If
+      we do not meet there, it is my deepest hope that it is for your swiftness,
+      and not your discountance.\r\n\r\nGodspeed old friend,\r\n Mayor Meitar Poppet\r\n"
+    Obtained: 0
+  - ID: DN_F2_Mayor2
+    <Body>k__BackingField: "The edges of this erstwhile page are torn and browned
+      with age.\r\nThe Church kept my position under strict check, but I knew they
+      were laboring toward an ineffable achievement: giving form to their god, if
+      such a monstrosity deserves the honorific. They showed me one of their instruments,
+      an enigmatic eye. No words could belay the sensation, the keening at the edge
+      of my vision, as I beheld the Eye then. I knew as its sight stared back at
+      me, the Church would bring no genesis, but our doom.\r\n\r\nAnd I curse the
+      rest of my days for standing by, allowing this fate befall on the public who
+      trusted me to lead them. \r\n"
+    Obtained: 0
+  - ID: DN_F2_S1
+    <Body>k__BackingField: "We have unleashed a monster. Those people, their lives,
+      are gone because of our mistakes. There is nothing we can do no longer, we
+      are the sinners, our only hope is that hell takes us for our mistakes. \r\n\r\n\r\nI
+      don\u2019t know where I am or what happened. It feels like I\u2019m dying or
+      going crazy, But I need to at least write this down. To whoever finds this
+      let my family know that I miss them and let them know I lov\u2026.\r\n"
+    Obtained: 0
+  - ID: DN_F2_S2
+    <Body>k__BackingField: "\u201CHey Custi, I really needed to talk to you today
+      but you didn\u2019t answer your door so I\u2019ll just leave this. I really
+      need to get that watch back. I know that the first rule of gambling is \u2018Never
+      bet something that you\u2019d regret if you lost,\u2019 but I didn\u2019t understand
+      the value of it at the time. You see, the wife and I are trying to get out
+      of this town and she\u2019s been really down in the dumps about abandoning
+      her hometown, kind of like she\u2019s losing a part of her. That item was an
+      heirloom from her family. I only bet the thing because it was collecting dust
+      in our attic, I didn\u2019t know she cared so much about it. So please, if
+      there\u2019s anything I could do to get it back I can repay back tenfold, just
+      let me know.\u201D\r\n"
+    Obtained: 0
+  - ID: MAYOR_FINAL_NOTE
+    <Body>k__BackingField: "The screams grow deafening, I can feel the bitter taste
+      upon my tongue fading, but I must commit this to page. I\u2019m taking the
+      Eye to the town in the city outskirts. I do not comprehend the power of these
+      artifacts, but if it can be a tool in reversing this malignance, I will keep
+      it within reach.\r\n\r\nWith contrition,\r\nMeitar Poppet\r\n"
+    Obtained: 0
+  - ID: 1
+    <Body>k__BackingField: "It\u2019s coming, I have fled, its risen, I\u2019m afraid
+      I lack time, I\u2019m sorry my love- \r\n\r\n\r\nWhere are you? It\u2019s so
+      dark. I can\u2019t find you. Did you leave me? It\u2019s so dark. Where did
+      you go? I can\u2019t find you. Why did you leave me? It\u2019s so dark. Where
+      are you?\r\n\r\n\r\nI can\u2019t see. I can\u2019t see. I can\u2019t see. I
+      can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t
+      see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
+      I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t
+      see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
+      I ca\r\n"
+    Obtained: 1
+  - ID: 2
+    <Body>k__BackingField: "\u201CFather, I do not see how I can go on. I know I
+      shouldn\u2019t be thinking about things of this nature, but it has become hard
+      to even sleep at night. Who I see in the mirror now is not who I saw years
+      ago, very rarely do I even smile anymore. What may remedy this father? I joined
+      the church in search of a sense of family, but I\u2019ve never felt more isolated.
+      I am lost in a blindingly dark forest, I just cannot find a way out.\""
+    Obtained: 1
+  - ID: 3
+    <Body>k__BackingField: "It\u2019s coming, I have fled, its risen, I\u2019m afraid
+      I lack time, I\u2019m sorry my love- \r\n\r\n\r\nWhere are you? It\u2019s so
+      dark. I can\u2019t find you. Did you leave me? It\u2019s so dark. Where did
+      you go? I can\u2019t find you. Why did you leave me? It\u2019s so dark. Where
+      are you?\r\n\r\n\r\nI can\u2019t see. I can\u2019t see. I can\u2019t see. I
+      can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t
+      see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
+      I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t
+      see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
+      I ca\r\n"
+    Obtained: 1
+  - ID: 4
+    <Body>k__BackingField: "\u201CHey Custi, I really needed to talk to you today
+      but you didn\u2019t answer your door so I\u2019ll just leave this. I really
+      need to get that watch back. I know that the first rule of gambling is \u2018Never
+      bet something that you\u2019d regret if you lost,\u2019 but I didn\u2019t understand
+      the value of it at the time. You see, the wife and I are trying to get out
+      of this town and she\u2019s been really down in the dumps about abandoning
+      her hometown, kind of like she\u2019s losing a part of her. That item was an
+      heirloom from her family. I only bet the thing because it was collecting dust
+      in our attic, I didn\u2019t know she cared so much about it. So please, if
+      there\u2019s anything I could do to get it back I can repay back tenfold, just
+      let me know.\u201D\r\n"
+    Obtained: 1
+  - ID: 5
+    <Body>k__BackingField: "The screams grow deafening, I can feel the bitter taste
+      upon my tongue fading, but I must commit this to page. I\u2019m taking the
+      Eye to the town in the city outskirts. I do not comprehend the power of these
+      artifacts, but if it can be a tool in reversing this malignance, I will keep
+      it within reach.\r\n\r\nWith contrition,\r\nMeitar Poppet\r\n"
+    Obtained: 1

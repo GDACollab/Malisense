@@ -19,7 +19,6 @@ public static class Loader
 
     public static void Initialize()
     {
-        //SceneManager.LoadScene((int)Scene.MainMenu);
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
 
@@ -29,7 +28,7 @@ public static class Loader
         onLoaderCallback = () =>
         {
             currentScene = scene;
-            SceneManager.LoadScene((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
+            SceneManager.LoadSceneAsync((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
         };
         
         currentScene = Scene.LoadingScene;

@@ -6,39 +6,21 @@ using UnityEngine.InputSystem;
 public class FloorNote : MonoBehaviour
 {
     public string noteID = "";
-    
-    public GameObject Note;
-    public GameObject Player;
     public bool isNear = false;
 
     [Header("Note Sprites")]
     public bool disappear = true;
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     public Sprite notSelected;
     public Sprite selected;
 
-    public FNRManager FloorNotePopup;
-    [TextArea(15,20)]
     public string noteTitle = "Title";
-    [TextArea(15,20)]
+    [TextArea(5,20)]
     public string noteBody = "Body";
-    
-    public KeyCode InteractButton;
-    bool NoteActive = false; // not sure if this is needed
-    
-    private PlayerInput playerInput;
-    private InputAction selectAction;
 
     void Start()
     {
-        Note = this.gameObject;
-        Player = GameObject.FindGameObjectWithTag("Player");
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        // Set input system variables
-        playerInput = Player.GetComponent<PlayerInput>();
-        selectAction = playerInput.actions.FindAction("Interact");
-        
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get sprite renderer
     }
 
     private void Update()
@@ -54,17 +36,17 @@ public class FloorNote : MonoBehaviour
     
         // if near note and key pressed down, popup the window
     public void ActivateNote(){
-        FloorNotePopup.showFNR(noteTitle, noteBody);
+        // dungeonManager.ActivateNote(this);
         if (Time.timeScale != 0f) 
         {
             Time.timeScale = 0f;
         }
     }
     public void DeactivateNote(){
-        FloorNotePopup.hideFNR();
+        // dungeonManager.DectivateNote();
         if (disappear)
         {
-            Object.Destroy(Note);
+            Object.Destroy(this.gameObject);
         }
         if (Time.timeScale == 0f) 
         {
