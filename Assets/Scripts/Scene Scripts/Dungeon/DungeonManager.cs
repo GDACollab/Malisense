@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+using TMPro;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
 {
     [SerializeField] List<StateMachine> enemies = new List<StateMachine>();
     [SerializeField] bool isChasing = false;
+    
+    [Header("Floor Note UI")]
+    [SerializeField] GameObject floorNoteDisplay;
+    TextMeshProUGUI floorNoteText;
     
     GlobalTeapot globalTeapot;
     AudioManager audioManager;
@@ -22,6 +25,7 @@ public class DungeonManager : MonoBehaviour
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = globalTeapot.audioManager;
         floorNotes = FindObjectsOfType<FloorNote>().ToList();
+        floorNoteText = floorNoteDisplay.GetComponentInChildren<TextMeshProUGUI>();
         
         SetFloorNotes();
     }
@@ -72,6 +76,54 @@ public class DungeonManager : MonoBehaviour
                     Destroy(note.gameObject);
                 }
             }
+        }
+    }
+    
+    public void ActivateNote(FloorNote note){
+        globalTeapot.ObtainFloorNote(note.noteID);
+        floorNoteDisplay.SetActive(true);
+        floorNoteText.text = note.noteBody;
+        Destroy(note.gameObject);
+        if (Time.timeScale != 0f) 
+        {
+            Time.timeScale = 0f;
+        }
+    }
+    
+    public void DeactivateNote(){
+        floorNoteDisplay.SetActive(false);
+        floorNoteText.text = "";
+        if (Time.timeScale == 0f) 
+        {
+            Time.timeScale = 1f;
+        }
+    }
+    
+    public void KillPlayer(){
+        EndDungeon(true, false);
+    }
+    
+    public void EndDungeon(bool death=false, bool artifact=false){
+        globalTeapot.hasDied = death;
+        if(artifact){
+            switch (globalTeapot.currProgress)
+            {
+                case GlobalTeapot.TeaType.Intro:
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
+                    break;
+                case GlobalTeapot.TeaType.Dungeon_F2:
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.End;
+                    break;
+                default:
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.Intro;
+                    break;
+            }
+        }
+        if(death){
+            Loader.Load(Loader.Scene.DeathScene);
+        }
+        else{
+            Loader.Load(Loader.Scene.Village);
         }
     }
 }
