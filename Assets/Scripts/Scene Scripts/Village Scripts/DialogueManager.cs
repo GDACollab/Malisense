@@ -215,6 +215,12 @@ public class DialogueManager : MonoBehaviour
 
         currentStory = new Ink.Runtime.Story(inkJson.text);
 
+        currentStory.variablesState["isMayorIntro"] = globalTeapot.currProgress == GlobalTeapot.TeaType.Intro; // MAYOR INTRO DELAY NOT IMPLEMENTED, CURRENTLY JUST HAPPENS DURING THE NORMAL INTRO
+        currentStory.variablesState["hasMayorNote1"] = globalTeapot.hasMayorNote1;
+        currentStory.variablesState["hasMayorNote2"] = globalTeapot.hasMayorNote2;
+        currentStory.variablesState["hasFinalMayorNote"] = globalTeapot.hasFinalMayorNote;
+
+        // Set defaults, will be modified afterward if needs to be true
         currentStory.variablesState["isIntro"] = false;
         currentStory.variablesState["isDeathF1"] = false;
         currentStory.variablesState["isHub"] = false;
@@ -222,11 +228,6 @@ public class DialogueManager : MonoBehaviour
         currentStory.variablesState["isEnd"] = false;
         currentStory.variablesState["isIntroductionCutscene"] = isIntroductionCutscene;
         currentStory.variablesState["hasDied"] = false;
-
-        currentStory.variablesState["isMayorIntro"] = false;
-        currentStory.variablesState["hasMayorNote1"] = false;
-        currentStory.variablesState["hasMayorNote2"] = false;
-        currentStory.variablesState["hasFinalMayorNote"] = false;
 
         switch (globalTeapot.currProgress)
         {
@@ -264,11 +265,9 @@ public class DialogueManager : MonoBehaviour
         // VAR StickHappiness = 0
 
         currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
-
-
         currentInkFileName = inkJson.name; // Update the current ink file name         
-
         isPlaying = true;
+
         dialoguePanel.SetActive(true);
         ContinueStory();
     }

@@ -527,6 +527,7 @@ MonoBehaviour:
   - light: {fileID: 1022978294}
   - light: {fileID: 1691295069}
   initialSelectedBuilding: 3
+  selectedBuildingIndex: 0
   dungeonMessage: {fileID: 1835241703}
   UI_ELEMENTS:
   - {fileID: 487022360}
@@ -558,8 +559,7 @@ MonoBehaviour:
   hasSelected: 0
   movePointer: 1
   fadeOutUIImage: {fileID: 291680188}
-  fadeSpeed: 0.5
-  CurrentInkTextAsset: {fileID: 0}
+  fadeSpeed: 2
   CurrentCharacter: 
   activateInk: 0
   loadDungeon: 0

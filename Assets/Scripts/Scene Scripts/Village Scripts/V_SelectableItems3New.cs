@@ -42,10 +42,13 @@ public class V_SelectableItems3New : MonoBehaviour
     public Image fadeOutUIImage; // Reference to the UI Image
     [SerializeField] public float fadeSpeed = 12f;
 
-    //Inkle
+    //Ink
     public string CurrentCharacter;
     public bool activateInk;
     public bool loadDungeon = false;
+
+    //Story Variables
+    private bool hasForcedCKIntro = false;
 
     // Global Teapot
     GlobalTeapot globalTeapot;
@@ -82,13 +85,17 @@ public class V_SelectableItems3New : MonoBehaviour
         // If this is the first time the village is visited, play village cutscene
         if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
         {
+            // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
             selectObject();
-        } // If this is the first time the player has died, force Crypt Keeper interaction
+        } // Force CK Intro After 1st Death
         else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
         { 
             moveInList(-1);
             selectObject();
+        } // TODO: Force Mayor Intro 
+        else if (false)
+        { 
         }
 
         activateInk = false;
@@ -96,6 +103,15 @@ public class V_SelectableItems3New : MonoBehaviour
 
     private void Update()
     {
+        // Force CK Intro After Intro Cutscene
+        if (!hasSelected && !hasEntered && !hasForcedCKIntro && globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            Debug.Log("forcing CK INTRO");
+            moveInList(-3);
+            selectObject();
+            hasForcedCKIntro = true;
+        }
+
         if (!movePointer) return;
     }
 
@@ -210,7 +226,7 @@ public class V_SelectableItems3New : MonoBehaviour
             DeActivateUI(selectedBuildingIndex);
         }
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(2.0f/fadeSpeed);
 
         while (fadeOutUIImage.color.a > 0)
         {
@@ -241,6 +257,7 @@ public class V_SelectableItems3New : MonoBehaviour
 
             currentlySelected = false;
         }
+
     }
 
     private void DeActivateUI(int index)  //Deactivates UI Function
