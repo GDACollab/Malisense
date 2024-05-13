@@ -263,18 +263,6 @@ public class DialogueManager : MonoBehaviour
         // VAR background = "First"
         // VAR StickHappiness = 0
 
-        //        VAR character = "Crypt_Keeper"
-
-        //{
-        //            -character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
-        //            - character == "Stick": -> Stick // Go to Stick
-        //            - character == "Mayor": -> Mayor // Go to Mayor
-        //            - character == "Clergy": -> Clergy // Go to Clergy
-        //            - character == "Scholar": -> Scholar // Go to Scholar 
-        //            - isEnd: // Go to end
-        //         - else: Error
-        //         }
-
         currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
 
 

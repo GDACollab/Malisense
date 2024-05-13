@@ -59,9 +59,6 @@ public class V_SelectableItems3New : MonoBehaviour
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
         audioManager.PlayOST(audioManager.dungeonOST);
 
-
-
-
         // Building Selection:
         // Turn off every building's light
         foreach (Building building in buildings)
