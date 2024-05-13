@@ -30,7 +30,6 @@ public class V_SelectableItems3New : MonoBehaviour
 
     //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
-    [SerializeField] private List<TextAsset> InkScripts = new List<TextAsset>(); // List for Inkle Stuff :3
     [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
     [SerializeField] public bool currentlySelected = false;
     [SerializeField] public bool hasEntered = false;
