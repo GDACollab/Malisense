@@ -2,7 +2,6 @@ VAR isIntro = false
 VAR isDeathF1 = false
 VAR isHub = false
 VAR isDeathF2 = false 
-VAR isIntroductionCutscene = false
 VAR isEnd = false
 VAR hasDied = false
 
@@ -26,7 +25,6 @@ Scholar
 VAR character = "Crypt_Keeper"
 
 {
- - isIntroductionCutscene: -> Introduction // Go to Introduction
  - character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
@@ -40,38 +38,12 @@ VAR character = "Crypt_Keeper"
 
 /*
 Sections:
-Introduction
 NPCs x5
 End
 
 Subsections:
 bool Variables
 */
-
-== Introduction ==
-Everything is coated in darkness. 
-
-It reeks of death
-
-Your mind flashes… 
-
-You hear screams… 
-
-Flickers of blood…
-
-Sight, hearing, touch, taste, scent…restored but not recovered 
-
-You blink into consciousness, yet the world around you does not
-
-The memories fade, but the smell of death still lingers
-
-Your soul hangs inbetween, familiar but foreign 
-
-But, everything happens for a reason 
-
-Right?
-
--> END
  
 
 /* PreF1 Reserved for Crypt Keeper and Clergy. If you are working on other characters, please delete this section */
@@ -91,28 +63,28 @@ You approach the familiar figure. Your throat tightens as she turns to you.
 
 Her warm smile softens the gloom of the decaying fountain. 
 
- <b>???:</b>  I don’t need my sight to recognize your presence, little sweet. It has been a long while since anyone has dared venture to this old place. 
+ <b>???:</b>  "I don’t need my sight to recognize your presence, little sweet. It has been a long while since anyone has dared venture to this old place." 
  
-  <b>???:</b>  It's rude to keep a lady waiting...even one with all the time in the world. 
+  <b>???:</b>  "It's rude to keep a lady waiting...even one with all the time in the world." 
   
-  She giggles softly.
+  She chuckles softly.
 
- * Who are you...again?
+ * "Who are you...again?"
     <b>???:</b> "You don't recall? Perhaps that is to be expected, considering your state."
     
     She lets out a quiet sigh. 
     
-    <b>???:</b> "Well, I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." ->whathappened
+    <b>???:</b> "I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." ->whathappened
    
- * Hello?
+ * "Hello?"
     <b>???:</b> "Oh, thank the heavens. I was so worried that, in all the tumult, you might have forgotten who I was."
     
-   <b>???:</b>  "But I guess that's how peonies are: Just when you think they've wilted completely, they suddenly blossom brighter than ever before."
+   <b>???:</b>  "But I guess that's how peonies are–just when you think they've wilted completely, they suddenly blossom brighter than ever before."
    
    You feel as if you know this person, but struggle to even recall her name. ->whathappened
    
    =whathappened
-   *What happened?
+   *"What happened?"
    <b>???:</b> "Hmm...I guess there is no easy way to say this." 
    
    The woman's face becomes pale. She fidgets with her necklace. 
@@ -122,10 +94,10 @@ Her warm smile softens the gloom of the decaying fountain.
   <b>???:</b>: I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." ->whathappenedcont
     
    =whathappenedcont
-    *How did you do such a thing?
-   <b>CRYPT KEEPER:</b> "A magician never reveals her secrets... but since you're special I'll make an exception." 
+    *"How did you do such a thing?"
+   <b>CRYPT KEEPER:</b> "A magician never reveals her secrets...but since you're special, I'll make an exception." 
    
-   <b>CRYPT KEEPER:</b>  "That lantern you hold contains your soul. When touching it, your spirit can once again animate your body as it did while you were still...living."
+   <b>CRYPT KEEPER:</b>  "That lantern that hangs from your staff contains your soul. When in close proximity with it, your spirit can once again animate your body as it did while you were still...living."
    
     <b>CRYPT KEEPER:</b> "I even carefully fitted your latern with some precious stones. If you're ever in danger, those gems will bring you back to me. I'm always here to take care of you, darling. When you feel the latern's glow, think of it as my embrace." ->lanterndesc
    
@@ -138,53 +110,52 @@ Her warm smile softens the gloom of the decaying fountain.
      
      The lantern itself is ornately sculpted. It's so polished that you can see yourself reflected in its silver casing. 
      
-     Someone clearly put a lot of effort into preparing it for this occassion. ->interrogation
+     Someone clearly has put a lot of effort into preparing it for this occassion. ->interrogation
      
     =interrogation
-    *Where is everyone?
+    *"Where is everyone?"
         <B>CRYPT KEEPER:</B> "You don't remember? I'll tell you this much--I was right about that creature."
         
-       <B>CRYPT KEEPER:</B> "Radefell is gone. The survivors are living in this nearby village. I've been helping them, here and there." 
+       <B>CRYPT KEEPER:</B> "Radefell is gone. The survivors are living in this village. I've been helping them, here and there." 
         
         <B>CRYPT KEEPER:</B> "I bet they'll be quite happy to see you. But please, let's not discuss this any further." 
         
        <B>CRYPT KEEPER:</B>  "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." ->interrogation
    
-    *Where am I?
+    *"Where am I?"
         <b>CRYPT KEEPER:</b> "Apologies for the drab scenery. It's much easier to bring a soul back in a place such as this." 
         
         <b>CRYPT KEEPER:</b> "Ressuciation is difficult in a city, where death is so omnnipresent."
         
         <b>CRYPT KEEPER:</b> "But I guess it's an apt setting, seeing as I've cleaned you up like the mother dove cleans her young in the fountain's basin." ->interrogation
         
-    *Why revive me?
+    *"Why revive me?"
        
       She frowns. 
         
         <b>CRYPT KEEPER:</b> "Why revive anyone else? You're the lantern of my life, peony. You should know that better than anyone else." ->interrogation
     
-    *How did I die?
+    *"How did I die?"
       
         <b>CRYPT KEEPER:</b> "I found you not far from here, in a nearby cornfield. You were badly bruised, especially on your knees and elbows."
        
-       <b>CRYPT KEEPER:</b> "It was a terrible scene, just awful. I was quite distraught but managed to pull myself together."
+       <b>CRYPT KEEPER:</b> "It was a terrible scene, just awful. I was quite distraught, but I managed to pull myself together."
        
       <b>CRYPT KEEPER:</b> "'This won't do.', I told myself, 'This won't do.' So I picked you up--all of you, including the fingers you had lost--and put you back together." 
       
       <b>CRYPT KEEPER:</b> "Don't worry, I didn't peek under your mask. I know you're awfully sensitive about that."  ->interrogation
        
 
-    *{CHOICE_COUNT() == 0}->
-    
-    <b>CRYPT KEEPER:</b> Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon. 
+    *{CHOICE_COUNT() == 0} 
+       <b>CRYPT KEEPER:</b> "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
        
-       She smiles at you, and--for the first time in a long time--you feel safe. 
+       She smiles at you, and–for the first time in a long time–you feel safe. 
        
        You were safe at the chapel, sure, but any bird is safe in a cage. This is different. 
        
-       The woman snaps her fingers and dissapears, leaving nothing behind but a faint aroma of lavender.
+       The woman snaps her fingers and disappears, leaving nothing behind but a faint aroma of lavender.
 
-        -> END
+-> END
 
 = DeathF1
 
@@ -193,9 +164,9 @@ In an instant, you feel yourself being thrust back into the cold embrace of life
 
 <b>CRYPT KEEPER:</b>: "You’ve met with yet another terrible end, haven’t you?" 
 
-<b>CRYPT KEEPER:</b> "Not to worry. I’ll be here– as I always have been–to put your soul back in its place." 
+<b>CRYPT KEEPER:</b> "Not to worry. I’ll be here–as I always have been–to put your soul back in its place." 
 
-<b>CRYPT KEEPER:</b> "Just… promise me you won’t do something I can’t bring you back from." 
+<b>CRYPT KEEPER:</b> "Just...promise me you won’t do something I can’t bring you back from." 
 
 <b>CRYPT KEEPER:</b> "Don’t let your hunger for redemption destroy what we still have."
 
@@ -204,20 +175,20 @@ Breathe.
 -> END
 
 = hub
-{Clergy.Hub && Artifact1<0: You return to the Crypt Keeper, finding them tending to the crypt’s flora. -> Artifact1}
+{Clergy.Hub && Artifact1<0: You return to the Crypt Keeper, finding her tending to the crypt’s flora. -> Artifact1}
 
 
-<b>CRYPT KEEPER:</b> Hello, dear. I'd love to talk--that is, if you don't have any pressing matters to attend to.
+<b>CRYPT KEEPER:</b> Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to.
 
- * I have a question...
+ * "I have a question."
  
  <b>CRYPT KEEPER:</b> What would you like to discuss, my peony? -> conversation
  
- * Goodbye.
+ * "Goodbye."
  Until next time, then. Don't keep me waiting. -> END
  
  =conversation
-+ Why do we need the artifacts?
++ "Why do we need the artifacts?"
 
 <b>CRYPT KEEPER:</b> "Well, that wretched being wants the artifacts."
 
@@ -229,14 +200,14 @@ Breathe.
 
 <b>CRYPT KEEPER:</b> "That creature already destroyed Radefell. We can't let it move any further towards its goal." ->conversation
 
-+ What exactly are the dungeons?
++ "What exactly are the dungeons?"
 <b>CRYPT KEEPER:</b> "When the Malignance emerged, it wrought havoc upon Radefell. But it wasn't just blindly destroying everything." 
 
-<b>CRYPT KEEPER:</b> "It was also taking pieces of the city and pulling them underground. This created the dungeons you now traverse."
+<b>CRYPT KEEPER:</b> "It was taking pieces of the city and pulling them underground. This created the dungeons you now traverse."
 
 <b>CRYPT KEEPER:</b> "As to why would it do such a thing? I'm not sure, but I reckon that we'll find out soon enough." ->conversation
 
-+ How are you holding up?
++ "How are you holding up?"
 <b>CRYPT KEEPER:</b> "How kind of you to worry about me. I'm doing well, all things considered."
 
 <b>CRYPT KEEPER:</b> "In a situation like this, one is bound to miss her creature comforts." 
@@ -245,7 +216,7 @@ Breathe.
 
 <b>CRYPT KEEPER:</b> "But I still have you, my peony. That's all I need." ->conversation
 
-+ Goodbye.
++ "Goodbye."
  Until next time, then. Don't keep me waiting. -> END
 
 = DeathF2
@@ -256,10 +227,10 @@ Breathe.
 - 	"What a thrilling death. I can see you've had practice."
 -   "Oh dear, you know how much it pains me to see you get hurt."
 -   "Someone's been busy! Let's get you patched up."
--   "I wonder... is it possible for one to get used to dying?"
+-   "I wonder...is it possible for one to get accustomed to death?"
 }
 
-*Breathe
+*Breathe.
 
 -> END
 
@@ -289,30 +260,30 @@ After the minute you hear her say...
 
 =approach
 You take a single step forward.
-She giggles to herself.
+She chuckles to herself.
 <b>CRYPT KEEPER:</b> "Welcome back, my little sweet. Please, come here." 
 
 Doing as asked, you approach her observing the plant life she cares for. 
 
-<b>CRYPT KEEPER:</b> "Beautiful isn't it?" 
+<b>CRYPT KEEPER:</b> "Beautiful, isn't it?" 
 
-<b>CRYPT KEEPER:</b> "Now, be a doll and help me up would you?" 
+<b>CRYPT KEEPER:</b> "Now, be a doll and help me up, would you?" 
 
 *[Help her up] 
 
-She dusts herself off and turns to face you. Not a spec of dirt, dust or plant remains on her white dress. 
+She dusts herself off and turns to face you. Not a speck of dirt, dust, or plant remains on her white dress. 
 
 She embraces you. 
 
 <b>CRYPT KEEPER:</b> "It all feels so surreal, I knew I trusted in you for the right reason." 
 
-She releases you from her embrace
+She releases you from her embrace.
 
 <b>CRYPT KEEPER:</b> "Now, you have the artifact?"
 
 **[Give her the artifact]
 
-You hand her the bell, and she stares into the faces along the bell. 
+You hand her the bell, and she stares into the faces etched along its surface. 
 
 <b>CRYPT KEEPER:</b> "The Whispering Bell..." 
 
@@ -330,17 +301,17 @@ Then silence...
 
 <b>CRYPT KEEPER:</b> "So... how are you feeling?" 
 
-You unfocus from the bell and look back at the Crypt Keeper, extending the bell back toward you to take.
+You focus is drawn away from the bell and back to the Crypt Keeper as she extends it back towards you to take.
 
-+++[Ready to face the next challenge] -> ready
-+++[Perhaps some rest is in order.] -> rest
-+++[...] -> stare 
++++["I'm ready to face the next challenge."] -> ready
++++["Perhaps some rest is in order"] -> rest
++++["..."] -> stare 
 
 = ready 
  <b>CRYPT KEEPER:</b> "Always so eager, I suppose now is no time for a break." -> stare 
  
  = rest
- <b>CRYPT KEEPER:</b>  "Of course, a break is always necessary. Just make sure to make your return sooner rather than later."
+ <b>CRYPT KEEPER:</b>  "Of course, a break is always necessary. Just make your return sooner rather than later."
  -> stare
  
  = stare 
@@ -352,15 +323,15 @@ She stares at you intensely, expectantly.
 
 *["Do you feel different at all?"] -> different 
 *["Do you know how the High Priest died?"] -> died 
-*["What do you know of the Three Clerics?"] -> threeClerics 
+*["What do you know of the three clerics?"] -> threeClerics 
 *->HighPriestRise
 
 = different
 She looks over herself for a moment. 
 
-<b>CRYPT KEEPER:</b> "As far as physically I don't feel too different." 
+<b>CRYPT KEEPER:</b> "As far as physically, I don't feel too different." 
 
-<b>CRYPT KEEPER:</b> "I suspect that the moment you secured the artifact I will note that the crypt shook, and several of the plants died." 
+<b>CRYPT KEEPER:</b> "I suspected the moment you secured the artifact. The crypt shook violently, and several of the plants wilted." 
 
 <b>CRYPT KEEPER:</b> "That's why you found me caring for the ones that are left, knowing that they'll most likely pass on as you secure more of the relics." 
 
@@ -368,14 +339,14 @@ She looks over herself for a moment.
 
 = died 
 <b>CRYPT KEEPER:</b> "It is not knowledge that I am aware of."
-<b>CRYPT KEEPER:</b> "I've disconnected myself from my ties with the church, and I'd imagine that even if I was still involved with them I wouldn't get the whole truth. That's just their nature."
+<b>CRYPT KEEPER:</b> "I've disconnected myself from my ties with the church. I'd imagine that even if I was still involved with them, I wouldn't get the whole truth. That is simply their nature."
 -> ClergyQuestions
 
 = threeClerics 
 She rolls her eyes. 
 
-<b>CRYPT KEEPER:</b> "Yes I'm acquainted with the three. Nothing more than lackey clerics to the High Priest, but I suppose why not be?"
-<b>CRYPT KEEPER:</b> "Allows yourself an opportunity to be the next High Priest and some feeling of power."
+<b>CRYPT KEEPER:</b> "Yes, I'm acquainted with the three. Nothing more than lackey clerics to the High Priest, but I suppose why not be?"
+<b>CRYPT KEEPER:</b> "It allows yourself an opportunity to surround the High Priest, and in turn some feeling of power."
 ->ClergyQuestions
 
 =HighPriestRise
@@ -388,18 +359,18 @@ The Crypt Keeper goes pale, and she finds herself at a loss for words.
 
 **["Are you ok?"] 
 
-<b>CRYPT KEEPER:</b>"Y-yes... I somewhat feared you'd tell me this, but I thank you that you did." 
+<b>CRYPT KEEPER:</b>"Y-yes... I feared you would eventually bring me news like this, but I thank that you did." 
 
 She pauses for a minute.
 
 <b>CRYPT KEEPER:</b> "Please don't worry about me, peony."
 
-<b>CRYPT KEEPER:</b> "You have a tall task being asked of you, the last thing I'd want to do is distract you from your noble quest." 
+<b>CRYPT KEEPER:</b> "You have a tall task being asked of you, the last thing I'd want to do is distract you from your quest." 
 
 <b>CRYPT KEEPER:</b> "We may talk about this more at a later date, but I think the best thing for me now is to collect my own thoughts."
 
 +++[Leave] -> leave
-+++[Embrace her once more.] -> embrace 
++++[Embrace her once more] -> embrace 
 
 =embrace 
 You move in to embrace the Crypt Keeper once more. 
@@ -529,7 +500,7 @@ A bark of triumph.
  * Leave
     ~ StickHappiness = StickHappiness - 1
     <b>Stick:</b> Ruff! Ruff!
-    You immediately turn around and leave. Ignoring Stick's barks.
+    You immediately turn around and leave, ignoring Stick's barks.
 -> END
 
 =Stick4
@@ -660,7 +631,7 @@ You look around and find a dog bowl, several weird masks, and a few keys. Howeve
     -- ~ StickHappiness = -10
     -> WishfulThinking(tries-1)
  * Leave
-    You leave the Custodian's house wondering why you ever even entered.
+    You leave the Custodian's house, wondering why you ever even entered.
 ->END
 
 -> END 
@@ -674,12 +645,12 @@ You look around and find a dog bowl, several weird masks, and a few keys. Howeve
  //INTRO CUTSCENE WHEN HE'S INTRODUCED OUTSIDE OF FLOOR 2
  
  =intro
-As you arise from the dungeon, a familiar man in a top hat, with rosy cheeks and thin, stitched lips. Golden strings hang limply from his limbs, like a discarded marionette. His smile brims with a melancholic mirth.
+As you arise from the dungeon, you notice a familiar man in a top hat, with rosy cheeks and thin, stitched lips. Golden strings hang limply from his limbs, like a discarded marionette. His smile brims with a melancholic mirth.
 
 <b>MAYOR</b>: “...What a bitter state of affairs we find ourselves in."
 
-+[You were there] -> YouWereThere
-+[I am sorry] -> Sorry
++["You were there."] -> YouWereThere
++["I am sorry."] -> Sorry
 
 =YouWereThere
 The familiar man gives a tasteless, empty chuckle.
@@ -704,19 +675,19 @@ The familiar man breathes deep through his nose, unbothered by the scent of deat
 {questions < 1:  Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.}
 <b>MAYOR</b>: “You must have questions. Ask away.”
 
-+[How did you survive?] -> survive 
-+[What happened to the rest of the church?] ->church
-+[What are you doing here?] ->here 
-+[That's All for now] -> EndOfIntro
++["How did you survive?"] -> survive 
++["What happened to the rest of the church?"] ->church
++["What are you doing here?"] ->here 
++["That's all for now."] -> EndOfIntro
 
 =survive
 <b>MAYOR</b>: “...I fled.”
 
 Forlorn, the man’s posture visibly sinks.
 
-<b>MAYOR</b>:“I hold no deeper shame. I knew that… thing… that something was coming, and I turned my back on those I purported service to.”
+<b>MAYOR</b>: “I hold no deeper shame. I knew that...thing...that something was coming, and I turned my back on those I purported service to.”
 
-<b>MAYOR</b>:“Atonement may never grace me for such deep cowardice.”
+<b>MAYOR</b>: “Atonement may never grace me for such deep cowardice.”
 
 -> questions
 
@@ -724,8 +695,8 @@ Forlorn, the man’s posture visibly sinks.
 {church < 1: <b>MAYOR</b>: “...Most are gone. Just like everything else.”}
 
 {church < 1: <b>MAYOR</b>: “Perhaps the only just perdition to have come from the Convergence after all this time.” }
-*[Do you know who I am?] -> whoIam
-*[Couldn’t you have stopped what happened?] ->stopped 
+*["Do you know who I am?"] -> whoIam
+*["Couldn’t you have stopped what happened?"] ->stopped 
 *-> questions
 
 = here 
@@ -735,7 +706,7 @@ Forlorn, the man’s posture visibly sinks.
 
 The Mayor directs a heavy glance through a nearby window.
 
-<b>MAYOR</b>:“...or if there is any good that remains to be done.”
+<b>MAYOR</b>: “...or if there is any good that remains to be done.”
 -> questions
 
 
@@ -744,7 +715,7 @@ The Mayor directs a heavy glance through a nearby window.
 
 After a moment of silence, the man leans in to regard your appearance in greater detail.
 
-<b>MAYOR</b>:“Not many within our strain of history return to this sense-dulled place.”
+<b>MAYOR</b>: “Not many within our strain of history return to this sense-dulled place.”
 ->church
 
 =stopped 
@@ -769,39 +740,39 @@ The Mayor regards your appearance and posture. He nods with approval, and speaks
 
 =Hub
 As you enter the room, the Mayor looks to regard you.
-<b>MAYOR</b>:  “It is not every day a corpse comes to speak to me. How may I be of assistance?” -> HubQuestions
+<b>MAYOR</b>: “It is not every day a corpse comes to speak to me. How may I be of assistance?” -> HubQuestions
 
 =HubQuestions
 
 +[Show the Whispering Bell] -> Artifact1
-+{Artifact2Intro} [Show the Apparition Gauntlet.] -> Artifact2
++{Artifact2Intro} [Show the Apparition Gauntlet] -> Artifact2
 +{hasMayorNote1}[Show note about friend] -> note1
 +{hasMayorNote2}[Show note about enigmatic eye] -> note2
-+[Enough for now.] -> goodbye 
++[Enough for now] -> goodbye 
 
 =Artifact1
 <b>MAYOR</b>: “Now, this is most intriguing.”
 
 A foreign air fills the Mayor at the sight of the Bell, his posture gaining some form at the sight of the artifact.
 
-<b>MAYOR</b>:  “That much explains the buzz I have seen wash over the townsfolk as of late.”
+<b>MAYOR</b>: “That much explains the buzz I have seen wash over the townsfolk as of late.”
 
 <b>MAYOR</b>: “You’ve earned my commendation, albeit I doubt it holds much value in these times.”
 
 <b>MAYOR</b>: “No doubt, however, that such an achievement rightfully deserves recognition, even deathless as you are. "
 
-<b>MAYOR</b>: Spelunking into the ruins of Radefell with horrors stalking its corridors seems amongst the least of pleasant ventures.”
+<b>MAYOR</b>: "Spelunking into the ruins of Radefell with horrors stalking its corridors seems amongst the least of pleasant ventures.”
 
-+[It could be better.] -> better 
-+[It could be worse.] -> worse 
-+[It is unpleasant, indeed.] -> unpleasent 
++["It could be better."] -> better 
++["It could be worse."] -> worse 
++["It is unpleasant, indeed."] -> unpleasent 
 
 = better 
 A blanched laugh breaches Mayor’s rosy cheeks, his eyes slitting at the long unfamiliar sensation.
 
-<b>MAYOR</b>:  “Haah, ah… it always could be. That, in a way, is why you seek these artifacts.”
+<b>MAYOR</b>: “Haah, ah...it always could be. That, in a way, is why you seek these artifacts.”
 
-<b>MAYOR</b>:  “Each step you take is toward the untwisting of our reality. Each artifact you reclaim is another leap toward the ending of these senseless times.”
+<b>MAYOR</b>: “Each step you take is toward the untwisting of our reality. Each artifact you reclaim is another leap toward the ending of these senseless times.”
 
 <b>MAYOR</b>: “Hold to that, and you will see our wrongs righted.”
 
@@ -821,24 +792,24 @@ The Mayor expels the humored thought through his nose, one half of his lip curli
 
 <b>MAYOR</b>: “Then further respect for your efforts. I do not doubt that the work capable of redeeming ourselves or our world would ever be easy.”
 
-<b>MAYOR</b>: “Yet… if enduring such an endeavor will cleanse the Malignance, then it will be well worth undertaking. You have already made great strides along this path, and such strides show that you are capable of much more.”
+<b>MAYOR</b>: “Yet...if enduring such an endeavor will cleanse the Malignance, then it will be well worth undertaking. You have already made great strides along this path, and such strides show that you are capable of much more.”
 
-<b>MAYOR</b>:  “Hold to the course, and I do not doubt that you will see it through.”
+<b>MAYOR</b>: “Hold to the course, and I do not doubt that you will see it through.”
 
 -> Artifact2Intro
 
 =note1
-<b>MAYOR</b>:  “...Let me read it.”
+<b>MAYOR</b>: “...Let me read it.”
 
 You hold the letter out to the Mayor, whose hands tremble as his eyes regard the letter.
 
 <b>MAYOR</b>: “Where did you procure this? Within the dungeon?”
 
-<b>MAYOR</b>: “That can only mean…”
+<b>MAYOR</b>: “That can only mean...”
 
 The Mayor grits his savorless teeth, a dry frost settling his gaze low.
 
-<b>MAYOR</b>:“....my thanks for bringing this to me, my friend.”
+<b>MAYOR</b>: “...My thanks for bringing this to me, my friend.”
 
 With a downward tilt of his head, the Mayor’s face is locked in shadow, a tremble still visible at the tip of his nose.
 
@@ -852,9 +823,9 @@ The Mayor’s eyes seem to weaken as he holds the letter out. You take it from h
 
 =letter1Questions
 
-+[Who was he?] -> whoWasHe
-+[Why did you warn him?] -> WarnHim
-+[What now?] -> WhatNow
++["Who was he?]" -> whoWasHe
++["Why did you warn him?"] -> WarnHim
++["What now?"] -> WhatNow
 
 =whoWasHe 
 A distant light twinkles in the Mayor’s eye, and youthful air fills his chest.
@@ -863,7 +834,7 @@ A distant light twinkles in the Mayor’s eye, and youthful air fills his chest.
 
 <b>MAYOR</b>: “If I could turn back time,”
 
-<b>MAYOR</b>:  “I would have never let such kinship fade.”
+<b>MAYOR</b>: “I would have never let such kinship fade.”
 
 ->letter1Questions
 
@@ -894,15 +865,15 @@ The Mayor inhales through his nose as he reforms his posture.
 
 You hand the Mayor the page. His eyes squint and his lips frown in recognition.
 
-<b>MAYOR</b>:  “Indeed, yes. This is my penmanship. I was witness to one of the artifacts, before the Convergence.”
+<b>MAYOR</b>: “Indeed, yes. This is my penmanship. I was witness to one of the artifacts, before the Convergence.”
 
-Mayor: “What do you wish to know?”
+<b>MAYOR</b>: “What do you wish to know?”
 
 -> Letter2Questions 
 
 =Letter2Questions 
-+[What is this artifact?] -> artifactQuestion
-+[When did you see it?] -> seeIt 
++["What is this artifact?"] -> artifactQuestion
++["When did you see it?"] -> seeIt 
 * -> HubQuestions
 
 =artifactQuestion
@@ -910,9 +881,9 @@ Mayor: “What do you wish to know?”
 
 <b>MAYOR</b>: “They claimed it would unite the powers of the artifacts, and bring form to the Malignance.”
 
-<b>MAYOR</b>:  “I cannot comprehend the extent of its power, only that it possesses it.”
+<b>MAYOR</b>: “I cannot comprehend the extent of its power, only that it possesses it.”
 
-<b>MAYOR</b>: “And its gaze… I hesitate to match its gaze again.”
+<b>MAYOR</b>: “And its gaze...I hesitate to match its gaze again.”
 
 ->Letter2Questions
 
@@ -931,16 +902,16 @@ Mayor: “What do you wish to know?”
 = Artifact2 
 You see surprise tug the lids of the Mayor’s eyes open, and his stitched lips file into an impressed line.
 
-<b>MAYOR</b>:“Now this is… most auspicious.”
+<b>MAYOR</b>:“Now this is...most auspicious.”
 
-<b>MAYOR</b>: The Mayor’s sight seems to settle on something that isn’t you for a moment, his next words half-spoken as his mind drifts.
+The Mayor’s sight seems to settle on something that isn’t you for a moment, his next words half-spoken as his mind drifts.
 
 <b>MAYOR</b>: “No doubt such diligence deserves recognition.”
 
-+[Glad to be of service.] ->service 
-+[I deserve no thanks.] -> thanks 
-+[It is my duty.] -> duty
-+[The work remains unfinished.] -> unfinished 
++["Glad to be of service."] ->service 
++["I deserve no thanks."] -> thanks 
++["It is my duty."] -> duty
++["The work remains unfinished."] -> unfinished 
 
 =service 
 The Mayor’s gaze focuses on the wall behind you for a few seconds, until he looks back to you, coming to his senses.
@@ -990,46 +961,46 @@ INTRO SECTION
  = intro
 VAR angryClerics = false
 
-<b>WEEPING CLERIC</b>: We face failure! How dare we yet breathe while the Perfect One suffers below…
-<b>SMILING CLERIC</b>: No, brother, we face success! The Perfect One has taken the city and dragged it beneath the lofty reaches of our sacred spire!
+<b>WEEPING CLERIC</b>: "We face failure! How dare we yet breathe while the Perfect One suffers below..."
+<b>SMILING CLERIC</b>: "No, brother, we face success! The Perfect One has taken the city and dragged it beneath the lofty reaches of our sacred spire!"
 
-<b>THINKING CLERIC</b>: We may still face either fate, my kin, but be aware, a fallen cleric listens.
+<b>THINKING CLERIC</b>: "We may still face either fate, my kin, but be aware, a fallen cleric listens."
 
-<b>WEEPING</b>: Do you come to beg forgiveness?
+<b>WEEPING</b>: "Do you come to beg forgiveness?"
 
 
-<b>SMILING</b>: Do you come to share our mirth?
+<b>SMILING</b>: "Do you come to share our mirth?"
 
 
  You look between each face, crossing your arms.
- *  I seek the artifact. 
+ *  "I seek the artifact." 
     -> ADoomedQuest
- *  I seek a setting sun on your god.  
+ *  "I seek a setting sun on your god."
     -> TrulyDisgraced
- *  I seek nothing but safe passage below. 
+ *  "I seek nothing but safe passage below." 
     -> ADoomedQuest
 
 = ADoomedQuest 
-<b>WEEPING</b>: A doomed quest…
+<b>WEEPING</b>: "A doomed quest..."
 
-<b>THINKING</b>: …but a useful experiment.
+<b>THINKING</b>: "...but a useful experiment."
 
-<b>SMILING</b>: Of course, disgraced one, you may pass into our lord's lair and meet his children. May it rekindle your faith.
+<b>SMILING</b>: "Of course, disgraced one, you may pass into our lord's lair and meet his children. May it rekindle your faith."
 
 -> GoForth
 
 =TrulyDisgraced 
 ~ angryClerics = true
-<b>WEEPING</b>: Disgraceful, as expected...
+<b>WEEPING</b>: "Disgraceful, as expected..."
 
-<b>SMILING</b>: And what a grand promise! There will be equally grand humor in your failure.
+<b>SMILING</b>: "And what a grand promise! There will be equally grand humor in your failure."
 
-<b>THINKING</b>: Poor heretic... we will speak to you no longer. Your empty words waste time which could have been spent in silence.
+<b>THINKING</b>: "Poor heretic... we will speak to you no longer. Your empty words waste time which could have been spent in silence."
 
 -> GoForth
 
 = GoForth 
-<b>THINKING</b>: Asitotheh ko’ila pri’on anikoli, may you fear that which possesses powerful senses, foolish child. Now, fi, {angryClerics:begone.|go forth.}
+<b>THINKING</b>: "Asitotheh ko’ila pri’on anikoli, may you fear that which possesses powerful senses, foolish child. Now, fi, {angryClerics:begone.|go forth.}"
     -> END
 
  /*
@@ -1038,84 +1009,84 @@ PLAYER DIES IN FLOOR 1 SECTION
 
 = DeathF1 
 
-<b>WEEPING CLERIC</b>: I hear shameful footsteps upon the sacred marble floors.
-<b>SMILING CLERIC</b>: Of course! The wretched dreamer returns with broken spirits!
-<b>THINKING CLERIC</b>: I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?
+<b>WEEPING CLERIC</b>: "I hear shameful footsteps upon the sacred marble floors."
+<b>SMILING CLERIC</b>: "Of course! The wretched dreamer returns with broken spirits!"
+<b>THINKING CLERIC</b>: "I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?"
 
 The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.
- *  I have no need for holy light, but I could use some answers.
+ *  "I have no need for holy light, but I could use some answers."
     The thoughtful cleric spreads their arms wide.
-    <b>THINKING</b>: We have little to hide. As long as you remain diplomatic, we will answer any questions you possess.
+    <b>THINKING</b>: "We have little to hide. As long as you remain diplomatic, we will answer any questions you possess."
         -> AskQuestions
- *  Let me pass, petulant ones. I care not for your distractions.
+ *  "Let me pass, petulant ones. I care not for your distractions."
     -> GoForth2
 
 = AskQuestions 
- *  Who are you?
+ *  "Who are you?"
     -> WhoAreYou
- *  Why are you still here? 
+ *  "Why are you still here?"
     -> WhyStillHere
- *  Do you know of the other villagers? 
+ *  "Do you know of the other villagers?"
     -> KnowVillagers
- *  The church was supposed to survive the cataclysm. What happened to everyone else? Where is the High Priest?
+ *  "The church was supposed to survive the cataclysm. What happened to everyone else? Where is the High Priest?"
     -> WhatHappenedToChurch
- *  Enough. I wish to pass on into the dungeon.
+ *  "Enough. I wish to pass on into the dungeon."
     -> GoForth2
 
 = WhoAreYou 
-<b>WEEPING</b>: I am Ila, acolyte of repose.
-<b>SMILING</b>: I am Ina, acolyte of beast. 
-<b>THINKING</b>: I am Ana, acolyte of word. Who are you?
+<b>WEEPING</b>: "I am Ila, acolyte of repose."
+<b>SMILING</b>: "I am Ina, acolyte of beast."
+<b>THINKING</b>: "I am Ana, acolyte of word. Who are you?"
  *  I am the endless repose.
-    <b>WEEPING</b>: Doubtful...
+    <b>WEEPING</b>: "Doubtful..."
  *  I am the lonely beast.
-    <b>SMILING</b>: Laughable!
+    <b>SMILING</b>: "Laughable!"
  *  I am the final word.
-    <b>THINKING</b>: Intriguing. 
+    <b>THINKING</b>: "Intriguing."
  *  I am the Disgraced.
-    <b>THINKING</b>: Without a doubt. 
+    <b>THINKING</b>: "Without a doubt."
 - -> AskQuestions
 
 = WhyStillHere 
-<b>WEEPING</b>: How could we dare to abandon our post?
-<b>SMILING</b>: Why would ever want to leave this perfect place?
+<b>WEEPING</b>: "How could we dare to abandon our post?"
+<b>SMILING</b>: "Why would ever want to leave this perfect place?"
 The thoughtful cleric considers you for a moment...
-<b>THINKING</b>: You forget the predicating question, young one. Where would we go?
+<b>THINKING</b>: "You forget the predicating question, young one. Where would we go?"
 -> AskQuestions
 
 = KnowVillagers 
-<b>THINKING</b>: Of course, our spire watches over each of them.
- *  What are your thoughts on the Crypt Keeper?
-    <b>WEEPING</b>: I know her... heathen. Traitor.
-    <b>SMILING</b>: Laughable! A true failure!
-    <b>THINKING</b>: ...and a troublingly talented woman
+<b>THINKING</b>: "Of course, our spire watches over each of them."
+ *  "What are your thoughts on the Crypt Keeper?"
+    <b>WEEPING</b>: "I know her...Heathen. Traitor."
+    <b>SMILING</b>: "Laughable! A true failure!"
+    <b>THINKING</b>: "...and a troublingly talented woman."
 
- *  What are your thoughts on the Mayor?
-    <b>WEEPING</b>: Of course... that-
-    <b>WEEPING</b>: Wait, who?
-    <b>THINKING</b>: The weak-willed one, didn’t he flee?
-    <b>SMILING</b>: Oh that fun little puppet! He ran from the city at the first sign of our lord's rise!
+ *  "What are your thoughts on the Mayor?"
+    <b>WEEPING</b>: "Of course... that-"
+    <b>WEEPING</b>: "Wait, who?"
+    <b>THINKING</b>: "The weak-willed one, didn’t he flee?"
+    <b>SMILING</b>: "Oh, that fun little puppet! He ran from the city at the first sign of our lord's rise!"
 
- *  What are your thoughts on the Scholar?
-    <b>THINKING</b>: They were an adept keeper of the church's secrets, even the High Priest adored their fervor.
-    <b>SMILING</b>:  What a monster for knowledge!
-    <b>WEEPING</b>: ...and what a tortured soul.
+ *  "What are your thoughts on the Scholar?"
+    <b>THINKING</b>: "They were an adept keeper of the church's secrets, even the High Priest adored their fervor."
+    <b>SMILING</b>: "What a monster for knowledge!"
+    <b>WEEPING</b>: "...and what a tortured soul."
     
 - -> AskQuestions
 
 
 = WhatHappenedToChurch 
-The clerics visibly flinch at your question
-<b>WEEPING</b>: The church lives, so magnificent, though tears flow from her spires...
-<b>SMILING</b>: ...and we live, too, blessed to be the final children of the Malignance...
-<b>THINKING</b>: ...and the High Priest lives, most holy, slumbering in the great throne, awaiting the proper calalyst to his return.
-<b>THINKING</b>: Your inquiry cuts blunt and foolish, question us no more.
+The clerics visibly flinch at your question.
+<b>WEEPING</b>: "The church lives, so magnificent, though tears flow from her spires..."
+<b>SMILING</b>: "...and we live, too, blessed to be the final children of the Malignance..."
+<b>THINKING</b>: "...and the High Priest lives, most holy, slumbering in the great throne, awaiting the proper calalyst to his return."
+<b>THINKING</b>: "Your inquiry cuts blunt and foolish, question us no more."
 
 -> GoForth2
 
 = GoForth2 
-<b>SMILING</b>: We will see you again soon, regardless of whether success or failure sinks its fangs into you first.
-<b>WEEPING</b>: Though I do not have hope in your ability to escape the cold embrace of death any time soon. Mortality cannot be cheated forever...
+<b>SMILING</b>: "We will see you again soon, regardless of whether success or failure sinks its fangs into you first."
+<b>WEEPING</b>: "Though I do not have hope in your ability to escape the cold embrace of death any time soon. Mortality cannot be cheated forever..."
     -> END
 
 
@@ -1126,21 +1097,21 @@ PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence ove
 = Hub 
 The great church has become consumed in a whirl of dark whispers. The chanting voices of the three clerics fill the air.
 
-<b>CLERICS</b>: Asi'ona! Asi'ona! Asi'ona! Fi'a!
+<b>CLERICS</b>: "Asi'ona! Asi'ona! Asi'ona! Fi'a!"
 
-<b>THINKING CLERIC</b>: Perfect One, our great lord, god of gods, creator of ruins, destroyer of all things not yet so. Fi'a! The heretic has stolen what belongs to you, come forth!
+<b>THINKING CLERIC</b>: "Perfect One, our great lord, god of gods, creator of ruins, destroyer of all things not yet so. Fi'a! The heretic has stolen what belongs to you, come forth!'
 
 The earth shakes and the air tastes of metal.
 
 A dark, humanoid form rises from the throne behind the clerics, booming laughter filling the air. The figure approaches.
 
-<b>HIGH PRIEST</b>: Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?
- *  I am no traitor.
- *  I am no one's puppet.
- *  I am not a monster.
--<b>HIGH PRIEST</b>: Maybe not, but you are weak. Though you have stolen from my dungeon, you have only shown the futility of your quest. 
-<b>HIGH PRIEST</b>: My children grow hungrier. Your final death is imminent.
-<b>HIGH PRIEST</b>: Now, get out of my sight.
+<b>HIGH PRIEST</b>: "Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?"
+ *  "I am no traitor."
+ *  "I am no one's puppet."
+ *  "I am not a monster."
+-<b>HIGH PRIEST</b>: "Maybe not, but you are weak. Though you have stolen from my dungeon, you have only shown the futility of your quest."
+<b>HIGH PRIEST</b>: "My children grow hungrier. Your final death is imminent."
+<b>HIGH PRIEST</b>: "Now, get out of my sight."
     -> END
 
 
@@ -1150,48 +1121,48 @@ PLAYER DIES IN FLOOR 2 SECTION
 
 = DeathF2 
 The menacing figure of the High Priest turns to you, the other clerics cowering behind.
-<b>HIGH PRIEST</b>: My clerics forewarned me of the great humor of your repeated failings, but nothing could have prepared me for the reality of your humiliation.
-  *  Enough mocking, I have questions.
+<b>HIGH PRIEST</b>: "My clerics forewarned me of the great humor of your repeated failings, but nothing could have prepared me for the reality of your humiliation."
+  *  "Enough mocking, I have questions."
     The High Priest's black eyes burn twin holes in your head, but they do not decline your request.
         -> AskQuestionsOfHP
- *  I will not speak to you any more than I must, fear-father. Let me pass.
+ *  "I will not speak to you any more than I must, fear-father. Let me pass."
     -> GoForth3
 
 = AskQuestionsOfHP 
- *  What are you?
+ *  "What are you?"
     -> WhatAreYou
- *  What do you think of the villagers? 
+ *  "What do you think of the villagers?"
     -> WhatOfVillagers
- *  You returned when I discovered the Magic Hand, why? What do you want?
+ *  "You returned when I discovered the Magic Hand, why? What do you want?"
     -> WhatYouWant
- *  Enough. I wish to pass on into the dungeon.
+ *  "Enough. I wish to pass on into the dungeon."
     -> GoForth3
 
 = WhatAreYou 
-<b>HIGH PRIEST</b>: I am a vision of myself, wrenched from my infinite form into this weak body.
+<b>HIGH PRIEST</b>: "I am a vision of myself, wrenched from my infinite form into this weak body."
 Chills creep up the back of your neck. The High Priest's cold stare holds you, immobilized.
-<b>HIGH PRIEST</b>: A better question, I ask myself: what are you?
-<b>HIGH PRIEST</b>: Death-cheater, oath-breaker, disgraced. Despite your resistance, you are destined to be nothing, just as I am destined to be everything.
-<b>HIGH PRIEST</b>: Fate will not relent for you, and time will reveal my true nature.
+<b>HIGH PRIEST</b>: "A better question, I ask myself: what are you?"
+<b>HIGH PRIEST</b>: "Death-cheater, oath-breaker, disgraced. Despite your resistance, you are destined to be nothing, just as I am destined to be everything."
+<b>HIGH PRIEST</b>: "Fate will not relent for you, and time will reveal my true nature."
 - -> AskQuestionsOfHP
 
 = WhatOfVillagers 
-<b>HIGH PRIEST</b>: They are, all but one, wretched invertibrates. Which of them interests you?
- *  The Crypt Keeper.
-    <b>HIGH PRIEST</b>: She is a betrayer, heathen, and the most egregious of failures, despite her talents.
- *  The Mayor.
-    <b>HIGH PRIEST</b>: He is a weak-willed puppet, and it was delicious fun to toy with him before he fled during my rise.
- *   The Scholar.
-    <b>HIGH PRIEST</b>: They are a poor, tortured monster, and I cannot help but adore their fervor. They are also quite a talented keeper of secrets, to be sure.
+<b>HIGH PRIEST</b>: "They are, all but one, wretched invertibrates. Which of them interests you?"
+ *  "The Crypt Keeper."
+    <b>HIGH PRIEST</b>: "She is a betrayer, heathen, and the most egregious of failures, despite her talents."
+ *  "The Mayor."
+    <b>HIGH PRIEST</b>: "He is a weak-willed puppet, and it was delicious fun to toy with him before he fled during my rise."
+ *   "The Scholar."
+    <b>HIGH PRIEST</b>: "They are a poor, tortured monster, and I cannot help but adore their fervor. They are also quite a talented keeper of secrets, to be sure."
 - -> AskQuestionsOfHP
 
 = WhatYouWant 
-<b>HIGH PRIEST</b>: You've brushed so close against success...
-<b>HIGH PRIEST</b>: I want to bear witness to when you inevitably fail.
+<b>HIGH PRIEST</b>: "You've brushed so close against success..."
+<b>HIGH PRIEST</b>: "I want to bear witness to when you inevitably fail."
 -> AskQuestionsOfHP
 
 = GoForth3 
-<b>HIGH PRIEST</b>: Of course... I will see you again shortly, doomed heretic.
+<b>HIGH PRIEST</b>: "Of course... I will see you again shortly, doomed heretic."
     -> END
 ==Scholar==
 {
@@ -1215,20 +1186,20 @@ As you approach, the door creaks open, and a robed figure appears from the deep 
 
 The little of their face left uncovered by bandages sends a shiver down your spine. 
 
-And yet… a wave of familiarity crashes upon you all the same. 
+And yet...a wave of familiarity crashes upon you all the same. 
 
 The gravelly voice from the person before you echoes louder in your head than in your ears.
 
-<b>SCHOLAR:</b> “Hmm, so it appears one has returned...
+<b>SCHOLAR:</b> Hmm, so it appears one has returned...
 It has been a long while since I’ve conversed with someone... of a similar origin. 
 
-<b>SCHOLAR:</b> "It’s good to know we few are not the last.”
+<b>SCHOLAR:</b> It’s good to know we few are not the last.
 
-*[What do you mean?] ->WhatDoYouMean 
-*[It is good to see you too.] ->GoodToSee
+*["What do you mean?"] ->WhatDoYouMean 
+*["It is good to see you too."] ->GoodToSee
 
 =WhatDoYouMean 
-<b>SCHOLAR:</b> “Hmm? Has the wanderer lost themself in their years away? Surely, they must recognize one of their Church’s great knowledge keepers.”
+<b>SCHOLAR:</b> Hmm? Has the wanderer lost themself in their years away? Surely, they must recognize one of their Church’s great knowledge keepers.
 
 <b>SCHOLAR:</b> Not much for talk, wanderer? I can’t say I’m surprised. The eternal enigma they are, even to one as learned as I. 
 
@@ -1237,26 +1208,26 @@ It has been a long while since I’ve conversed with someone... of a similar ori
 =GoodToSee 
 You give a deep bow. 
 
-<b>SCHOLAR:</b> “Ahh, such respect from the wanderer."
+<b>SCHOLAR:</b> Ahh, such respect from the wanderer.
 
-<b>SCHOLAR:</b> "Nothing less than I’d expect from Malisense’s most faithful."
+<b>SCHOLAR:</b> Nothing less than I’d expect from Malisense’s most faithful.
 
-<b>SCHOLAR:</b> "It seems, even after all this time, they remember how to respect their superiors.”
+<b>SCHOLAR:</b> It seems, even after all this time, they remember how to respect their superiors.
 
 ->introQuestions
 
 =introQuestions
 <b>SCHOLAR:</b> But, niceties and remembrances aside, I doubt idle prattle is what the wanderer seeks. What is it they wish of me?
 
-*[What happened to you?] -> toYou 
-*[What happened here?] -> happenedHere 
+*["What happened to you?"] -> toYou 
+*["What happened here?"] -> happenedHere 
 *-> introGoodbye 
 
 =toYou 
 <b>SCHOLAR:</b> Isn't that an interesting quandary. 
 <b>SCHOLAR:</b> And the answer is even more intriguing.
 <b>SCHOLAR:</b> But, forgotten wanderer, I hardly wish to reveal such knowledge to one who has become practically a stranger. 
-<b>SCHOLAR:</b>Perhaps some other time I shall tell, but for now the doors to my secrets are locked.
+<b>SCHOLAR:</b> Perhaps some other time I shall tell, but for now the doors to my secrets are locked.
 
 ->introQuestions
 
@@ -1267,9 +1238,9 @@ You give a deep bow.
 
 <b>SCHOLAR:</b> In an instant, the city disappeared beneath the Earth, and those who remained either lost their minds or their freedom to the Malignance. 
 
-<b>SCHOLAR:</b> Evidently, some people were able to escape the destruction - though none unscathed - and decided to go about the process of rebuilding... or whatever the closest thing might be. 
+<b>SCHOLAR:</b> Evidently, some people were able to escape the destruction–though none unscathed–and decided to go about the process of rebuilding...or whatever the closest thing might be. 
 
-<b>SCHOLAR:</b> I doubt the Malisense we knew shall ever stand as it did before...
+<b>SCHOLAR:</b> I doubt the Radefell we knew shall ever stand as it did before...
 
 -> introGoodbye 
 
@@ -1282,7 +1253,7 @@ They let out a heavy sigh.
 
 <b>SCHOLAR:</b> Come again with any items of interest, and I shall tell of their nature. 
 
-<b>SCHOLAR:</b> And... give my regards to the Crypt Keeper. If she's around.
+<b>SCHOLAR:</b> And...give my regards to the Crypt Keeper. If she's still around.
 -> END
 
 =regularHub
@@ -1307,40 +1278,40 @@ They let out a heavy sigh.
 
 {ArtifactTibits > 3: They've made little finger puppets, which they're now using to try and explain the Old Wars to you. Where did that cheery person go? Maybe they never left.}
 
-{hasDied: <b>SCHOLAR</b>: Ah, what joy! The wanderer returns once again! I had worried our last meeting would be our final one. What a tragedy that would have been… ->ArtifactQuestions} 
+{hasDied: <b>SCHOLAR</b>: Ah, what joy! The wanderer returns once again! I had worried our last meeting would be our final one. What a tragedy that would have been... ->ArtifactQuestions} 
 
 =ArtifactQuestions 
 <b>SCHOLAR</b>: What do you wish of me?
 
- *  What is the Whispering Bell?
+ *  "What is the Whispering Bell?"
     -> WhisperingBell
-* {WhisperingBell} May I show you something? -> AfterA1
+* {WhisperingBell} "May I show you something?" -> AfterA1
 
- *  What is the Apparition Gauntlet?
+ *  "What is the Apparition Gauntlet?"
     -> ApparitionGauntlet
-* {ApparitionGauntlet} May I show you something? -> AfterA2
+* {ApparitionGauntlet} "May I show you something?" -> AfterA2
 
- *  What is the Eye of Genesis?
+ *  "What is the Eye of Genesis?"
     -> EyeofGenesis
     
- *  I'm done here
+ *  "I'm done here."
     -> END
 
 *-> CharacterQs
 
 
 = WhisperingBell 
-<b>SCHOLAR</b>: According to legend, the Whispering Bell was formed deep underground--much like a diamond. 
+<b>SCHOLAR</b>: According to legend, the Whispering Bell was formed deep underground–much like a diamond. 
 
 <b>SCHOLAR</b>: Over time, the bell was pushed closer and closer to the surface, until it was eventually found by the great General Dymilos. 
 
 <b>SCHOLAR</b>: Many historians attribute Dymilos' strategic prowess to the bell, which he claimed allowed him to see enemy soldiers through castle walls and country hillsides. 
 
-<b>SCHOLAR</b>: The battles he won were the crux of Malisense's glory. Our city would not have held as long as it did without his strength. 
+<b>SCHOLAR</b>: The battles he won were the crux of Radefell's glory. Our city would not have held as long as it did without his strength. 
 
 <b>SCHOLAR</b>: When he died, the bell was taken by the Church, as revered as a sacred item. 
 
-<b>SCHOLAR</b>: Upon the death of a devotee, the bell would be rung once in honor of their life lived in sacrafice to the Church. 
+<b>SCHOLAR</b>: Upon the death of a devotee, the bell would be rung once in honor of their life lived in sacrifice to the Church. 
 
 <b>SCHOLAR</b>: The wanderer must remember its tolls, even if they knew not from where. And it seems the bell has yet to toll for them. 
 
@@ -1349,9 +1320,9 @@ They let out a heavy sigh.
 -> ArtifactQuestions
 
 = ApparitionGauntlet 
-<b>SCHOLAR</b>: Indeed, the Apparition Gauntlet! An item of great power, and greater mystery. I admit, despite my position as Malisense's last great Scholar, even I have very little knowledge of its true origins. 
+<b>SCHOLAR</b>: Indeed, the Apparition Gauntlet! An item of great power, and greater mystery. I admit, despite my position as Radefell's last great Scholar, even I have very little knowledge of its true origins. 
 
-<b>SCHOLAR</b>:However, many legends agree that this artifact sprung from the earth, as if grasping for the light of the surface it knew only whispers of. 
+<b>SCHOLAR</b>: However, many legends agree that this artifact sprung from the earth, as if grasping for the light of the surface it knew only whispers of. 
 
 <b>SCHOLAR</b>: Supposedly, it's outstretched grasp is fueled by the anger of the souls sacrificed to the Malignance, so much so that they can still influence the mortal world. 
 -> ArtifactQuestions
@@ -1361,7 +1332,7 @@ They let out a heavy sigh.
 
 <b>SCHOLAR</b>: This was originally utilized by the Church as a way to oversee everyone within it. Some say its ever watchful gaze is constantly predicting the next movements of all within its line of sight. 
 
-<b>SCHOLAR</b>: As for how it tells the Clergy about misbehavior or imminent issues, that is a closely guarded secret of the Church that only the High Priest and few others knew. 
+<b>SCHOLAR</b>: As for how it tells the clergy about misbehavior or imminent issues, that is a closely guarded secret of the Church that only the High Priest and few others knew. 
 
 -> ArtifactQuestions
 
@@ -1369,13 +1340,13 @@ They let out a heavy sigh.
 
 <b>SCHOLAR</b>: Ahh, it seems our intrepid wanderer has brought back something interesting. Brilliant, brilliant. 
 
-<b>SCHOLAR</b>: I hope the wanderer does not mind my writing as we talk. My mind has been clouded since Malisense perished, and nearly I along with it. 
+<b>SCHOLAR</b>: I hope the wanderer does not mind my writing as we talk. My mind has been clouded since Radefell perished, and nearly I along with it. 
 
-<b>SCHOLAR</b>: Writing helps me remember… remember what I am, what it was, and who we are. 
+<b>SCHOLAR</b>: Writing helps me remember...remember what I am, what it was, and who we are. 
 
 <b>SCHOLAR</b>: Now, what is it that the wanderer wishes to show me?
 
-You show them the bell 
+You show them the bell. 
 
 Instantly, the Scholar's remaining eye lights up. 
 
@@ -1383,16 +1354,16 @@ You've never seen them in such a state.
 
 Their excitement makes them seem almost monstrous, their hand quickly scribbling unrecognized symbols on their parchment. 
 
-<b>SCHOLAR</b>: My, my, what have we here? Such an incredible item they have brought to show me! 
+<b>SCHOLAR</b>: My, my, my, what have we here? Such an incredible item they seem to have brought to show me! 
 
 <b>SCHOLAR</b>: To the wanderer's layman eyes, I imagine it appears to simply be a bell. 
 
-<b>SCHOLAR</b>: What rank were they, again? Well, no matter, they have earned my knowledge of this artifact. 
+<b>SCHOLAR</b>: What was their clerical title, again? Well, no matter, they have earned my knowledge of this artifact. 
 
-* Please, tell me more.
+* "Please, tell me more."
  -> tellMore
  
-* Just get on with it, already.
+* "Just get on with it, already."
  -> getOn
 
 = tellMore  
@@ -1410,27 +1381,27 @@ Though their expression remains concealed, you can feel the giddiness rising wit
 
  They begin eyeing the bell thoroughly. Though their expression remains concealed, you can feel the giddiness rising within them as they hungrily take in every inch of the artifact.. 
 
-<b>SCHOLAR>/b>: Certainly this cannot be... Yet, it is... Wanderer. Oh gracious wanderer! You have brought to me the Whispering Bell! 
+<b>SCHOLAR>/b>: Certainly this cannot be...Yet, it is...wanderer. Oh, gracious wanderer! You have brought to me the Whispering Bell! 
 
 -> WhisperingBellExplination
 
 = WhisperingBellExplination
 <b>SCHOLAR>/b>: Mortal minds cannot hear the sound of the bell. If I could, I shudder to think of how terrible it might sound. 
 
-<b>SCHOLAR>/b>:  Seeing it here, in the flesh, I can confirm a few suspicions that it would have been unbecoming of me to voice before. 
+<b>SCHOLAR>/b>: Seeing it here, in the flesh, I can confirm a few suspicions that it would have been unbecoming of me to voice before. 
 
 <b>SCHOLAR>/b>: There were rumors it was used to track signs of the Malignance when rung, and it thusly must allow you to track the souls corrupted by it. As for a reward for showing me this, I shall tell you of my folly, and of the knowledge I have burdened myself with.
 
-*[Your folly?] -> folly 
+*["Your folly?"] -> folly 
 
 =folly 
-<b>SCHOLAR>/b>:  I seek memories of the Malisense, to preserve my own humanity, as I now have the unfortunate position of feeling empathy for the Malignance, yet at least I hold my own memories. 
+<b>SCHOLAR>/b>: I seek memories of the Convergence, to preserve my own humanity, as I now have the unfortunate position of feeling empathy for the Malignance, yet at least I hold my own memories. 
 
 <b>SCHOLAR>/b>: I lost my peers, and my own control over my body, and all for what? 
 
-<b>SCHOLAR>/b>:  To have no mouth with which to speak my knowledge, to bear the burden of these secrets alone...at least I may tell you without any fear. That is all I will say for now. 
+<b>SCHOLAR>/b>: To have no mouth with which to speak my knowledge, to bear the burden of these secrets alone...at least I may tell you without any fear. That is all I will say for now. 
 
-<b>SCHOLAR>/b>: Now, go and wander once more, down in the dark and despair of Malisense's tomb. 
+<b>SCHOLAR>/b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
 
 <b>SCHOLAR>/b>: The ringing echoes of the dead shall clear the way of the corrupted.
 
@@ -1440,50 +1411,50 @@ Though their expression remains concealed, you can feel the giddiness rising wit
 
 <b>SCHOLAR</b>: Brilliant, simply brilliant. The wanderer never fails to impress, as I should have expected. It seems even I have forgotten why they were so close to the heart of our Church... 
 
-You hold up the Apparition Gauntlet
+You hold up the Apparition Gauntlet.
 
 As the gilded hand shimmers in the faint light before the doorway, you see its gleam reflected in the Scholar's eyes. Their excitement is apparent. 
 
-<b>SCHOLAR</b>: It... This is... Wanderer. My dear wanderer! What blessings they bring to my doorstep, for they have found me the Apparition Gauntlet!
+<b>SCHOLAR</b>: It...This is...wanderer. My dear wanderer! What blessings they bring to my doorstep, for they have found me the Apparition Gauntlet!
 
 <b>SCHOLAR</b>: To think that such a legendary artifact is here before me now. 
 
- * Please, tell me more.
+ * "Please, tell me more."
  -> tellMoreGautlet 
  
-* Just get on with it, already.
+* "Just get on with it, already."
  -> getOnGautlet
  
  =getOnGautlet 
  The Scholar's brow furrows slightly.
  
- <b>SCHOLAR</b>: It seems I have also forgotten their lack of patience. But, no matter. Bring it here
+ <b>SCHOLAR</b>: It seems I have also forgotten their lack of patience. But, no matter. Bring it here.
  
  ->tellMoreGautlet
  
  = tellMoreGautlet 
 {-getOnGautlet: 
-<b>SCHOLAR</b>: But, no matter. Bring it here
+<b>SCHOLAR</b>: But, no matter. Bring it here.
 -else:
 <b>SCHOLAR</b>: If you'll allow me...
 }
 
 The Scholar reaches over to touch the Gauntlet, then shudders. 
 
-<b>SCHOLAR</b>:It is as I thought, my intuitions were correct...
+<b>SCHOLAR</b>: It is as I thought, my intuitions were correct...
 
 -> handQuestions
 
 =handQuestions
 
-*[How should I use it?] -> howUseHand 
-*[What was its use] -> useHand
+*["How should I use it?"] -> howUseHand 
+*["What was its use?"] -> useHand
 *->handGoodbye
 
 =howUseHand 
 <b>SCHOLAR>/b>: It seems the souls consumed by the Malignance still claw for the surface of a tempestuous sea of their own multitudes. 
 
-<b>SCHOLAR>/b>: Their outstretched grasp and its lack of a grip on reality ends up overcompensating, so that it's infrequent touch far outstretches the physical bounds of the Gauntlet's fingers. 
+<b>SCHOLAR>/b>: Their outstretched grasp and its lack of a grip on reality ends up overcompensating, so that its infrequent touch far outstretches the physical bounds of the Gauntlet's fingers. 
 
 <b>SCHOLAR>/b>: For those with a vocabulary lesser than mine, it may touch others from very far away in its attempts to cling to the mortal realm.
 
@@ -1495,11 +1466,11 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 
 <b>SCHOLAR>/b>: This forces me into a position of conjecture given how much of the information about it is knowledge or rumor, but considering the truth of it being the consumed souls of the Malignance vying for revenge...
 
-<b>SCHOLAR>/b>: it must have been used by the Church for the controlling of beasts...still, as thanks for sharing such a wonderous creation with me, I shall speak more of my senselessness...
+<b>SCHOLAR>/b>: It must have been used by the Church for the controlling of beasts...still, as thanks for sharing such a wonderous creation with me, I shall speak more of my senselessness...
 
-<b>SCHOLAR>/b>: if I had merely left the Clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
+<b>SCHOLAR>/b>: If I had merely left the clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
 
-*[Your body?] 
+*["Your body?"] 
 
 <b>SCHOLAR>/b>: I...do not know if it is safe to share this secret but...my body is not my own. 
 
@@ -1513,28 +1484,28 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 -> handQuestions
 
 =handGoodbye 
-<b>SCHOLAR>/b>: Now, go and wander once more, down in the dark and despair of Malisense's tomb. 
+<b>SCHOLAR>/b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
 ->END 
 
 = CharacterQs 
-* What do you know about the Crypt Keeper?
+* "What do you know about the Crypt Keeper?"
 -> ckAnswers
 
-* What can you tell me about the Mayor?
+* "What can you tell me about the Mayor?"
 -> mayorAnswers
 
-* Anything to say about the Clergy?
+* "Anything to say about the clergy?"
 -> clergyAnswers
 
-* Enough questions
+* "Enough questions."
 -> END
 
 = ckAnswers 
 <b>SCHOLAR</b>: So you wish to know more about the Crypt Keeper...I must say, there is some knowledge I am not burdened by. 
 
-<b>SCHOLAR</b>: I know not if it is my place to say this, but rightfully she left the Clergy long ago while I remained, blinded by my search for knowledge. 
+<b>SCHOLAR</b>: I know not if it is my place to say this, but rightfully she left the clergy long ago while I remained, blinded by my search for knowledge. 
 
- Why did she leave? 
+ "Why did she leave?" 
 
 <b>SCHOLAR</b>: There were times where the good she could do was limited by being in the Church. And so she left, for a better life. And look where it got her in comparison. 
 
@@ -1549,13 +1520,13 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 
 <b>SCHOLAR</b>: I have done many things that were senseless, but never as senseless as that fool of a mayor. 
 
- Senseless? 
+ "Senseless?" 
 
 <b>SCHOLAR</b>: The wanderer seeks to know of my many mistakes, but I shall only speak of it if you show me any and all artifacts you collect. 
 
 -> CharacterQs
 = clergyAnswers 
-<b>SCHOLAR</b>: The Clergy...all I know is that they are members of the Church, with the exception of the High Priest...they kept me on a short leash, treating me like a curious infant, even when I was one of the foremost keepers of Church secrets. 
+<b>SCHOLAR</b>: The clergy...all I know is that they are members of the Church, with the exception of the High Priest...they kept me on a short leash, treating me like a curious infant, even when I was one of the foremost keepers of Church secrets. 
 
 <b>SCHOLAR</b>: Perhaps they were right that I would never learn some sort of higher truth, and I never left the clergy like the Crypt Keeper did...if I had, maybe I'd have learned some greater truth.
 
@@ -1567,22 +1538,22 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 ==End== 
 ~character = "Mayor"
 ~background = "next"
-You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your light footed step and close the distance across the room in an instant, locking eyes with the Mayor. 
+You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your lightfooted step and close the distance across the room in an instant, locking eyes with the Mayor. 
 
 While he does not flinch from your gaze, the Mayor’s lips are pressed together, but not smiling this time.	
 
-<b>MAYOR</b>:  “I knew this time would come…”
+<b>MAYOR</b>: “I knew this time would come...”
 
-+[You have the final artifact!]  
++["You have the final artifact!"]  
 
 <b>MAYOR</b>: “Indeed. It is within my possession, and I am willing to tell you where it is.”  
 
-++[Tell me.] 
+++["Tell me."] 
 
 “I hid it within the fountain, at the center of town. You can find it there.”
 
-+++[Tell me what happened.] -> Explination 
-+++[I am done with you.] -> CryptKeeperFinal
++++["Tell me what happened."] -> Explination 
++++["I am done with you."] -> CryptKeeperFinal
 
 = Explination
 {Mayor.note1: <b>MAYOR</b>: “You know the story, you found that scrap of my journal. Allow me to illuminate the full context.”}
@@ -1593,75 +1564,75 @@ While he does not flinch from your gaze, the Mayor’s lips are pressed together
 
 <b>MAYOR</b>: “We know now that it would have never been that simple.”
 
-+[What happened before the Convergence?] -> PreConvergence
-+[I am done with you.] -> CryptKeeperFinal
++["What happened before the Convergence?"] -> PreConvergence
++["I am done with you."] -> CryptKeeperFinal
 
 =PreConvergence
 <b>MAYOR</b>: “I toiled, unable to come to a course of action that could stop the Church. I am no warrior nor sneak, so I had no chance of infiltrating where they kept the Eye of Genesis.”
 
-<b>MAYOR</b>: “So… I simply waited. Listening to the final celebrations of many lives. Even though I foresaw the apocalypse that would unfold, I could not predict the specificity of its horror.”
+<b>MAYOR</b>: “So...I simply waited. Listening to the final celebrations of many lives. Even though I foresaw the apocalypse that would unfold, I could not predict the specificity of its horror.”
 
 <b>MAYOR</b>: “As the Malignance began to break through and across our reality, I ran into the Church’s doors, wrote the note, and ran like fire with the Eye, hoping that I or another would discover a method for aiding against the Malignance in the future.”
 
 <b>MAYOR</b>: “I passed those screaming to hear their own voices, so many toppled over, locked in a hell within their body. Unable to move, unable to see, losing the ability to know what horror had befallen us.”
 
-<b>MAYOR</b>:  “In that flight from Radefell, the chance to aid those who I warned laid before me, and I left them to their fates.”
+<b>MAYOR</b>: “In that flight from Radefell, the chance to aid those who I warned laid before me, and I left them to their fates.”
 
 <b>MAYOR</b>: “I damn myself for each and every soul I abandoned that night.”
 
-+[There was nothing you could do.] -> NothingToDo
-+[I am done with you.] -> CryptKeeperFinal
++["There was nothing you could do."] -> NothingToDo
++["I am done with you."] -> CryptKeeperFinal
 
 =NothingToDo
 The Mayor’s gaze flits low, his dry teeth clenching nearly hard enough to crack.
 
 <b>MAYOR</b>: “I cannot accept any excuse for my cowardice, my friend. It is my failure, and mine alone. I will give myself to whatever good I can accomplish, but I know it will never pay the full tithe of my sin.”
 
-<b>MAYOR</b>: “Especially after this final negligence…”
+<b>MAYOR</b>: “Especially after this final negligence...”
 
-+[Deservedly so.] -> Deserved
-+[Leave the past behind.] -> behind
-+[I am done with you.] -> CryptKeeperFinal
++["Deservedly so."] -> Deserved
++["Leave the past behind."] -> behind
++["I am done with you."] -> CryptKeeperFinal
 
 =Deserved
 The Mayor vents a tasteless breath, a pained smile plastered upon his face.
 
 <b>MAYOR</b>: “Indeed, my friend.”
 
-+[Why didn’t you tell me where the Eye is?] ->WhyDidntYouTellMe
-+[I am done with you.] -> CryptKeeperFinal
++["Why didn’t you tell me where the Eye is?"] ->WhyDidntYouTellMe
++["I am done with you."] -> CryptKeeperFinal
 
 =behind 
 The Mayor smiles, the thin stitch of his lip trembles as his eyes seem to vibrate in his skull.
 
-<b>MAYOR</b>: “I… I do not know if I can, my friend. The faces, lost and twisted with the horror of their very existence deprived from them, they haunt me every time I close my eyes.”
+<b>MAYOR</b>: “I...I do not know if I can, my friend. The faces, lost and twisted with the horror of their very existence deprived from them, they haunt me every time I close my eyes.”
 
-<b>MAYOR</b>: “Even further, there is one final negligence of mine…”
+<b>MAYOR</b>: “Even further, there is one final negligence of mine...”
 
-+[Why didn’t you tell me where the Eye is?] ->WhyDidntYouTellMe
-+[I am done with you.] -> CryptKeeperFinal
++["Why didn’t you tell me where the Eye is?"] ->WhyDidntYouTellMe
++["I am done with you."] -> CryptKeeperFinal
 
 =WhyDidntYouTellMe
-<b>MAYOR</b>: “Knowing your task, of collecting the artifacts, I realized that my displacement of the Eye of Genesis would need to be revealed.”
+<b>MAYOR</b>: “Knowing your task of collecting the artifacts, I realized that my displacement of the Eye of Genesis would need to be revealed.”
 
-<b>MAYOR</b>:  “I did not yet know your capability when you arose, and there was the potential outcome of you losing it in the depths of Radefell where it would be out of reach. I kept it secret then, and I would reveal it to you once you had returned with the second artifact.”
+<b>MAYOR</b>: “I did not yet know your capability when you arose, and there was the potential outcome of you losing it in the depths of Radefell where it would be out of reach. I kept it secret then, and I would reveal it to you once you had returned with the second artifact.”
 
-<b>MAYOR</b>: “But then… hope came to the village. I enjoyed working with our fellows, and a distant contentment finally came to me.”
+<b>MAYOR</b>: “But then...hope came to the village. I enjoyed working with our fellows, and a distant contentment finally came to me.”
 
-<b>MAYOR</b>:  “I thought that with the unveiling of the Eye’s location and the cleansing of the Malignance, it would come time to bring those who allowed the Malignance’s proliferation to trial.”
+<b>MAYOR</b>: “I thought that with the unveiling of the Eye’s location and the cleansing of the Malignance, it would come time to bring those who allowed the Malignance’s proliferation to trial.”
 
-<b>MAYOR</b>:  “So, instead, I opted not to inform you, instead I could enjoy the little, happy life here until it would be time to come clean.”
+<b>MAYOR</b>: “So, instead, I opted not to inform you. I could enjoy the little, happy life here until it would be time to come clean.”
 
 <b>MAYOR</b>: “And that time has come. I won’t pretend that such actions were not selfish.”
 
 ->Selfish
 
 =Selfish
-*[Why do it then?] -> WhyDoIt
-*{WhyDoIt}[You deserve to be punished.] -> punish
-*{WhyDoIt}[I would have protected you.] -> protected
-*{punish} or {protected} [There is one thing I wish you to do.] -> Wish
-+[I am done with you.] -> CryptKeeperFinal
+*["Why do it then?"] -> WhyDoIt
+*{WhyDoIt}["You deserve to be punished."] -> punish
+*{WhyDoIt}["I would have protected you."] -> protected
+*{punish} or {protected} ["There is one thing I wish you to do."] -> Wish
++["I am done with you."] -> CryptKeeperFinal
 
 =WhyDoIt
 The Mayor’s rosy cheeks reach a high blush, blended deep with shame.
@@ -1674,7 +1645,7 @@ The Mayor’s rosy cheeks reach a high blush, blended deep with shame.
 
 <b>MAYOR</b>: “I don’t disagree, I’m afraid.”
 
-<b>MAYOR</b>:  “I will accept whatever judgment comes to me. I will give whatever remains of my word to that.” 
+<b>MAYOR</b>: “I will accept whatever judgment comes to me. I will give whatever remains of my word to that.” 
 
 -> Selfish
 
@@ -1688,21 +1659,21 @@ The Mayor’s rosy cheeks reach a high blush, blended deep with shame.
 =Wish
 The Mayor nods, awaiting your word.
 
-+[Await your judgment here.] -> Judgement
-+[Life free of the past.] -> Past
-+[Submit to condemnation.] -> Condemnation
-+[Give yourself to the future of Radefell.] -> GiveYourself
++["Await your judgment here."] -> Judgement
++["Life free of the past."] -> Past
++["Submit to condemnation."] -> Condemnation
++["Give yourself to the future of Radefell."] -> GiveYourself
 
 = Judgement 
 
 <b>MAYOR</b>: “Very well. I will do as you ask. Farewell, Disgraced.”
 
-<b>MAYOR</b>:  “End this curse, once and for all.”
+<b>MAYOR</b>: “End this curse, once and for all.”
 
 ->CryptKeeperFinal
 
 = Past
-<b>MAYOR</b>: “I… I will do my best to, my friend.”
+<b>MAYOR</b>: “I...I will do my best to, my friend.”
 
 <b>MAYOR</b>: “Go. End this curse, once and for all.”
 
@@ -1741,53 +1712,53 @@ Its gaze almost seems to apprise you as you take it into your hands.
 
 ~character = "Crypt_Keeper"
 
-You hurry back to meet with the Crypt Keeper, the Eye, the final artifact, in hand. 
+You hurry back to meet with the Crypt Keeper, the Eye of Genesis, the final artifact, in hand. 
 
-As you approach her she cannot match your gaze, instead she focuses on the barren land around the town.
+As you approach her, she remains silent, unmoving. Instead, she focuses on the barren land surrounding the town.
 
 *Get closer
-    As you approach her you swear you see her eyes dart toward and away from you in an instant, she knows you're here.
+    Her acknowledgement of your presence is betrayed only by tinge of sorrow that has appeared in her face.
     **Sit down next to her
-        <b>Crypt Keeper:</b> You know what this means right?
-        ***Of course
-             <b>Crypt Keeper:</b> Yes, yes... You know what this means for the Malignance, you know what this means for Radafell...
+        <b>CRYPT KEEPER:</b> "You know what this means, right?"
+        ***"Of course."
+             <b>CRYPT KEEPER:</b> "Yes, yes...You know what this means for the Malignance, you know what this means for Radafell..."
              
                 Her tone of voice raising with every passing word.
                 ->WhatItMeans
-        ***I do not
+        ***"I do not."
             ->WhatItMeans
-        ***...
+        ***"..."
             ->WhatItMeans
 
 ==WhatItMeans
 She takes up your hands, and finally makes eye contact with you. Her eyes water.
 
-<b>Crypt Keeper:</b> Do you know what this means for you?
-*For me?
-    <b>Crypt Keeper:</b> Yes! For you! You haven't sat down and thought about what all this means for you? 
+<b>CRYPT KEEPER:</b> "Do you know what this means for you?"
+*"For me?"
+    <b>CRYPT KEEPER:</b> "Yes! For you! You haven't sat down and thought about what all this means for you?"
     
     Her grip on your hands strengthen, averting her eyes once again.
-    **I have not
-        <b>Crypt Keeper:</b> Of course you haven't. Of course you haven't... and that's why you were the only person who could have succeeded in this quest.
-        ***What does this mean?
+    **"I have not."
+        <b>CRYPT KEEPER:</b> "Of course you haven't. Of course you haven't...and that's why you were the only person who could have succeeded in this quest."
+        ***"What does this mean?"
             Any words that she tries to get out are choked up by her tears as she embraces you, burying herself into your chest. 
             
             ****Comfort her
-               For minutes on end she cries out into you. Recollecting herself she takes a deep breath. 
+               For a minute, she remains like this. You feel her shoulders heave up and down as she continues to silently weep with you in embrace.
                
                   She looks back at you. 
                  
-                  <b>Crypt Keeper:</b> It... it's for the best though. Please, my peony, give me the artifact.
+                  <b>CRYPT KEEPER:</b> "It...it's for the best though. Please, my peony, give me the artifact."
                  
-                  ******Give her the artifact.
-                        After taking the artifact she embraces you once more. She pulls away, artifact in hand, tears falling from her cheeks as she starts cleansing.
+                  ******Give her the artifact
+                        After taking the artifact, she embraces you one final time. She pulls away before she begins the cleansing ritual of the Eye of Genesis.
                         
                         *******Breathe
                             As the process goes on you start to feel tired, weak, like you can't...
                             
                             ********Breathe
                                 
-                                Your vision grows darker, the only thing you can clearly see are your memories.
+                                The light fades. The only thing that you can envision are your memories.
                                 
                                 ->SensesReturn
 
