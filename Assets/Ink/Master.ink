@@ -2,6 +2,7 @@ VAR isIntro = false
 VAR isDeathF1 = false
 VAR isHub = false
 VAR isDeathF2 = false 
+VAR isIntroductionCutscene = false
 VAR isEnd = false
 VAR hasDied = false
 
@@ -25,6 +26,7 @@ Scholar
 VAR character = "Crypt_Keeper"
 
 {
+ - isIntroductionCutscene: -> Introduction // Go to Introduction
  - character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
@@ -38,12 +40,38 @@ VAR character = "Crypt_Keeper"
 
 /*
 Sections:
+Introduction
 NPCs x5
 End
 
 Subsections:
 bool Variables
 */
+ 
+ == Introduction ==
+Everything is coated in darkness. 
+
+It reeks of death
+
+Your mind flashes... 
+
+You hear screams...
+
+Flickers of blood...
+
+Sight, hearing, touch, taste, scent...restored but not recovered 
+
+You blink into consciousness, yet the world around you does not
+
+The memories fade, but the smell of death still lingers
+
+Your soul hangs inbetween, familiar but foreign 
+
+But, everything happens for a reason 
+
+Right?
+
+-> END
  
 
 /* PreF1 Reserved for Crypt Keeper and Clergy. If you are working on other characters, please delete this section */
@@ -125,7 +153,7 @@ Her warm smile softens the gloom of the decaying fountain.
     *"Where am I?"
         <b>CRYPT KEEPER:</b> "Apologies for the drab scenery. It's much easier to bring a soul back in a place such as this." 
         
-        <b>CRYPT KEEPER:</b> "Ressuciation is difficult in a city, where death is so omnnipresent."
+        <b>CRYPT KEEPER:</b> "Resuscitation is difficult in a city, where death is so omnnipresent."
         
         <b>CRYPT KEEPER:</b> "But I guess it's an apt setting, seeing as I've cleaned you up like the mother dove cleans her young in the fountain's basin." ->interrogation
         
@@ -146,7 +174,8 @@ Her warm smile softens the gloom of the decaying fountain.
       <b>CRYPT KEEPER:</b> "Don't worry, I didn't peek under your mask. I know you're awfully sensitive about that."  ->interrogation
        
 
-    *{CHOICE_COUNT() == 0} 
+    *{CHOICE_COUNT() == 0}->
+
        <b>CRYPT KEEPER:</b> "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
        
        She smiles at you, and–for the first time in a long time–you feel safe. 
@@ -155,7 +184,7 @@ Her warm smile softens the gloom of the decaying fountain.
        
        The woman snaps her fingers and disappears, leaving nothing behind but a faint aroma of lavender.
 
--> END
+        -> END
 
 = DeathF1
 
@@ -1079,7 +1108,7 @@ The thoughtful cleric considers you for a moment...
 The clerics visibly flinch at your question.
 <b>WEEPING</b>: "The church lives, so magnificent, though tears flow from her spires..."
 <b>SMILING</b>: "...and we live, too, blessed to be the final children of the Malignance..."
-<b>THINKING</b>: "...and the High Priest lives, most holy, slumbering in the great throne, awaiting the proper calalyst to his return."
+<b>THINKING</b>: "...and the High Priest lives, most holy, slumbering in the great throne, awaiting the proper calalyst to their return."
 <b>THINKING</b>: "Your inquiry cuts blunt and foolish, question us no more."
 
 -> GoForth2
