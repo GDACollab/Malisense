@@ -43,15 +43,13 @@ public class V_SelectableItems3New : MonoBehaviour
     [SerializeField] public float fadeSpeed = 12f;
 
     //Inkle
-    public TextAsset CurrentInkTextAsset;
     public string CurrentCharacter;
     public bool activateInk;
     public bool loadDungeon = false;
     
     // Global Teapot
     GlobalTeapot globalTeapot;
-    int ckTea;
-    int clergyTea;
+
     private AudioManager audioManager;
 
     private void Start()
@@ -60,10 +58,10 @@ public class V_SelectableItems3New : MonoBehaviour
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
         audioManager.PlayOST(audioManager.dungeonOST);
-        ckTea = globalTeapot.villageInk;
-        clergyTea = globalTeapot.villageInk;
+
+
         
-        
+
         // Building Selection:
         // Turn off every building's light
         foreach (Building building in buildings)
@@ -82,20 +80,8 @@ public class V_SelectableItems3New : MonoBehaviour
 
 
         thisObject = gameObject;
-        CurrentInkTextAsset = InkScripts[0];
-        CurrentCharacter = CharacterList[0];
+        CurrentCharacter = CharacterList[selectedBuildingIndex];
         activateInk = false;
-        
-        if(globalTeapot.villageInk == 0){
-            CurrentInkTextAsset = InkScripts[9];
-            // what should i be setting here? CurrentCharacter = CharacterList[9];
-            selectedBuildingIndex = 5;
-            selectObject();
-        }
-        else if(globalTeapot.villageInk == 2){
-            moveInList(-1);
-            selectObject();
-        }
     }
 
     private void Update()
@@ -119,35 +105,9 @@ public class V_SelectableItems3New : MonoBehaviour
 
         selectedBuilding = buildings[selectedBuildingIndex];
         
-        // ### FIX AFTER VS PLEASE!!! ###
-        if(selectedBuildingIndex == 2){
-            if(ckTea == 0){
-                CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
-                CurrentCharacter = CharacterList[selectedBuildingIndex];
-            }
-            else if(ckTea == 2){
-                CurrentInkTextAsset = InkScripts[6];
-                // what should i be setting here? CurrentCharacter = CharacterList[6];
-            }
-            else if(ckTea == 3){
-                CurrentInkTextAsset = InkScripts[7];
-                // what should i be setting here? CurrentCharacter = CharacterList[7];
-            }
-            else
-            {
-                CurrentInkTextAsset = InkScripts[5];
-                // what should i be setting here? CurrentCharacter = CharacterList[5];
-            }
-        }
-        else if(selectedBuildingIndex == 3 && clergyTea == 2){
-            CurrentInkTextAsset = InkScripts[8];
-            // what should i be setting here?CurrentCharacter = CharacterList[8];
-        }
-        else
-        {
-            CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
-            CurrentCharacter = CharacterList[selectedBuildingIndex];
-        }
+
+        CurrentCharacter = CharacterList[selectedBuildingIndex];
+
 
         itemSelected();
     }//NEEDS TO BE UPDATED FOR InputAction
@@ -280,20 +240,6 @@ public class V_SelectableItems3New : MonoBehaviour
         {
             uiElement.SetActive(false);
             activateInk = false;
-        }
-        
-        if(selectedBuildingIndex == 2){
-            if(ckTea != 3){
-                ckTea = 1;
-                moveInList(0, true);
-            }
-        }
-        else if(selectedBuildingIndex == 3){
-            clergyTea = 1;
-            moveInList(0, true);
-        }
-        else if(selectedBuildingIndex == 5){
-            moveInList(-2, true);
         }
         
         currentlySelected = true;

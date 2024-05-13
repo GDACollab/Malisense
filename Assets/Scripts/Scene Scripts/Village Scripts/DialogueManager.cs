@@ -6,6 +6,7 @@ using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private bool isPlaying;
     [SerializeField] V_SelectableItems3New selectableScript;
 
+    // Global Teapot
+    GlobalTeapot globalTeapot;
+
     private string currentInkFileName = "";
 
 
@@ -56,6 +60,9 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        // Get the Global Teapot
+        globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
+
         isPlaying = false;
         dialoguePanel.SetActive(false);
         selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
@@ -89,7 +96,6 @@ public class DialogueManager : MonoBehaviour
 
         if (selectableScript != null && selectableScript.activateInk)
         {
-            TextAsset currentInk = selectableScript.CurrentInkTextAsset;
             string currentChar = selectableScript.CurrentCharacter;
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
             if (currentChar != null)
@@ -189,36 +195,51 @@ public class DialogueManager : MonoBehaviour
     {
         TextAsset inkJson = masterInk;
 
-        // Load a new story or restart the current one
         currentStory = new Ink.Runtime.Story(inkJson.text);
 
-        if (currentInkFileName == inkJson.name)
+        currentStory.variablesState["isIntro"] = false;
+        currentStory.variablesState["isDeathF1"] = false;
+        currentStory.variablesState["isHub"] = false;
+        currentStory.variablesState["isDeathF2"] = false;
+        currentStory.variablesState["isEnd"] = false;
+        currentStory.variablesState["hasDied"] = false;
+
+        currentStory.variablesState["isMayorIntro"] = false;
+        currentStory.variablesState["hasMayorNote1"] = false;
+        currentStory.variablesState["hasMayorNote2"] = false;
+        currentStory.variablesState["hasFinalMayorNote"] = false;
+
+        switch (globalTeapot.currProgress)
         {
-
-            Debug.Log("RETURN");
-            // The story is already loaded and can continue, so just activate the UI
-            isPlaying = true;
-            dialoguePanel.SetActive(true);
-            // Optionally, update the UI here if needed (e.g., refresh choice buttons)
-            return; // Skip reinitializing the story
+            case GlobalTeapot.TeaType.Intro:
+                currentStory.variablesState["isIntro"] = true;
+                Debug.Log("intro with " + character);
+                break;
+            case GlobalTeapot.TeaType.Dungeon_F1:
+                currentStory.variablesState["isDeathF1"] = true;
+                Debug.Log("deathf1 with " + character);
+                break;
+            case GlobalTeapot.TeaType.Dungeon_F2:
+                if (globalTeapot.hasDied)
+                {
+                    currentStory.variablesState["isDeathF2"] = true;
+                    Debug.Log("deathf2 with " + character);
+                }
+                else
+                {
+                    currentStory.variablesState["isHub"] = true;
+                    Debug.Log("hub with " + character);
+                }
+                break;
+            case GlobalTeapot.TeaType.End:
+                currentStory.variablesState["isEnd"] = true;
+                Debug.Log("end with " + character);
+                break;
+            default:
+                Debug.Log("default in dialoge switch statement (this is bad)");
+                currentStory.variablesState["isIntro"] = true;
+                break;
         }
-        Debug.Log(" Not RETURN " + currentInkFileName + " Names " + inkJson.name);
-        // Load a new story or restart the current one
-        currentStory = new Ink.Runtime.Story(inkJson.text);
-        currentInkFileName = inkJson.name; // Update the current ink file name
-
-        // update ink variables
-        // VAR isIntro = false
-        // VAR isDeathF1 = false
-        // VAR isHub = false
-        // VAR isDeathF2 = false
-        // VAR isEnd = false
-        // VAR hasDied = false
-
-        // VAR isMayorIntro = true
-        // VAR hasMayorNote1 = false
-        // VAR hasMayorNote2 = false
-        // VAR hasFinalMayorNote = false
 
         // VAR background = "First"
         // VAR StickHappiness = 0
@@ -234,19 +255,6 @@ public class DialogueManager : MonoBehaviour
         //            - isEnd: // Go to end
         //         - else: Error
         //         }
-
-
-        currentStory.variablesState["isIntro"] = "false";
-        currentStory.variablesState["isDeathF1"] = "false";
-        currentStory.variablesState["isHub"] = "false";
-        currentStory.variablesState["isDeathF2"] = "true";
-        currentStory.variablesState["isEnd"] = "false";
-        currentStory.variablesState["hasDied"] = "false";
-
-        currentStory.variablesState["isMayorIntro"] = "false";
-        currentStory.variablesState["hasMayorNote1"] = "false";
-        currentStory.variablesState["hasMayorNote2"] = "false";
-        currentStory.variablesState["hasFinalMayorNote"] = "false";
 
         currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
 

@@ -18,6 +18,7 @@ public class GlobalTeapot : MonoBehaviour
     public enum TeaType
     {
         Intro,
+        Dungeon_F1,
         Dungeon_F2,
         End
     }

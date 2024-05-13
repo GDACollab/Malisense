@@ -1,4 +1,4 @@
-VAR isIntro = true
+VAR isIntro = false
 VAR isDeathF1 = false
 VAR isHub = false
 VAR isDeathF2 = false 

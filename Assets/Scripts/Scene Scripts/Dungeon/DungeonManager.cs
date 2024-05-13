@@ -102,24 +102,32 @@ public class DungeonManager : MonoBehaviour
     public void KillPlayer(){
         EndDungeon(true, false);
     }
-    
-    public void EndDungeon(bool death=false, bool artifact=false){
+
+    public void EndDungeon(bool death = false, bool artifact = false) {
         globalTeapot.hasDied = death;
-        if(artifact){
+
+        // If coming from intro state, move to floor one dungeon state (since the dungeon has been played)
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
+        }
+
+        if (artifact) {
             switch (globalTeapot.currProgress)
             {
-                case GlobalTeapot.TeaType.Intro:
+                case GlobalTeapot.TeaType.Dungeon_F1:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
                     break;
                 case GlobalTeapot.TeaType.Dungeon_F2:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.End;
                     break;
                 default:
-                    globalTeapot.currProgress = GlobalTeapot.TeaType.Intro;
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                     break;
             }
         }
-        if(death){
+
+        if (death){
             Loader.Load(Loader.Scene.DeathScene);
         }
         else{
