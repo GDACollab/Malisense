@@ -83,10 +83,10 @@ public class DialogueManager : MonoBehaviour
         UpdateChoiceSelectionVisuals();
         MovementInput();
 
-        if (!selectablescript.activateink)
+        if (!selectableScript.activateInk)
         {
-            currentinkfilename = "";
-            cleardialoguemode();
+            currentInkFileName = "";
+            ClearDialogueMode();
         }
 
         if (isPlaying)
@@ -104,11 +104,12 @@ public class DialogueManager : MonoBehaviour
                 if (selectableScript.selectedBuildingIndex == 5)
                 {
                     EnterDialogueMode(isIntroductionCutscene: true);
-                } else
+                }
+                else
                 {
                     EnterDialogueMode(currentChar);
                 }
-                
+
             }
         }
     }
@@ -202,6 +203,15 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogueMode(string character = "None", bool isIntroductionCutscene = false)
     {
         TextAsset inkJson = masterInk;
+
+        // Prevent from restarting conversation at the end
+        if (currentInkFileName == inkJson.name)
+        {
+            Debug.Log("Do not restart currently running story.");
+            isPlaying = true;
+            return; // Skip reinitializing the story
+        }
+        Debug.Log("Start running story.");
 
         currentStory = new Ink.Runtime.Story(inkJson.text);
 
