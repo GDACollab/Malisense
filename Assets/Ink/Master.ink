@@ -2,6 +2,7 @@ VAR isIntro = false
 VAR isDeathF1 = false
 VAR isHub = false
 VAR isDeathF2 = false 
+VAR isIntroductionCutscene = false
 VAR isEnd = false
 VAR hasDied = false
 
@@ -25,6 +26,7 @@ Scholar
 VAR character = "Crypt_Keeper"
 
 {
+ - isIntroductionCutscene: -> Introduction // Go to Introduction
  - character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
@@ -38,12 +40,38 @@ VAR character = "Crypt_Keeper"
 
 /*
 Sections:
+Introduction
 NPCs x5
 End
 
 Subsections:
 bool Variables
 */
+
+== Introduction ==
+Everything is coated in darkness. 
+
+It reeks of death
+
+Your mind flashes… 
+
+You hear screams… 
+
+Flickers of blood…
+
+Sight, hearing, touch, taste, scent…restored but not recovered 
+
+You blink into consciousness, yet the world around you does not
+
+The memories fade, but the smell of death still lingers
+
+Your soul hangs inbetween, familiar but foreign 
+
+But, everything happens for a reason 
+
+Right?
+
+-> END
  
 
 /* PreF1 Reserved for Crypt Keeper and Clergy. If you are working on other characters, please delete this section */

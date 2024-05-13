@@ -128,6 +128,7 @@ public class DungeonManager : MonoBehaviour
         }
 
         if (death){
+            globalTeapot.deathCount++;
             Loader.Load(Loader.Scene.DeathScene);
         }
         else{

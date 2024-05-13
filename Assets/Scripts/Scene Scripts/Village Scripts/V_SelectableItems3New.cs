@@ -21,7 +21,7 @@ public class V_SelectableItems3New : MonoBehaviour
     [SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
     [Tooltip("Determines which building is selected at the start of the scene.")]
     [SerializeField] Buildings initialSelectedBuilding;
-    int selectedBuildingIndex;
+    public int selectedBuildingIndex;
     Building selectedBuilding;
 
     //TMP Variables
@@ -46,7 +46,7 @@ public class V_SelectableItems3New : MonoBehaviour
     public string CurrentCharacter;
     public bool activateInk;
     public bool loadDungeon = false;
-    
+
     // Global Teapot
     GlobalTeapot globalTeapot;
 
@@ -60,7 +60,7 @@ public class V_SelectableItems3New : MonoBehaviour
         audioManager.PlayOST(audioManager.dungeonOST);
 
 
-        
+
 
         // Building Selection:
         // Turn off every building's light
@@ -68,7 +68,7 @@ public class V_SelectableItems3New : MonoBehaviour
         {
             building.light.SetActive(false);
         }
-        
+
         // Set selectedBuildingIndex to the index of the building that's initially selected at the start of the scene
         selectedBuildingIndex = (int)initialSelectedBuilding;
 
@@ -81,6 +81,19 @@ public class V_SelectableItems3New : MonoBehaviour
 
         thisObject = gameObject;
         CurrentCharacter = CharacterList[selectedBuildingIndex];
+
+        // If this is the first time the village is visited, play village cutscene
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            selectedBuildingIndex = 5;
+            selectObject();
+        } // If this is the first time the player has died, force Crypt Keeper interaction
+        else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
+        { 
+            moveInList(-1);
+            selectObject();
+        }
+
         activateInk = false;
     }
 
@@ -104,7 +117,7 @@ public class V_SelectableItems3New : MonoBehaviour
         }
 
         selectedBuilding = buildings[selectedBuildingIndex];
-        
+
 
         CurrentCharacter = CharacterList[selectedBuildingIndex];
 
@@ -172,12 +185,13 @@ public class V_SelectableItems3New : MonoBehaviour
 
         if (selectedBuildingIndex == 3)
         {
-            if(loadDungeon)
+            if (loadDungeon)
             {
                 loadDungeon = false;
                 Loader.Load(Loader.Scene.Dungeon);
             }
-            else{
+            else
+            {
                 loadDungeon = true;
             }
         }
@@ -236,12 +250,12 @@ public class V_SelectableItems3New : MonoBehaviour
     {
         Debug.Log("DeActivateUI");
         // Deactivate all UI elements
+        activateInk = false;
         foreach (var uiElement in UI_ELEMENTS)
         {
             uiElement.SetActive(false);
-            activateInk = false;
         }
-        
+
         currentlySelected = true;
     }
 

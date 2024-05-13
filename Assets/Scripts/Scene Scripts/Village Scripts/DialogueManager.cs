@@ -26,14 +26,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private int currentChoiceIndex = -1;
     private int defaultHeight = 115;
 
-	[Header("Input")]
-	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
-	[SerializeField] float moveRepeatDelay = 0.5f;
-	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
-	[SerializeField] float moveRepeatRate = 0.1f;
-	bool firstInput = true;
-	float moveTimer = 0f;
-	Controls controls;
+    [Header("Input")]
+    [Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
+    [SerializeField] float moveRepeatDelay = 0.5f;
+    [Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
+    [SerializeField] float moveRepeatRate = 0.1f;
+    bool firstInput = true;
+    float moveTimer = 0f;
+    Controls controls;
 
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
@@ -52,11 +52,11 @@ public class DialogueManager : MonoBehaviour
 
     void Awake()
     {
-		// Input
-		controls = new Controls();
-		controls.UI.Enable();
-		controls.UI.Select.performed += Select;
-	}
+        // Input
+        controls = new Controls();
+        controls.UI.Enable();
+        controls.UI.Select.performed += Select;
+    }
 
     void Start()
     {
@@ -81,12 +81,12 @@ public class DialogueManager : MonoBehaviour
     {
         int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-		MovementInput();
+        MovementInput();
 
-        if (!selectableScript.activateInk)
+        if (!selectablescript.activateink)
         {
-            currentInkFileName = "";
-            ClearDialogueMode();
+            currentinkfilename = "";
+            cleardialoguemode();
         }
 
         if (isPlaying)
@@ -100,22 +100,30 @@ public class DialogueManager : MonoBehaviour
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
             if (currentChar != null)
             {
-                EnterDialogueMode(currentChar);
+                // If this is the introduction cutscene, pass it with an extra parameter
+                if (selectableScript.selectedBuildingIndex == 5)
+                {
+                    EnterDialogueMode(isIntroductionCutscene: true);
+                } else
+                {
+                    EnterDialogueMode(currentChar);
+                }
+                
             }
         }
     }
 
     void MovementInput()
     {
-		// Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-		// Check that there are dialogue options to choose from otherwise there's no option to move
-		if (isPlaying && currentStory.currentChoices.Count > 0)
+        // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        // Check that there are dialogue options to choose from otherwise there's no option to move
+        if (isPlaying && currentStory.currentChoices.Count > 0)
         {
-			// Read movement input
-			Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
+            // Read movement input
+            Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
 
-			// There's horizontal movement input
-			if (inputVector.x != 0f)
+            // There's horizontal movement input
+            if (inputVector.x != 0f)
             {
 
                 // Moving is on cooldown
@@ -132,34 +140,34 @@ public class DialogueManager : MonoBehaviour
                 // Can Move
                 if (moveTimer <= 0f)
                 {
-					// Check if this is the first movement input after there was just no movement
-					if (firstInput)
-					{
-						// Put move on moveRepeatDelay cooldown
-						firstInput = false;
-						moveTimer = moveRepeatDelay;
-					}
-					else
-					{
-						// Put move on moveRepeatRate cooldown
-						moveTimer = moveRepeatRate;
-					}
+                    // Check if this is the first movement input after there was just no movement
+                    if (firstInput)
+                    {
+                        // Put move on moveRepeatDelay cooldown
+                        firstInput = false;
+                        moveTimer = moveRepeatDelay;
+                    }
+                    else
+                    {
+                        // Put move on moveRepeatRate cooldown
+                        moveTimer = moveRepeatRate;
+                    }
 
-					// Move
-					if (inputVector.x < 0f)             // left
-					{
-						// Navigate up in the choices list
-						currentChoiceIndex--;
-						if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-						// Optionally, call a function to update the UI here
-					}
-					else if (inputVector.x > 0f)        // right
-					{
-						// Navigate down in the choices list
-						currentChoiceIndex++;
-						if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-						// Optionally, call a function to update the UI here
-					}
+                    // Move
+                    if (inputVector.x < 0f)             // left
+                    {
+                        // Navigate up in the choices list
+                        currentChoiceIndex--;
+                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                        // Optionally, call a function to update the UI here
+                    }
+                    else if (inputVector.x > 0f)        // right
+                    {
+                        // Navigate down in the choices list
+                        currentChoiceIndex++;
+                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                        // Optionally, call a function to update the UI here
+                    }
                 }
 
             }
@@ -174,24 +182,24 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-	void Select(InputAction.CallbackContext context)
+    void Select(InputAction.CallbackContext context)
     {
-		// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-		if (isPlaying)
-		{
-			// Check if there are any choices to navigate
-			if (currentStory.currentChoices.Count > 0)
-			{
-				MakeChoice(currentChoiceIndex);
-			}
-			else
-			{
-				ContinueStory();
-			}
-		}
+        // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        if (isPlaying)
+        {
+            // Check if there are any choices to navigate
+            if (currentStory.currentChoices.Count > 0)
+            {
+                MakeChoice(currentChoiceIndex);
+            }
+            else
+            {
+                ContinueStory();
+            }
+        }
     }
 
-    public void EnterDialogueMode(string character)
+    public void EnterDialogueMode(string character = "None", bool isIntroductionCutscene = false)
     {
         TextAsset inkJson = masterInk;
 
@@ -202,6 +210,7 @@ public class DialogueManager : MonoBehaviour
         currentStory.variablesState["isHub"] = false;
         currentStory.variablesState["isDeathF2"] = false;
         currentStory.variablesState["isEnd"] = false;
+        currentStory.variablesState["isIntroductionCutscene"] = isIntroductionCutscene;
         currentStory.variablesState["hasDied"] = false;
 
         currentStory.variablesState["isMayorIntro"] = false;
@@ -236,7 +245,7 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("end with " + character);
                 break;
             default:
-                Debug.Log("default in dialoge switch statement (this is bad)");
+                Debug.Log("default in dialogue switch statement (this is bad)");
                 currentStory.variablesState["isIntro"] = true;
                 break;
         }
@@ -257,6 +266,7 @@ public class DialogueManager : MonoBehaviour
         //         }
 
         currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
+
 
         currentInkFileName = inkJson.name; // Update the current ink file name         
 
