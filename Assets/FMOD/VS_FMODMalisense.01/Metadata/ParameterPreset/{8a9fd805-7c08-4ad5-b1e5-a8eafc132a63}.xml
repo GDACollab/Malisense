@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{8a9fd805-7c08-4ad5-b1e5-a8eafc132a63}">
+		<property name="name">
+			<value>Village_shop</value>
+		</property>
+		<relationship name="folder">
+			<destination>{2e712f6e-3e08-49f3-8142-fcba344d7e06}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{56cde315-beb7-40b7-9166-f276b0027ef6}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{56cde315-beb7-40b7-9166-f276b0027ef6}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
