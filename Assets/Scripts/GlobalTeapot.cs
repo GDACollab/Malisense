@@ -50,7 +50,8 @@ public class GlobalTeapot : MonoBehaviour
         { 
             Instance = this; 
             DontDestroyOnLoad(this.gameObject);
-        } 
+        }
+        if(!journal){journal = Resources.Load<Journal>("Journal");}
         audioManager = GetComponent<AudioManager>();
         journal.CreateFloorNotes();
     }

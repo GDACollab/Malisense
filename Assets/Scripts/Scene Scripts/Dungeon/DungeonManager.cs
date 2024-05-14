@@ -83,7 +83,7 @@ public class DungeonManager : MonoBehaviour
         globalTeapot.ObtainFloorNote(note.noteID);
         floorNoteDisplay.SetActive(true);
         floorNoteText.text = note.noteBody;
-        Destroy(note.gameObject);
+        if(note.disappear){Destroy(note.gameObject);}
         if (Time.timeScale != 0f) 
         {
             Time.timeScale = 0f;
@@ -100,6 +100,7 @@ public class DungeonManager : MonoBehaviour
     }
     
     public void KillPlayer(){
+        globalTeapot.numStoreCredits = globalTeapot.numNotesObtained;
         EndDungeon(true, false);
     }
 

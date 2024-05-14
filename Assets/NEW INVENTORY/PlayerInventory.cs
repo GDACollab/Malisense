@@ -10,7 +10,8 @@ public class PlayerInventory : ScriptableObject
     public List<InventorySlot> inventory;
     
     public HeavyItem carriedObject;
-    public Artifact currentArtifact;
+    public Artifact artifact1;
+    public Artifact artifact2;
 
     // happens when editor is updated
     private void OnValidate()
@@ -22,7 +23,8 @@ public class PlayerInventory : ScriptableObject
         
         // Set inventory size
         inventory.Clear();
-            
+        artifact2 = null;
+        
         for (int i = 0; i < size; i++)
         {
             inventory.Add(new InventorySlot(null, 0));

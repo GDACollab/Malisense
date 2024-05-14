@@ -103,13 +103,19 @@ public class InteractionSelector : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider) {
         if(collider.GetComponent<FloorNote>()){
             collider.GetComponent<FloorNote>().isNear = true;
-            }
+        }
+        if(collider.GetComponent<ArtifactAltar>()){
+            collider.GetComponent<ArtifactAltar>().isNear = true;
+        }
     }
     
     private void OnTriggerExit2D(Collider2D collider)
     {
         if(collider.GetComponent<FloorNote>()){
             collider.GetComponent<FloorNote>().isNear = false;
+        }
+        if(collider.GetComponent<ArtifactAltar>()){
+            collider.GetComponent<ArtifactAltar>().isNear = false;
         }
     }
 }

@@ -101,6 +101,9 @@ public class Player : MonoBehaviour
         // Set initial stamina
         currentStamina = maxStamina;
         
+        // Get inventory
+        newInventory = Resources.Load<PlayerInventory>("Player_Inventory");
+        
         // Get sound object
         noiseSystem = GetComponent<scr_noise>();
         
@@ -149,6 +152,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Player died due to contact to enemy");
+            newInventory.inventory.Clear();
             dungeonManager.KillPlayer();
         }
     }
@@ -386,16 +390,6 @@ public class Player : MonoBehaviour
             else if (note)
             {
                 interactArea.removeInteracts();
-                #region REMOVE THIS 
-                // Remove this once artifacts are actually in
-                if(note.name == "End Artifact"){
-                    IEnumerator WaitBeforeReturning(){
-                        yield return new WaitForSeconds(0.5f);
-                        dungeonManager.EndDungeon();
-                    }
-                    StartCoroutine(WaitBeforeReturning());
-                }
-                #endregion
                 canMove = false;
                 isReading = true;
                 dungeonManager.ActivateNote(note);

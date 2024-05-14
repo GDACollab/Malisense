@@ -459,9 +459,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Use Artifact",
+                    "name": "Use Artifact 1",
                     "type": "Button",
                     "id": "ebb8f62a-7260-4506-881f-0f2aa4d66b2f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Use Artifact 2",
+                    "type": "Button",
+                    "id": "48a53c2f-194e-44cf-94e4-dabbcab2a28e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -615,18 +624,7 @@
                 {
                     "name": "",
                     "id": "4f8edf4e-e04f-4503-ae2a-2c127a7e9083",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Use Item",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c3e383d9-9abe-4944-8478-dd85e90b7266",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -637,22 +635,22 @@
                 {
                     "name": "",
                     "id": "e31fa093-a3c5-44ad-a0ce-bfa3e7014156",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use Artifact",
+                    "action": "Use Artifact 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "d576140a-4210-4ebe-9b19-736a99bbf0db",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use Artifact",
+                    "action": "Use Artifact 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -663,7 +661,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use Artifact",
+                    "action": "Use Artifact 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d712d97-4c3b-4900-bd8a-a7a7e3132ca0",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Artifact 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0fa35e3-7272-4b4b-b7e4-cd99262b82e3",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Artifact 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
