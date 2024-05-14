@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{7558c8ae-a361-41fe-a334-ae6dba72b6f7}">
 		<property name="name">
-			<value>Dynamite</value>
+			<value>Light</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{63c0ce0d-b3fe-4bf6-ab7f-6bfaf408cb91}</destination>
+			<destination>{4699ad73-0543-4e1a-aa50-38c5d58a963a}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{35d3e899-e3b9-40c9-ab9b-e3ef73597e19}</destination>
@@ -60,11 +60,18 @@
 	<object class="EventAutomatableProperties" id="{182d3991-4bf3-4f10-91a2-c3006832e035}" />
 	<object class="MarkerTrack" id="{529ea0c3-646e-4824-9a15-dd12e3915880}" />
 	<object class="GroupTrack" id="{cf0502fc-9d64-4b8d-ac3c-57f9a559a15d}">
+		<relationship name="modules">
+			<destination>{61e19269-3594-4a28-b547-92f60d30f29b}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{afd5dd84-e689-4c11-ace7-5d8f2fc10a1a}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{6bc368e3-25af-4c7a-a861-bc9a6ba60acd}" />
+	<object class="Timeline" id="{6bc368e3-25af-4c7a-a861-bc9a6ba60acd}">
+		<relationship name="modules">
+			<destination>{61e19269-3594-4a28-b547-92f60d30f29b}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{dde2dbc5-71eb-4c03-a356-eaf8911036ae}">
 		<relationship name="effectChain">
 			<destination>{e68c19c5-7808-46be-b031-9b7e4fc11770}</destination>
@@ -82,7 +89,18 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{cdf85758-55b4-4655-8e76-2ac98519bb14}" />
+	<object class="SingleSound" id="{61e19269-3594-4a28-b547-92f60d30f29b}">
+		<property name="length">
+			<value>4</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{b4a7a980-a245-4c22-8bac-981fb1e30e76}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{afd5dd84-e689-4c11-ace7-5d8f2fc10a1a}">
+		<property name="volume">
+			<value>-4</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
