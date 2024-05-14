@@ -21,7 +21,7 @@ public class V_SelectableItems3New : MonoBehaviour
     [SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
     [Tooltip("Determines which building is selected at the start of the scene.")]
     [SerializeField] Buildings initialSelectedBuilding;
-    int selectedBuildingIndex;
+    public int selectedBuildingIndex;
     Building selectedBuilding;
 
     //TMP Variables
@@ -30,7 +30,7 @@ public class V_SelectableItems3New : MonoBehaviour
 
     //Each "Buildings/NPC"
     [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
-    [SerializeField] private List<TextAsset> InkScripts = new List<TextAsset>(); // List for Inkle Stuff :3
+    [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
     [SerializeField] public bool currentlySelected = false;
     [SerializeField] public bool hasEntered = false;
     [SerializeField] private bool hasSelected = false;
@@ -41,15 +41,17 @@ public class V_SelectableItems3New : MonoBehaviour
     public Image fadeOutUIImage; // Reference to the UI Image
     [SerializeField] public float fadeSpeed = 12f;
 
-    //Inkle
-    public TextAsset CurrentInkTextAsset;
+    //Ink
+    public string CurrentCharacter;
     public bool activateInk;
     public bool loadDungeon = false;
-    
+
+    //Story Variables
+    private bool hasForcedCKIntro = false;
+
     // Global Teapot
     GlobalTeapot globalTeapot;
-    int ckTea;
-    int clergyTea;
+
     private AudioManager audioManager;
 
     private void Start()
@@ -58,17 +60,14 @@ public class V_SelectableItems3New : MonoBehaviour
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
         audioManager.PlayOST(audioManager.dungeonOST);
-        ckTea = globalTeapot.villageInk;
-        clergyTea = globalTeapot.villageInk;
-        
-        
+
         // Building Selection:
         // Turn off every building's light
         foreach (Building building in buildings)
         {
             building.light.SetActive(false);
         }
-        
+
         // Set selectedBuildingIndex to the index of the building that's initially selected at the start of the scene
         selectedBuildingIndex = (int)initialSelectedBuilding;
 
@@ -80,22 +79,38 @@ public class V_SelectableItems3New : MonoBehaviour
 
 
         thisObject = gameObject;
-        CurrentInkTextAsset = InkScripts[0];
-        activateInk = false;
-        
-        if(globalTeapot.villageInk == 0){
-            CurrentInkTextAsset = InkScripts[9];
+        CurrentCharacter = CharacterList[selectedBuildingIndex];
+
+        // If this is the first time the village is visited, play village cutscene
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
             selectObject();
-        }
-        else if(globalTeapot.villageInk == 2){
+        } // Force CK Intro After 1st Death
+        else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
+        { 
             moveInList(-1);
             selectObject();
+        } // TODO: Force Mayor Intro 
+        else if (false)
+        { 
         }
+
+        activateInk = false;
     }
 
     private void Update()
     {
+        // Force CK Intro After Intro Cutscene
+        if (!hasSelected && !hasEntered && !hasForcedCKIntro && globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            Debug.Log("forcing CK INTRO");
+            moveInList(-3);
+            selectObject();
+            hasForcedCKIntro = true;
+        }
+
         if (!movePointer) return;
     }
 
@@ -114,28 +129,10 @@ public class V_SelectableItems3New : MonoBehaviour
         }
 
         selectedBuilding = buildings[selectedBuildingIndex];
-        
-        // ### FIX AFTER VS PLEASE!!! ###
-        if(selectedBuildingIndex == 2){
-            if(ckTea == 0){
-                CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
-            }
-            else if(ckTea == 2){
-                CurrentInkTextAsset = InkScripts[6];
-            }
-            else if(ckTea == 3){
-                CurrentInkTextAsset = InkScripts[7];
-            }
-            else{
-                CurrentInkTextAsset = InkScripts[5];
-            }
-        }
-        else if(selectedBuildingIndex == 3 && clergyTea == 2){
-            CurrentInkTextAsset = InkScripts[8];
-        }
-        else{
-            CurrentInkTextAsset = InkScripts[selectedBuildingIndex];
-        }
+
+
+        CurrentCharacter = CharacterList[selectedBuildingIndex];
+
 
         itemSelected();
     }//NEEDS TO BE UPDATED FOR InputAction
@@ -200,12 +197,13 @@ public class V_SelectableItems3New : MonoBehaviour
 
         if (selectedBuildingIndex == 3)
         {
-            if(loadDungeon)
+            if (loadDungeon)
             {
                 loadDungeon = false;
                 Loader.Load(Loader.Scene.Dungeon);
             }
-            else{
+            else
+            {
                 loadDungeon = true;
             }
         }
@@ -227,7 +225,7 @@ public class V_SelectableItems3New : MonoBehaviour
             DeActivateUI(selectedBuildingIndex);
         }
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(2.0f/fadeSpeed);
 
         while (fadeOutUIImage.color.a > 0)
         {
@@ -258,32 +256,19 @@ public class V_SelectableItems3New : MonoBehaviour
 
             currentlySelected = false;
         }
+
     }
 
     private void DeActivateUI(int index)  //Deactivates UI Function
     {
         Debug.Log("DeActivateUI");
         // Deactivate all UI elements
+        activateInk = false;
         foreach (var uiElement in UI_ELEMENTS)
         {
             uiElement.SetActive(false);
-            activateInk = false;
         }
-        
-        if(selectedBuildingIndex == 2){
-            if(ckTea != 3){
-                ckTea = 1;
-                moveInList(0, true);
-            }
-        }
-        else if(selectedBuildingIndex == 3){
-            clergyTea = 1;
-            moveInList(0, true);
-        }
-        else if(selectedBuildingIndex == 5){
-            moveInList(-2, true);
-        }
-        
+
         currentlySelected = true;
     }
 
