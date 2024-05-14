@@ -536,18 +536,6 @@ MonoBehaviour:
   - {fileID: 219218002}
   - {fileID: 260985597}
   - {fileID: 31854813}
-  InkScripts:
-  - {fileID: 4900000, guid: 38d7ee344f063c3459f252ecf9cafeb8, type: 3}
-  - {fileID: 4900000, guid: 38d7ee344f063c3459f252ecf9cafeb8, type: 3}
-  - {fileID: 4900000, guid: 4432e194a45daef4d9010447b2bd6347, type: 3}
-  - {fileID: 4900000, guid: 41e3456b099954746aaf0aee3bcf8a49, type: 3}
-  - {fileID: 4900000, guid: a05e5d152584ff741bab2f71c3541cc3, type: 3}
-  - {fileID: 4900000, guid: 252e509eb8cf90f47a0178374eadb505, type: 3}
-  - {fileID: 4900000, guid: 48aefa41fd26b1845bc1713abccda173, type: 3}
-  - {fileID: 4900000, guid: 40b1306ea6a710143aa4473d873e20a9, type: 3}
-  - {fileID: 4900000, guid: be095f0b595ef5747be8a5e326212647, type: 3}
-  - {fileID: 4900000, guid: 891ed6b5a3270ce458bc8af80491a1a5, type: 3}
-  - {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
   CharacterList:
   - Scholar
   - Stick
@@ -3293,7 +3281,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 400821f4a7ff580409e43685515e8b5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 199d5e4acdeb41d49a48fa4714965194, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4026,7 +4014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 400821f4a7ff580409e43685515e8b5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f4d3d75b91b7b064fb343dd068e490ee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4973,7 +4961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1850888068}
   - component: {fileID: 1850888070}
-  - component: {fileID: 1850888072}
+  - component: {fileID: 1850888071}
   m_Layer: 0
   m_Name: Interactions
   m_TagString: Untagged
@@ -5026,7 +5014,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1850888072
+--- !u!114 &1850888071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5035,7 +5023,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1850888066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c599753f14b05ed418a679c937b0aadd, type: 3}
+  m_Script: {fileID: 11500000, guid: c2798148c5d444d4cbbb1c2a6ccf5979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveRepeatDelay: 0.5
@@ -6057,7 +6045,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 400821f4a7ff580409e43685515e8b5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ec23fe50b8711034a89fb43b89dc2372, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

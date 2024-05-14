@@ -11,7 +11,7 @@ public class Building
     public GameObject light;
 }
 
-public class V_SelectableItems3New : MonoBehaviour
+public class VillageNavigationManager : MonoBehaviour
 {
 
     //Building Selection

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class V_KeyboardInteractiontion3New : MonoBehaviour
+public class VillageInteraction : MonoBehaviour
 {
 	[Header("Input")]
 	Controls controls;
@@ -23,22 +23,22 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
 	[SerializeField] GameObject currentListSelected;
 
 	private int currentIndex;
-	private V_SelectableItems3New DaSCRIPT;
+	private VillageNavigationManager navigationManager;
 
 
-	private static V_KeyboardInteractiontion3New _instance;
+	private static VillageInteraction _instance;
 
-	public static V_KeyboardInteractiontion3New Instance
+	public static VillageInteraction Instance
 	{
 		get
 		{
 			if (_instance == null)
 			{
-				_instance = FindObjectOfType<V_KeyboardInteractiontion3New>();
+				_instance = FindObjectOfType<VillageInteraction>();
 				if (_instance == null)
 				{
-					GameObject singletonObject = new GameObject(typeof(V_KeyboardInteractiontion3New).Name);
-					_instance = singletonObject.AddComponent<V_KeyboardInteractiontion3New>();
+					GameObject singletonObject = new GameObject(typeof(VillageInteraction).Name);
+					_instance = singletonObject.AddComponent<VillageInteraction>();
 				}
 			}
 			return _instance;
@@ -109,11 +109,11 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
 				// Move
 				if (inputVector.x < 0f)             // left
 				{
-					DaSCRIPT.moveInList(-1);
+					navigationManager.moveInList(-1);
 				}
 				else if (inputVector.x > 0f)        // right
 				{
-					DaSCRIPT.moveInList(1);
+					navigationManager.moveInList(1);
 				}
 			}
 
@@ -130,16 +130,16 @@ public class V_KeyboardInteractiontion3New : MonoBehaviour
 
 	void Select(InputAction.CallbackContext context)
 	{
-		if (!DaSCRIPT.hasEntered)
+		if (!navigationManager.hasEntered)
 		{
-			DaSCRIPT.selectObject();
+			navigationManager.selectObject();
 		}
 	}
 
 	private void getGameObjectList()
 	{
 		//USE LATER
-		DaSCRIPT = currentListSelected.GetComponent<V_SelectableItems3New>();
+		navigationManager = currentListSelected.GetComponent<VillageNavigationManager>();
 	}
 
 	public GameObject currentlySelectedObject() //For Other script to check if its listed

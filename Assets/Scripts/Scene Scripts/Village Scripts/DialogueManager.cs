@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] public GameObject selectableItemsGameObject;
+    [SerializeField] public GameObject navigationGameObject;
 
     [Header("Ink File")]
     [Tooltip("The master ink file.")]
@@ -42,7 +42,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private bool isPlaying;
-    [SerializeField] V_SelectableItems3New selectableScript;
+    [SerializeField] VillageNavigationManager navigationManager;
 
     // Global Teapot
     GlobalTeapot globalTeapot;
@@ -65,7 +65,7 @@ public class DialogueManager : MonoBehaviour
 
         isPlaying = false;
         dialoguePanel.SetActive(false);
-        selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
+        navigationManager = navigationGameObject.GetComponent<VillageNavigationManager>();
 
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -83,7 +83,7 @@ public class DialogueManager : MonoBehaviour
         UpdateChoiceSelectionVisuals();
         MovementInput();
 
-        if (!selectableScript.activateInk)
+        if (!navigationManager.activateInk)
         {
             currentInkFileName = "";
             ClearDialogueMode();
@@ -94,14 +94,14 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (selectableScript != null && selectableScript.activateInk)
+        if (navigationManager != null && navigationManager.activateInk)
         {
-            string currentChar = selectableScript.CurrentCharacter;
+            string currentChar = navigationManager.CurrentCharacter;
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
             if (currentChar != null)
             {
                 // If this is the introduction cutscene, pass it with an extra parameter
-                if (selectableScript.selectedBuildingIndex == 5)
+                if (navigationManager.selectedBuildingIndex == 5)
                 {
                     EnterDialogueMode(isIntroductionCutscene: true);
                 }
@@ -277,7 +277,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        selectableScript.selectObject();
+        navigationManager.selectObject();
     }
 
     private void ClearDialogueMode()
