@@ -73,6 +73,9 @@ public class Player : MonoBehaviour
     private Transform interactBody;
     private InteractionSelector interactArea;
 
+    //Artifact code
+    //[HideInInspector] public GameObject magicHand;
+
     void Start()
     {
         // Set input system variables
@@ -199,6 +202,29 @@ public class Player : MonoBehaviour
             if (direction.magnitude > 0)
                 interactBody.up = direction;
         }
+        /*else if(magicHand != null)
+        {
+            // For moving and rotating
+            // Movement
+            float moveX = moveAction.ReadValue<Vector2>().x;
+            float moveY = moveAction.ReadValue<Vector2>().y;
+            Vector2 direction = new Vector2(moveX, moveY).normalized;
+            magicHand.GetComponent<Rigidbody2D>().velocity = direction * adjustedSpeed;
+
+            
+            // Set isMoving
+            //if (moveX != 0 || moveY != 0)
+            //    isMoving = true;
+            //else
+            //    isMoving = false;
+            
+
+            // Rotation
+            if (direction.magnitude > 0)
+                interactBody.up = direction;
+
+            rb.velocity = Vector2.zero; // Zero out movement
+        }*/
         else
         {
             rb.velocity = Vector2.zero; // Zero out movement
