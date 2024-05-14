@@ -18,6 +18,7 @@ public class GlobalTeapot : MonoBehaviour
     public enum TeaType
     {
         Intro,
+        Dungeon_F1,
         Dungeon_F2,
         End
     }
@@ -28,8 +29,8 @@ public class GlobalTeapot : MonoBehaviour
     /// True if player has this
     /// </summary>
     public bool hasDied = false, hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
+    public int deathCount = 0;
     public Loader.Scene currentScene = Loader.Scene.DeathScene;
-    public int villageInk = 0; // DELETE ONCE EVERYTHING IS CONNECTED PROPERLY
     
     [Header("Note Variables")]
     public int numNotesObtained = 0;

@@ -6,6 +6,7 @@ using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -15,23 +16,27 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] public GameObject selectableItemsGameObject;
 
+    [Header("Ink File")]
+    [Tooltip("The master ink file.")]
+    [SerializeField] private TextAsset masterInk;
+
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
     private int defaultHeight = 115;
 
-	[Header("Input")]
-	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
-	[SerializeField] float moveRepeatDelay = 0.5f;
-	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
-	[SerializeField] float moveRepeatRate = 0.1f;
-	bool firstInput = true;
-	float moveTimer = 0f;
-	Controls controls;
+    [Header("Input")]
+    [Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
+    [SerializeField] float moveRepeatDelay = 0.5f;
+    [Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
+    [SerializeField] float moveRepeatRate = 0.1f;
+    bool firstInput = true;
+    float moveTimer = 0f;
+    Controls controls;
 
-	// Start is called before the first frame update
-	private Ink.Runtime.Story currentStory;
+    // Start is called before the first frame update
+    private Ink.Runtime.Story currentStory;
 
     private static DialogueManager instance;
 
@@ -39,19 +44,25 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private bool isPlaying;
     [SerializeField] V_SelectableItems3New selectableScript;
 
+    // Global Teapot
+    GlobalTeapot globalTeapot;
+
     private string currentInkFileName = "";
 
 
     void Awake()
     {
-		// Input
-		controls = new Controls();
-		controls.UI.Enable();
-		controls.UI.Select.performed += Select;
-	}
+        // Input
+        controls = new Controls();
+        controls.UI.Enable();
+        controls.UI.Select.performed += Select;
+    }
 
     void Start()
     {
+        // Get the Global Teapot
+        globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
+
         isPlaying = false;
         dialoguePanel.SetActive(false);
         selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
@@ -70,7 +81,7 @@ public class DialogueManager : MonoBehaviour
     {
         int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-		MovementInput();
+        MovementInput();
 
         if (!selectableScript.activateInk)
         {
@@ -85,26 +96,35 @@ public class DialogueManager : MonoBehaviour
 
         if (selectableScript != null && selectableScript.activateInk)
         {
-            TextAsset currentInk = selectableScript.CurrentInkTextAsset;
+            string currentChar = selectableScript.CurrentCharacter;
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
-            if (currentInk != null)
+            if (currentChar != null)
             {
-                EnterDialogueMode(currentInk);
+                // If this is the introduction cutscene, pass it with an extra parameter
+                if (selectableScript.selectedBuildingIndex == 5)
+                {
+                    EnterDialogueMode(isIntroductionCutscene: true);
+                }
+                else
+                {
+                    EnterDialogueMode(currentChar);
+                }
+
             }
         }
     }
 
     void MovementInput()
     {
-		// Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-		// Check that there are dialogue options to choose from otherwise there's no option to move
-		if (isPlaying && currentStory.currentChoices.Count > 0)
+        // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        // Check that there are dialogue options to choose from otherwise there's no option to move
+        if (isPlaying && currentStory.currentChoices.Count > 0)
         {
-			// Read movement input
-			Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
+            // Read movement input
+            Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
 
-			// There's horizontal movement input
-			if (inputVector.x != 0f)
+            // There's horizontal movement input
+            if (inputVector.x != 0f)
             {
 
                 // Moving is on cooldown
@@ -121,34 +141,34 @@ public class DialogueManager : MonoBehaviour
                 // Can Move
                 if (moveTimer <= 0f)
                 {
-					// Check if this is the first movement input after there was just no movement
-					if (firstInput)
-					{
-						// Put move on moveRepeatDelay cooldown
-						firstInput = false;
-						moveTimer = moveRepeatDelay;
-					}
-					else
-					{
-						// Put move on moveRepeatRate cooldown
-						moveTimer = moveRepeatRate;
-					}
+                    // Check if this is the first movement input after there was just no movement
+                    if (firstInput)
+                    {
+                        // Put move on moveRepeatDelay cooldown
+                        firstInput = false;
+                        moveTimer = moveRepeatDelay;
+                    }
+                    else
+                    {
+                        // Put move on moveRepeatRate cooldown
+                        moveTimer = moveRepeatRate;
+                    }
 
-					// Move
-					if (inputVector.x < 0f)             // left
-					{
-						// Navigate up in the choices list
-						currentChoiceIndex--;
-						if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-						// Optionally, call a function to update the UI here
-					}
-					else if (inputVector.x > 0f)        // right
-					{
-						// Navigate down in the choices list
-						currentChoiceIndex++;
-						if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-						// Optionally, call a function to update the UI here
-					}
+                    // Move
+                    if (inputVector.x < 0f)             // left
+                    {
+                        // Navigate up in the choices list
+                        currentChoiceIndex--;
+                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                        // Optionally, call a function to update the UI here
+                    }
+                    else if (inputVector.x > 0f)        // right
+                    {
+                        // Navigate down in the choices list
+                        currentChoiceIndex++;
+                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                        // Optionally, call a function to update the UI here
+                    }
                 }
 
             }
@@ -163,41 +183,91 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-	void Select(InputAction.CallbackContext context)
+    void Select(InputAction.CallbackContext context)
     {
-		// Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-		if (isPlaying)
-		{
-			// Check if there are any choices to navigate
-			if (currentStory.currentChoices.Count > 0)
-			{
-				MakeChoice(currentChoiceIndex);
-			}
-			else
-			{
-				ContinueStory();
-			}
-		}
+        // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        if (isPlaying)
+        {
+            // Check if there are any choices to navigate
+            if (currentStory.currentChoices.Count > 0)
+            {
+                MakeChoice(currentChoiceIndex);
+            }
+            else
+            {
+                ContinueStory();
+            }
+        }
     }
 
-    public void EnterDialogueMode(TextAsset inkJson)
+    public void EnterDialogueMode(string character = "None", bool isIntroductionCutscene = false)
     {
+        TextAsset inkJson = masterInk;
 
+        // Prevent from restarting conversation at the end
         if (currentInkFileName == inkJson.name)
         {
-
-            Debug.Log("RETURN");
-            // The story is already loaded and can continue, so just activate the UI
+            Debug.Log("Do not restart currently running story.");
             isPlaying = true;
-            dialoguePanel.SetActive(true);
-            // Optionally, update the UI here if needed (e.g., refresh choice buttons)
             return; // Skip reinitializing the story
         }
-        Debug.Log(" Not RETURN " + currentInkFileName + " Names " + inkJson.name);
-        // Load a new story or restart the current one
+        Debug.Log("Start running story.");
+
         currentStory = new Ink.Runtime.Story(inkJson.text);
-        currentInkFileName = inkJson.name; // Update the current ink file name
+
+        currentStory.variablesState["isMayorIntro"] = globalTeapot.currProgress == GlobalTeapot.TeaType.Intro; // MAYOR INTRO DELAY NOT IMPLEMENTED, CURRENTLY JUST HAPPENS DURING THE NORMAL INTRO
+        currentStory.variablesState["hasMayorNote1"] = globalTeapot.hasMayorNote1;
+        currentStory.variablesState["hasMayorNote2"] = globalTeapot.hasMayorNote2;
+        currentStory.variablesState["hasFinalMayorNote"] = globalTeapot.hasFinalMayorNote;
+
+        // Set defaults, will be modified afterward if needs to be true
+        currentStory.variablesState["isIntro"] = false;
+        currentStory.variablesState["isDeathF1"] = false;
+        currentStory.variablesState["isHub"] = false;
+        currentStory.variablesState["isDeathF2"] = false;
+        currentStory.variablesState["isEnd"] = false;
+        currentStory.variablesState["isIntroductionCutscene"] = isIntroductionCutscene;
+        currentStory.variablesState["hasDied"] = false;
+
+        switch (globalTeapot.currProgress)
+        {
+            case GlobalTeapot.TeaType.Intro:
+                currentStory.variablesState["isIntro"] = true;
+                Debug.Log("intro with " + character);
+                break;
+            case GlobalTeapot.TeaType.Dungeon_F1:
+                currentStory.variablesState["isDeathF1"] = true;
+                Debug.Log("deathf1 with " + character);
+                break;
+            case GlobalTeapot.TeaType.Dungeon_F2:
+                if (globalTeapot.hasDied)
+                {
+                    currentStory.variablesState["isDeathF2"] = true;
+                    Debug.Log("deathf2 with " + character);
+                }
+                else
+                {
+                    currentStory.variablesState["isHub"] = true;
+                    Debug.Log("hub with " + character);
+                }
+                break;
+            case GlobalTeapot.TeaType.End:
+                currentStory.variablesState["isEnd"] = true;
+                Debug.Log("end with " + character);
+                break;
+            default:
+                Debug.Log("default in dialogue switch statement (this is bad)");
+                currentStory.variablesState["isIntro"] = true;
+                break;
+        }
+
+        // VAR background = "First"
+        // VAR StickHappiness = 0
+
+        currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
+        currentInkFileName = inkJson.name; // Update the current ink file name         
         isPlaying = true;
+
         dialoguePanel.SetActive(true);
         ContinueStory();
     }
