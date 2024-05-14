@@ -3,6 +3,7 @@ using UnityEngine.Tilemaps;
 using UnityEditor.Tilemaps;
 using Unity.VisualScripting;
 
+#if UNITY_EDITOR
 namespace UnityEditor.Tilemaps
 {
     /// <summary>
@@ -329,3 +330,4 @@ namespace UnityEditor.Tilemaps
         }
     }
 }
+#endif
