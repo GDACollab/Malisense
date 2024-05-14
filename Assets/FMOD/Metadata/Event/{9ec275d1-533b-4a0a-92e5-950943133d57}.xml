@@ -5,7 +5,7 @@
 			<value>FlashLantern</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{63c0ce0d-b3fe-4bf6-ab7f-6bfaf408cb91}</destination>
@@ -60,11 +60,18 @@
 	<object class="EventAutomatableProperties" id="{aee55497-a97f-409c-87ca-da1adc8d2d8d}" />
 	<object class="MarkerTrack" id="{c5161926-56bc-4e4d-b074-d01c8e4e2754}" />
 	<object class="GroupTrack" id="{577c947a-20cb-48f2-94b6-5d949ace1ce5}">
+		<relationship name="modules">
+			<destination>{527b5bbb-97b8-4a2b-a21c-65a3e4c41b03}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{d91f0f64-514b-4ba9-a9bf-f6cf3f90d627}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{eacf5ffc-cfd2-44cc-b03a-88c970fa10e9}" />
+	<object class="Timeline" id="{eacf5ffc-cfd2-44cc-b03a-88c970fa10e9}">
+		<relationship name="modules">
+			<destination>{527b5bbb-97b8-4a2b-a21c-65a3e4c41b03}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{94858583-d50a-4793-91d9-e9d24bd7a2dc}">
 		<relationship name="effectChain">
 			<destination>{bb35ab60-75bb-4f51-819e-6173ae74ad36}</destination>
@@ -82,7 +89,18 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{eeecfbd6-7833-40fb-9a0d-a1535b99d29a}" />
+	<object class="SingleSound" id="{527b5bbb-97b8-4a2b-a21c-65a3e4c41b03}">
+		<property name="length">
+			<value>1.5673469387755101</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{344430fb-2cc6-4cdd-8caa-f5936d798aca}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{d91f0f64-514b-4ba9-a9bf-f6cf3f90d627}">
+		<property name="volume">
+			<value>-5</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
