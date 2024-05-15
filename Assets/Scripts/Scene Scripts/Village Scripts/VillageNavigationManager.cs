@@ -38,13 +38,14 @@ public class VillageNavigationManager : MonoBehaviour
     // UI Stuff
     [Header("UI")]
     [SerializeField] private List<GameObject> DialogueUI = new List<GameObject>(); // List for UI elements
+    [SerializeField] private GameObject DialogueTextUI; // List for UI elements
     public Image fadeOutUIImage; // Reference to the UI Image
     [SerializeField] public float fadeSpeed = 12f;
 
     //Ink
     [Header("Ink")]
     [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
-    public string CurrentCharacter;
+    public string CurrentCharacter; 
     public bool activateInk;
     public bool loadDungeon = false;
 
@@ -265,6 +266,9 @@ public class VillageNavigationManager : MonoBehaviour
 
             currentlySelected = false;
         }
+
+        // Set Dialogue Text UI Visible
+        DialogueTextUI.SetActive(true);
 
     }
 

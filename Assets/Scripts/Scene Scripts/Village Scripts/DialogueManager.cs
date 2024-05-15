@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI characterNameText;
 
     [Header("Village Navigation")]
     [SerializeField] VillageNavigationManager navigationManager;
@@ -138,7 +139,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(string character = "None", bool isIntroductionCutscene = false)
+    public void EnterDialogueMode(string character = "???", bool isIntroductionCutscene = false)
     {
         TextAsset inkJson = masterInk;
 
@@ -207,6 +208,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = true;
 
         dialoguePanel.SetActive(true);
+        characterNameText.text = character;
         ContinueStory();
     }
 
@@ -216,6 +218,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        characterNameText.text = "";
         navigationManager.selectBuilding();
     }
 
@@ -224,6 +227,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        characterNameText.text = "";
     }
 
     private void ContinueStory()
