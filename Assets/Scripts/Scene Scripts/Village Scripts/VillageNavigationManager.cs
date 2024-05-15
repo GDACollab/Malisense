@@ -49,10 +49,6 @@ public class VillageNavigationManager : MonoBehaviour
     public bool activateInk;
     public bool loadDungeon = false;
 
-    //TMP Variables
-    [Header("Temporary")]
-    public GameObject dungeonMessage;
-
     //Story Variables
     private bool hasForcedCKIntro = false;
 
@@ -187,8 +183,6 @@ public class VillageNavigationManager : MonoBehaviour
                 building.light.SetActive(false);
             }
         }
-
-        dungeonMessage.SetActive(selectedBuildingIndex == 3);
     }//Turns on Light 
 
     private IEnumerator FadeToBlack() //Coroutine Function

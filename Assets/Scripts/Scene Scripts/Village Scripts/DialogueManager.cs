@@ -286,6 +286,7 @@ public class DialogueManager : MonoBehaviour
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.black; // Example of highlighting
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // set overflow to allow text to expand
                 choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize; //set box to exanded size
+                // choices[i].GetComponentInChildren<TextMeshProUGUI>().text
 
             }
             else

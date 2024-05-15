@@ -1059,7 +1059,8 @@ The condescension drips sickly sour off of their lips as their eyes alight upon 
     -> KnowVillagers
  *  "The church was supposed to survive the cataclysm. What happened to everyone else? Where is the High Priest?"
     -> WhatHappenedToChurch
- *  "Enough. I wish to pass on into the dungeon."
+ *{CHOICE_COUNT() < 4}->  
+ "Enough. I wish to pass on into the dungeon."
     -> GoForth2
 
 = WhoAreYou 
