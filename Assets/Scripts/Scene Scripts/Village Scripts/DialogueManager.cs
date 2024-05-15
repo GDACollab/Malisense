@@ -9,13 +9,17 @@ using UnityEngine.UI;
 using System;
 using UnityEditor.Experimental.GraphView;
 
+/// <summary>
+/// A script that handles dialogue UI and Ink functionality (variables, choices, etc)
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
-
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] public GameObject navigationGameObject;
+
+    [Header("Village Navigation")]
+    [SerializeField] VillageNavigationManager navigationManager;
 
     [Header("Ink File")]
     [Tooltip("The master ink file.")]
@@ -27,21 +31,12 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private int currentChoiceIndex = -1;
     private int defaultHeight = 115;
 
-    [Header("Input")]
-    [Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
-    [SerializeField] float moveRepeatDelay = 0.5f;
-    [Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
-    [SerializeField] float moveRepeatRate = 0.1f;
-    bool firstInput = true;
-    float moveTimer = 0f;
-    Controls controls;
-
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
 
-    [Header("Other")]
+    [Header("Status")]
     [SerializeField] private bool isPlaying;
-    [SerializeField] VillageNavigationManager navigationManager;
+    
 
     // Global Teapot
     GlobalTeapot globalTeapot;
@@ -55,7 +50,6 @@ public class DialogueManager : MonoBehaviour
 
         isPlaying = false;
         dialoguePanel.SetActive(false);
-        navigationManager = navigationGameObject.GetComponent<VillageNavigationManager>();
 
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -70,7 +64,6 @@ public class DialogueManager : MonoBehaviour
     public void Update()
     {
         UpdateChoiceSelectionVisuals();
-        MovementInput();
 
         if (!navigationManager.activateInk)
         {
@@ -118,7 +111,7 @@ public class DialogueManager : MonoBehaviour
                 if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
                 // Optionally, call a function to update the UI here
             }
-            else if (direction == "left")        // right
+            else if (direction == "right")        // right
             {
                 // Navigate down in the choices list
                 currentChoiceIndex++;

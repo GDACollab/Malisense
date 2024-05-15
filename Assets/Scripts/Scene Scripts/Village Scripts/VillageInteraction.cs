@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// An input-handling script that calls functions on the Village Navigation and Dialogue Managers.
+/// </summary>
 public class VillageInteraction : MonoBehaviour
 {
 	[Header("Input")]
@@ -14,8 +17,8 @@ public class VillageInteraction : MonoBehaviour
 	[SerializeField] float moveRepeatDelay = 0.5f;
 	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
 	[SerializeField] float moveRepeatRate = 0.1f;
-	bool firstInput = true;
-	float moveTimer = 0f;
+	private bool isFirstInput = true;
+    private float moveTimer = 0f;
 
 
 	[Header("Manager Scripts")]
@@ -33,10 +36,14 @@ public class VillageInteraction : MonoBehaviour
 
 	private void Update()
 	{
+		// Move selection based on directional input
 		MovementInput();
 	}
 
-	void MovementInput()
+    /// <summary>
+    ///  Checks for input to move left or right, and triggers the village navigation or dialogue UI to reflect the movement.
+    /// </summary>
+    void MovementInput()
 	{
 		// Read movement input
 		Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
@@ -44,15 +51,13 @@ public class VillageInteraction : MonoBehaviour
 		// There's horizontal movement input
 		if (inputVector.x != 0f)
 		{
-
 			// Moving is on cooldown
 			if (moveTimer > 0f)
 			{
 				moveTimer -= Time.deltaTime;
 
-				if (moveTimer < 0f)
-				{
-					moveTimer = 0f;
+				if (moveTimer < 0f) { 
+					moveTimer = 0f; 
 				}
 			}
 
@@ -60,10 +65,10 @@ public class VillageInteraction : MonoBehaviour
 			if (moveTimer <= 0f)
 			{
 				// Check if this is the first movement input after there was just no movement
-				if (firstInput)
+				if (isFirstInput)
 				{
 					// Put move on moveRepeatDelay cooldown
-					firstInput = false;
+					isFirstInput = false;
 					moveTimer = moveRepeatDelay;
 				}
 				else
@@ -86,8 +91,15 @@ public class VillageInteraction : MonoBehaviour
 				}
 				else if (inputVector.x > 0f)        // right
 				{
-					navigationManager.moveInList(1);
-				}
+                    if (navigationManager.hasEntered)
+                    {
+                        dialogueManager.moveChoiceSelection("right");
+                    }
+                    else
+                    {
+                        navigationManager.moveInList(1);
+                    }
+                }
 			}
 
 		}
@@ -96,79 +108,14 @@ public class VillageInteraction : MonoBehaviour
 		else
 		{
 			// Reset movement so that the next movement input is instant
-			firstInput = true;
+			isFirstInput = true;
 			moveTimer = 0f;
 		}
 	}
 
-    void MovementInput()
-    {
-        // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-        // Check that there are dialogue options to choose from otherwise there's no option to move
-        if (isPlaying && currentStory.currentChoices.Count > 0)
-        {
-            // Read movement input
-            Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
-
-            // There's horizontal movement input
-            if (inputVector.x != 0f)
-            {
-
-                // Moving is on cooldown
-                if (moveTimer > 0f)
-                {
-                    moveTimer -= Time.deltaTime;
-
-                    if (moveTimer < 0f)
-                    {
-                        moveTimer = 0f;
-                    }
-                }
-
-                // Can Move
-                if (moveTimer <= 0f)
-                {
-                    // Check if this is the first movement input after there was just no movement
-                    if (firstInput)
-                    {
-                        // Put move on moveRepeatDelay cooldown
-                        firstInput = false;
-                        moveTimer = moveRepeatDelay;
-                    }
-                    else
-                    {
-                        // Put move on moveRepeatRate cooldown
-                        moveTimer = moveRepeatRate;
-                    }
-
-                    // Move
-                    if (inputVector.x < 0f)             // left
-                    {
-                        // Navigate up in the choices list
-                        currentChoiceIndex--;
-                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                        // Optionally, call a function to update the UI here
-                    }
-                    else if (inputVector.x > 0f)        // right
-                    {
-                        // Navigate down in the choices list
-                        currentChoiceIndex++;
-                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                        // Optionally, call a function to update the UI here
-                    }
-                }
-
-            }
-
-            // There's no horizontal movement input
-            else
-            {
-                // Reset movement so that the next movement input is instant
-                firstInput = true;
-                moveTimer = 0f;
-            }
-        }
-    }
+    /// <summary>
+    ///  Is called on the input to select, and triggers the village navigation or dialogue UI to reflect the selection.
+    /// </summary>
     void Select(InputAction.CallbackContext context)
 	{
 		if (navigationManager.hasEntered)

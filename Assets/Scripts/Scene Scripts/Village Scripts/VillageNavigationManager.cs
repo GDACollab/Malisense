@@ -8,9 +8,13 @@ using Ink.Runtime;      // Make sure you have this using directive for Ink scrip
 [System.Serializable]		// this lets me fill in the following two fields in the inspector
 public class Building
 {
+    public string characterName;
     public GameObject light;
 }
 
+/// <summary>
+/// A script that handles village UI and navigation, and which calls functions on the Dialogue Manager.
+/// </summary>
 public class VillageNavigationManager : MonoBehaviour
 {
 
@@ -24,27 +28,29 @@ public class VillageNavigationManager : MonoBehaviour
     public int selectedBuildingIndex;
     Building selectedBuilding;
 
-    //TMP Variables
-    [Header("Temp Playtest Variables")]
-    public GameObject dungeonMessage;
-
     //Each "Buildings/NPC"
-    [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
-    [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
+    [Header("Selection States")]
     [SerializeField] public bool currentlySelected = false;
     [SerializeField] public bool hasEntered = false;
     [SerializeField] private bool hasSelected = false;
     [SerializeField] private bool movePointer = true;
-    private GameObject thisObject;
 
-    //UI Stuff
+    // UI Stuff
+    [Header("UI")]
+    [SerializeField] private List<GameObject> DialogueUI = new List<GameObject>(); // List for UI elements
     public Image fadeOutUIImage; // Reference to the UI Image
     [SerializeField] public float fadeSpeed = 12f;
 
     //Ink
+    [Header("Ink")]
+    [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
     public string CurrentCharacter;
     public bool activateInk;
     public bool loadDungeon = false;
+
+    //TMP Variables
+    [Header("Temporary")]
+    public GameObject dungeonMessage;
 
     //Story Variables
     private bool hasForcedCKIntro = false;
@@ -52,7 +58,11 @@ public class VillageNavigationManager : MonoBehaviour
     // Global Teapot
     GlobalTeapot globalTeapot;
 
+    // Audio Manager
     private AudioManager audioManager;
+
+    // This Object
+    private GameObject thisObject;
 
     private void Start()
     {
@@ -76,7 +86,6 @@ public class VillageNavigationManager : MonoBehaviour
 
         // Turn on the light of the selected building 
         buildings[selectedBuildingIndex].light.SetActive(true);
-
 
         thisObject = gameObject;
         CurrentCharacter = CharacterList[selectedBuildingIndex];
@@ -241,16 +250,16 @@ public class VillageNavigationManager : MonoBehaviour
     {
         Debug.Log("ActivateUI");
         // Deactivate all UI elements
-        foreach (var uiElement in UI_ELEMENTS)
+        foreach (var uiElement in DialogueUI)
         {
             uiElement.SetActive(false);
         }
 
         // Activate the UI element that corresponds to the selected object
-        if (index >= 0 && index < UI_ELEMENTS.Count)
+        if (index >= 0 && index < DialogueUI.Count)
         {
             //UI Activate
-            UI_ELEMENTS[index].SetActive(true);
+            DialogueUI[index].SetActive(true);
             //Ink Activate
             activateInk = true;
 
@@ -264,7 +273,7 @@ public class VillageNavigationManager : MonoBehaviour
         Debug.Log("DeActivateUI");
         // Deactivate all UI elements
         activateInk = false;
-        foreach (var uiElement in UI_ELEMENTS)
+        foreach (var uiElement in DialogueUI)
         {
             uiElement.SetActive(false);
         }
