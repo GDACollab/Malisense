@@ -196,7 +196,6 @@ public class VillageNavigationManager : MonoBehaviour
         print("FadingToBlack");
         Color objectColor = fadeOutUIImage.color;
         float fadeAmount;
-
         while (fadeOutUIImage.color.a < 1)
         {
             fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);

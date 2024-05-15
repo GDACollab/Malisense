@@ -139,7 +139,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(string character = "???", bool isIntroductionCutscene = false)
+    public void EnterDialogueMode(string character = "???????????????", bool isIntroductionCutscene = false)
     {
         TextAsset inkJson = masterInk;
 
@@ -208,7 +208,13 @@ public class DialogueManager : MonoBehaviour
         isPlaying = true;
 
         dialoguePanel.SetActive(true);
-        characterNameText.text = character;
+        if (character == "Crypt_Keeper")
+        {
+            characterNameText.text = "Crypt Keeper";
+        } else
+        {
+            characterNameText.text = character;
+        }
         ContinueStory();
     }
 
