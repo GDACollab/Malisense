@@ -10,7 +10,6 @@ public class VillageInteraction : MonoBehaviour
 {
 	[Header("Input")]
 	Controls controls;
-
 	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
 	[SerializeField] float moveRepeatDelay = 0.5f;
 	[Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
@@ -19,46 +18,14 @@ public class VillageInteraction : MonoBehaviour
 	float moveTimer = 0f;
 
 
-	[Header("Lists")]
-	[SerializeField] GameObject currentListSelected;
+	[Header("Manager Scripts")]
+	[SerializeField] private VillageNavigationManager navigationManager;
+    [SerializeField] private DialogueManager dialogueManager;
 
-	private int currentIndex;
-	private VillageNavigationManager navigationManager;
-
-
-	private static VillageInteraction _instance;
-
-	public static VillageInteraction Instance
+    private void Start()
 	{
-		get
-		{
-			if (_instance == null)
-			{
-				_instance = FindObjectOfType<VillageInteraction>();
-				if (_instance == null)
-				{
-					GameObject singletonObject = new GameObject(typeof(VillageInteraction).Name);
-					_instance = singletonObject.AddComponent<VillageInteraction>();
-				}
-			}
-			return _instance;
-		}
-	}
-
-	private void Awake()
-	{
-		if (_instance == null)
-		{
-			_instance = this;
-			// DontDestroyOnLoad(gameObject);
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
-
-		// Input
-		controls = new Controls();
+        // Input
+        controls = new Controls();
 		controls.UI.Enable();
 		controls.UI.Select.performed += Select;
 	}
@@ -66,7 +33,6 @@ public class VillageInteraction : MonoBehaviour
 
 	private void Update()
 	{
-		getGameObjectList();
 		MovementInput();
 	}
 
@@ -109,7 +75,14 @@ public class VillageInteraction : MonoBehaviour
 				// Move
 				if (inputVector.x < 0f)             // left
 				{
-					navigationManager.moveInList(-1);
+                    if (navigationManager.hasEntered)
+                    {
+                        dialogueManager.moveChoiceSelection("left");
+                    }
+                    else
+                    {
+                        navigationManager.moveInList(-1);
+                    }
 				}
 				else if (inputVector.x > 0f)        // right
 				{
@@ -128,23 +101,82 @@ public class VillageInteraction : MonoBehaviour
 		}
 	}
 
-	void Select(InputAction.CallbackContext context)
+    void MovementInput()
+    {
+        // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        // Check that there are dialogue options to choose from otherwise there's no option to move
+        if (isPlaying && currentStory.currentChoices.Count > 0)
+        {
+            // Read movement input
+            Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
+
+            // There's horizontal movement input
+            if (inputVector.x != 0f)
+            {
+
+                // Moving is on cooldown
+                if (moveTimer > 0f)
+                {
+                    moveTimer -= Time.deltaTime;
+
+                    if (moveTimer < 0f)
+                    {
+                        moveTimer = 0f;
+                    }
+                }
+
+                // Can Move
+                if (moveTimer <= 0f)
+                {
+                    // Check if this is the first movement input after there was just no movement
+                    if (firstInput)
+                    {
+                        // Put move on moveRepeatDelay cooldown
+                        firstInput = false;
+                        moveTimer = moveRepeatDelay;
+                    }
+                    else
+                    {
+                        // Put move on moveRepeatRate cooldown
+                        moveTimer = moveRepeatRate;
+                    }
+
+                    // Move
+                    if (inputVector.x < 0f)             // left
+                    {
+                        // Navigate up in the choices list
+                        currentChoiceIndex--;
+                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                        // Optionally, call a function to update the UI here
+                    }
+                    else if (inputVector.x > 0f)        // right
+                    {
+                        // Navigate down in the choices list
+                        currentChoiceIndex++;
+                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                        // Optionally, call a function to update the UI here
+                    }
+                }
+
+            }
+
+            // There's no horizontal movement input
+            else
+            {
+                // Reset movement so that the next movement input is instant
+                firstInput = true;
+                moveTimer = 0f;
+            }
+        }
+    }
+    void Select(InputAction.CallbackContext context)
 	{
-		if (!navigationManager.hasEntered)
+		if (navigationManager.hasEntered)
 		{
-			navigationManager.selectObject();
+            dialogueManager.selectDialogue();
+        } else
+		{
+            navigationManager.selectBuilding();
 		}
 	}
-
-	private void getGameObjectList()
-	{
-		//USE LATER
-		navigationManager = currentListSelected.GetComponent<VillageNavigationManager>();
-	}
-
-	public GameObject currentlySelectedObject() //For Other script to check if its listed
-	{
-		return currentListSelected;
-	}
-
 }

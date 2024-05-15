@@ -86,12 +86,12 @@ public class VillageNavigationManager : MonoBehaviour
         {
             // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
-            selectObject();
+            selectBuilding();
         } // Force CK Intro After 1st Death
         else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
         { 
             moveInList(-1);
-            selectObject();
+            selectBuilding();
         } // TODO: Force Mayor Intro 
         else if (false)
         { 
@@ -107,7 +107,7 @@ public class VillageNavigationManager : MonoBehaviour
         {
             Debug.Log("forcing CK INTRO");
             moveInList(-3);
-            selectObject();
+            selectBuilding();
             hasForcedCKIntro = true;
         }
 
@@ -137,7 +137,7 @@ public class VillageNavigationManager : MonoBehaviour
         itemSelected();
     }//NEEDS TO BE UPDATED FOR InputAction
 
-    public void selectObject()
+    public void selectBuilding()
     {
         if (hasSelected)
         {

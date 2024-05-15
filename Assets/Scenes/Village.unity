@@ -2796,7 +2796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 564863805}
   dialogueText: {fileID: 406351828}
-  selectableItemsGameObject: {fileID: 127951903}
+  navigationGameObject: {fileID: 127951903}
   masterInk: {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
   choices:
   - {fileID: 1046494621}
@@ -2807,7 +2807,7 @@ MonoBehaviour:
   moveRepeatDelay: 0.5
   moveRepeatRate: 0.1
   isPlaying: 0
-  selectableScript: {fileID: 127951905}
+  navigationManager: {fileID: 127951905}
 --- !u!1 &1022978294
 GameObject:
   m_ObjectHideFlags: 0
@@ -5028,7 +5028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRepeatDelay: 0.5
   moveRepeatRate: 0.1
-  currentListSelected: {fileID: 127951903}
+  navigationGameObject: {fileID: 127951903}
 --- !u!1 &1853069460
 GameObject:
   m_ObjectHideFlags: 0

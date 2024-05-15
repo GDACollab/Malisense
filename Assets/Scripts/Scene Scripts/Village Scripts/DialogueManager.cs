@@ -7,6 +7,7 @@ using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -38,8 +39,6 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
 
-    private static DialogueManager instance;
-
     [Header("Other")]
     [SerializeField] private bool isPlaying;
     [SerializeField] VillageNavigationManager navigationManager;
@@ -48,15 +47,6 @@ public class DialogueManager : MonoBehaviour
     GlobalTeapot globalTeapot;
 
     private string currentInkFileName = "";
-
-
-    void Awake()
-    {
-        // Input
-        controls = new Controls();
-        controls.UI.Enable();
-        controls.UI.Select.performed += Select;
-    }
 
     void Start()
     {
@@ -79,7 +69,6 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
-        int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
         MovementInput();
 
@@ -114,76 +103,32 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void MovementInput()
+    public void moveChoiceSelection(string direction)
     {
         // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
         // Check that there are dialogue options to choose from otherwise there's no option to move
         if (isPlaying && currentStory.currentChoices.Count > 0)
         {
-            // Read movement input
-            Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
 
-            // There's horizontal movement input
-            if (inputVector.x != 0f)
+            // Move
+            if (direction == "left")             // left
             {
-
-                // Moving is on cooldown
-                if (moveTimer > 0f)
-                {
-                    moveTimer -= Time.deltaTime;
-
-                    if (moveTimer < 0f)
-                    {
-                        moveTimer = 0f;
-                    }
-                }
-
-                // Can Move
-                if (moveTimer <= 0f)
-                {
-                    // Check if this is the first movement input after there was just no movement
-                    if (firstInput)
-                    {
-                        // Put move on moveRepeatDelay cooldown
-                        firstInput = false;
-                        moveTimer = moveRepeatDelay;
-                    }
-                    else
-                    {
-                        // Put move on moveRepeatRate cooldown
-                        moveTimer = moveRepeatRate;
-                    }
-
-                    // Move
-                    if (inputVector.x < 0f)             // left
-                    {
-                        // Navigate up in the choices list
-                        currentChoiceIndex--;
-                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                        // Optionally, call a function to update the UI here
-                    }
-                    else if (inputVector.x > 0f)        // right
-                    {
-                        // Navigate down in the choices list
-                        currentChoiceIndex++;
-                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                        // Optionally, call a function to update the UI here
-                    }
-                }
-
+                // Navigate up in the choices list
+                currentChoiceIndex--;
+                if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                // Optionally, call a function to update the UI here
             }
-
-            // There's no horizontal movement input
-            else
+            else if (direction == "left")        // right
             {
-                // Reset movement so that the next movement input is instant
-                firstInput = true;
-                moveTimer = 0f;
+                // Navigate down in the choices list
+                currentChoiceIndex++;
+                if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                // Optionally, call a function to update the UI here
             }
         }
     }
 
-    void Select(InputAction.CallbackContext context)
+    public void selectDialogue()
     {
         // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
         if (isPlaying)
@@ -274,10 +219,11 @@ public class DialogueManager : MonoBehaviour
 
     private void ExitDialogueMode()
     {
+        Debug.Log(gameObject);
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        navigationManager.selectObject();
+        navigationManager.selectBuilding();
     }
 
     private void ClearDialogueMode()
