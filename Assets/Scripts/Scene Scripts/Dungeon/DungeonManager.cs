@@ -9,16 +9,16 @@ public class DungeonManager : MonoBehaviour
 {
     [SerializeField] List<StateMachine> enemies = new List<StateMachine>();
     [SerializeField] bool isChasing = false;
-    
+
     [Header("Floor Note UI")]
     [SerializeField] GameObject floorNoteDisplay;
     TextMeshProUGUI floorNoteText;
-    
+
     GlobalTeapot globalTeapot;
     AudioManager audioManager;
-    
+
     List<FloorNote> floorNotes = new List<FloorNote>();
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,85 +26,100 @@ public class DungeonManager : MonoBehaviour
         audioManager = globalTeapot.audioManager;
         floorNotes = FindObjectsOfType<FloorNote>().ToList();
         floorNoteText = floorNoteDisplay.GetComponentInChildren<TextMeshProUGUI>();
-        
+
         SetFloorNotes();
     }
-    
+
     /// <summary>
     /// Add a chasing enemy
     /// </summary>
     /// <param name="enemy"></param>
-    public void AddEnemy(StateMachine enemy){
-        if(enemy.currentState == StateMachine.State.Chasing){
+    public void AddEnemy(StateMachine enemy)
+    {
+        if (enemy.currentState == StateMachine.State.Chasing)
+        {
             enemies.Append(enemy);
             audioManager.PlayScream(enemy.GetComponent<StudioEventEmitter>());
             UpdateMusic();
         }
     }
-    
+
     /// <summary>
     /// Remove an enemy from the list
     /// </summary>
     /// <param name="enemy"></param>
-    public void RemoveEnemy(StateMachine enemy){
+    public void RemoveEnemy(StateMachine enemy)
+    {
         enemies.Remove(enemy);
         UpdateMusic();
     }
-    
+
     /// <summary>
     /// Update the music based on 
     /// </summary>
-    void UpdateMusic(){
-        if(!isChasing && enemies.Count > 0){
+    void UpdateMusic()
+    {
+        if (!isChasing && enemies.Count > 0)
+        {
             isChasing = true;
             audioManager.ChaseOST();
         }
-        else if(isChasing && enemies.Count==0){
+        else if (isChasing && enemies.Count == 0)
+        {
             isChasing = false;
             audioManager.DungeonOST();
         }
     }
-    
-    void SetFloorNotes(){
-        foreach(FloorNote note in floorNotes){
-            if(note.noteID.Length>0){
-                if(!globalTeapot.journal.CheckFloorNote(note.noteID)){
+
+    void SetFloorNotes()
+    {
+        foreach (FloorNote note in floorNotes)
+        {
+            if (note.noteID.Length > 0)
+            {
+                if (!globalTeapot.journal.CheckFloorNote(note.noteID))
+                {
                     note.noteTitle = "";
                     note.noteBody = globalTeapot.journal.ReadFloorNote(note.noteID);
                 }
-                else{
+                else
+                {
                     Destroy(note.gameObject);
                 }
             }
         }
     }
-    
-    public void ActivateNote(FloorNote note){
+
+    public void ActivateNote(FloorNote note)
+    {
         globalTeapot.ObtainFloorNote(note.noteID);
         floorNoteDisplay.SetActive(true);
         floorNoteText.text = note.noteBody;
-        if(note.disappear){Destroy(note.gameObject);}
-        if (Time.timeScale != 0f) 
+        if (note.disappear) { Destroy(note.gameObject); }
+        if (Time.timeScale != 0f)
         {
             Time.timeScale = 0f;
         }
     }
-    
-    public void DeactivateNote(){
+
+    public void DeactivateNote()
+    {
         floorNoteDisplay.SetActive(false);
         floorNoteText.text = "";
-        if (Time.timeScale == 0f) 
+        if (Time.timeScale == 0f)
         {
             Time.timeScale = 1f;
         }
     }
-    
-    public void KillPlayer(){
+
+    public void KillPlayer()
+    {
         globalTeapot.numStoreCredits = globalTeapot.numNotesObtained;
         EndDungeon(true, false);
     }
 
-    public void EndDungeon(bool death = false, bool artifact = false) {
+    public void EndDungeon(bool death = false, bool artifact = false)
+    {
         globalTeapot.hasDied = death;
 
         // If coming from intro state, move to floor one dungeon state (since the dungeon has been played)
@@ -113,7 +128,8 @@ public class DungeonManager : MonoBehaviour
             globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
         }
 
-        if (artifact) {
+        if (artifact)
+        {
             switch (globalTeapot.currProgress)
             {
                 case GlobalTeapot.TeaType.Dungeon_F1:
@@ -128,11 +144,13 @@ public class DungeonManager : MonoBehaviour
             }
         }
 
-        if (death){
+        if (death)
+        {
             globalTeapot.deathCount++;
             Loader.Load(Loader.Scene.DeathScene);
         }
-        else{
+        else
+        {
             Loader.Load(Loader.Scene.Village);
         }
     }

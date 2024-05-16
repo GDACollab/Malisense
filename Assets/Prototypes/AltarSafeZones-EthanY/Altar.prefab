@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4284253163621254074}
-  - component: {fileID: 2007772540243323502}
+  - component: {fileID: -9210381029414526045}
   - component: {fileID: 216679922687029721}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Altar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2007772540243323502
+--- !u!114 &-9210381029414526045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +42,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3722799944565836995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03807294b45a6334e90f213d0273fbab, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e37f31d43f794beea08f8de33adba53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alertCooldown: 5
 --- !u!61 &216679922687029721
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -75,7 +74,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [Tooltip("Percentage of speed reduction while carrying an object")][SerializeField] float objectSlowdownRatio = 0.4f;
     [HideInInspector] public OLD_INVENTORY inventory;
     [SerializeField] public PlayerInventory newInventory;
-    
+
     // Sound 
     [Header("Sound")]
     [SerializeField] float NoiseFrequency = 0.2f;
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     //public float sneakLoudness;
     private float timeCheck = 0;
     private scr_noise noiseSystem;
-    
+
     // Maybe Seperate UI Script?
     // UI Elements
     [Header("UI Elements")]
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     // Stamina States
     [HideInInspector] public bool isExhausted = false; // makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
     bool isReading = false;
-    
+
     // Global Teapot
     private GlobalTeapot globalTeapot;
     // Dungeon Manager
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
     private Transform interactBody;
     private InteractionSelector interactArea;
 
-    [HideInInspector] public List<GameObject> activeSafeZones = new List<GameObject>();
+    public List<GameObject> activeSafeZones = new List<GameObject>();
 
     void Start()
     {
@@ -100,21 +100,21 @@ public class Player : MonoBehaviour
 
         // Set initial stamina
         currentStamina = maxStamina;
-        
+
         // Get inventory
         newInventory = Resources.Load<PlayerInventory>("Player_Inventory");
-        
+
         // Get sound object
         noiseSystem = GetComponent<scr_noise>();
-        
+
         // Get player sprite
         playerSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        
+
         // Get Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         // Get Dungeon Manager
         dungeonManager = FindObjectOfType<DungeonManager>();
-        
+
         #region TEMP INPUTS
         // Get temp input options
         hideMessage = playerInput.actions.FindAction("Hide Message");
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
         hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
         activateFunctions = playerInput.actions.FindAction("Activate Functions");
         #endregion
-        
+
         // Get the enemies to deactivate
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
@@ -178,14 +178,17 @@ public class Player : MonoBehaviour
         {
             noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled = !noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled;
         }
-        if(activateFunctions.triggered){
-            if (testFunctions.GetPersistentEventCount()>0){
+        if (activateFunctions.triggered)
+        {
+            if (testFunctions.GetPersistentEventCount() > 0)
+            {
                 testFunctions.Invoke();
             }
         }
     }
-    
-    public void ToggleCheats(int stamdepl){
+
+    public void ToggleCheats(int stamdepl)
+    {
         var collider = GetComponent<Collider2D>();
         collider.enabled = !collider.enabled;
         staminaDepletion = collider.enabled ? stamdepl : 0;
@@ -208,15 +211,17 @@ public class Player : MonoBehaviour
                 isMoving = true;
             else
                 isMoving = false;
-            
+
             // Flip Sprite
-            if(moveX > 0){
+            if (moveX > 0)
+            {
                 playerSprite.flipX = true;
             }
-            else if(moveX < 0){
+            else if (moveX < 0)
+            {
                 playerSprite.flipX = false;
             }
-            
+
             // Rotation
             if (direction.magnitude > 0)
                 interactBody.up = direction;
@@ -327,8 +332,8 @@ public class Player : MonoBehaviour
     {
         // get list of all interactable objects, in order of priority
         List<GameObject> interactions = interactArea.getInteractables();
-        
-        
+
+
         // Stop reading
         if (isReading)
         {
@@ -348,15 +353,17 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (interactions == null) {
+        if (interactions == null)
+        {
             Debug.Log("no interactions found");
             interactArea.removeInteracts();
             return;
         }
-        
+
         // run through each object in the list until we find the highest priority interaction we can do
-        foreach (GameObject other in interactions) {
-            
+        foreach (GameObject other in interactions)
+        {
+
 
             // Find what object of item it is
             var item = other.GetComponent<ItemPickup>();
@@ -426,10 +433,11 @@ public class Player : MonoBehaviour
             }
         }
         interactArea.removeInteracts();
-        
+
     }
-    
-    private void SoundManager(){
+
+    private void SoundManager()
+    {
         if (isMoving) //When the player is moving
         {
             timeCheck += Time.deltaTime; //increment time
@@ -438,7 +446,7 @@ public class Player : MonoBehaviour
                 float size = walkLoudness; // Decide size of noiceObject based on current state
                 if (isSprinting) { size = sprintLoudness; }
                 //else if(player.GetComponent<PlayerControl>().isSneaking) { size = sneakLoudness; }
-                noiseSystem.MakeSound(transform.position,size); //Send command to create sound object
+                noiseSystem.MakeSound(transform.position, size); //Send command to create sound object
                 timeCheck -= NoiseFrequency; //decrement timeCheck to prevent infinite loop!
             }
         }

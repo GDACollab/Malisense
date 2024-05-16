@@ -480,17 +480,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "d8a2e5ca-6737-493a-aa45-3b3c817badd7",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slot 1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f1b39445-0a10-484b-ad70-a11afae2000c",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -502,34 +491,12 @@
                 },
                 {
                     "name": "",
-                    "id": "46643bd9-f011-41f8-8f4c-1a0dd462f97e",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slot 2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3342f5c2-b4e8-43ae-aa5c-1cc226f02b07",
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Slot 2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "53d38cab-d215-4441-9d33-efc5f197eb9a",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slot 3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -603,6 +570,39 @@
                     "name": "positive",
                     "id": "90fa0c31-d996-4666-9627-8a3788bfb38f",
                     "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right Stick",
+                    "id": "5e1873dd-49b9-451f-b91a-be7b1b89e30a",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "1f687de3-7107-4353-b780-38313c3518f3",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "b726a841-b143-4275-887c-38264764aa0d",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
