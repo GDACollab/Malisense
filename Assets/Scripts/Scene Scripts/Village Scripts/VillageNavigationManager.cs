@@ -8,10 +8,14 @@ using Ink.Runtime;      // Make sure you have this using directive for Ink scrip
 [System.Serializable]		// this lets me fill in the following two fields in the inspector
 public class Building
 {
+    public string characterName;
     public GameObject light;
 }
 
-public class V_SelectableItems3New : MonoBehaviour
+/// <summary>
+/// A script that handles village UI and navigation, and which calls functions on the Dialogue Manager.
+/// </summary>
+public class VillageNavigationManager : MonoBehaviour
 {
 
     //Building Selection
@@ -24,25 +28,24 @@ public class V_SelectableItems3New : MonoBehaviour
     public int selectedBuildingIndex;
     Building selectedBuilding;
 
-    //TMP Variables
-    [Header("Temp Playtest Variables")]
-    public GameObject dungeonMessage;
-
     //Each "Buildings/NPC"
-    [SerializeField] private List<GameObject> UI_ELEMENTS = new List<GameObject>(); // List for UI elements
-    [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
+    [Header("Selection States")]
     [SerializeField] public bool currentlySelected = false;
     [SerializeField] public bool hasEntered = false;
     [SerializeField] private bool hasSelected = false;
     [SerializeField] private bool movePointer = true;
-    private GameObject thisObject;
 
-    //UI Stuff
+    // UI Stuff
+    [Header("UI")]
+    [SerializeField] private List<GameObject> DialogueUI = new List<GameObject>(); // List for UI elements
+    [SerializeField] private GameObject DialogueTextUI; // List for UI elements
     public Image fadeOutUIImage; // Reference to the UI Image
     [SerializeField] public float fadeSpeed = 12f;
 
     //Ink
-    public string CurrentCharacter;
+    [Header("Ink")]
+    [SerializeField] private List<string> CharacterList = new List<string>(); // List for Ink
+    public string CurrentCharacter; 
     public bool activateInk;
     public bool loadDungeon = false;
 
@@ -52,7 +55,11 @@ public class V_SelectableItems3New : MonoBehaviour
     // Global Teapot
     GlobalTeapot globalTeapot;
 
+    // Audio Manager
     private AudioManager audioManager;
+
+    // This Object
+    private GameObject thisObject;
 
     private void Start()
     {
@@ -77,7 +84,6 @@ public class V_SelectableItems3New : MonoBehaviour
         // Turn on the light of the selected building 
         buildings[selectedBuildingIndex].light.SetActive(true);
 
-
         thisObject = gameObject;
         CurrentCharacter = CharacterList[selectedBuildingIndex];
 
@@ -86,12 +92,12 @@ public class V_SelectableItems3New : MonoBehaviour
         {
             // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
-            selectObject();
+            selectBuilding();
         } // Force CK Intro After 1st Death
         else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
         { 
             moveInList(-1);
-            selectObject();
+            selectBuilding();
         } // TODO: Force Mayor Intro 
         else if (false)
         { 
@@ -107,7 +113,7 @@ public class V_SelectableItems3New : MonoBehaviour
         {
             Debug.Log("forcing CK INTRO");
             moveInList(-3);
-            selectObject();
+            selectBuilding();
             hasForcedCKIntro = true;
         }
 
@@ -137,7 +143,7 @@ public class V_SelectableItems3New : MonoBehaviour
         itemSelected();
     }//NEEDS TO BE UPDATED FOR InputAction
 
-    public void selectObject()
+    public void selectBuilding()
     {
         if (hasSelected)
         {
@@ -177,8 +183,6 @@ public class V_SelectableItems3New : MonoBehaviour
                 building.light.SetActive(false);
             }
         }
-
-        dungeonMessage.SetActive(selectedBuildingIndex == 3);
     }//Turns on Light 
 
     private IEnumerator FadeToBlack() //Coroutine Function
@@ -186,7 +190,6 @@ public class V_SelectableItems3New : MonoBehaviour
         print("FadingToBlack");
         Color objectColor = fadeOutUIImage.color;
         float fadeAmount;
-
         while (fadeOutUIImage.color.a < 1)
         {
             fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);
@@ -241,21 +244,24 @@ public class V_SelectableItems3New : MonoBehaviour
     {
         Debug.Log("ActivateUI");
         // Deactivate all UI elements
-        foreach (var uiElement in UI_ELEMENTS)
+        foreach (var uiElement in DialogueUI)
         {
             uiElement.SetActive(false);
         }
 
         // Activate the UI element that corresponds to the selected object
-        if (index >= 0 && index < UI_ELEMENTS.Count)
+        if (index >= 0 && index < DialogueUI.Count)
         {
             //UI Activate
-            UI_ELEMENTS[index].SetActive(true);
+            DialogueUI[index].SetActive(true);
             //Ink Activate
             activateInk = true;
 
             currentlySelected = false;
         }
+
+        // Set Dialogue Text UI Visible
+        DialogueTextUI.SetActive(true);
 
     }
 
@@ -264,7 +270,7 @@ public class V_SelectableItems3New : MonoBehaviour
         Debug.Log("DeActivateUI");
         // Deactivate all UI elements
         activateInk = false;
-        foreach (var uiElement in UI_ELEMENTS)
+        foreach (var uiElement in DialogueUI)
         {
             uiElement.SetActive(false);
         }

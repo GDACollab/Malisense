@@ -1,5 +1,5 @@
 VAR isIntro = false
-VAR isDeathF1 = false
+VAR isDeathF1 = true
 VAR isHub = false
 VAR isDeathF2 = false 
 VAR isIntroductionCutscene = false
@@ -23,7 +23,7 @@ Mayor
 Scholar 
 */
 
-VAR character = "Crypt_Keeper"
+VAR character = "Scholar"
 
 {
  - isIntroductionCutscene: -> Introduction // Go to Introduction
@@ -1059,7 +1059,8 @@ The condescension drips sickly sour off of their lips as their eyes alight upon 
     -> KnowVillagers
  *  "The church was supposed to survive the cataclysm. What happened to everyone else? Where is the High Priest?"
     -> WhatHappenedToChurch
- *  "Enough. I wish to pass on into the dungeon."
+ *{CHOICE_COUNT() < 4}->  
+ "Enough. I wish to pass on into the dungeon."
     -> GoForth2
 
 = WhoAreYou 
@@ -1194,16 +1195,11 @@ Chills creep up the back of your neck. The High Priest's cold stare holds you, i
 <b>HIGH PRIEST</b>: "Of course... I will see you again shortly, doomed heretic."
     -> END
 ==Scholar==
-{
- - character == "Scholar": ->Scholar
- - isEnd: // Go to end
- - else: Error
- }
  
  =Hub
  
  {
-- Hub < 0: -> ScholarhubIntro
+- Hub == 0: -> ScholarhubIntro
 - else: -> regularHub
 } 
 
@@ -1406,33 +1402,33 @@ Though their expression remains concealed, you can feel the giddiness rising wit
 -> WhisperingBellExplination
 
 = getOn 
-<b>SCHOLAR>/b>: Such impatience. The wanderer must learn to wait... 
+<b>SCHOLAR</b>: Such impatience. The wanderer must learn to wait... 
 
  They begin eyeing the bell thoroughly. Though their expression remains concealed, you can feel the giddiness rising within them as they hungrily take in every inch of the artifact.. 
 
-<b>SCHOLAR>/b>: Certainly this cannot be...Yet, it is...wanderer. Oh, gracious wanderer! You have brought to me the Whispering Bell! 
+<b>SCHOLAR</b>: Certainly this cannot be...Yet, it is...wanderer. Oh, gracious wanderer! You have brought to me the Whispering Bell! 
 
 -> WhisperingBellExplination
 
 = WhisperingBellExplination
-<b>SCHOLAR>/b>: Mortal minds cannot hear the sound of the bell. If I could, I shudder to think of how terrible it might sound. 
+<b>SCHOLAR</b>: Mortal minds cannot hear the sound of the bell. If I could, I shudder to think of how terrible it might sound. 
 
-<b>SCHOLAR>/b>: Seeing it here, in the flesh, I can confirm a few suspicions that it would have been unbecoming of me to voice before. 
+<b>SCHOLAR</b>: Seeing it here, in the flesh, I can confirm a few suspicions that it would have been unbecoming of me to voice before. 
 
-<b>SCHOLAR>/b>: There were rumors it was used to track signs of the Malignance when rung, and it thusly must allow you to track the souls corrupted by it. As for a reward for showing me this, I shall tell you of my folly, and of the knowledge I have burdened myself with.
+<b>SCHOLAR</b>: There were rumors it was used to track signs of the Malignance when rung, and it thusly must allow you to track the souls corrupted by it. As for a reward for showing me this, I shall tell you of my folly, and of the knowledge I have burdened myself with.
 
 *["Your folly?"] -> folly 
 
 =folly 
-<b>SCHOLAR>/b>: I seek memories of the Convergence, to preserve my own humanity, as I now have the unfortunate position of feeling empathy for the Malignance, yet at least I hold my own memories. 
+<b>SCHOLAR</b>: I seek memories of the Convergence, to preserve my own humanity, as I now have the unfortunate position of feeling empathy for the Malignance, yet at least I hold my own memories. 
 
-<b>SCHOLAR>/b>: I lost my peers, and my own control over my body, and all for what? 
+<b>SCHOLAR</b>: I lost my peers, and my own control over my body, and all for what? 
 
-<b>SCHOLAR>/b>: To have no mouth with which to speak my knowledge, to bear the burden of these secrets alone...at least I may tell you without any fear. That is all I will say for now. 
+<b>SCHOLAR</b>: To have no mouth with which to speak my knowledge, to bear the burden of these secrets alone...at least I may tell you without any fear. That is all I will say for now. 
 
-<b>SCHOLAR>/b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
+<b>SCHOLAR</b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
 
-<b>SCHOLAR>/b>: The ringing echoes of the dead shall clear the way of the corrupted.
+<b>SCHOLAR</b>: The ringing echoes of the dead shall clear the way of the corrupted.
 
 -> END
 
@@ -1481,11 +1477,11 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 *->handGoodbye
 
 =howUseHand 
-<b>SCHOLAR>/b>: It seems the souls consumed by the Malignance still claw for the surface of a tempestuous sea of their own multitudes. 
+<b>SCHOLAR</b>: It seems the souls consumed by the Malignance still claw for the surface of a tempestuous sea of their own multitudes. 
 
-<b>SCHOLAR>/b>: Their outstretched grasp and its lack of a grip on reality ends up overcompensating, so that its infrequent touch far outstretches the physical bounds of the Gauntlet's fingers. 
+<b>SCHOLAR</b>: Their outstretched grasp and its lack of a grip on reality ends up overcompensating, so that its infrequent touch far outstretches the physical bounds of the Gauntlet's fingers. 
 
-<b>SCHOLAR>/b>: For those with a vocabulary lesser than mine, it may touch others from very far away in its attempts to cling to the mortal realm.
+<b>SCHOLAR</b>: For those with a vocabulary lesser than mine, it may touch others from very far away in its attempts to cling to the mortal realm.
 
 -> handQuestions
 
@@ -1493,27 +1489,27 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 
 =useHand
 
-<b>SCHOLAR>/b>: This forces me into a position of conjecture given how much of the information about it is knowledge or rumor, but considering the truth of it being the consumed souls of the Malignance vying for revenge...
+<b>SCHOLAR</b>: This forces me into a position of conjecture given how much of the information about it is knowledge or rumor, but considering the truth of it being the consumed souls of the Malignance vying for revenge...
 
-<b>SCHOLAR>/b>: It must have been used by the Church for the controlling of beasts...still, as thanks for sharing such a wonderous creation with me, I shall speak more of my senselessness...
+<b>SCHOLAR</b>: It must have been used by the Church for the controlling of beasts...still, as thanks for sharing such a wonderous creation with me, I shall speak more of my senselessness...
 
-<b>SCHOLAR>/b>: If I had merely left the clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
+<b>SCHOLAR</b>: If I had merely left the clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
 
 *["Your body?"] 
 
-<b>SCHOLAR>/b>: I...do not know if it is safe to share this secret but...my body is not my own. 
+<b>SCHOLAR</b>: I...do not know if it is safe to share this secret but...my body is not my own. 
 
-<b>SCHOLAR>/b>: I only make use of the eye and my mind. I am left as a puppet, much like the Mayor. 
+<b>SCHOLAR</b>: I only make use of the eye and my mind. I am left as a puppet, much like the Mayor. 
 
-<b>SCHOLAR>/b>: N-Not in the political sense or whatever is going on with that coward. 
+<b>SCHOLAR</b>: N-Not in the political sense or whatever is going on with that coward. 
 
-<b>SCHOLAR>/b>: It was a great mistake of mine, to give up my body to a beast that controls it...I am grateful you are the only visitor I get. 
+<b>SCHOLAR</b>: It was a great mistake of mine, to give up my body to a beast that controls it...I am grateful you are the only visitor I get. 
 
-<b>SCHOLAR>/b>: I shall speak no more of it to you....
+<b>SCHOLAR</b>: I shall speak no more of it to you....
 -> handQuestions
 
 =handGoodbye 
-<b>SCHOLAR>/b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
+<b>SCHOLAR</b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
 ->END 
 
 = CharacterQs 

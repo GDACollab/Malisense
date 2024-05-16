@@ -7,14 +7,20 @@ using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System;
+using UnityEditor.Experimental.GraphView;
 
+/// <summary>
+/// A script that handles dialogue UI and Ink functionality (variables, choices, etc)
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
-
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] public GameObject selectableItemsGameObject;
+    [SerializeField] private TextMeshProUGUI characterNameText;
+
+    [Header("Village Navigation")]
+    [SerializeField] VillageNavigationManager navigationManager;
 
     [Header("Ink File")]
     [Tooltip("The master ink file.")]
@@ -26,37 +32,17 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private int currentChoiceIndex = -1;
     private int defaultHeight = 115;
 
-    [Header("Input")]
-    [Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
-    [SerializeField] float moveRepeatDelay = 0.5f;
-    [Tooltip("The speed (in seconds) that the move action repeats itself once repeating (max 1 per frame).")]
-    [SerializeField] float moveRepeatRate = 0.1f;
-    bool firstInput = true;
-    float moveTimer = 0f;
-    Controls controls;
-
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
 
-    private static DialogueManager instance;
-
-    [Header("Other")]
+    [Header("Status")]
     [SerializeField] private bool isPlaying;
-    [SerializeField] V_SelectableItems3New selectableScript;
+    
 
     // Global Teapot
     GlobalTeapot globalTeapot;
 
     private string currentInkFileName = "";
-
-
-    void Awake()
-    {
-        // Input
-        controls = new Controls();
-        controls.UI.Enable();
-        controls.UI.Select.performed += Select;
-    }
 
     void Start()
     {
@@ -65,7 +51,6 @@ public class DialogueManager : MonoBehaviour
 
         isPlaying = false;
         dialoguePanel.SetActive(false);
-        selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
 
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -79,11 +64,9 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
-        int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-        MovementInput();
 
-        if (!selectableScript.activateInk)
+        if (!navigationManager.activateInk)
         {
             currentInkFileName = "";
             ClearDialogueMode();
@@ -94,14 +77,14 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (selectableScript != null && selectableScript.activateInk)
+        if (navigationManager != null && navigationManager.activateInk)
         {
-            string currentChar = selectableScript.CurrentCharacter;
+            string currentChar = navigationManager.CurrentCharacter;
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
             if (currentChar != null)
             {
                 // If this is the introduction cutscene, pass it with an extra parameter
-                if (selectableScript.selectedBuildingIndex == 5)
+                if (navigationManager.selectedBuildingIndex == 5)
                 {
                     EnterDialogueMode(isIntroductionCutscene: true);
                 }
@@ -114,76 +97,32 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void MovementInput()
+    public void moveChoiceSelection(string direction)
     {
         // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
         // Check that there are dialogue options to choose from otherwise there's no option to move
         if (isPlaying && currentStory.currentChoices.Count > 0)
         {
-            // Read movement input
-            Vector2 inputVector = controls.UI.Move.ReadValue<Vector2>();
 
-            // There's horizontal movement input
-            if (inputVector.x != 0f)
+            // Move
+            if (direction == "left")             // left
             {
-
-                // Moving is on cooldown
-                if (moveTimer > 0f)
-                {
-                    moveTimer -= Time.deltaTime;
-
-                    if (moveTimer < 0f)
-                    {
-                        moveTimer = 0f;
-                    }
-                }
-
-                // Can Move
-                if (moveTimer <= 0f)
-                {
-                    // Check if this is the first movement input after there was just no movement
-                    if (firstInput)
-                    {
-                        // Put move on moveRepeatDelay cooldown
-                        firstInput = false;
-                        moveTimer = moveRepeatDelay;
-                    }
-                    else
-                    {
-                        // Put move on moveRepeatRate cooldown
-                        moveTimer = moveRepeatRate;
-                    }
-
-                    // Move
-                    if (inputVector.x < 0f)             // left
-                    {
-                        // Navigate up in the choices list
-                        currentChoiceIndex--;
-                        if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                        // Optionally, call a function to update the UI here
-                    }
-                    else if (inputVector.x > 0f)        // right
-                    {
-                        // Navigate down in the choices list
-                        currentChoiceIndex++;
-                        if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                        // Optionally, call a function to update the UI here
-                    }
-                }
-
+                // Navigate up in the choices list
+                currentChoiceIndex--;
+                if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                // Optionally, call a function to update the UI here
             }
-
-            // There's no horizontal movement input
-            else
+            else if (direction == "right")        // right
             {
-                // Reset movement so that the next movement input is instant
-                firstInput = true;
-                moveTimer = 0f;
+                // Navigate down in the choices list
+                currentChoiceIndex++;
+                if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                // Optionally, call a function to update the UI here
             }
         }
     }
 
-    void Select(InputAction.CallbackContext context)
+    public void selectDialogue()
     {
         // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
         if (isPlaying)
@@ -200,7 +139,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(string character = "None", bool isIntroductionCutscene = false)
+    public void EnterDialogueMode(string character = "???????????????", bool isIntroductionCutscene = false)
     {
         TextAsset inkJson = masterInk;
 
@@ -269,15 +208,24 @@ public class DialogueManager : MonoBehaviour
         isPlaying = true;
 
         dialoguePanel.SetActive(true);
+        if (character == "Crypt_Keeper")
+        {
+            characterNameText.text = "Crypt Keeper";
+        } else
+        {
+            characterNameText.text = character;
+        }
         ContinueStory();
     }
 
     private void ExitDialogueMode()
     {
+        Debug.Log(gameObject);
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        selectableScript.selectObject();
+        characterNameText.text = "";
+        navigationManager.selectBuilding();
     }
 
     private void ClearDialogueMode()
@@ -285,6 +233,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        characterNameText.text = "";
     }
 
     private void ContinueStory()
@@ -337,6 +286,7 @@ public class DialogueManager : MonoBehaviour
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.black; // Example of highlighting
                 choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // set overflow to allow text to expand
                 choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize; //set box to exanded size
+                // choices[i].GetComponentInChildren<TextMeshProUGUI>().text
 
             }
             else
