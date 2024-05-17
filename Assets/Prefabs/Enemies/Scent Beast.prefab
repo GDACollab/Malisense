@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 4438870575858539407}
   - component: {fileID: 5463842739364525523}
   - component: {fileID: 3437042412423122348}
-  - component: {fileID: 2096877065520059329}
   - component: {fileID: 5485851214165889153}
-  - component: {fileID: 2535709646859203902}
+  - component: {fileID: 8425315111178970922}
+  - component: {fileID: 2096877065520059329}
   - component: {fileID: 5651225449475446733}
+  - component: {fileID: 2535709646859203902}
   m_Layer: 0
   m_Name: Scent Beast
   m_TagString: Enemy
@@ -52,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  patrol: {fileID: 0}
+  patrol: {fileID: 8425315111178970922}
   chasing: {fileID: 0}
   alert: {fileID: 2096877065520059329}
 --- !u!58 &5463842739364525523
@@ -117,24 +118,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2096877065520059329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446181726072927397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30e46b46334ecd741b792656de960696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endPointRadius: 30
-  maxPathTime: 15
-  enableGizmos: 0
-  pathTimeLeft: 10
-  endpoint: {x: 0, y: 0}
-  player: {fileID: 0}
 --- !u!114 &5485851214165889153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +137,63 @@ MonoBehaviour:
   scentPerSecond: 1
   playerScent: 0
   playerDist: 0
+--- !u!114 &8425315111178970922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a963882426285674188c098e8dfcb358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endPointRadius: 30
+  maxPathTime: 10
+  enableGizmos: 0
+  pathTimeLeft: 10
+  endpoint: {x: 0, y: 0}
+  player: {fileID: 0}
+--- !u!114 &2096877065520059329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e46b46334ecd741b792656de960696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endPointRadius: 30
+  maxPathTime: 15
+  enableGizmos: 0
+  pathTimeLeft: 10
+  endpoint: {x: 0, y: 0}
+  player: {fileID: 0}
+--- !u!114 &5651225449475446733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 238eef22560de404c9a17e29f7f29d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 20
+  waypointDistance: 0.5
+  goalDistance: 0.5
+  recalculateInterval: 0.5
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 1545
+  visuals: {fileID: 2084635950395696323}
+  direction: {x: 0.8225545, y: 0.56868625}
 --- !u!114 &2535709646859203902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,27 +222,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &5651225449475446733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446181726072927397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238eef22560de404c9a17e29f7f29d5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acceleration: 20
-  waypointDistance: 0.5
-  goalDistance: 0.5
-  recalculateInterval: 0.5
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 521
-  visuals: {fileID: 2084635950395696323}
-  direction: {x: 0.8225545, y: 0.56868625}
 --- !u!1001 &847181753730587933
 PrefabInstance:
   m_ObjectHideFlags: 0
