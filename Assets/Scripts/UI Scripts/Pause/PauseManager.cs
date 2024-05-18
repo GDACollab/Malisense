@@ -200,10 +200,10 @@ public class PauseManager : MonoBehaviour
                 Loader.Load(Loader.Scene.Village);
                 break;
             case 1: 
-                Loader.Load(Loader.Scene.Dungeon);
+                Loader.Load(Loader.Scene.Dungeon_F1);
                 break;
             case 2: 
-                Loader.Load(Loader.Scene.Dungeon);
+                Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             default:
                 Loader.Load(Loader.Scene.MainMenu);

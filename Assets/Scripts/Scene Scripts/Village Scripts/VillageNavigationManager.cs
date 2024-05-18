@@ -203,7 +203,7 @@ public class VillageNavigationManager : MonoBehaviour
             if (loadDungeon)
             {
                 loadDungeon = false;
-                Loader.Load(Loader.Scene.Dungeon);
+                Loader.Load(Loader.Scene.Dungeon_F1);
             }
             else
             {
