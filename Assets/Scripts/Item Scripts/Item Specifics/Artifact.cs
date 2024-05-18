@@ -11,4 +11,10 @@ public class Artifact : ItemBase
     public float cooldown;
     [Tooltip("Artifact duration in seconds")]
     public float duration;
+
+    private void OnValidate()
+    {
+        cooldown = 0;
+        duration = 0;
+    }
 }

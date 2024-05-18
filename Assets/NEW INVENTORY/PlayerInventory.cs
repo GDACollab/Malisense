@@ -23,7 +23,6 @@ public class PlayerInventory : ScriptableObject
         
         // Set inventory size
         inventory.Clear();
-        artifact2 = null;
         
         for (int i = 0; i < size; i++)
         {
