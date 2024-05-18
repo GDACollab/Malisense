@@ -24,14 +24,14 @@ public class LoaderCallback : MonoBehaviour
     {
         yield return StartCoroutine(FadeToBlackToLoadScene());
 
-        Loader.LoaderCallback(); // Calls to load the scene after load 
+        var asyncScene = Loader.LoaderCallback(); // Calls to load the scene after load 
 
-        while (!SceneManager.GetActiveScene().isLoaded) // Waits on Loading screen while other screen loads
+        while (asyncScene.progress<0.9f/* !SceneManager.GetActiveScene().isLoaded */) // Waits on Loading screen while other screen loads
         {
             yield return null;
         }
         //fadeOutUIImage.gameObject.SetActive(false);
-        // yield return StartCoroutine(FadeToBlackToNextScene());
+        yield return StartCoroutine(FadeToBlackToNextScene(asyncScene));
         // Call the loader callback after the delay
 
     }
@@ -47,17 +47,18 @@ public class LoaderCallback : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeToBlackToNextScene()
+    private IEnumerator FadeToBlackToNextScene(AsyncOperation asyncScene)
     {
         Color objectColor = fadeOutUIImage.color; //Gets Object Color and Modifies values
         fadeOutUIImage.gameObject.SetActive(true);
-        while (fadeOutUIImage.color.a < 1.5)
+        while (fadeOutUIImage.color.a < 1)
         {
             objectColor.a += fadeSpeed * Time.deltaTime;
             fadeOutUIImage.color = objectColor;
             yield return null;
         }
         fadeOutUIImage.gameObject.SetActive(false);
+        asyncScene.allowSceneActivation = true;
     }
 }
 

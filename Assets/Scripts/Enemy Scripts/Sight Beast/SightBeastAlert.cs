@@ -8,6 +8,7 @@ public class SightBeastAlert : StateBaseClass
 {
     [Tooltip("Seconds after entering alert during which the player cannot be chased.")]
     public float gracePeriod = 0.5f;
+    public float maxAlertPeriod = 10f;
 
     [Tooltip("Rate of acceleration.")]
     public float speed = 200f;
@@ -62,6 +63,7 @@ public class SightBeastAlert : StateBaseClass
         }
         else
         {
+            _gracePeriodRemaining -= Time.deltaTime;
             _pathfinder.acceleration = speed;
 
             // Make chase!
@@ -71,7 +73,7 @@ public class SightBeastAlert : StateBaseClass
             }
 
             // Go back to patrol mode after a short animation
-            else if (_pathfinder.AtGoal)
+            else if (_pathfinder.AtGoal || Mathf.Abs(_gracePeriodRemaining) > maxAlertPeriod)
             {
                 if (_lookAroundCoroutine == null)
                     _lookAroundCoroutine = StartCoroutine(LookAround());

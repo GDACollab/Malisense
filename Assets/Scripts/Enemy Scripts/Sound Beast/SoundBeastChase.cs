@@ -5,6 +5,7 @@ using Pathfinding;
 using System.Threading;
 
 [RequireComponent(typeof(StateMachine))]
+[RequireComponent(typeof(SoundBeastSoundModule))]
 public class SoundBeastChase : StateBaseClass
 {
     public Transform target;
@@ -24,9 +25,14 @@ public class SoundBeastChase : StateBaseClass
     Rigidbody2D rb;
     private FearTracker _fear;
     private StateMachine machine;
-    private bool hearsPlayer = false;
+    private bool hearsPlayer => _sound.heardSound;
     private float _chaseTimer;
+    private SoundBeastSoundModule _sound;
     
+    
+    private void Awake() {
+        _sound = GetComponent<SoundBeastSoundModule>();
+    }
 
     public override void Init()
     {
@@ -116,27 +122,12 @@ public class SoundBeastChase : StateBaseClass
             if(_chaseTimer <=0){
                 _chaseTimer = chaseTimer;
                 CancelInvoke();
+                _sound.detectedNoisePos = target.position;
                 machine.currentState = StateMachine.State.Alert;
             }
         }
         else{
             _chaseTimer = chaseTimer;
-        }
-    }
-    
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "NoiseObject")
-        {
-            hearsPlayer = true;
-        }
-    }
-    
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "NoiseObject")
-        {
-            hearsPlayer = false;
         }
     }
 }

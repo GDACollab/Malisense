@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
     {
         fadeOutUIImage.gameObject.SetActive(true);
         yield return StartCoroutine(FadeToBlack());
-        Loader.Load(Loader.Scene.Dungeon);
+        Loader.Load(Loader.Scene.Dungeon_F1);
     }
 
     IEnumerator FadeToBlack()

@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 
 [RequireComponent(typeof(StateMachine))]
+[RequireComponent(typeof(SoundBeastSoundModule))]
 public class SoundBeastAlert : StateBaseClass
 {
     public float circleRadius = 3f;
@@ -25,7 +26,7 @@ public class SoundBeastAlert : StateBaseClass
     public bool movedToOutside = false; // debug public
     private Transform player;
     private AIPath aiPath;
-    public bool isCircling = false; // debug public
+    public bool isCircling { get {return _sound.isCircling;} set{_sound.isCircling = value;}} // debug public
     public bool isMovingToOutside = false; // debug public
     private float circleStartTime;
     private Vector3 circleCenter;
@@ -34,9 +35,14 @@ public class SoundBeastAlert : StateBaseClass
     private bool notcollided = false;
 
     private Player playerObj;
+    private SoundBeastSoundModule _sound;
+    private Vector3 soundPosition => _sound.detectedNoisePos;
 
     //get the noisePos variable from the soundBeast_noiseDetect_copy script and use it to pass the noise position to the Sound_Alert script
 
+    private void Awake() {
+        _sound = GetComponent<SoundBeastSoundModule>();
+    }
 
     public override void Init()
     {
@@ -44,19 +50,21 @@ public class SoundBeastAlert : StateBaseClass
         machine = GetComponent<StateMachine>();
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
+        aiPath.enabled = true;
         isCircling = false;
         movedToOutside = false;
         if (distractTarget) distractTarget = false;
         else
         {
-            circleCenter = player.position;
-            aiPath.destination = player.position;
+            circleCenter = soundPosition;
+            aiPath.destination = soundPosition;
         }
 
         // Start pathfinding to player's position
         aiPath.maxSpeed = AlertedSpeed;
         aiPath.SearchPath();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        GetComponent<SoundBeastChase>().CancelInvoke();
     }
 
 
@@ -192,24 +200,14 @@ public class SoundBeastAlert : StateBaseClass
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        if (collision.tag == "NoiseObject" && isCircling && playerObj.activeSafeZones.Count == 0)
-        {
-            // Switch to chase state
-            isCircling = false;
-            machine.currentState = StateMachine.State.Chasing;
-        }
-    }
     //Sets target to player position when a monster is distracted
     public void SetDistractTarget()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         aiPath = GetComponent<AIPath>();
         distractTarget = true;
-        circleCenter = player.position;
-        aiPath.destination = player.position;
+        circleCenter = soundPosition;
+        aiPath.destination = soundPosition;
         aiPath.canMove = false;
     }
 
