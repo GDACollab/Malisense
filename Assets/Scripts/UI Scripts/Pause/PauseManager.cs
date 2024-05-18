@@ -8,7 +8,7 @@ using System.Linq;
 
 public class PauseManager : MonoBehaviour
 {
-    [SerializeField] GameObject pauseParent, optionsMenu, journalDisplay;
+    [SerializeField] GameObject pauseParent, optionsMenu, journalDisplay, controlsDisplay;
     [SerializeField] Image journalTab, settingsTab;
     [SerializeField] Slider masterSlider, musicSlider, sfxSlider, ambianceSlider;
     [SerializeField] List<TextMeshProUGUI> notePages;
@@ -16,7 +16,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] Button debug;
     public static bool isPaused;
     
-    enum Submenu {SETTINGS, JOURNAL}
+    enum Submenu {SETTINGS, JOURNAL, CONTROLS}
     Submenu currSubMenu = Submenu.SETTINGS;
     
     PlayerInput uiInput;
@@ -32,6 +32,8 @@ public class PauseManager : MonoBehaviour
         uiInput = GetComponent<PlayerInput>();
         otherInputs = FindObjectsOfType<PlayerInput>().ToList();
         otherInputs.Remove(uiInput);
+        DisableUIInput();
+        
         isPaused = false;
         masterSlider.value = globalTeapot.audioManager.masterVolume;
         musicSlider.value = globalTeapot.audioManager.musicVolume;
@@ -92,6 +94,7 @@ public class PauseManager : MonoBehaviour
             floorNotes = globalTeapot.journal.GetObtainedFloorNotes();
             Time.timeScale = 0f;
             isPaused = true;
+            EnableUIInput();
         }
     }
     
@@ -100,28 +103,52 @@ public class PauseManager : MonoBehaviour
         pauseParent.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        DisableUIInput();
         SetOtherInputs(true);
     }
 
-    
     public void OpenSettings(bool force = false){
-        if(currSubMenu == Submenu.SETTINGS && !force){return;}
-        currSubMenu = Submenu.SETTINGS;
-        optionsMenu.SetActive(true);
-        journalDisplay.SetActive(false);
-        settingsTab.color = Color.white;
-        journalTab.color = Color.grey;
-        masterSlider.Select();
+        OpenMenu(Submenu.SETTINGS);
+        if(force){masterSlider.Select();}
     }
     
     public void OpenJournal(){
-        if(currSubMenu == Submenu.JOURNAL){return;}
-        currSubMenu = Submenu.JOURNAL;
+        OpenMenu(Submenu.JOURNAL);
+    }
+    
+    public void OpenControls(){
+        OpenMenu(Submenu.CONTROLS);
+    }
+    
+    void OpenMenu(Submenu submenu){
+        if(currSubMenu == submenu){return;}
+        currSubMenu = submenu;
         optionsMenu.SetActive(false);
-        journalDisplay.SetActive(true);
+        journalDisplay.SetActive(false);
+        controlsDisplay.SetActive(false);
         settingsTab.color = Color.grey;
-        journalTab.color = Color.white;
-        DisplayJournalPages(lastPageDisplayed);
+        journalTab.color = Color.grey;
+        
+        switch(submenu){
+            case Submenu.SETTINGS:
+                optionsMenu.SetActive(true);
+                settingsTab.color = Color.white;
+                masterSlider.Select();
+                break;
+            case Submenu.JOURNAL:
+                journalDisplay.SetActive(true);
+                journalTab.color = Color.white;
+                DisplayJournalPages(lastPageDisplayed);
+                break;
+            case Submenu.CONTROLS:
+                controlsDisplay.SetActive(true);
+                break;
+            default:
+                optionsMenu.SetActive(true);
+                settingsTab.color = Color.white;
+                masterSlider.Select();
+                break;
+        }
     }
     
     void DisplayJournalPages(int ind){
@@ -188,5 +215,14 @@ public class PauseManager : MonoBehaviour
         foreach(PlayerInput input in otherInputs){
             input.enabled = enable;
         }
+    }
+    
+    void EnableUIInput(){
+        uiInput.currentActionMap.Enable();
+    }
+    
+    void DisableUIInput(){
+        uiInput.currentActionMap.Disable();
+        uiInput.currentActionMap.FindAction("Pause").Enable();
     }
 }

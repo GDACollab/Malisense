@@ -344,7 +344,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2304
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -519,6 +519,7 @@ MonoBehaviour:
   speed: 31
   rateOfAcceleration: 1
   speedMax: 50
+  lookAheadDistance: 6
   seeAroundWallsTime: 2
 --- !u!114 &6089753570044768361
 MonoBehaviour:

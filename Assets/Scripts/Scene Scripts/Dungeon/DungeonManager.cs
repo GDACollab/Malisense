@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FMODUnity;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -12,6 +15,11 @@ public class DungeonManager : MonoBehaviour
 
     [Header("Floor Note UI")]
     [SerializeField] GameObject floorNoteDisplay;
+    [Header("Dungeon Fade In")]
+    [SerializeField] Image fadeInUIImage;
+    [SerializeField] float fadeInTime = 2f;
+    [SerializeField] float fadeOutTime = 0.5f;
+
     TextMeshProUGUI floorNoteText;
 
     GlobalTeapot globalTeapot;
@@ -28,6 +36,7 @@ public class DungeonManager : MonoBehaviour
         floorNoteText = floorNoteDisplay.GetComponentInChildren<TextMeshProUGUI>();
 
         SetFloorNotes();
+        StartCoroutine(FadeFromBlack());
     }
 
     /// <summary>
@@ -52,6 +61,82 @@ public class DungeonManager : MonoBehaviour
     {
         enemies.Remove(enemy);
         UpdateMusic();
+    }
+
+    public void ActivateNote(FloorNote note)
+    {
+        foreach (var input in GetComponentsInChildren<PlayerInput>())
+        {
+            input.enabled = false;
+        }
+        globalTeapot.ObtainFloorNote(note.noteID);
+        floorNoteDisplay.SetActive(true);
+        floorNoteText.text = note.noteBody;
+        if (note.disappear) { Destroy(note.gameObject); }
+        if (Time.timeScale != 0f)
+        {
+            Time.timeScale = 0f;
+        }
+    }
+
+    public void DeactivateNote()
+    {
+        floorNoteDisplay.SetActive(false);
+        floorNoteText.text = "";
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+        }
+        foreach (var input in GetComponentsInChildren<PlayerInput>())
+        {
+            input.enabled = true;
+        }
+
+    }
+
+    public void KillPlayer()
+    {
+        globalTeapot.numStoreCredits = globalTeapot.numNotesObtained;
+        EndDungeon(true, false);
+    }
+
+    public void EndDungeon(bool death = false, bool artifact = false)
+    {
+        globalTeapot.hasDied = death;
+        Action sceneChange;
+
+        // If coming from intro state, move to floor one dungeon state (since the dungeon has been played)
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
+        }
+
+        if (artifact)
+        {
+            switch (globalTeapot.currProgress)
+            {
+                case GlobalTeapot.TeaType.Dungeon_F1:
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
+                    break;
+                case GlobalTeapot.TeaType.Dungeon_F2:
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.End;
+                    break;
+                default:
+                    globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
+                    break;
+            }
+        }
+
+        if (death)
+        {
+            globalTeapot.deathCount++;
+            sceneChange = () => Loader.Load(Loader.Scene.DeathScene);
+        }
+        else
+        {
+            sceneChange = () => Loader.Load(Loader.Scene.Village);
+        }
+        StartCoroutine(FadeToBlack(sceneChange));
     }
 
     /// <summary>
@@ -90,68 +175,37 @@ public class DungeonManager : MonoBehaviour
         }
     }
 
-    public void ActivateNote(FloorNote note)
+    private IEnumerator FadeFromBlack()
     {
-        globalTeapot.ObtainFloorNote(note.noteID);
-        floorNoteDisplay.SetActive(true);
-        floorNoteText.text = note.noteBody;
-        if (note.disappear) { Destroy(note.gameObject); }
-        if (Time.timeScale != 0f)
+        Time.timeScale = 0f;
+        fadeInUIImage.gameObject.SetActive(true);
+        Color objectColor = fadeInUIImage.color; //Gets Object Color and Modifies values
+        float timer = fadeInTime;
+        while (fadeInUIImage.color.a > 0)
         {
-            Time.timeScale = 0f;
+            timer -= Time.unscaledDeltaTime;
+            objectColor.a = Mathf.Lerp(-0.1f, 1, timer / fadeInTime);
+            fadeInUIImage.color = objectColor;
+            yield return null;
         }
+        fadeInUIImage.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
-    public void DeactivateNote()
+    private IEnumerator FadeToBlack(Action sceneChange)
     {
-        floorNoteDisplay.SetActive(false);
-        floorNoteText.text = "";
-        if (Time.timeScale == 0f)
+        Time.timeScale = 0f;
+        Color objectColor = fadeInUIImage.color; //Gets Object Color and Modifies values
+        fadeInUIImage.gameObject.SetActive(true);
+        float timer = fadeOutTime;
+        while (fadeInUIImage.color.a < 1)
         {
-            Time.timeScale = 1f;
+            timer -= Time.unscaledDeltaTime;
+            objectColor.a = Mathf.Lerp(1.1f, 0, timer / fadeOutTime);
+            fadeInUIImage.color = objectColor;
+            yield return null;
         }
-    }
-
-    public void KillPlayer()
-    {
-        globalTeapot.numStoreCredits = globalTeapot.numNotesObtained;
-        EndDungeon(true, false);
-    }
-
-    public void EndDungeon(bool death = false, bool artifact = false)
-    {
-        globalTeapot.hasDied = death;
-
-        // If coming from intro state, move to floor one dungeon state (since the dungeon has been played)
-        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
-        {
-            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
-        }
-
-        if (artifact)
-        {
-            switch (globalTeapot.currProgress)
-            {
-                case GlobalTeapot.TeaType.Dungeon_F1:
-                    globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
-                    break;
-                case GlobalTeapot.TeaType.Dungeon_F2:
-                    globalTeapot.currProgress = GlobalTeapot.TeaType.End;
-                    break;
-                default:
-                    globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
-                    break;
-            }
-        }
-
-        if (death)
-        {
-            globalTeapot.deathCount++;
-            Loader.Load(Loader.Scene.DeathScene);
-        }
-        else
-        {
-            Loader.Load(Loader.Scene.Village);
-        }
+        Time.timeScale = 1f;
+        sceneChange();
     }
 }
