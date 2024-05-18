@@ -169,7 +169,7 @@ public class SightBeastSightModule : MonoBehaviour
 
 #if UNITY_EDITOR
     // Depict vision cone
-    private void OnDrawGizmosSelected()
+    /* private void OnDrawGizmosSelected()
     {
         
         Handles.color = new Color(128, 00, 255);
@@ -179,6 +179,6 @@ public class SightBeastSightModule : MonoBehaviour
         Handles.DrawLine(transform.position, transform.position + DirFromAngle(-visionArcSize / 2 + visionAngle) * visionRadius);
         Handles.DrawLine(transform.position, transform.position + DirFromAngle(visionArcSize / 2 + visionAngle) * visionRadius);
        
-    }
+    } */
 #endif
 }

@@ -162,14 +162,15 @@ public class DungeonManager : MonoBehaviour
         {
             if (note.noteID.Length > 0)
             {
-                if (!globalTeapot.journal.CheckFloorNote(note.noteID))
+                
+                if (note.noteID.ToLower() == "destroy" || globalTeapot.journal.CheckFloorNote(note.noteID))
                 {
-                    note.noteTitle = "";
-                    note.noteBody = globalTeapot.journal.ReadFloorNote(note.noteID);
+                    Destroy(note.gameObject);
                 }
                 else
                 {
-                    Destroy(note.gameObject);
+                    note.noteTitle = "";
+                    note.noteBody = globalTeapot.journal.ReadFloorNote(note.noteID);
                 }
             }
         }
