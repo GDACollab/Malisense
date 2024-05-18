@@ -16,12 +16,12 @@ public abstract class Character : MonoBehaviour, IEffectable
 
     // string is name of item, int is amount in inv
     [HideInInspector]
-    public InventoryBase Inventory;
+    public OLD_INVENTORY Inventory;
     
     // Start is called before the first frame update
     void Start()
     {
-        Inventory = GetComponent<InventoryBase>();
+        Inventory = GetComponent<OLD_INVENTORY>();
         _health = maxHealth;
     }
 

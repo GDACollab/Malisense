@@ -11,10 +11,12 @@ public static class Loader
         MainMenu = 0, // This refers to the scene in Build Settings at index 0
         LoadingScene = 1, // This refers to the scene in Build Settings at index 1
         Village = 2, // This refers to the scene in Build Settings at index 2
-        Dungeon = 3, // This refers to the scene in Build Settings at index 3
-        DeathScene = 4, // This refers to the scene in Build Settings at index 4
+        Dungeon_F1 = 3, // This refers to the scene in Build Settings at index 3
+        Dungeon_F2 = 4, // This refers to the scene in Build Settings at index 3
+        DeathScene = 5, // This refers to the scene in Build Settings at index 4
     }
-    private static Action onLoaderCallback;
+    private delegate AsyncOperation AsyncLoaderCallback();
+    private static AsyncLoaderCallback onLoaderCallback;
     private static Scene currentScene = Scene.MainMenu;
 
     public static void Initialize()
@@ -28,7 +30,9 @@ public static class Loader
         onLoaderCallback = () =>
         {
             currentScene = scene;
-            SceneManager.LoadSceneAsync((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
+            var asyncScene = SceneManager.LoadSceneAsync((int)scene); // USES BUILD SETTINGS INDEX, NOT NAME 
+            asyncScene.allowSceneActivation = false;
+            return asyncScene;
         };
         
         currentScene = Scene.LoadingScene;
@@ -36,13 +40,15 @@ public static class Loader
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
 
-    public static void LoaderCallback()
+    public static AsyncOperation LoaderCallback()
     {
         if (onLoaderCallback != null)
         {
-            onLoaderCallback();
+            var asyncScene = onLoaderCallback();
             onLoaderCallback = null;
+            return asyncScene;
         }
+        return null;
     }
     
     public static Scene GetCurrentScene(){

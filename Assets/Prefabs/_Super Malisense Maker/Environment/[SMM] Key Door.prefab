@@ -52,50 +52,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[SMM] Key Door'
       objectReference: {fileID: 0}
-    - target: {fileID: 5329034190211979195, guid: dd0df9a5c96c3d045a2f2dbd2affdecd, type: 3}
-      propertyPath: m_Layer
-      value: 15
+    - target: {fileID: 8410211180325458911, guid: dd0df9a5c96c3d045a2f2dbd2affdecd, type: 3}
+      propertyPath: m_InstanceId
+      value: -96260
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5329034190211979195, guid: dd0df9a5c96c3d045a2f2dbd2affdecd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5750353741097417709}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd0df9a5c96c3d045a2f2dbd2affdecd, type: 3}
---- !u!1 &8254753541019500425 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5329034190211979195, guid: dd0df9a5c96c3d045a2f2dbd2affdecd, type: 3}
-  m_PrefabInstance: {fileID: 4285824584749574194}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5750353741097417709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8254753541019500425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 3f1388a319fdf1bb00000000b172e7a0
-  m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 353762
-  m_LocalBounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0.5, z: 0}

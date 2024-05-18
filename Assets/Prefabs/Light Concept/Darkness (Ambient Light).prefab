@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7984233705934468660}
   - component: {fileID: 3852741288328845033}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ambient Floor Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,10 +49,10 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.11475, g: 0.07875001, b: 0.135, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.45
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 3f1388a3
+  m_ApplyToSortingLayers: 3f1388a300000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7489796410286124304}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Darkness (Ambient Light)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825086057354892854}
   - component: {fileID: 473596380062380974}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ambient Walls Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.11475, g: 0.07875001, b: 0.135, a: 1}
-  m_Intensity: 1.25
+  m_Intensity: 0.45
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 19fdf1bb

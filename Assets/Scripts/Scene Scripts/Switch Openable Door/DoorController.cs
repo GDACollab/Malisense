@@ -19,6 +19,7 @@ public class DoorController : MonoBehaviour, ISwitchable
     private int OnAllCounter = 0;
     private bool doorstate;
     private SpriteRenderer doorSprite;
+    private SpriteRenderer sigilSprite;
     private Collider2D doorCollider;
     private ShadowCaster2D doorShadow;
 
@@ -27,6 +28,7 @@ public class DoorController : MonoBehaviour, ISwitchable
     {
         // Ensure that the door is initially closed
         doorSprite = GetComponent<SpriteRenderer>();
+        sigilSprite = GetComponentsInChildren<SpriteRenderer>()[1];
         doorCollider = GetComponent<Collider2D>();
         doorShadow = GetComponent<ShadowCaster2D>();
         SetDoor(startOpen);
@@ -76,10 +78,11 @@ public class DoorController : MonoBehaviour, ISwitchable
 
         doorstate = open;
         doorSprite.enabled = !open;
+        sigilSprite.enabled = !open;
         doorCollider.enabled = !open;
         doorShadow.enabled = !open;
         Bounds bounds = gameObject.GetComponent<Collider2D>().bounds;
-        bounds.Expand(1);
+        bounds.Expand(3);
         AstarPath.active.UpdateGraphs(bounds);
     }
 

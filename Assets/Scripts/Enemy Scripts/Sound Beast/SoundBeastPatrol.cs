@@ -9,8 +9,6 @@ using Pathfinding;
 [RequireComponent(typeof(StateMachine))]
 public class SoundBeastPatrol : StateBaseClass
 {
-    // ### PLEASE FIX SCRIPT AFTER VS ###
-    
     private StateMachine machine;
     public PatrolPath patrolPath;
     private AIPath aiPath;
@@ -71,6 +69,7 @@ public class SoundBeastPatrol : StateBaseClass
     public override void Init()
     {
         aiPath = GetComponent<AIPath>();
+        aiPath.enabled = true;
         machine = GetComponent<StateMachine>();
         aiPath.destination = transform.position;
         aiPath.maxSpeed = maxSpeed;
@@ -100,39 +99,6 @@ public class SoundBeastPatrol : StateBaseClass
                     SBProtoPatrolArea nextArea = randomPath ? GetRandomArea() : GetNextArea();
                     aiPath.destination = nextArea.GetRandomPoint();
                     aiPath.SearchPath();
-                }
-            }
-        }
-    }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "NoiseObject")
-        {
-            // Get the noise object and check that it has the noiseobject script
-            scr_noiseObject noise = collision.GetComponent<scr_noiseObject>();
-            if (noise == null)
-            {
-                Debug.LogError("ERROR: could not find scr_noiseObject in detected noise object \"" + collision.name + "\"");
-                return;
-            }
-
-            // Check radius for noise level
-            float loudness = noise.diameter;
-            Vector2 noisePos = noise.transform.position;
-            Debug.Log(noise.parent.name);
-            if (noise.noiseDistractsSound == true)
-            {
-                Debug.Log("Distracted!");
-                machine.currentState = StateMachine.State.Distracted;
-            }
-            else {
-                if (machine.currentState == StateMachine.State.Patrolling)
-                {
-                    if (playerObj.activeSafeZones.Count == 0)
-                    {
-                        machine.currentState = StateMachine.State.Alert;
-                    }
                 }
             }
         }
