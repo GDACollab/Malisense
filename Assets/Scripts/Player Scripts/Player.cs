@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Pathfinding;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,6 +34,14 @@ public class Player : MonoBehaviour
     [Tooltip("Deplete n stamina per second while sprinting")][SerializeField] float staminaDepletion = 4;
     [Tooltip("percentage of stamina required to sprint again after becoming exhausted")][Range(0.00f, 1.00f)][SerializeField] float minimumToSprint = 0.25f;
     float currentStamina;
+
+    // Animation
+    [Header("Animations")]
+    // Player Animator
+    [SerializeField] Animator playerAnimator;
+    // Player Sprite
+    private SpriteRenderer playerSprite;
+    
 
     // Inventory
     [Header("Inventory")]
@@ -68,8 +77,6 @@ public class Player : MonoBehaviour
     private GlobalTeapot globalTeapot;
     // Dungeon Manager
     private DungeonManager dungeonManager;
-    // Player Sprite
-    private SpriteRenderer playerSprite;
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
@@ -108,7 +115,7 @@ public class Player : MonoBehaviour
         noiseSystem = GetComponent<scr_noise>();
 
         // Get player sprite
-        playerSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        playerSprite = transform.GetChild(2).GetComponent<SpriteRenderer>(); // Hard coded location of player sprite
 
         // Get Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
@@ -242,6 +249,7 @@ public class Player : MonoBehaviour
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!isExhausted))
         {
             isSprinting = true;
+            playerAnimator.SetTrigger("die");
             adjustedSpeed *= sprintRatio;   // Adjust Speed
             currentStamina -= staminaDepletion * Time.deltaTime;        // deplete stamina
             if (currentStamina < 0f)
