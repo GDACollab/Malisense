@@ -78,7 +78,7 @@ public class MagicHandScript : MonoBehaviour
             }
             else if (currentHover.GetComponent<SwitchController>()) // If Switch
             {
-                currentHover.GetComponent<SwitchController>().FlipSwitch();
+                currentHover.GetComponent<SwitchController>().ActivateSwitch();
             }
             else if (currentHover.GetComponent<ItemPickup>()) // If Item
             {
