@@ -13,6 +13,8 @@ public class DeathScript : MonoBehaviour
 
     //Start of Tristyn's changes
     //public Text titleText;
+    
+    public GameObject obj;
     public Button ariseButton;
 
     //Functions ======================================================================================
