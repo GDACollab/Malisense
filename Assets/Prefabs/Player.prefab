@@ -226,7 +226,19 @@ MonoBehaviour:
   enemies: []
   testFunctions:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6163761530930631722}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: ToggleCheats
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   walkingSpeed: 6
   sprintRatio: 2
   sneakRatio: 1
@@ -235,10 +247,11 @@ MonoBehaviour:
   staminaDepletion: 4
   minimumToSprint: 0.25
   objectSlowdownRatio: 0.4
+  inventory: {fileID: 0}
   newInventory: {fileID: 0}
   NoiseFrequency: 0.2
-  walkLoudness: 3
-  sprintLoudness: 12
+  walkLoudness: 8
+  sprintLoudness: 20
   StaminaBar: {fileID: 0}
   isMoving: 0
   isSprinting: 0
@@ -246,6 +259,9 @@ MonoBehaviour:
   canMove: 1
   isExhausted: 0
   activeSafeZones: []
+  Artifacts:
+  - {fileID: 11400000, guid: c9b1a678494ea0442acb94ed7326ade0, type: 2}
+  - {fileID: 11400000, guid: bdab452323e725e44be9a7edf6e38780, type: 2}
 --- !u!114 &7766653828464704798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +299,7 @@ MonoBehaviour:
   - item: {fileID: 0}
     amount: 0
   carriedObject: {fileID: 0}
-  currentArtifact: {fileID: 11400000, guid: c9b1a678494ea0442acb94ed7326ade0, type: 2}
+  currentArtifact: {fileID: 11400000, guid: bdab452323e725e44be9a7edf6e38780, type: 2}
 --- !u!114 &3672404848277679862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseObject: {fileID: 5032859555972340647, guid: 1b4fee9aff0937e4cbcee0bd6551cb20, type: 3}
+  noiseDistractsSound: 0
 --- !u!114 &2279670278616363904
 MonoBehaviour:
   m_ObjectHideFlags: 0

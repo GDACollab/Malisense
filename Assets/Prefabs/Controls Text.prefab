@@ -71,14 +71,16 @@ MonoBehaviour:
 
     BUTTON EAST
 
-    SHOULDERS / D-PAD
+    RB & LB / RIGHT STICK
 
     BUTTON
-    NORTH / LEFT TRIGGER
+    WEST
 
-    BUTTON WEST / RIGHT TRIGGER
+    BUTTON NORTH / RT
 
-    SELECT'
+    LT
+
+    START'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
   m_sharedMaterial: {fileID: -6763417379106355407, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
@@ -354,13 +356,15 @@ MonoBehaviour:
 
     SPACE / F
 
-    SCROLL / 1 - 3
+    1 - 3
 
     Q
 
-    C
+    E
 
-    J'
+    R
+
+    TAB'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
   m_sharedMaterial: {fileID: -6763417379106355407, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
@@ -546,9 +550,11 @@ MonoBehaviour:
     Use Item:
 
     Use
-    Artifact:
+    Artifact 1:
 
-    Open Journal:'
+    Use Artifact 2:
+
+    Pause:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
   m_sharedMaterial: {fileID: -6763417379106355407, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}

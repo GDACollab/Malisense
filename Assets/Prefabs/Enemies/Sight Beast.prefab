@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d1512f20827d1e640ae1f1e2b293bb9a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.7
   m_Color: {r: 0.7358711, g: 1, b: 0.4764151, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 3f1388a319fdf1bb00000000
@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: -1788361034846400081}
   - component: {fileID: -2143965568594709404}
   - component: {fileID: 6089753570044768361}
+  - component: {fileID: 3756714849023598437}
   m_Layer: 8
   m_Name: Sight Beast
   m_TagString: Enemy
@@ -343,7 +344,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2304
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -441,7 +442,7 @@ MonoBehaviour:
   patrol: {fileID: 4179440197986460598}
   chasing: {fileID: -2143965568594709404}
   alert: {fileID: -1788361034846400081}
-  distracted: {fileID: 0}
+  distracted: {fileID: 6089753570044768361}
   Statue: 0
   ActivationsToAwake: 0
 --- !u!114 &3196582113618833869
@@ -498,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gracePeriod: 0.5
+  maxAlertPeriod: 10
   speed: 200
   nextWaypointDistance: 3
   lookAroundTime: 2
@@ -515,6 +517,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 31
+  rateOfAcceleration: 1
+  speedMax: 30
+  lookAheadDistance: 6
   seeAroundWallsTime: 2
 --- !u!114 &6089753570044768361
 MonoBehaviour:
@@ -528,7 +533,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7ec45f8287a004fa5db4b98943e65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distractLength: 0
+  distractLength: 3
+--- !u!114 &3756714849023598437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &5704342065390394418
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,7 +59,7 @@ public class SwitchController : MonoBehaviour
         isActivated = startActivated;
         if (isActivated)
         {
-            lamp.TurnOn();
+            lamp?.TurnOn();
             switchSprite.flipY = true;
         }
 
@@ -135,13 +135,13 @@ public class SwitchController : MonoBehaviour
     {
         if (activated)
         {
-            lamp.TurnOn();
+            lamp?.TurnOn();
             switchSprite.flipX = true;
             isActivated = true;
         }
         else
         {
-            lamp.TurnOff();
+            lamp?.TurnOff();
             switchSprite.flipX = false;
             isActivated = false;
         }

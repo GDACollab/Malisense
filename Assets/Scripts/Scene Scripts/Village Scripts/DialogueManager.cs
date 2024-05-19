@@ -6,8 +6,6 @@ using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using System;
-using UnityEditor.Experimental.GraphView;
 
 /// <summary>
 /// A script that handles dialogue UI and Ink functionality (variables, choices, etc)
