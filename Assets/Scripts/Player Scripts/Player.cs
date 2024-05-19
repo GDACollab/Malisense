@@ -39,8 +39,6 @@ public class Player : MonoBehaviour
     [Header("Animations")]
     // Player Animator
     [SerializeField] Animator playerAnimator;
-    // Player Sprite
-    private SpriteRenderer playerSprite;
     // Sprite Scale
     private Vector3 rigScale;
 
@@ -117,8 +115,6 @@ public class Player : MonoBehaviour
         // Get sound object
         noiseSystem = GetComponent<scr_noise>();
 
-        // Get player sprite
-        playerSprite = transform.GetChild(2).GetComponent<SpriteRenderer>(); // Hard coded location of player sprite
         // Get scale of player rig
         rigScale = playerAnimator.gameObject.transform.localScale;
 
