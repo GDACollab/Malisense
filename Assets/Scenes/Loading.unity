@@ -316,7 +316,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: b04260586b433934792eb99c9be55f2e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -497,6 +497,7 @@ Transform:
   m_Children:
   - {fileID: 1979407736}
   - {fileID: 112302119}
+  - {fileID: 1809874502}
   m_Father: {fileID: 1630596683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &334512041
@@ -516,7 +517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &334512042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2690,6 +2691,30 @@ MonoBehaviour:
   loadingText: {fileID: 73494741}
   monsterParent: {fileID: 314250971}
   hintParent: {fileID: 580153211}
+  hintText: {fileID: 1679390038}
+  hintTexts: "<i>Asitotheh ko\u2019ila pri\u2019on anikoli.<i>\nAfter the Convergance
+    people had a strange urge to write.\r\nFun Fact:\r\nI can\u2019t see. I can\u2019t
+    see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
+    I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t
+    see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see.
+    I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t see. I can\u2019t
+    see. I can\u2019t see. I ca\r\nMal means <i>bad<i>\r\nThe Disgraced is 6'6\"\r\nStick
+    is god.\r\nThe mask the Disgraced wears smells like lavender and mold. \r\nPeonies
+    are a type of flower. \r\nEars are useful.\r\nThe city of Radefell was once a
+    bustling, hopeful place. Now, monsters skulk in its remains.\r\nTry not to die.\r\n
+    If you seek the full story of Radefell\u2019s fall, speak to its survivors, and
+    find the writings of those who passed.\r\nVillagers debate if the Mayor\u2019s
+    lips are actually stitched together.\r\nMany you pass by do not seem disturbed
+    by the smell of death wafting from you.\r\nThe red amulet\u2019s gem is called
+    a Democritium.\r\nBefore the revival, many have known you as \u201CThe Disgraced.\u201D
+    \r\nThe festival was a ruse. \r\nDying will not help your back problems. \r\nDeath
+    is not the end. \r\nIt is hard to eat cheese with a mask on. \r\nYour mask may
+    mean blindness, but you certainly are not. \r\nThe Scholar enjoys poetry. \r\nThe
+    Crypt Keeper\u2019s favorite flowers are Peonies. \r\nThe dog\u2019s name is
+    Stick. \r\nThe dog once had an owner, who was a Custodian. \r\nThe Clergy once
+    resided in Radefell.\r\nDo not seek the Clergy\u2019s secret tapestry of the
+    Disgraced.\r\nThe Crypt Keeper is blind. \r\nRIP the Custodian \r\nDon\u2019t
+    forget to use items \r\n"
 --- !u!1 &1678982374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,7 +2866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1679390037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2881,8 +2906,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Did you know there are actually three monsters? \r\nOne hasn't been implemented
-    in the game yet though.\r\n"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
   m_sharedMaterial: {fileID: -6763417379106355407, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
@@ -2909,7 +2933,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
+  m_fontSize: 60
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3093,6 +3117,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780355427}
   m_CullTransparentMesh: 1
+--- !u!1 &1809874501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1809874502}
+  - component: {fileID: 1809874504}
+  - component: {fileID: 1809874503}
+  m_Layer: 0
+  m_Name: Scent Beast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1809874502
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809874501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 314250972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 698.55, y: 0}
+  m_SizeDelta: {x: 1394.34, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1809874503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809874501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f304177e902adbb49aa667d76fc20de2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1809874504
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809874501}
+  m_CullTransparentMesh: 1
 --- !u!1 &1979407735
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,7 +3251,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 57989f0c1a52e0848be88e8f14a22289, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
