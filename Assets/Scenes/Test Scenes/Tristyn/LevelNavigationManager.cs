@@ -119,9 +119,11 @@ public class LevelNavigationManager : MonoBehaviour
         switch (selectedDoorIndex)
         {
             case 0:
+                DungeonManager.instance.finishLevel = true;
                 Loader.Load(Loader.Scene.Dungeon_F1);
                 break;
             case 1:
+                DungeonManager.instance.finishLevel = true;
                 Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             default: //defaults to floor 1 if something went wrong
