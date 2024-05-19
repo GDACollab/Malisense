@@ -15,7 +15,10 @@ public class HotbarSlot : MonoBehaviour
     [Tooltip("The label to update with the current number of items held.")]
     public TextMeshProUGUI count;
 
+    public TextMeshProUGUI itemText;
+
     private Hotbar hotbar;
+
 
     private ItemBase Item
     {

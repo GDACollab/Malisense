@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -62,6 +63,26 @@ public class Hotbar : MonoBehaviour
             var pos = selector.anchoredPosition;
             pos.x = Mathf.SmoothDamp(pos.x, rect.anchoredPosition.x, ref selectorVel, selectorMoveTime);
             selector.anchoredPosition = pos;
+        }
+
+        updateArtifactSlot(inventory.artifact1, artifact1Slot);
+        updateArtifactSlot(inventory.artifact2, artifact2Slot);
+    }
+
+    private void updateArtifactSlot(Artifact x, HotbarSlot y)
+    {
+        if (x != null)
+        {
+            if (x.cooldown > 0)
+            {
+                y.itemIcon.color = new Color(0.2f, 0.2f, 0.2f, 1);
+                y.itemText.text = ((int) x.cooldown).ToString();
+            }
+            else
+            {
+                y.itemIcon.color = Color.white;
+                y.itemText.text = "";
+            }
         }
     }
 

@@ -81,6 +81,8 @@ public class Player : MonoBehaviour
 
     public List<GameObject> activeSafeZones = new List<GameObject>();
 
+    public List<Artifact> Artifacts = new List<Artifact>();
+
     void Start()
     {
         // Set input system variables
@@ -130,6 +132,16 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         BasicMovement();
+
+        foreach(Artifact x in Artifacts)
+        {
+            if (x.cooldown != 0)
+            {
+                x.cooldown = Mathf.Max(0, x.cooldown - Time.deltaTime);
+            }
+        }
+
+        // For all Artifacts decreate cooldowns
     }
 
     void Update()
