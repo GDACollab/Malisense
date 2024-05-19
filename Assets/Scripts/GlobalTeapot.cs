@@ -31,6 +31,7 @@ public class GlobalTeapot : MonoBehaviour
     public bool hasDied = false, hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
     public int deathCount = 0;
     public Loader.Scene currentScene = Loader.Scene.DeathScene;
+    public int stickHappiness = 0;
 
     [Header("Note Variables")]
     public int numNotesObtained = 0;

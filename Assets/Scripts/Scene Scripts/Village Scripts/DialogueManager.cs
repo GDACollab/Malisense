@@ -199,7 +199,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         // VAR background = "First"
-        // VAR StickHappiness = 0
+        currentStory.variablesState["StickHappiness"] = globalTeapot.stickHappiness;
 
         currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
         currentInkFileName = inkJson.name; // Update the current ink file name         
@@ -219,6 +219,7 @@ public class DialogueManager : MonoBehaviour
     private void ExitDialogueMode()
     {
         Debug.Log(gameObject);
+        globalTeapot.stickHappiness = (int)currentStory.variablesState["StickHappiness"];
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";

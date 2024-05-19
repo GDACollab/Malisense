@@ -1,5 +1,5 @@
-VAR isIntro = false
-VAR isDeathF1 = true
+VAR isIntro = true
+VAR isDeathF1 = false
 VAR isHub = false
 VAR isDeathF2 = false 
 VAR isIntroductionCutscene = false
@@ -23,7 +23,7 @@ Mayor
 Scholar 
 */
 
-VAR character = "Scholar"
+VAR character = "Stick"
 
 {
  - isIntroductionCutscene: -> Introduction // Go to Introduction
