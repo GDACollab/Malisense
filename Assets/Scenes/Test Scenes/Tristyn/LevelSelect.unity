@@ -3537,6 +3537,7 @@ MonoBehaviour:
   initialSelectedDoor: 0
   selectedDoorIndex: 0
   currentlySelected: 0
+  hasEntered: 0
   hasSelected: 0
   movePointer: 1
   fadeOutUIImage: {fileID: 1228375087}
@@ -5431,7 +5432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRepeatDelay: 0.5
   moveRepeatRate: 0.1
-  navigationManager: {fileID: 0}
+  navigationManager: {fileID: 967665939}
   dialogueManager: {fileID: 0}
 --- !u!1 &1651251541
 GameObject:
