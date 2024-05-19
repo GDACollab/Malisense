@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Pathfinding;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,6 +34,14 @@ public class Player : MonoBehaviour
     [Tooltip("Deplete n stamina per second while sprinting")][SerializeField] float staminaDepletion = 4;
     [Tooltip("percentage of stamina required to sprint again after becoming exhausted")][Range(0.00f, 1.00f)][SerializeField] float minimumToSprint = 0.25f;
     float currentStamina;
+
+    // Animation
+    [Header("Animations")]
+    // Player Animator
+    [SerializeField] Animator playerAnimator;
+    // Sprite Scale
+    private Vector3 rigScale;
+
 
     // Inventory
     [Header("Inventory")]
@@ -68,15 +77,15 @@ public class Player : MonoBehaviour
     private GlobalTeapot globalTeapot;
     // Dungeon Manager
     private DungeonManager dungeonManager;
-    // Player Sprite
-    private SpriteRenderer playerSprite;
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
     private InputAction hideMessage, setEnemies, hideFootsteps, activateFunctions; // Test inputs remove before final build please
     // Rigid Body and interaction variables
     private Rigidbody2D rb;
-    private Transform interactBody;
+    // Interaction Area
+    [Header("Interaction Area")]
+    [SerializeField] private Transform interactBody;
     private InteractionSelector interactArea;
 
     public List<GameObject> activeSafeZones = new List<GameObject>();
@@ -92,7 +101,6 @@ public class Player : MonoBehaviour
         setDownAction = playerInput.actions.FindAction("SetDown");
 
         // Get Rotating Body for Interactions
-        interactBody = transform.GetChild(0);
         interactArea = interactBody.GetComponent<InteractionSelector>();
 
         // Set rigid body variables
@@ -107,8 +115,8 @@ public class Player : MonoBehaviour
         // Get sound object
         noiseSystem = GetComponent<scr_noise>();
 
-        // Get player sprite
-        playerSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        // Get scale of player rig
+        rigScale = playerAnimator.gameObject.transform.localScale;
 
         // Get Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
@@ -208,18 +216,25 @@ public class Player : MonoBehaviour
 
             // Set isMoving
             if (moveX != 0 || moveY != 0)
+            {
                 isMoving = true;
+                playerAnimator.SetBool("moving",true);
+            }
             else
+            {
                 isMoving = false;
+                playerAnimator.SetBool("moving", false);
+            }
+                
 
             // Flip Sprite
             if (moveX > 0)
             {
-                playerSprite.flipX = true;
+                playerAnimator.gameObject.transform.localScale = new Vector3(-rigScale.x, rigScale.y, rigScale.z);
             }
             else if (moveX < 0)
             {
-                playerSprite.flipX = false;
+                playerAnimator.gameObject.transform.localScale = new Vector3(rigScale.x, rigScale.y, rigScale.z);
             }
 
             // Rotation
@@ -237,11 +252,13 @@ public class Player : MonoBehaviour
         // For sprinting and sneaking
         // Walking (default)
         adjustedSpeed = walkingSpeed;
+        
 
         // Sprinting
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!isExhausted))
         {
             isSprinting = true;
+            playerAnimator.SetBool("sprinting", true);
             adjustedSpeed *= sprintRatio;   // Adjust Speed
             currentStamina -= staminaDepletion * Time.deltaTime;        // deplete stamina
             if (currentStamina < 0f)
@@ -253,6 +270,7 @@ public class Player : MonoBehaviour
         else
         {
             isSprinting = false;
+            playerAnimator.SetBool("sprinting", false);
             if (currentStamina < maxStamina)
             {                            // regen stamina
                 currentStamina += staminaRegen * Time.deltaTime;
@@ -274,6 +292,7 @@ public class Player : MonoBehaviour
         if (interactAction.triggered)
         {
             InteractionManager();
+            // TEST DEATH SCRIPT playerAnimator.SetTrigger("die");
         }
 
         // Slow player when carrying an object 
