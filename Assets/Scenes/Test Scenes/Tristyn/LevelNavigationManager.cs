@@ -116,14 +116,24 @@ public class LevelNavigationManager : MonoBehaviour
         }
 
         loadDungeon = false;
+
+        /*if(selectedDoorIndex == 0){
+            Loader.Load(Loader.Scene.Dungeon_F1);    
+        }else if(selectedDoorIndex == 1 && DungeonManager.instance.finishLevel == true){
+            Debug.Log("SECOND DOOR HAS BEEN SELECTED");
+            Loader.Load(Loader.Scene.Dungeon_F2);    
+        }else{
+            Debug.Log("Sorry, you haven't completed Dungeon 1 yet.");
+        }*/
+        
         switch (selectedDoorIndex)
         {
             case 0:
-                DungeonManager.instance.finishLevel = true;
-                Loader.Load(Loader.Scene.Dungeon_F1);
+                //DungeonManager.instance.finishLevel = true;
+                Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             case 1:
-                DungeonManager.instance.finishLevel = true;
+                //DungeonManager.instance.finishLevel = true;
                 Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             default: //defaults to floor 1 if something went wrong
@@ -134,3 +144,4 @@ public class LevelNavigationManager : MonoBehaviour
         //StartCoroutine(FadeToClear()); //FadeToClear not needed as no option would result in diaogue, only scene changes
     }
 }
+
