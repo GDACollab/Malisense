@@ -12,6 +12,7 @@ public class SoundBeastPatrol : StateBaseClass
     private StateMachine machine;
     public PatrolPath patrolPath;
     private AIPath aiPath;
+    private Animator animator;
 
     [Tooltip("Rate of acceleration.")]
     public float maxSpeed = 2f;
@@ -38,6 +39,7 @@ public class SoundBeastPatrol : StateBaseClass
     private void Awake()
     {
         patrolPath = GetComponent<PatrolPath>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private SBProtoPatrolArea GetRandomArea()
@@ -84,15 +86,20 @@ public class SoundBeastPatrol : StateBaseClass
 
     public override void On_Update()
     {
+        
         if(aiPath.reachedEndOfPath)
         {
             // Currently idle
             _idleTimeLeft -= Time.deltaTime;
+            animator.SetBool("Idle", true);
+            animator.SetBool("Walk", false);
 
             // When done idling, move to new area
-            if(_idleTimeLeft < 0f)
+            if (_idleTimeLeft < 0f)
             {
                 _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
+                animator.SetBool("Walk", true);
+                animator.SetBool("Idle", false);
 
                 if (patrolPath && patrolPath.areas.Length > 0)
                 {
