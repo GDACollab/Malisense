@@ -6,7 +6,7 @@ using UnityEngine;
 public class SmartCamera : MonoBehaviour
 {
     Camera mainCamera;
-    private GameObject player;
+    private GameObject target;
     private float shakeTimeLeft;
     private float shakeTotalTime;
     private float shakeMagnitude;
@@ -15,8 +15,9 @@ public class SmartCamera : MonoBehaviour
     {
         // Get the camera
         mainCamera = GetComponent<Camera>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        target = GameObject.FindGameObjectWithTag("Player");
         mainCamera.backgroundColor = Color.black;
+        setAspectRatio();
     }
     
     private void FixedUpdate() {
@@ -24,10 +25,10 @@ public class SmartCamera : MonoBehaviour
     }
     
     private void LateUpdate() {
-        if (!player) return;
+        if (!target) return;
 
         // Track player
-        Vector3 pos = player.transform.position;
+        Vector3 pos = target.transform.position;
         pos.z = transform.position.z;
 
         // Do screen shake
@@ -89,5 +90,9 @@ public class SmartCamera : MonoBehaviour
             shakeTotalTime = duration;
             shakeMagnitude = magnitude;
         }
+    }
+
+    public void SetTarget(GameObject newTarget){
+        target = newTarget;
     }
 }

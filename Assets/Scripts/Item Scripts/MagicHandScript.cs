@@ -40,6 +40,7 @@ public class MagicHandScript : MonoBehaviour
             return;
         }
 
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<SmartCamera>().SetTarget(gameObject);
         MagicHand.duration = 1;
 
         currentHover = null;
@@ -133,6 +134,7 @@ public class MagicHandScript : MonoBehaviour
         MagicHand.duration = 0;
         player.GetComponent<Player>().canMove = true;
         MagicHand.cooldown = cooldown;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<SmartCamera>().SetTarget(player);
         Destroy(gameObject);
     }
 

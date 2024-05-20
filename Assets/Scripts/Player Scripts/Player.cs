@@ -320,14 +320,14 @@ public class Player : MonoBehaviour
     private void InventoryManager()
     {
         // Check if the player is carrying an object
-        if (!newInventory.carriedObject)
-        {
-            return;
-        }
-        else
-        {
-            newInventory.carriedObject.transform.rotation = interactBody.transform.rotation;
-        }
+        // if (!newInventory.carriedObject)
+        // {
+        //     return;
+        // }
+        // else
+        // {
+        //     newInventory.carriedObject.transform.rotation = interactBody.transform.rotation;
+        // }
 
         // if (setDownAction.ReadValue<float>() > 0f)
         // {
