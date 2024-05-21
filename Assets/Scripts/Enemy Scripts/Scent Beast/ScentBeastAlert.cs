@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
-using UnityEditor.EditorTools;
 using Unity.VisualScripting;
 
 [RequireComponent(typeof(EnemyPathfinder))]

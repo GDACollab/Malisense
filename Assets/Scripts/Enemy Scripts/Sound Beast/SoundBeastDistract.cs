@@ -88,8 +88,8 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
 
     public void SwitchInteract(bool activated)
     {
-        ExitToState(StateMachine.State.Distracted);
-        /*
+        // ExitToState(StateMachine.State.Distracted);
+        
         //If switch is activated subtract from statue counter
         if (activated) _statueCounter--;
         else _statueCounter++;
@@ -100,11 +100,11 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
             _soundSprite.sprite = AwakeSprite;
             gameObject.tag = "Enemy";
             //Alert target is set to it self's position
-            //_alert.SetStatueTarget();
+            _alert.SetStatueTarget();
             ExitToState(StateMachine.State.Alert);
             //Debug.Log("Monster Working");
         }
-        */
+       
         
     }
 

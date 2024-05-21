@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 
 public class scr_playerNoiseTrack : MonoBehaviour

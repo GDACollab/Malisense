@@ -90,6 +90,8 @@ public class Player : MonoBehaviour
 
     public List<GameObject> activeSafeZones = new List<GameObject>();
 
+    public List<Artifact> Artifacts = new List<Artifact>();
+
     void Start()
     {
         // Set input system variables
@@ -138,6 +140,16 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         BasicMovement();
+
+        foreach(Artifact x in Artifacts)
+        {
+            if (x.cooldown != 0)
+            {
+                x.cooldown = Mathf.Max(0, x.cooldown - Time.deltaTime);
+            }
+        }
+
+        // For all Artifacts decreate cooldowns
     }
 
     void Update()
@@ -338,14 +350,14 @@ public class Player : MonoBehaviour
     private void InventoryManager()
     {
         // Check if the player is carrying an object
-        if (!newInventory.carriedObject)
-        {
-            return;
-        }
-        else
-        {
-            newInventory.carriedObject.transform.rotation = interactBody.transform.rotation;
-        }
+        // if (!newInventory.carriedObject)
+        // {
+        //     return;
+        // }
+        // else
+        // {
+        //     newInventory.carriedObject.transform.rotation = interactBody.transform.rotation;
+        // }
 
         // if (setDownAction.ReadValue<float>() > 0f)
         // {

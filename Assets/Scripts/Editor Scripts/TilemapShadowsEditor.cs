@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
+#if UNITY_EDITOR
 [CustomEditor(typeof(TilemapShadows))]
 public class TilemapShadowsEditor : Editor
 {
@@ -33,3 +35,4 @@ public class TilemapShadowsEditor : Editor
         }
     }
 }
+#endif

@@ -34,6 +34,7 @@ public class WhisperingBellArtifact : MonoBehaviour
             pulseObject.transform.parent = enemy.transform;
         }
         WhisperingBell.duration += Time.deltaTime;
+        WhisperingBell.cooldown = 30;
         blockAction = true;
         
     }
@@ -58,14 +59,12 @@ public class WhisperingBellArtifact : MonoBehaviour
     {
         if (WhisperingBell.cooldown > whisperingBellCooldown)
         {
-            WhisperingBell.cooldown = 0.0f;
             WhisperingBell.duration = 0.0f;
             Destroy(gameObject);
         }
         if (WhisperingBell.duration > 0.0f) WhisperingBell.duration += Time.deltaTime;
         if (WhisperingBell.duration >= 5.0f)    
         {
-            WhisperingBell.cooldown += Time.deltaTime;
             WhisperingBell.duration = 0.0f;
         } 
         if (WhisperingBell.cooldown == 0.0f && WhisperingBell.duration == 0.0f && !blockAction){ // Temporary key press, needs to be connected to player controller
@@ -73,7 +72,5 @@ public class WhisperingBellArtifact : MonoBehaviour
             Debug.Log("Bell Activated");
             WhisperBellAction();
         }
-
-        else if (WhisperingBell.cooldown > 0.0f) WhisperingBell.cooldown += Time.deltaTime;
     }
 }

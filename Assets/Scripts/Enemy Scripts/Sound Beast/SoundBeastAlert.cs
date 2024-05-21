@@ -13,7 +13,7 @@ public class SoundBeastAlert : StateBaseClass
     public float circleTime = 10f; // Time to circle around the player's position
     public float CirclingSpeed = 2f;
     private float angularSpeed = 0.7f;
-    public TilemapCollider2D wallcollider;
+    CompositeCollider2D wallcollider;
     public float AlertedSpeed = 5f;
 
     public LayerMask wallLayers;
@@ -46,6 +46,7 @@ public class SoundBeastAlert : StateBaseClass
 
     public override void Init()
     {
+        wallcollider = GameObject.Find("Grid").GetComponent<CompositeCollider2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         machine = GetComponent<StateMachine>();
         rb = GetComponent<Rigidbody2D>();
@@ -65,6 +66,21 @@ public class SoundBeastAlert : StateBaseClass
         aiPath.SearchPath();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         GetComponent<SoundBeastChase>().CancelInvoke();
+    }
+
+
+    bool checkIfPointInCollider(CompositeCollider2D collider, Vector2 pos)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 0);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.name == collider.name)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
@@ -132,8 +148,10 @@ public class SoundBeastAlert : StateBaseClass
                     // This should be using the A* pathfinding, not direct position modification
                     movePosition = new Vector3(x1, y1, 0);
                     //dont move if the movePosition is inside the wall
-                    
-                    while (wallcollider.bounds.Contains(movePosition))
+
+                    int tries = 0;
+
+                    while (checkIfPointInCollider(wallcollider,(Vector2) movePosition) && tries < 100)
                     {
                         if (notcollided == false)
                         {
@@ -143,6 +161,7 @@ public class SoundBeastAlert : StateBaseClass
                         x1 = circleCenter.x + Mathf.Cos(angle) * circleRadius;
                         y1 = circleCenter.y + Mathf.Sin(angle) * circleRadius;
                         movePosition = new Vector3(x1, y1, 0);
+                        tries += 1;
                     }
                     //move to new position that isnt in the wall
                     if (notcollided == true)
@@ -165,7 +184,7 @@ public class SoundBeastAlert : StateBaseClass
                         }
                     }
                     //circle
-                    if (!wallcollider.bounds.Contains(movePosition) && notcollided == false)
+                    if (!checkIfPointInCollider(wallcollider, (Vector2)movePosition) && notcollided == false)
                     {
                         Vector3 direction = (movePosition - transform.position).normalized;         // Checking for obstacles between the enemy and the movePosition
 

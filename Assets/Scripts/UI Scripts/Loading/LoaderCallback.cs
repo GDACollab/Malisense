@@ -57,7 +57,7 @@ public class LoaderCallback : MonoBehaviour
             fadeOutUIImage.color = objectColor;
             yield return null;
         }
-        fadeOutUIImage.gameObject.SetActive(false);
+        // fadeOutUIImage.gameObject.SetActive(false);
         asyncScene.allowSceneActivation = true;
     }
 }

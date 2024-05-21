@@ -26,6 +26,9 @@ public class DungeonManager : MonoBehaviour
     AudioManager audioManager;
 
     List<FloorNote> floorNotes = new List<FloorNote>();
+    
+    IEnumerator FadeFromBlack(float fadeInTime) => globalTeapot.fader.FadeFromBlack(fadeInTime);
+    IEnumerator FadeToBlack(Action sceneChange, float fadeOutTime) => globalTeapot.fader.FadeToBlack(sceneChange, fadeOutTime);
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +39,7 @@ public class DungeonManager : MonoBehaviour
         floorNoteText = floorNoteDisplay.GetComponentInChildren<TextMeshProUGUI>();
 
         SetFloorNotes();
-        StartCoroutine(FadeFromBlack());
+        StartCoroutine(FadeFromBlack(fadeInTime));
     }
 
     /// <summary>
@@ -130,13 +133,13 @@ public class DungeonManager : MonoBehaviour
         if (death)
         {
             globalTeapot.deathCount++;
-            sceneChange = () => Loader.Load(Loader.Scene.DeathScene);
+            sceneChange = () => Loader.Load(Loader.Scene.DeathScene, true);
         }
         else
         {
             sceneChange = () => Loader.Load(Loader.Scene.Village);
         }
-        StartCoroutine(FadeToBlack(sceneChange));
+        StartCoroutine(FadeToBlack(sceneChange, fadeOutTime));
     }
 
     /// <summary>
@@ -162,50 +165,17 @@ public class DungeonManager : MonoBehaviour
         {
             if (note.noteID.Length > 0)
             {
-                if (!globalTeapot.journal.CheckFloorNote(note.noteID))
+                
+                if (note.noteID.ToLower() == "destroy" || globalTeapot.journal.CheckFloorNote(note.noteID))
+                {
+                    Destroy(note.gameObject);
+                }
+                else
                 {
                     note.noteTitle = "";
                     note.noteBody = globalTeapot.journal.ReadFloorNote(note.noteID);
                 }
-                else
-                {
-                    Destroy(note.gameObject);
-                }
             }
         }
-    }
-
-    private IEnumerator FadeFromBlack()
-    {
-        Time.timeScale = 0f;
-        fadeInUIImage.gameObject.SetActive(true);
-        Color objectColor = fadeInUIImage.color; //Gets Object Color and Modifies values
-        float timer = fadeInTime;
-        while (fadeInUIImage.color.a > 0)
-        {
-            timer -= Time.unscaledDeltaTime;
-            objectColor.a = Mathf.Lerp(-0.1f, 1, timer / fadeInTime);
-            fadeInUIImage.color = objectColor;
-            yield return null;
-        }
-        fadeInUIImage.gameObject.SetActive(false);
-        Time.timeScale = 1f;
-    }
-
-    private IEnumerator FadeToBlack(Action sceneChange)
-    {
-        Time.timeScale = 0f;
-        Color objectColor = fadeInUIImage.color; //Gets Object Color and Modifies values
-        fadeInUIImage.gameObject.SetActive(true);
-        float timer = fadeOutTime;
-        while (fadeInUIImage.color.a < 1)
-        {
-            timer -= Time.unscaledDeltaTime;
-            objectColor.a = Mathf.Lerp(1.1f, 0, timer / fadeOutTime);
-            fadeInUIImage.color = objectColor;
-            yield return null;
-        }
-        Time.timeScale = 1f;
-        sceneChange();
     }
 }

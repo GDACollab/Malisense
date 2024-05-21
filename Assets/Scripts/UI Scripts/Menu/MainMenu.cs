@@ -31,6 +31,10 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void volumeChange(float sliderVolume)
+    {
+        audioManager.masterVolume = sliderVolume;
+    }
     IEnumerator FadeToBlackAndLoadScene()
     {
         fadeOutUIImage.gameObject.SetActive(true);

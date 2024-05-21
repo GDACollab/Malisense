@@ -968,6 +968,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1270538235393261018}
     m_Modifications:
+    - target: {fileID: 399994541882038211, guid: 14584a38b7ee9964abc09f956b470ed8, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 616086859666649851, guid: 14584a38b7ee9964abc09f956b470ed8, type: 3}
       propertyPath: m_Name
       value: Hotbar
@@ -1051,6 +1055,10 @@ PrefabInstance:
     - target: {fileID: 3216841442674836135, guid: 14584a38b7ee9964abc09f956b470ed8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422188899896119651, guid: 14584a38b7ee9964abc09f956b470ed8, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

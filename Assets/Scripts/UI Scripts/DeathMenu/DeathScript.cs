@@ -12,21 +12,24 @@ public class DeathScript : MonoBehaviour
     public float fadeSpeed = 0.5f;
 
     //Start of Tristyn's changes
-    //public Text titleText;
+    public Text titleText;
+    
+    public GameObject obj;
     public Button ariseButton;
 
     //Functions ======================================================================================
-    public void ResetButton()
+    public void ResetButton(float waitTime)
     {
-        StartCoroutine(Fader());
+        StartCoroutine(Fader(waitTime));
     }
 
-    IEnumerator Fader()
+    IEnumerator Fader(float waitTime)
     {
         //
-        //titleText.gameObject.SetActive(false);
-        ariseButton.gameObject.SetActive(false);
+        // titleText.gameObject.SetActive(false);
+        // ariseButton.gameObject.SetActive(false);
         //
+        yield return new WaitForSeconds(waitTime);
         fadeOutUIImage.gameObject.SetActive(true);
         //Play Audio with FMOD - Need to research Library
 

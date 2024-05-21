@@ -18,7 +18,6 @@ public class ArtifactAltar : MonoBehaviour, ISwitchable
     void Start()
     {
         playerInventory = GameObject.FindWithTag("Player").GetComponent<Player>();
-        if (playerInventory.newInventory?.artifact2) { Destroy(gameObject); }
         dungeonManager = FindObjectOfType<DungeonManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 

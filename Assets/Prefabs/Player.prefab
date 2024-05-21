@@ -177,6 +177,9 @@ MonoBehaviour:
   isExhausted: 0
   interactBody: {fileID: 5337750370170260473}
   activeSafeZones: []
+  Artifacts:
+  - {fileID: 11400000, guid: c9b1a678494ea0442acb94ed7326ade0, type: 2}
+  - {fileID: 11400000, guid: bdab452323e725e44be9a7edf6e38780, type: 2}
 --- !u!114 &7766653828464704798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +217,7 @@ MonoBehaviour:
   - item: {fileID: 0}
     amount: 0
   carriedObject: {fileID: 0}
-  currentArtifact: {fileID: 11400000, guid: c9b1a678494ea0442acb94ed7326ade0, type: 2}
+  currentArtifact: {fileID: 11400000, guid: bdab452323e725e44be9a7edf6e38780, type: 2}
 --- !u!114 &3672404848277679862
 MonoBehaviour:
   m_ObjectHideFlags: 0
