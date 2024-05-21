@@ -161,7 +161,18 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player died due to contact to enemy");
             newInventory.inventory.Clear();
+            playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+            playerAnimator.SetTrigger("die");
+            StartCoroutine(ZoomCamera());
             dungeonManager.KillPlayer();
+        }
+    }
+    
+    IEnumerator ZoomCamera(){
+        var camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        while (camera.orthographicSize > 5){
+            camera.orthographicSize -= Time.unscaledDeltaTime * 2;
+            yield return null;
         }
     }
 
