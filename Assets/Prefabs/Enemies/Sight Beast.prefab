@@ -272,12 +272,14 @@ GameObject:
   - component: {fileID: 6115236165451100336}
   - component: {fileID: 1219489192654737068}
   - component: {fileID: 6519638445488620212}
+  - component: {fileID: 3543257976352664531}
   - component: {fileID: 3196582113618833869}
   - component: {fileID: 4179440197986460598}
   - component: {fileID: -1788361034846400081}
   - component: {fileID: -2143965568594709404}
   - component: {fileID: 6089753570044768361}
   - component: {fileID: 3756714849023598437}
+  - component: {fileID: 779943132625553680}
   m_Layer: 8
   m_Name: Sight Beast
   m_TagString: Enemy
@@ -445,6 +447,19 @@ MonoBehaviour:
   distracted: {fileID: 6089753570044768361}
   Statue: 0
   ActivationsToAwake: 0
+--- !u!114 &3543257976352664531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68913520dcf664c0489334094f4a5ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8694767944396127748}
 --- !u!114 &3196582113618833869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +579,27 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!95 &779943132625553680
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252077317078807248}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5704342065390394418
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +610,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7399970916169899145}
   - component: {fileID: 7929056975138697904}
-  - component: {fileID: 1316880669396713818}
   m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
@@ -598,7 +633,7 @@ Transform:
   - {fileID: 3501707255719967641}
   - {fileID: 4632489622618928290}
   - {fileID: 3550916298700733624}
-  - {fileID: 7178685510169361609}
+  - {fileID: 2657973176771345743}
   m_Father: {fileID: 3131323788594825379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7929056975138697904
@@ -622,26 +657,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1316880669396713818
-MonoBehaviour:
+--- !u!1 &7165775096218260801
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5704342065390394418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68913520dcf664c0489334094f4a5ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachine: {fileID: 6519638445488620212}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2657973176771345743}
+  m_Layer: 8
+  m_Name: Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2657973176771345743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7165775096218260801}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7178685510169361609}
+  m_Father: {fileID: 7399970916169899145}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8408227534993786135
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7399970916169899145}
+    m_TransformParent: {fileID: 2657973176771345743}
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_Name
@@ -661,11 +715,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.51
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_LocalPosition.z
