@@ -4,17 +4,17 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class SightBeastAnimations : MonoBehaviour
 {
-    public StateMachine _stateMachine;
+    public Animator _animator;
 
-    private Animator _animator;
-    private Rigidbody2D _rd2d
+    private StateMachine _stateMachine;
+    private Rigidbody2D _rd2d;
 
     // Start is called before the first frame update
     void Start()
     {
         _stateMachine = GetComponent<StateMachine>();
-        _animator = GetComponent<Animator>();
-        _rd2d = GetComponent<Rigidbody>();
+        //_animator = GetComponent<Animator>();
+        _rd2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
