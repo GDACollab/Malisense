@@ -37,11 +37,12 @@ public class SoundBeastAlert : StateBaseClass
     private Player playerObj;
     private SoundBeastSoundModule _sound;
     private Vector3 soundPosition => _sound.detectedNoisePos;
-
+    private Animator animator;
     //get the noisePos variable from the soundBeast_noiseDetect_copy script and use it to pass the noise position to the Sound_Alert script
 
     private void Awake() {
         _sound = GetComponent<SoundBeastSoundModule>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public override void Init()
@@ -61,6 +62,7 @@ public class SoundBeastAlert : StateBaseClass
         }
 
         // Start pathfinding to player's position
+        animator.SetTrigger("Alert");
         aiPath.maxSpeed = AlertedSpeed;
         aiPath.SearchPath();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
