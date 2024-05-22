@@ -36,6 +36,8 @@ public class SoundBeastPatrol : StateBaseClass
 
     private Player playerObj;
 
+
+
     private void Awake()
     {
         patrolPath = GetComponent<PatrolPath>();
