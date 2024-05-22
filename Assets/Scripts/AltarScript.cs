@@ -5,38 +5,32 @@ using UnityEngine;
 
 public class AltarScript : MonoBehaviour
 {
-    // Remove once alert goes to patrol automatically
-    [Header("Time")]
-    [SerializeField][Tooltip("Time after entering altar until enemies return to patrol")] private float alertCooldown = 5f;
-    
-    GameObject[] enemyObjects;
+    GameObject playerObj;
+
+    private Collider2D safeCollider;
     
     // Start is called before the first frame update
     void Start()
     {
-        enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
+        safeCollider = GetComponent<Collider2D>();
+        playerObj = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
-        if(other.CompareTag("Player")){
-            foreach(GameObject eObj in enemyObjects){
-                StateMachine enemy = eObj.GetComponent<StateMachine>();
-                // Remove if alert when alert goes to patrol automatically
-                if(enemy.currentState==StateMachine.State.Chasing || enemy.currentState==StateMachine.State.Alert){ 
-                    // enemy.switchState(StateMachine_Updated.State.Alert); 
-                    // Replace with just setting to alert when alert goes to patrol automatically
-                    StartCoroutine(CooldownEnemy(enemy)); 
-                }
+    void Update()
+    {
+        
+        Player playerScript = playerObj.GetComponent<Player>();
+        // Need to check intersection this way as collision between Safe Zone and Player has been disabled
+        if (safeCollider.bounds.Intersects(playerObj.GetComponent<Collider2D>().bounds))
+        {
+                
+            if (!playerScript.activeSafeZones.Contains(this.gameObject))
+            {
+                playerScript.activeSafeZones.Add(this.gameObject);
             }
+        } else
+        {
+            playerScript.activeSafeZones.Remove(this.gameObject);
         }
-    }
-    
-    // Remove once alert goes to patrol automatically
-    private IEnumerator CooldownEnemy(StateMachine enemy){
-        enemy.currentState = StateMachine.State.Alert;
-        
-        yield return new WaitForSeconds(alertCooldown);
-        
-        enemy.currentState = StateMachine.State.Patrolling;
     }
 }

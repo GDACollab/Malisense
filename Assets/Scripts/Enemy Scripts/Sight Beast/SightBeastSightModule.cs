@@ -44,12 +44,15 @@ public class SightBeastSightModule : MonoBehaviour
 
     private StateMachine _stateMachine;
 
+    private Player playerObj;
+
     private void Start()
     {
         _stateMachine = GetComponent<StateMachine>();
         visionArcMargin = visionLight.pointLightOuterAngle / visionLight.pointLightInnerAngle;
         smoothedVisionArcSize = visionArcSize;
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     bool FasterLineSegmentIntersection(Vector2 fromA, Vector2 toA, Vector2 fromB, Vector2 toB)
@@ -123,8 +126,8 @@ public class SightBeastSightModule : MonoBehaviour
 
     public bool CanSee(Vector2 position, float radius)
     {
-        // Exit if player exceeds view distance
-        if (Vector2.Distance(transform.position, position) > visionRadius) return false;
+        // Exit if player exceeds view distance or in safe zone
+        if (Vector2.Distance(transform.position, position) > visionRadius || playerObj.activeSafeZones.Count > 0) return false;
 
         var perpendicular = Vector2.Perpendicular(position - (Vector2)transform.position).normalized;
         int count = 0;
@@ -166,16 +169,16 @@ public class SightBeastSightModule : MonoBehaviour
 
 #if UNITY_EDITOR
     // Depict vision cone
-    private void OnDrawGizmosSelected()
+    /* private void OnDrawGizmosSelected()
     {
-        /*
+        
         Handles.color = new Color(128, 00, 255);
         Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.right, 360, visionRadius);
 
         // Draw boundry lines
         Handles.DrawLine(transform.position, transform.position + DirFromAngle(-visionArcSize / 2 + visionAngle) * visionRadius);
         Handles.DrawLine(transform.position, transform.position + DirFromAngle(visionArcSize / 2 + visionAngle) * visionRadius);
-        */
-    }
+       
+    } */
 #endif
 }

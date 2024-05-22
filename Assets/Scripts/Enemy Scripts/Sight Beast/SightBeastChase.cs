@@ -9,6 +9,10 @@ public class SightBeastChase : StateBaseClass
     [Tooltip("Rate of acceleration.")]
     public float speed = 200f;
 
+    public float rateOfAcceleration = 1f;
+    public float speedMax = 200f;
+    public float lookAheadDistance = 6f;
+
     [Tooltip("Amount of time that the sight beast will be able to track the player once visual contact is broken, measured in seconds.")]
     public float seeAroundWallsTime = 0.75f;
 
@@ -24,6 +28,7 @@ public class SightBeastChase : StateBaseClass
         _stateMachine = GetComponent<StateMachine>();
         _pathfinder = GetComponent<EnemyPathfinder>();
         _sight = GetComponent<SightBeastSightModule>();
+
     }
 
     public override void Init()
@@ -37,6 +42,10 @@ public class SightBeastChase : StateBaseClass
 
     public override void On_Update()
     {
+        speed = speed * (1 + (rateOfAcceleration * Time.deltaTime));
+        speed = Mathf.Min(speed, speedMax);
+        _pathfinder.acceleration = speed;
+
         var seesTarget = _sight.CanSeeTarget();
         // Target not visable
         if (seesTarget)
@@ -54,7 +63,13 @@ public class SightBeastChase : StateBaseClass
         if (seesTarget || _lastSeenTime + seeAroundWallsTime > Time.time)
         {
             // Move towards target
-            _pathfinder.SetTarget(_sight.target.position);
+
+            // Get point 10 units in front of player
+            Vector3 dir = _sight.target.position - transform.position;
+            var pos  = _sight.target.position + dir.normalized * lookAheadDistance;
+
+            pos = (AstarPath.active.data.gridGraph.GetNearest(pos).node.Walkable) ? pos : _sight.target.position;
+            _pathfinder.SetTarget(pos);
 
             // Look towards target
             //_sight.LookAt(_sight.target.position);

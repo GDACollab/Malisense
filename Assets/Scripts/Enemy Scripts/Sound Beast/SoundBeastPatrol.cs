@@ -9,8 +9,6 @@ using Pathfinding;
 [RequireComponent(typeof(StateMachine))]
 public class SoundBeastPatrol : StateBaseClass
 {
-    // ### PLEASE FIX SCRIPT AFTER VS ###
-    
     private StateMachine machine;
     public PatrolPath patrolPath;
     private AIPath aiPath;
@@ -34,6 +32,8 @@ public class SoundBeastPatrol : StateBaseClass
     private float _lastSeenTime = float.NegativeInfinity;
 
     private int _pathIndex;
+
+    private Player playerObj;
 
     private void Awake()
     {
@@ -69,6 +69,7 @@ public class SoundBeastPatrol : StateBaseClass
     public override void Init()
     {
         aiPath = GetComponent<AIPath>();
+        aiPath.enabled = true;
         machine = GetComponent<StateMachine>();
         aiPath.destination = transform.position;
         aiPath.maxSpeed = maxSpeed;
@@ -78,6 +79,7 @@ public class SoundBeastPatrol : StateBaseClass
         // Start at the closest path point when entering patrol state
         var startArea = patrolPath.FindClosestArea(transform.position);
         _pathIndex = Array.IndexOf(patrolPath.areas, startArea);
+        playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     public override void On_Update()
@@ -98,28 +100,6 @@ public class SoundBeastPatrol : StateBaseClass
                     aiPath.destination = nextArea.GetRandomPoint();
                     aiPath.SearchPath();
                 }
-            }
-        }
-    }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "NoiseObject")
-        {
-            // Get the noise object and check that it has the noiseobject script
-            scr_noiseObject noise = collision.GetComponent<scr_noiseObject>();
-            if (noise == null)
-            {
-                Debug.LogError("ERROR: could not find scr_noiseObject in detected noise object \"" + collision.name + "\"");
-                return;
-            }
-
-            // Check radius for noise level
-            float loudness = noise.diameter;
-            Vector2 noisePos = noise.transform.position;
-            if (noise.parent.tag == "Player" && machine.currentState == StateMachine.State.Patrolling)
-            {
-                machine.currentState = StateMachine.State.Alert;
             }
         }
     }

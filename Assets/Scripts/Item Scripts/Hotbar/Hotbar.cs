@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class Hotbar : MonoBehaviour
 {
-    public InventoryBase inventory;
+    public PlayerInventory inventory;
     public RectTransform selector;
 
     [Tooltip("The time it takes for the selector to move to another slot, measured in seconds.")]
@@ -18,19 +19,25 @@ public class Hotbar : MonoBehaviour
     public float lockedAlpha = 0.15f;
 
     private float selectorVel;
-    private HotbarSlot artifactSlot;
+    private HotbarSlot artifact1Slot, artifact2Slot;
     private List<HotbarSlot> inventorySlots = new();
     private CanvasGroup group;
 
     private void Start()
     {
+        inventory = Resources.Load<PlayerInventory>("Player_Inventory");
+        
         var allSlots = GetComponentsInChildren<HotbarSlot>();
 
         foreach(var slot in allSlots)
         {
             if(slot.slotNumber == -1)
             {
-                artifactSlot = slot;
+                artifact1Slot = slot;
+            }
+            if(slot.slotNumber == -2)
+            {
+                artifact2Slot = slot;
             }
             else if(slot.slotNumber > -1)
             {
@@ -56,6 +63,26 @@ public class Hotbar : MonoBehaviour
             var pos = selector.anchoredPosition;
             pos.x = Mathf.SmoothDamp(pos.x, rect.anchoredPosition.x, ref selectorVel, selectorMoveTime);
             selector.anchoredPosition = pos;
+        }
+
+        updateArtifactSlot(inventory.artifact1, artifact1Slot);
+        updateArtifactSlot(inventory.artifact2, artifact2Slot);
+    }
+
+    private void updateArtifactSlot(Artifact x, HotbarSlot y)
+    {
+        if (x != null)
+        {
+            if (x.cooldown > 0)
+            {
+                y.itemIcon.color = new Color(0.2f, 0.2f, 0.2f, 1);
+                y.itemText.text = ((int) x.cooldown).ToString();
+            }
+            else
+            {
+                y.itemIcon.color = Color.white;
+                y.itemText.text = "";
+            }
         }
     }
 
@@ -95,11 +122,18 @@ public class Hotbar : MonoBehaviour
         }
     }
 
-    public void OnUseArtifact()
+    public void OnUseArtifact1()
     {
         if (inventory.carriedObject) return;
         
-        Use(inventory.currentArtifact);
+        Use(inventory.artifact1);
+    }
+    
+    public void OnUseArtifact2()
+    {
+        if (inventory.carriedObject) return;
+        
+        Use(inventory.artifact2);
     }
 
     private void Use(ItemBase item)

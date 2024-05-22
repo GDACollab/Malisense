@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Journal Action",
-                    "type": "Button",
-                    "id": "46c9acae-0f5f-43ea-bc6d-8ab3580fadc5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Hide Message",
                     "type": "Value",
                     "id": "040a405d-7375-4406-93a7-28b93e745851",
@@ -90,6 +81,15 @@
                     "name": "Activate Functions",
                     "type": "Button",
                     "id": "1c2a4c4c-6d13-43c2-80af-645b7ccf9862",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "9a1d8ea5-c94f-431b-8d51-1b9372e46568",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -264,6 +264,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ad87a5ec-46fd-4bf7-9941-56c740a6dd44",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "8 Directions Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d56b6d1b-6895-4eae-8131-8cc5ed35e069",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -352,28 +363,6 @@
                 },
                 {
                     "name": "",
-                    "id": "89c55c81-61d4-4682-be3a-09895834b789",
-                    "path": "<Keyboard>/j",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Journal Action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b119e223-9307-423d-9eae-e2bdbd2e8ddf",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Journal Action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "622f009e-d27d-4de0-b2f8-98211766db40",
                     "path": "<Keyboard>/semicolon",
                     "interactions": "",
@@ -407,17 +396,6 @@
                 },
                 {
                     "name": "",
-                    "id": "08a2d6db-3811-4f8f-aeb7-8d8ffb268cc4",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Hide Message",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "471a1288-151f-4c87-86b4-99441fe6f300",
                     "path": "<Keyboard>/quote",
                     "interactions": "",
@@ -430,11 +408,44 @@
                 {
                     "name": "",
                     "id": "cde5a3c6-b082-4b8e-957d-1599c0a049a1",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/equals",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Activate Functions",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f81e0d4b-2575-4367-9c80-81ac3a08eef2",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Activate Functions",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55bba8af-2e9d-45b2-9b93-e665773d0dc1",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e7917df-8360-4148-a2d1-bee669d4456c",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -490,9 +501,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Use Artifact",
+                    "name": "Use Artifact 1",
                     "type": "Button",
                     "id": "ebb8f62a-7260-4506-881f-0f2aa4d66b2f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Use Artifact 2",
+                    "type": "Button",
+                    "id": "48a53c2f-194e-44cf-94e4-dabbcab2a28e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -500,17 +520,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "d8a2e5ca-6737-493a-aa45-3b3c817badd7",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slot 1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "f1b39445-0a10-484b-ad70-a11afae2000c",
@@ -524,34 +533,12 @@
                 },
                 {
                     "name": "",
-                    "id": "46643bd9-f011-41f8-8f4c-1a0dd462f97e",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slot 2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3342f5c2-b4e8-43ae-aa5c-1cc226f02b07",
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Slot 2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "53d38cab-d215-4441-9d33-efc5f197eb9a",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slot 3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -633,6 +620,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Right Stick",
+                    "id": "5e1873dd-49b9-451f-b91a-be7b1b89e30a",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "1f687de3-7107-4353-b780-38313c3518f3",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "b726a841-b143-4275-887c-38264764aa0d",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "cb9d800e-beee-46f0-9619-759e75c21d9c",
                     "path": "<Keyboard>/q",
@@ -646,18 +666,7 @@
                 {
                     "name": "",
                     "id": "4f8edf4e-e04f-4503-ae2a-2c127a7e9083",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Use Item",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c3e383d9-9abe-4944-8478-dd85e90b7266",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -668,22 +677,22 @@
                 {
                     "name": "",
                     "id": "e31fa093-a3c5-44ad-a0ce-bfa3e7014156",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use Artifact",
+                    "action": "Use Artifact 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "d576140a-4210-4ebe-9b19-736a99bbf0db",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use Artifact",
+                    "action": "Use Artifact 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -694,7 +703,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use Artifact",
+                    "action": "Use Artifact 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d712d97-4c3b-4900-bd8a-a7a7e3132ca0",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Artifact 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0fa35e3-7272-4b4b-b7e4-cd99262b82e3",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Artifact 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -717,6 +748,51 @@
                     "name": "Select",
                     "type": "Button",
                     "id": "0436c1ba-00b6-4617-9d38-30ad442d3c66",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "3b8a12cb-1646-4727-8fd4-e90c79420d9d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "e9ee706a-d7d5-4b5a-bf7a-45ca5c96d00c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "JournalTab",
+                    "type": "Button",
+                    "id": "d95c3d63-23c8-4a70-acab-8b44cbf0f581",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SettingsTab",
+                    "type": "Button",
+                    "id": "182cf768-7449-491d-977c-63eeddcb3abb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug",
+                    "type": "Value",
+                    "id": "256b0ea4-9563-40cc-92ba-bb07dbd16af4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -839,7 +915,7 @@
                     "id": "09dcec77-c64f-490a-8899-883c7e9ffeb5",
                     "path": "2DVector",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,
@@ -894,7 +970,7 @@
                     "id": "3ef72462-5efe-4f69-864f-b5239098707e",
                     "path": "2DVector",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,
@@ -1000,57 +1076,134 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Joystick",
-                    "id": "7fbf6938-6868-48c5-8465-1a8cfc5b6b88",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "712b1cbc-59d7-407a-a930-814c3060dc90",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab322462-f668-47cc-b0c4-51862272e2a1",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ca873ac-b8c5-4fd2-bc85-feb8ff95195e",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b892bcc-dda5-4b79-9c23-73142e2ef6f3",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b19b9c3d-4b19-4372-af5d-0ec116dcd1b1",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5f6a640-6d08-4fbc-bdda-fb1bf2abe940",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JournalTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb19fccf-a1ac-4782-b1be-e59bfabfe9b7",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JournalTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ace8b26-5d9e-4da2-b192-11b9949b1631",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SettingsTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52bcaa33-e366-45cc-9b20-57c4c9d15517",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SettingsTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "c1d9af6e-2a3b-4c8e-b2ec-6a18802b7605",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "f27b96ff-d4a9-44a8-ad8b-8badfeab8bc0",
-                    "path": "<Joystick>/stick/up",
+                    "name": "modifier",
+                    "id": "b5091b0e-0471-4f3e-8fec-54b0a1b7cf51",
+                    "path": "<Keyboard>/slash",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Debug",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
-                    "id": "da350f4d-865c-4b2e-8419-a6da1359ba1b",
-                    "path": "<Joystick>/stick/down",
+                    "name": "binding",
+                    "id": "1c5dea30-54c9-4122-811e-209a876f8c90",
+                    "path": "<Keyboard>/backslash",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "40f6fba0-5356-40ba-b1f1-62e5821d64a5",
-                    "path": "<Joystick>/stick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "cf1ca6b7-deaf-4955-90db-d4b10b309eff",
-                    "path": "<Joystick>/stick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
+                    "action": "Debug",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

@@ -8,21 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1060745926655753273, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
-      propertyPath: switches.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7873316857041265846, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
-      propertyPath: m_LocalScale.x
+    - target: {fileID: 1599361701924622066, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
+      propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7873316857041265846, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
+    - target: {fileID: 4265002083969241106, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
+      propertyPath: m_InstanceId
+      value: -1343380
       objectReference: {fileID: 0}
-    - target: {fileID: 7873316857041265846, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
+    - target: {fileID: 7380827696130007702, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7873316857041265846, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -67,10 +63,6 @@ PrefabInstance:
     - target: {fileID: 8290041445005185098, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
       propertyPath: m_Name
       value: '[SMM] Switch Door'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8290041445005185098, guid: 3fab26c86525a7d479a8e0238410a0e7, type: 3}
-      propertyPath: m_Layer
-      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

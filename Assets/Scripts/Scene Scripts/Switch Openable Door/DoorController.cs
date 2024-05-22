@@ -1,6 +1,8 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class DoorController : MonoBehaviour, ISwitchable
 {
@@ -17,14 +19,18 @@ public class DoorController : MonoBehaviour, ISwitchable
     private int OnAllCounter = 0;
     private bool doorstate;
     private SpriteRenderer doorSprite;
+    private SpriteRenderer sigilSprite;
     private Collider2D doorCollider;
+    private ShadowCaster2D doorShadow;
 
     // Start is called before the first frame update
     void Start()
     {
         // Ensure that the door is initially closed
         doorSprite = GetComponent<SpriteRenderer>();
+        sigilSprite = GetComponentsInChildren<SpriteRenderer>()[1];
         doorCollider = GetComponent<Collider2D>();
+        doorShadow = GetComponent<ShadowCaster2D>();
         SetDoor(startOpen);
     }
 
@@ -72,9 +78,14 @@ public class DoorController : MonoBehaviour, ISwitchable
 
         doorstate = open;
         doorSprite.enabled = !open;
+        sigilSprite.enabled = !open;
         doorCollider.enabled = !open;
-
+        doorShadow.enabled = !open;
+        Bounds bounds = gameObject.GetComponent<Collider2D>().bounds;
+        bounds.Expand(3);
+        AstarPath.active.UpdateGraphs(bounds);
     }
+
 
     public void OpenDoor()
     {

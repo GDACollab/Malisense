@@ -10,7 +10,7 @@ public class Flash : MonoBehaviour
     public Color endColor = Color.white;
     public float exponent = 1f;
 
-    private new Light2D light;
+    private Light2D light;
     private float outerRad;
     private float innerRad;
     private float intensity;

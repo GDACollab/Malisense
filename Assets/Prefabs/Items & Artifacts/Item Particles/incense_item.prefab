@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseObject: {fileID: 5032859555972340647, guid: 1b4fee9aff0937e4cbcee0bd6551cb20, type: 3}
+  noiseDistractsSound: 0
 --- !u!114 &-6549291531931627274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +102,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2315651385435373631}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

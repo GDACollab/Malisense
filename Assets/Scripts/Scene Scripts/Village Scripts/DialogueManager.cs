@@ -5,44 +5,50 @@ using TMPro;
 using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
+/// <summary>
+/// A script that handles dialogue UI and Ink functionality (variables, choices, etc)
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
-
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] public GameObject selectableItemsGameObject;
+    [SerializeField] private TextMeshProUGUI characterNameText;
+
+    [Header("Village Navigation")]
+    [SerializeField] VillageNavigationManager navigationManager;
+
+    [Header("Ink File")]
+    [Tooltip("The master ink file.")]
+    [SerializeField] private TextAsset masterInk;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
+    private int defaultHeight = 115;
 
     // Start is called before the first frame update
     private Ink.Runtime.Story currentStory;
 
-    private static DialogueManager instance;
-
+    [Header("Status")]
     [SerializeField] private bool isPlaying;
-    [SerializeField] V_SelectableItems3New selectableScript;
+    
+
+    // Global Teapot
+    GlobalTeapot globalTeapot;
 
     private string currentInkFileName = "";
 
-    PlayerInput playerInput;
-    InputAction moveAction;
-    InputAction selectAction;
-
-
     void Start()
     {
-        playerInput = FindFirstObjectByType<PlayerInput>().GetComponent<PlayerInput>();
-        moveAction = playerInput.actions.FindAction("8 Directions Movement");
-        selectAction = playerInput.actions.FindAction("Interact");
+        // Get the Global Teapot
+        globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
 
         isPlaying = false;
         dialoguePanel.SetActive(false);
-        selectableScript = selectableItemsGameObject.GetComponent<V_SelectableItems3New>();
 
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -56,47 +62,9 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
-        int previousChoiceIndex = currentChoiceIndex;
         UpdateChoiceSelectionVisuals();
-        //If Currently Selected and Input Space bar
-        if (isPlaying)
-        {
-            // Check if there are any choices to navigate
-            if (currentStory.currentChoices.Count > 0)
-            {
-                if (moveAction.ReadValue<Vector2>().x < 0f && moveAction.triggered)
-                {
-                    // Navigate up in the choices list
-                    currentChoiceIndex--;
-                    if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
-                    // Optionally, call a function to update the UI here
-                }
-                else if (moveAction.ReadValue<Vector2>().x > 0f && moveAction.triggered)
-                {
-                    // Navigate down in the choices list
-                    currentChoiceIndex++;
-                    if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                    // Optionally, call a function to update the UI here
-                }
 
-                // Select a choice with the Enter key
-                if (selectAction.triggered)
-                {
-                    MakeChoice(currentChoiceIndex);
-                }
-            }
-            else
-            {
-                // If there are no choices, pressing Enter continues the story
-                if (selectAction.triggered)
-                {
-                    ContinueStory();
-                }
-            }
-        }
-
-
-        if (!selectableScript.activateInk)
+        if (!navigationManager.activateInk)
         {
             currentInkFileName = "";
             ClearDialogueMode();
@@ -107,46 +75,155 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (selectableScript != null && selectableScript.activateInk)
+        if (navigationManager != null && navigationManager.activateInk)
         {
-            TextAsset currentInk = selectableScript.CurrentInkTextAsset;
+            string currentChar = navigationManager.CurrentCharacter;
             // If currentlySelected is true, show the dialogue panel - List of InkJson TextAssets in V_SelectableItens, variable CurInk
-            if (currentInk != null)
+            if (currentChar != null)
             {
-                EnterDialogueMode(currentInk);
+                // If this is the introduction cutscene, pass it with an extra parameter
+                if (navigationManager.selectedBuildingIndex == 5)
+                {
+                    EnterDialogueMode(isIntroductionCutscene: true);
+                }
+                else
+                {
+                    EnterDialogueMode(currentChar);
+                }
+
             }
         }
-
     }
 
-    public void EnterDialogueMode(TextAsset inkJson)
+    public void moveChoiceSelection(string direction)
     {
-
-        if (currentInkFileName == inkJson.name)
+        // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        // Check that there are dialogue options to choose from otherwise there's no option to move
+        if (isPlaying && currentStory.currentChoices.Count > 0)
         {
 
-            Debug.Log("RETURN");
-            // The story is already loaded and can continue, so just activate the UI
+            // Move
+            if (direction == "left")             // left
+            {
+                // Navigate up in the choices list
+                currentChoiceIndex--;
+                if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                // Optionally, call a function to update the UI here
+            }
+            else if (direction == "right")        // right
+            {
+                // Navigate down in the choices list
+                currentChoiceIndex++;
+                if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                // Optionally, call a function to update the UI here
+            }
+        }
+    }
+
+    public void selectDialogue()
+    {
+        // Need to check so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+        if (isPlaying)
+        {
+            // Check if there are any choices to navigate
+            if (currentStory.currentChoices.Count > 0)
+            {
+                MakeChoice(currentChoiceIndex);
+            }
+            else
+            {
+                ContinueStory();
+            }
+        }
+    }
+
+    public void EnterDialogueMode(string character = "???????????????", bool isIntroductionCutscene = false)
+    {
+        TextAsset inkJson = masterInk;
+
+        // Prevent from restarting conversation at the end
+        if (currentInkFileName == inkJson.name)
+        {
+            Debug.Log("Do not restart currently running story.");
             isPlaying = true;
-            dialoguePanel.SetActive(true);
-            // Optionally, update the UI here if needed (e.g., refresh choice buttons)
             return; // Skip reinitializing the story
         }
-        Debug.Log(" Not RETURN " + currentInkFileName + " Names " + inkJson.name);
-        // Load a new story or restart the current one
+        Debug.Log("Start running story.");
+
         currentStory = new Ink.Runtime.Story(inkJson.text);
-        currentInkFileName = inkJson.name; // Update the current ink file name
+
+        currentStory.variablesState["isMayorIntro"] = globalTeapot.currProgress == GlobalTeapot.TeaType.Intro; // MAYOR INTRO DELAY NOT IMPLEMENTED, CURRENTLY JUST HAPPENS DURING THE NORMAL INTRO
+        currentStory.variablesState["hasMayorNote1"] = globalTeapot.hasMayorNote1;
+        currentStory.variablesState["hasMayorNote2"] = globalTeapot.hasMayorNote2;
+        currentStory.variablesState["hasFinalMayorNote"] = globalTeapot.hasFinalMayorNote;
+
+        // Set defaults, will be modified afterward if needs to be true
+        currentStory.variablesState["isIntro"] = false;
+        currentStory.variablesState["isDeathF1"] = false;
+        currentStory.variablesState["isHub"] = false;
+        currentStory.variablesState["isDeathF2"] = false;
+        currentStory.variablesState["isEnd"] = false;
+        currentStory.variablesState["isIntroductionCutscene"] = isIntroductionCutscene;
+        currentStory.variablesState["hasDied"] = false;
+
+        switch (globalTeapot.currProgress)
+        {
+            case GlobalTeapot.TeaType.Intro:
+                currentStory.variablesState["isIntro"] = true;
+                Debug.Log("intro with " + character);
+                break;
+            case GlobalTeapot.TeaType.Dungeon_F1:
+                currentStory.variablesState["isDeathF1"] = true;
+                Debug.Log("deathf1 with " + character);
+                break;
+            case GlobalTeapot.TeaType.Dungeon_F2:
+                if (globalTeapot.hasDied)
+                {
+                    currentStory.variablesState["isDeathF2"] = true;
+                    Debug.Log("deathf2 with " + character);
+                }
+                else
+                {
+                    currentStory.variablesState["isHub"] = true;
+                    Debug.Log("hub with " + character);
+                }
+                break;
+            case GlobalTeapot.TeaType.End:
+                currentStory.variablesState["isEnd"] = true;
+                Debug.Log("end with " + character);
+                break;
+            default:
+                Debug.Log("default in dialogue switch statement (this is bad)");
+                currentStory.variablesState["isIntro"] = true;
+                break;
+        }
+
+        // VAR background = "First"
+        // VAR StickHappiness = 0
+
+        currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
+        currentInkFileName = inkJson.name; // Update the current ink file name         
         isPlaying = true;
+
         dialoguePanel.SetActive(true);
+        if (character == "Crypt_Keeper")
+        {
+            characterNameText.text = "Crypt Keeper";
+        } else
+        {
+            characterNameText.text = character;
+        }
         ContinueStory();
     }
 
     private void ExitDialogueMode()
     {
+        Debug.Log(gameObject);
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        selectableScript.selectObject();
+        characterNameText.text = "";
+        navigationManager.selectBuilding();
     }
 
     private void ClearDialogueMode()
@@ -154,6 +231,7 @@ public class DialogueManager : MonoBehaviour
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        characterNameText.text = "";
     }
 
     private void ContinueStory()
@@ -203,12 +281,19 @@ public class DialogueManager : MonoBehaviour
             if (i == currentChoiceIndex)
             {
                 // Highlight the current choice
-                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.yellow; // Example of highlighting
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.black; // Example of highlighting
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.ScrollRect; // set overflow to allow text to expand
+                choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize; //set box to exanded size
+                // choices[i].GetComponentInChildren<TextMeshProUGUI>().text
+
             }
             else
             {
                 // Revert other choices to their normal state
-                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.white; // Example of normal state
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.grey; // Example of normal state
+                choices[i].GetComponentInChildren<TextMeshProUGUI>().overflowMode = TextOverflowModes.Ellipsis; //reset overflow to Ellipsis
+                choices[i].GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained; //don't fit to text
+                choices[i].GetComponent<RectTransform>().sizeDelta = new Vector2(choices[i].GetComponent<RectTransform>().rect.width, defaultHeight);   //return box to normal size  
             }
         }
     }

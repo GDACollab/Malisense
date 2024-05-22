@@ -192,6 +192,15 @@ public class AudioManager : MonoBehaviour
     {
         PlayOST(dungeonOST);
     }
+    
+    
+    /// <summary>
+    /// Plays the chase ost
+    /// </summary>
+    public void ChaseOST(){
+        // Play the chase music
+        // PlayOST(chaseOST);
+    }
 
     /// <summary>
     /// Plays the select sfx
