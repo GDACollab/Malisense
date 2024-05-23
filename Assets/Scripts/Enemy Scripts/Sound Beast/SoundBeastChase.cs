@@ -28,10 +28,11 @@ public class SoundBeastChase : StateBaseClass
     private bool hearsPlayer => _sound.heardSound;
     private float _chaseTimer;
     private SoundBeastSoundModule _sound;
-    
-    
+    private Animator animator;
+
     private void Awake() {
         _sound = GetComponent<SoundBeastSoundModule>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public override void Init()
@@ -48,6 +49,11 @@ public class SoundBeastChase : StateBaseClass
                         pathUpdateRate);// UpdatePath delay
         _fear = target.GetComponent<FearTracker>();
         _chaseTimer = chaseTimer;
+
+        animator.SetBool("Run", true);
+        animator.SetBool("Walk", false);
+        animator.SetBool("Idle", false);
+
     }
 
     void UpdatePath()
