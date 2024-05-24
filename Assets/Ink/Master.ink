@@ -478,124 +478,168 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 // -> END
 
 =NeutralStick
+~ CharacterTitle = ""
 As you enter the Custodian's house, a melancholy dog approaches you.
 Its collar reads: "Stick, my loyal and beloved pet"
+~ CharacterTitle = "Stick"
 <b>Stick:</b> *Whimper*
- *[Pet Stick]
+ *[<i>Pet Stick</i>]
     ~ StickHappiness = StickHappiness + 1
+    ~ CharacterTitle = ""
     You softly pet Stick's head
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Ruff, ruff!
+    ~ CharacterTitle = ""
     Stick happily wags its tail as you gently wave goodbye.
     ->DONE
  *[Leave Stick Alone]
     ~ StickHappiness = StickHappiness - 1
+    ~ CharacterTitle = ""
     As you turn and leave you can hear Stick whimpering softly.
 
 -> END
 
 =Stick1
+~ CharacterTitle = ""
 Stick wags its tail happily as you enter.
 +[Pet Stick again]
     {StickHappiness<2: 
         ~StickHappiness=StickHappiness+1
     }
+    ~ CharacterTitle = ""
     You softly pat Stick's head.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Ruff, ruff!
+    ~ CharacterTitle = ""
     Stick happily wags its tail.
     ->PetStick
  *[Leave]
     ~ StickHappiness = StickHappiness - 1
+    ~ CharacterTitle = ""
     You ignore Stick and leave the house.
 ->END
 
 =PetStick
  +[Pet Stick again]
+ ~ CharacterTitle = ""
     You softly pat Stick's head.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Ruff, ruff!
+    ~ CharacterTitle = ""
     Stick happily wags its tail.
     ->PetStick
  *[Wave goodbye]
+ ~ CharacterTitle = ""
     You wave goodbye to Stick as you leave the house.
 ->END
 
 =Stick2
+~ CharacterTitle = ""
 You enter the Custodian's house. Little trinkets jingle on the wall.
 At your presence, Stick perks up and its tail starts moving rapidly.
  +[Pet Stick again]
     {StickHappiness<3:
         ~StickHappiness=StickHappiness+1
     }
+    ~ CharacterTitle = ""
     You softly rub Stick's head.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Arf!
+    ~ CharacterTitle = ""
     Stick nuzzles into your hand.
     ->PetStick2
  *[Leave]
     ~ StickHappiness = StickHappiness - 1
+    ~ CharacterTitle = ""
     You ignore Stick and leave the house.
 ->END
     
 =PetStick2
 +[Keep petting Stick]
     You softly rub Stick's head.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Arf!
+    ~ CharacterTitle = ""
     Stick nuzzles into your hand.
     ->PetStick
  *[Wave goodbye]
+ ~ CharacterTitle = ""
     You wave goodbye to Stick as you leave the house.
 ->END
 
 =Stick3
+~ CharacterTitle = ""
 As you enter the Custodian's house, you see Stick get up and walk towards you, its tail swinging rapidly.
+~ CharacterTitle = "Stick"
 <b>Stick:</b> Ruff!
+~ CharacterTitle = ""
 A bark of triumph.
  *[Pet Stick]
     {StickHappiness<4:
         ~StickHappiness=StickHappiness+1
     }
+    ~ CharacterTitle = ""
     You pat stick on the back.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Woof!
     **["Good dog!"]
+    ~ CharacterTitle = "Stick"
         <b>Stick:</b> Woof! Woof!
     **[Scratch Stick's back some more]
+    ~ CharacterTitle = "Stick"
         <b>Stick:</b> Arf!
-    - Stick's tail vigorously wags back and forth.
+    - ~ CharacterTitle = ""
+    Stick's tail vigorously wags back and forth.
     You give Stick one last pet and unwillingly leave.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Bark!
     ->DONE
  *[Leave]
     ~ StickHappiness = StickHappiness - 1
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Ruff! Ruff!
+    ~ CharacterTitle = ""
     You immediately turn around and leave, ignoring Stick's barks.
 -> END
 
 =Stick4
+~ CharacterTitle = ""
 As soon as you open the door, Stick launches toward you.
 You crouch down and recieve Stick in your arms.
  *[Pet Stick]
     {StickHappiness<5: 
         ~StickHappiness=StickHappiness+1
     }
+    ~ CharacterTitle = ""
     You give Stick a hearty back rub.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Woof! Woof!
     ->PetStick3
 *[Get up to leave]
+~ CharacterTitle = ""
     As you get up and start to leave, Stick follows.
     -> HappyLeave
 
 =PetStick3
  +[Pet Stick again]
+ ~ CharacterTitle = ""
     You give Stick the best belly rub you've ever done in your life.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Awooo!
     ->PetStick3
  +[Give Stick a treat]
+ ~ CharacterTitle = ""
     You find a jar of dog treats on a nearby shelf.
     You give Stick one of the treats.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Ruff!
+    ~ CharacterTitle = ""
     Stick happily gobbles down the treat. 
     ->PetStick3
  +[Get Stick to do a trick]
     ->StickTrick
  *[Get up to leave]
+ ~ CharacterTitle = ""
     As you get up and start to leave, Stick follows.
     -> HappyLeave
  
@@ -605,83 +649,117 @@ You crouch down and recieve Stick in your arms.
  ~ trick = "{~1|2|3|4}"
  ~ trick2 = "{~1|2|3|4|5|6|7|8|9}"
  {trick:
-    - 1: You grab a treat and spin it around Stick.
+    - 1: 
+        ~ CharacterTitle = ""
+        You grab a treat and spin it around Stick.
         Stick starts spinning in circles until it gets dizzy and has trouble standing up.
         You give Stick the treat.
+        ~ CharacterTitle = "Stick"
         <b>Stick:</b> Ruh... Ruff...
-    - 2: You grab a treat and tell Stick to sit.
+    - 2:
+        ~ CharacterTitle = ""
+        You grab a treat and tell Stick to sit.
         Stick sits down.
         You applaud and give Stick the treat. 
+        ~ CharacterTitle = "Stick"
         <b>Stick:</b> Ruff!
-    - 3: You grab a treat and ask Stick to {trick2==1: do a barrel roll|roll over}. 
+    - 3: 
+        ~ CharacterTitle = ""
+        You grab a treat and ask Stick to {trick2==1: do a barrel roll|roll over}. 
         Stick ferociously rolls over and into the wall. 
+        ~ CharacterTitle = "Stick"
         <b>Stick:</b> Woof! Ruff!
+        ~ CharacterTitle = ""
         Stick feels proud of their accomplishment.
         You feed stick the treat.
+        ~ CharacterTitle = "Stick"
         <b>Stick:</b> Arf!
-    - 4: As you go to grab a treat, you witness something amazing.
+    - 4: 
+        ~ CharacterTitle = ""
+        As you go to grab a treat, you witness something amazing.
         Stick does a double flip into a 360 midair spin.
         Stick proudly lands on the floor and you give two treats for that.
+        ~ CharacterTitle = "Stick"
         <b>Stick:</b> Arf! Arf!
     - else: ERROR RANDOM MODULE FAILED CONTACT YOUR NEAREST PELICAN
 }
 ->PetStick3
 
 =HappyLeave
+~ CharacterTitle = ""
 However, the dungeon is too dangerous for a dog, so you stop in your tracks.
  * Tell Stick to stay
+ ~ CharacterTitle = ""
     You tell Stick to stay.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> *whine*
+    ~ CharacterTitle = ""
     Stick whines a bit but understands and backs off.
     With a heavy heart, you leave the Custodian's house.
  * Try to leave
+ ~ CharacterTitle = ""
     You try to leave, but Stick tries to leave with you.
     ->HappyLeave
  -->END
 ->END
 
 =StickSad1
+~ CharacterTitle = ""
 As you enter the Custodian's house, a heartbroken dog approaches you.
 Its collar reads: "Stick, my loyal and beloved pet"
+~ CharacterTitle = "Stick"
 <b>Stick:</b> *Whimper* *Whimper*
  * Pet Stick
     ~ StickHappiness = StickHappiness + 1
+    ~ CharacterTitle = ""
     You softly pet Stick's head.
+    ~ CharacterTitle = "Stick"
     <b>Stick:</b> Ruff, ruff!
+    ~ CharacterTitle = ""
     Stick happily wags its tail as you gently wave goodbye.
     ->DONE
  * Leave Stick Alone
+ ~ CharacterTitle = ""
     You once again turn and leave, ignoring the whimpers behind you.
 ->END
 
 =StickSad2
+~ CharacterTitle = ""
 You enter the Custodian's house looking around at the various shelves filled with dust.
 Stick lays on the ground unresponsive to your intrusion.
     * Pet Stick
+    ~ CharacterTitle = ""
         You bend down and softly pet Stick's head.
         Stick remains unresponsive to you.
         ** Keep petting
             ~ StickHappiness = StickHappiness + 1
+            ~ CharacterTitle = ""
             You keep petting Stick.
             Eventually Stick perks up.
+            ~ CharacterTitle = "Stick"
             <b>Stick:</b> Ruff...
+            ~ CharacterTitle = ""
             Stick slightly wags its tail as you gently wave goodbye.
             ->END
         ** Leave Stick Alone
+        ~ CharacterTitle = ""
             You leave, ignoring Stick alone on the floor.
             ->END
     * Leave the Custodian's House
+    ~ CharacterTitle = ""
         You leave, ignoring Stick alone on the floor.
         ->END
 ->END
 
 =StickOHNO
+~ CharacterTitle = ""
 You enter the Custodian's house with a creak. It's a dusty room with various trinkets and baubles.
 You look around and find a dog bowl, several weird masks, and a few keys. However, you find nothing of importance here. 
 -> WishfulThinking(StickHappiness)
 
 =WishfulThinking(tries)
  + Keep looking
+ ~ CharacterTitle = ""
     You keep looking, but you don't find anything of interest.
     ->WishfulThinking(tries-1)
  * {tries == -8} Sit in silence
@@ -696,6 +774,7 @@ You look around and find a dog bowl, several weird masks, and a few keys. Howeve
     -- ~ StickHappiness = -10
     -> WishfulThinking(tries-1)
  * Leave
+ ~ CharacterTitle = ""
     You leave the Custodian's house, wondering why you ever even entered.
 ->END
 
