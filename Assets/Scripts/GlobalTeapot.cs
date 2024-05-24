@@ -39,6 +39,7 @@ public class GlobalTeapot : MonoBehaviour
 
     [Header("Scripts Referenced")]
     public AudioManager audioManager;
+    public Fader fader;
     public Journal journal;
 
     private void Awake()
@@ -54,6 +55,8 @@ public class GlobalTeapot : MonoBehaviour
         }
         if (!journal) { journal = Resources.Load<Journal>("Journal"); }
         audioManager = GetComponent<AudioManager>();
+        fader = GetComponent<Fader>();
+        fader.Init();
         journal.CreateFloorNotes();
     }
 
