@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Player died due to contact to enemy");
-            newInventory.inventory.Clear();
+            newInventory.ClearInventory();
             playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
             playerAnimator.SetTrigger("die");
             StartCoroutine(ZoomCamera());

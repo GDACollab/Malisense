@@ -190,6 +190,11 @@ MonoBehaviour:
   scentT_Patrol2Alert: 50
   scentT_Alert2Chase: 90
   scentPerSecond: 1
+  usedIncense: 0
+  incenseDecrease: 40
+  incenseDuration: 3
+  safeZoneDecrease: 0.75
+  minScentValue: 30
   playerScent: 0
   playerDist: 0
 --- !u!114 &8425315111178970922
