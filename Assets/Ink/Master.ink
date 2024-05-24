@@ -54,27 +54,27 @@ bool Variables
  
  == Introduction ==
 ~ CharacterTitle = "???????????????"
-Everything is coated in darkness. 
+<i>Everything is coated in darkness. </i>
 
-It reeks of death
+<i>It reeks of death.</i>
 
-Your mind flashes... 
+<i>Your mind flashes... </i>
 
-You hear screams...
+<i>You hear screams...</i>
 
-Flickers of blood...
+<i>Flickers of blood...</i>
 
-Sight, hearing, touch, taste, scent...restored but not recovered 
+<i>Sight, hearing, touch, taste, scent...restored but not recovered. </i>
 
-You blink into consciousness, yet the world around you does not
+<i>You blink into consciousness, yet the world around you does not.</i>
 
-The memories fade, but the smell of death still lingers
+<i>The memories fade, but the smell of death still lingers.</i>
 
-Your soul hangs inbetween, familiar but foreign 
+<i>Your soul hangs in between, familiar but foreign.</i>
 
-But, everything happens for a reason 
+<i>But, everything happens for a reason.</i>
 
-Right?
+<i>Right?</i>
 
 -> END
  
@@ -92,44 +92,48 @@ Right?
  }
  
  =intro
+~ CharacterTitle = ""
+<i>You approach the familiar figure. Your throat tightens as she turns to you. </i>
+
+<i>Her warm smile softens the gloom of the decaying fountain. </i>
 ~ CharacterTitle = "???????????????"
-You approach the familiar figure. Your throat tightens as she turns to you. 
-
-Her warm smile softens the gloom of the decaying fountain. 
-
  <b>???:</b>  "I don’t need my sight to recognize your presence, little sweet. It has been a long while since anyone has dared venture to this old place." 
  
   <b>???:</b>  "It's rude to keep a lady waiting...even one with all the time in the world." 
-  
-  She chuckles softly.
+~ CharacterTitle = ""
+  <i>She chuckles softly.</i>
 
  * "Who are you...again?"
+ ~ CharacterTitle = "???????????????"
     <b>???:</b> "You don't recall? Perhaps that is to be expected, considering your state."
-    
-    She lets out a quiet sigh. 
-    
+~ CharacterTitle = ""
+    <i>She lets out a quiet sigh. </i>
+    ~ CharacterTitle = "???????????????"
     <b>???:</b> "I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." ->whathappened
    
  * "Hello?"
+ ~ CharacterTitle = "???????????????"
     <b>???:</b> "Oh, thank the heavens. I was so worried that, in all the tumult, you might have forgotten who I was."
     
    <b>???:</b>  "But I guess that's how peonies are–just when you think they've wilted completely, they suddenly blossom brighter than ever before."
-   
-   You feel as if you know this person, but struggle to even recall her name. ->whathappened
+   ~ CharacterTitle = ""
+   <i>You feel as if you know this person, but struggle to even recall her name.</i> ->whathappened
    
    =whathappened
-   *"What happened?"
+   *"What happened?" {~ CharacterTitle = ""}
+   ~ CharacterTitle = "???????????????"
    <b>???:</b> "Hmm...I guess there is no easy way to say this." 
-   
-   The woman's face becomes pale. She fidgets with her necklace. 
-   
+   ~ CharacterTitle = ""
+   <i>The woman's face becomes pale. She fidgets with her necklace. </i>
+   ~ CharacterTitle = "???????????????"
   <b>???:</b>:  "You...passed on. Oh, you can only imagine how distraught I was to find your lifeless body out here. Thankfully, I was able to collect myself and begin preparations to bring you back." 
   
   <b>???:</b>: I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." ->whathappenedcont
     
    =whathappenedcont
-   ~ CharacterTitle = "Crypt Keeper"
-    *"How did you do such a thing?"
+    ~ CharacterTitle = ""
+    *"How did you do such a thing?" 
+     ~ CharacterTitle = "Crypt Keeper"
    <b>CRYPT KEEPER:</b> "A magician never reveals her secrets...but since you're special, I'll make an exception." 
    
    <b>CRYPT KEEPER:</b>  "That lantern that hangs from your staff contains your soul. When in close proximity with it, your spirit can once again animate your body as it did while you were still...living."
@@ -138,18 +142,21 @@ Her warm smile softens the gloom of the decaying fountain.
     ->lanterndesc
    
    =lanterndesc
-    You look down at the lantern.
+   ~ CharacterTitle = ""
+    <i>You look down at the lantern.</i>
      
-     Within it, a small candle burns soflty. The flicker of its flame is comforting. 
+    <i>Within it, a small candle burns soflty. The flicker of its flame is comforting. </i>
      
-     It reminds you of the broth you drank as a child when you were ill. 
+    <i>It reminds you of the broth you drank as a child when you were ill. </i>
      
-     The lantern itself is ornately sculpted. It's so polished that you can see yourself reflected in its silver casing. 
+    <i>The lantern itself is ornately sculpted. It's so polished that you can see yourself reflected in its silver casing. </i>
      
-     Someone clearly has put a lot of effort into preparing it for this occassion. ->interrogation
+    <i>Someone clearly has put a lot of effort into preparing it for this occassion.</i> ->interrogation
      
     =interrogation
+    ~ CharacterTitle = ""
     *"Where is everyone?"
+    ~ CharacterTitle = "Crypt Keeper"
         <B>CRYPT KEEPER:</B> "You don't remember? I'll tell you this much--I was right about that creature."
         
        <B>CRYPT KEEPER:</B> "Radefell is gone. The survivors are living in this village. I've been helping them, here and there." 
@@ -159,6 +166,7 @@ Her warm smile softens the gloom of the decaying fountain.
        <B>CRYPT KEEPER:</B>  "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." ->interrogation
    
     *"Where am I?"
+    ~ CharacterTitle = "Crypt Keeper"
         <b>CRYPT KEEPER:</b> "Apologies for the drab scenery. It's much easier to bring a soul back in a place such as this." 
         
         <b>CRYPT KEEPER:</b> "Resuscitation is difficult in a city, where death is so omnnipresent."
@@ -167,12 +175,12 @@ Her warm smile softens the gloom of the decaying fountain.
         
     *"Why revive me?"
        
-      She frowns. 
-        
+      <i>She frowns. </i>
+        ~ CharacterTitle = "Crypt Keeper"
         <b>CRYPT KEEPER:</b> "Why revive anyone else? You're the lantern of my life, peony. You should know that better than anyone else." ->interrogation
     
     *"How did I die?"
-      
+      ~ CharacterTitle = "Crypt Keeper"
         <b>CRYPT KEEPER:</b> "I found you not far from here, in a nearby cornfield. You were badly bruised, especially on your knees and elbows."
        
        <b>CRYPT KEEPER:</b> "It was a terrible scene, just awful. I was quite distraught, but I managed to pull myself together."
@@ -183,22 +191,22 @@ Her warm smile softens the gloom of the decaying fountain.
        
 
     *{CHOICE_COUNT() == 0}->
-
+~ CharacterTitle = "Crypt Keeper"
        <b>CRYPT KEEPER:</b> "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
+       ~ CharacterTitle = ""
+       <i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
        
-       She smiles at you, and–for the first time in a long time–you feel safe. 
+       <i>You were safe at the chapel, sure, but any bird is safe in a cage. This is different. </i>
        
-       You were safe at the chapel, sure, but any bird is safe in a cage. This is different. 
-       
-       The woman snaps her fingers and disappears, leaving nothing behind but a faint aroma of lavender.
+       <i>The woman snaps her fingers and disappears, leaving nothing behind but a faint aroma of lavender.</i>
 
         -> END
 
 = DeathF1
+~ CharacterTitle = ""
+<i>In an instant, you feel yourself being thrust back into the cold embrace of life.</i>
 
-In an instant, you feel yourself being thrust back into the cold embrace of life.
-
-
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b>: "You’ve met with yet another terrible end, haven’t you?" 
 
 <b>CRYPT KEEPER:</b> "Not to worry. I’ll be here–as I always have been–to put your soul back in its place." 
@@ -206,27 +214,30 @@ In an instant, you feel yourself being thrust back into the cold embrace of life
 <b>CRYPT KEEPER:</b> "Just...promise me you won’t do something I can’t bring you back from." 
 
 <b>CRYPT KEEPER:</b> "Don’t let your hunger for redemption destroy what we still have."
-
-Breathe. 
+~ CharacterTitle = ""
+<i>Breathe. </i>
 
 -> END
 
 = hub
-{Clergy.Hub && Artifact1<0: You return to the Crypt Keeper, finding her tending to the crypt’s flora. -> Artifact1}
+~ CharacterTitle = ""
+{Clergy.Hub && Artifact1<0: <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
 
-
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to.
-
+~ CharacterTitle = ""
  * "I have a question."
- 
+ ~ CharacterTitle = "Crypt Keeper"
  <b>CRYPT KEEPER:</b> What would you like to discuss, my peony? -> conversation
  
  * "Goodbye."
- Until next time, then. Don't keep me waiting. -> END
+ ~ CharacterTitle = "Crypt Keeper"
+ <b>CRYPT KEEPER:</b> Until next time, then. Don't keep me waiting. -> END
  
  =conversation
+ ~ CharacterTitle = ""
 + "Why do we need the artifacts?"
-
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Well, that wretched being wants the artifacts."
 
 <b>CRYPT KEEPER:</b> "Thus, we have two choices..."
@@ -238,6 +249,7 @@ Breathe.
 <b>CRYPT KEEPER:</b> "That creature already destroyed Radefell. We can't let it move any further towards its goal." ->conversation
 
 + "What exactly are the dungeons?"
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "When the Malignance emerged, it wrought havoc upon Radefell. But it wasn't just blindly destroying everything." 
 
 <b>CRYPT KEEPER:</b> "It was taking pieces of the city and pulling them underground. This created the dungeons you now traverse."
@@ -245,6 +257,7 @@ Breathe.
 <b>CRYPT KEEPER:</b> "As to why would it do such a thing? I'm not sure, but I reckon that we'll find out soon enough." ->conversation
 
 + "How are you holding up?"
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "How kind of you to worry about me. I'm doing well, all things considered."
 
 <b>CRYPT KEEPER:</b> "In a situation like this, one is bound to miss her creature comforts." 
@@ -254,10 +267,11 @@ Breathe.
 <b>CRYPT KEEPER:</b> "But I still have you, my peony. That's all I need." ->conversation
 
 + "Goodbye."
- Until next time, then. Don't keep me waiting. -> END
+~ CharacterTitle = "Crypt Keeper"
+ <b>CRYPT KEEPER:</b> "Until next time, then. Don't keep me waiting." -> END
 
 = DeathF2
-
+~ CharacterTitle = "Crypt Keeper"
 { shuffle once:
 
 -   "How disappointing..."
@@ -266,106 +280,116 @@ Breathe.
 -   "Someone's been busy! Let's get you patched up."
 -   "I wonder...is it possible for one to get accustomed to death?"
 }
-
-*Breathe.
+~ CharacterTitle = ""
+*<i>Breathe.</i>
 
 -> END
 
 =Artifact1
-She seems to not acknowledge your presence. 
+~ CharacterTitle = ""
+<i>She seems to not acknowledge your presence. </i>
 
-Have you done something wrong? 
+<i>Have you done something wrong? </i>
 
-Does she know about the High Priest returning? 
+<i>Does she know about the High Priest returning? </i>
 
-There's only one way to find out.
+<i>There's only one way to find out.</i>
 
-+[Wait for her to acknowledge you] -> wait
-+[Approach her] -> approach 
++[<i>Wait for her to acknowledge you</i>] -> wait
++[<i>Approach her</i>] -> approach 
 
 =wait 
-You observe her care for the plants for minutes on end.
-+[Continue to wait] -> continueWait 
-+[Approach her] -> approach 
+~ CharacterTitle = ""
+<i>You observe her care for the plants for minutes on end.</i>
++[<i>Continue to wait</i>] -> continueWait 
++[<i>Approach her</i>] -> approach 
 
 = continueWait
-You stand idly for another minute, even though she has stopped watering the plants. 
-After the minute you hear her say...
-
+~ CharacterTitle = ""
+<i>You stand idly for another minute, even though she has stopped watering the plants. </i>
+<i>After the minute you hear her say...</i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b>"Well?"
 ->approach
 
 =approach
-You take a single step forward.
-She chuckles to herself.
+~ CharacterTitle = ""
+<i>You take a single step forward.</i>
+<i>She chuckles to herself.</i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Welcome back, my little sweet. Please, come here." 
 
-Doing as asked, you approach her observing the plant life she cares for. 
-
+<i>Doing as asked, you approach her observing the plant life she cares for. </i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Beautiful, isn't it?" 
 
 <b>CRYPT KEEPER:</b> "Now, be a doll and help me up, would you?" 
+~ CharacterTitle = ""
+*[<i>Help her up</i>] 
 
-*[Help her up] 
+<i>She dusts herself off and turns to face you. Not a speck of dirt, dust, or plant remains on her white dress. </i>
 
-She dusts herself off and turns to face you. Not a speck of dirt, dust, or plant remains on her white dress. 
-
-She embraces you. 
-
+<i>She embraces you. </i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "It all feels so surreal, I knew I trusted in you for the right reason." 
 
-She releases you from her embrace.
-
+<i>She releases you from her embrace.</i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Now, you have the artifact?"
-
+~ CharacterTitle = ""
 **[Give her the artifact]
 
-You hand her the bell, and she stares into the faces etched along its surface. 
-
+<i>You hand her the bell, and she stares into the faces etched along its surface. </i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "The Whispering Bell..." 
-
-She looks back up at you. 
-
+~ CharacterTitle = ""
+<i>She looks back up at you. </i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "You really did it." 
+~ CharacterTitle = ""
+<i>The light you saw when you were brought back shines in front of you once again as the Crypt Keeper cleanses the Whispering Bell. </i>
 
-The light you saw when you were brought back shines in front of you once again as the Crypt Keeper cleanses the Whispering Bell. 
+<i>The bell emits pained groans as she does, until their cries of anguish lessen.</i>
 
-The bell emits pained groans as she does, until their cries of anguish lessen.
-
-Then silence...
-
+<i>Then silence...</i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Continue to bring these, and we can clense this world of the Malignance's curse." 
 
 <b>CRYPT KEEPER:</b> "So... how are you feeling?" 
-
-You focus is drawn away from the bell and back to the Crypt Keeper as she extends it back towards you to take.
+~ CharacterTitle = ""
+<i>You focus is drawn away from the bell and back to the Crypt Keeper as she extends it back towards you to take.</i>
 
 +++["I'm ready to face the next challenge."] -> ready
 +++["Perhaps some rest is in order"] -> rest
 +++["..."] -> stare 
 
 = ready 
+~ CharacterTitle = "Crypt Keeper"
  <b>CRYPT KEEPER:</b> "Always so eager, I suppose now is no time for a break." -> stare 
  
  = rest
+ ~ CharacterTitle = "Crypt Keeper"
  <b>CRYPT KEEPER:</b>  "Of course, a break is always necessary. Just make your return sooner rather than later."
  -> stare
  
  = stare 
-She stares at you intensely, expectantly. 
+ ~ CharacterTitle = ""
+<i>She stares at you intensely, expectantly. </i>
+~ CharacterTitle = "Crypt Keeper"
  <b>CRYPT KEEPER:</b> "Is something bothering you?" 
  -> ClergyQuestions 
 
 =ClergyQuestions
-
+~ CharacterTitle = ""
 *["Do you feel different at all?"] -> different 
 *["Do you know how the High Priest died?"] -> died 
 *["What do you know of the three clerics?"] -> threeClerics 
 *->HighPriestRise
 
 = different
-She looks over herself for a moment. 
-
+~ CharacterTitle = ""
+<i>She looks over herself for a moment. </i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "As far as physically, I don't feel too different." 
 
 <b>CRYPT KEEPER:</b> "I suspected the moment you secured the artifact. The crypt shook violently, and several of the plants wilted." 
@@ -375,46 +399,50 @@ She looks over herself for a moment.
 -> ClergyQuestions
 
 = died 
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "It is not knowledge that I am aware of."
 <b>CRYPT KEEPER:</b> "I've disconnected myself from my ties with the church. I'd imagine that even if I was still involved with them, I wouldn't get the whole truth. That is simply their nature."
 -> ClergyQuestions
 
 = threeClerics 
-She rolls her eyes. 
-
+~ CharacterTitle = ""
+<i>She rolls her eyes. </i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Yes, I'm acquainted with the three. Nothing more than lackey clerics to the High Priest, but I suppose why not be?"
 <b>CRYPT KEEPER:</b> "It allows yourself an opportunity to surround the High Priest, and in turn some feeling of power."
 ->ClergyQuestions
 
 =HighPriestRise
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "You still seem off, peony." 
 <b>CRYPT KEEPER:</b> "You can tell me what bothers you, I will always be here for you."
-
+~ CharacterTitle = ""
 *["I witnessed the High Priest return from death."] 
 
-The Crypt Keeper goes pale, and she finds herself at a loss for words.
-
+<i>The Crypt Keeper goes pale, and she finds herself at a loss for words.</i>
+~ CharacterTitle = ""
 **["Are you ok?"] 
-
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b>"Y-yes... I feared you would eventually bring me news like this, but I thank that you did." 
-
-She pauses for a minute.
-
+~ CharacterTitle = ""
+<i>She pauses for a minute.</i>
+~ CharacterTitle = "Crypt Keeper"
 <b>CRYPT KEEPER:</b> "Please don't worry about me, peony."
 
 <b>CRYPT KEEPER:</b> "You have a tall task being asked of you, the last thing I'd want to do is distract you from your quest." 
 
 <b>CRYPT KEEPER:</b> "We may talk about this more at a later date, but I think the best thing for me now is to collect my own thoughts."
-
-+++[Leave] -> leave
-+++[Embrace her once more] -> embrace 
+~ CharacterTitle = ""
++++[<i>Leave</i>] -> leave
++++[<i>Embrace her once more</i>] -> embrace 
 
 =embrace 
-You move in to embrace the Crypt Keeper once more. 
+~ CharacterTitle = ""
+<i>You move in to embrace the Crypt Keeper once more. </i>
 
-She wraps her arms around you, tighter than the last. 
+<i>She wraps her arms around you, tighter than the last. </i>
 
-Once again, she lets go, giving you a wave and a smile.
+<i>Once again, she lets go, giving you a wave and a smile.</i>
 
 -> END
 
@@ -1011,8 +1039,8 @@ VAR angryClerics = false
 ~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "Do you come to share our mirth?"
 
-
- You look between each face, crossing your arms.
+~ CharacterTitle = ""
+ <i>You look between each face, crossing your arms.
  *  "I seek the artifact." 
     -> ADoomedQuest
  *  "I seek a setting sun on your god."
@@ -1043,7 +1071,7 @@ VAR angryClerics = false
 
 = GoForth
 ~ CharacterTitle = "Thinking"
-<b>THINKING</b>: "Asitotheh ko’ila pri’on anikoli, may you fear that which possesses powerful senses, foolish child. Now, fi, {angryClerics:begone.|go forth.}"
+<b>THINKING</b>: "<i>Asitotheh ko’ila pri’on anikoli</i>, may you fear that which possesses powerful senses, foolish child. Now, <i>fi</i>, {angryClerics:begone.|go forth.}"
     -> END
 
  /*
@@ -1057,8 +1085,8 @@ PLAYER DIES IN FLOOR 1 SECTION
 <b>SMILING CLERIC</b>: "Of course! The wretched dreamer returns with broken spirits!"
 ~ CharacterTitle = "Thinking Cleric"
 <b>THINKING CLERIC</b>: "I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?"
-
-The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.
+~ CharacterTitle = ""
+<i>The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.
  *  "I have no need for holy light, but I could use some answers."
     The thoughtful cleric spreads their arms wide.
     ~ CharacterTitle = "Thinking"
@@ -1068,6 +1096,7 @@ The condescension drips sickly sour off of their lips as their eyes alight upon 
     -> GoForth2
 
 = AskQuestions 
+~ CharacterTitle = ""
  *  "Who are you?"
     -> WhoAreYou
  *  "Why are you still here?"
@@ -1106,7 +1135,7 @@ The condescension drips sickly sour off of their lips as their eyes alight upon 
 <b>WEEPING</b>: "How could we dare to abandon our post?"
 ~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "Why would ever want to leave this perfect place?"
-The thoughtful cleric considers you for a moment...
+<i>The thoughtful cleric considers you for a moment...</i>
 ~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "You forget the predicating question, young one. Where would we go?"
 -> AskQuestions
@@ -1142,7 +1171,8 @@ The thoughtful cleric considers you for a moment...
 
 
 = WhatHappenedToChurch 
-The clerics visibly flinch at your question.
+~ CharacterTitle = ""
+<i>The clerics visibly flinch at your question.</i>
 ~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "The church lives, so magnificent, though tears flow from her spires..."
 ~ CharacterTitle = "Smiling"
@@ -1166,20 +1196,23 @@ PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence ove
 */
 
 = Hub 
-The great church has become consumed in a whirl of dark whispers. The chanting voices of the three clerics fill the air.
+~ CharacterTitle = ""
+<i>The great church has become consumed in a whirl of dark whispers. The chanting voices of the three clerics fill the air.</i>
 ~ CharacterTitle = "Clerics"
-<b>CLERICS</b>: "Asi'ona! Asi'ona! Asi'ona! Fi'a!"
+<b>CLERICS</b>: "<i>Asi'ona! Asi'ona! Asi'ona! Fi'a!</i>"
 ~ CharacterTitle = "Thinking Cleric"
 <b>THINKING CLERIC</b>: "Perfect One, our great lord, god of gods, creator of ruins, destroyer of all things not yet so. Fi'a! The heretic has stolen what belongs to you, come forth!'
+~ CharacterTitle = ""
+<i>The earth shakes and the air tastes of metal.</i>
 
-The earth shakes and the air tastes of metal.
-
-A dark, humanoid form rises from the throne behind the clerics, booming laughter filling the air. The figure approaches.
+<i>A dark, humanoid form rises from the throne behind the clerics, booming laughter filling the air. The figure approaches.</i>
 ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?"
+~ CharacterTitle = ""
  *  "I am no traitor."
  *  "I am no one's puppet."
  *  "I am not a monster."
+ ~ CharacterTitle = "High Priest"
 -<b>HIGH PRIEST</b>: "Maybe not, but you are weak. Though you have stolen from my dungeon, you have only shown the futility of your quest."
 <b>HIGH PRIEST</b>: "My children grow hungrier. Your final death is imminent."
 <b>HIGH PRIEST</b>: "Now, get out of my sight."
@@ -1191,15 +1224,19 @@ PLAYER DIES IN FLOOR 2 SECTION
 */
 
 = DeathF2 
-The menacing figure of the High Priest turns to you, the other clerics cowering behind.
+~ CharacterTitle = ""
+<i>The menacing figure of the High Priest turns to you, the other clerics cowering behind.</i>
+ ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "My clerics forewarned me of the great humor of your repeated failings, but nothing could have prepared me for the reality of your humiliation."
+~ CharacterTitle = ""
   *  "Enough mocking, I have questions."
-    The High Priest's black eyes burn twin holes in your head, but they do not decline your request.
+    <i>The High Priest's black eyes burn twin holes in your head, but they do not decline your request.</i>
         -> AskQuestionsOfHP
  *  "I will not speak to you any more than I must, fear-father. Let me pass."
     -> GoForth3
 
 = AskQuestionsOfHP 
+~ CharacterTitle = ""
  *  "What are you?"
     -> WhatAreYou
  *  "What do you think of the villagers?"
@@ -1210,29 +1247,39 @@ The menacing figure of the High Priest turns to you, the other clerics cowering 
     -> GoForth3
 
 = WhatAreYou 
+ ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "I am a vision of myself, wrenched from my infinite form into this weak body."
-Chills creep up the back of your neck. The High Priest's cold stare holds you, immobilized.
+~ CharacterTitle = ""
+<i>Chills creep up the back of your neck. The High Priest's cold stare holds you, immobilized.</i>
+ ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "A better question, I ask myself: what are you?"
 <b>HIGH PRIEST</b>: "Death-cheater, oath-breaker, disgraced. Despite your resistance, you are destined to be nothing, just as I am destined to be everything."
 <b>HIGH PRIEST</b>: "Fate will not relent for you, and time will reveal my true nature."
 - -> AskQuestionsOfHP
 
 = WhatOfVillagers 
+ ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "They are, all but one, wretched invertibrates. Which of them interests you?"
+~ CharacterTitle = ""
  *  "The Crypt Keeper."
+  ~ CharacterTitle = "High Priest"
     <b>HIGH PRIEST</b>: "She is a betrayer, heathen, and the most egregious of failures, despite her talents."
  *  "The Mayor."
+  ~ CharacterTitle = "High Priest"
     <b>HIGH PRIEST</b>: "He is a weak-willed puppet, and it was delicious fun to toy with him before he fled during my rise."
  *   "The Scholar."
+  ~ CharacterTitle = "High Priest"
     <b>HIGH PRIEST</b>: "They are a poor, tortured monster, and I cannot help but adore their fervor. They are also quite a talented keeper of secrets, to be sure."
 - -> AskQuestionsOfHP
 
 = WhatYouWant 
+ ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "You've brushed so close against success..."
 <b>HIGH PRIEST</b>: "I want to bear witness to when you inevitably fail."
 -> AskQuestionsOfHP
 
 = GoForth3 
+ ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "Of course... I will see you again shortly, doomed heretic."
     -> END
 ==Scholar==
