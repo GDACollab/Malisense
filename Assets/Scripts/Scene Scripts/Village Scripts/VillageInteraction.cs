@@ -86,7 +86,7 @@ public class VillageInteraction : MonoBehaviour
                     }
                     else
                     {
-                        navigationManager.moveInList(-1);
+                        navigationManager.moveBuildingSelection(-1);
                     }
 				}
 				else if (inputVector.x > 0f)        // right
@@ -97,7 +97,7 @@ public class VillageInteraction : MonoBehaviour
                     }
                     else
                     {
-                        navigationManager.moveInList(1);
+                        navigationManager.moveBuildingSelection(1);
                     }
                 }
 			}
