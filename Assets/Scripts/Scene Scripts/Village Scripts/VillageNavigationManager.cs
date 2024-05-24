@@ -51,6 +51,7 @@ public class VillageNavigationManager : MonoBehaviour
 
     //Story Variables
     private bool hasForcedCKIntro = false;
+    private bool hasForcedClergyIntro = false;
 
     // Global Teapot
     GlobalTeapot globalTeapot;
@@ -108,14 +109,27 @@ public class VillageNavigationManager : MonoBehaviour
 
     private void Update()
     {
-        // Force CK Intro After Intro Cutscene
-        if (!hasSelected && !hasEntered && !hasForcedCKIntro && globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
         {
-            Debug.Log("forcing CK INTRO");
-            moveBuildingSelection(-3);
-            selectBuilding();
-            hasForcedCKIntro = true;
+            // Force CK Intro After Intro Cutscene
+            if (!hasSelected && !hasEntered && !hasForcedCKIntro )
+            {
+                Debug.Log("forcing CK INTRO");
+                moveBuildingSelection(-3);
+                selectBuilding();
+                hasForcedCKIntro = true;
+            }
+
+            // Force Clergy Intro After CK Intro
+            if (!hasSelected && !hasEntered && hasForcedCKIntro && !hasForcedClergyIntro)
+            {
+                Debug.Log("forcing CLERGY INTRO");
+                moveBuildingSelection(1);
+                selectBuilding();
+                hasForcedClergyIntro = true;
+            }
         }
+        
 
         if (!movePointer) return;
     }
