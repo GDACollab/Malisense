@@ -23,6 +23,12 @@ public class GlobalTeapot : MonoBehaviour
         End
     }
 
+    [Header("Ink File")]
+    [Tooltip("The master ink file.")]
+    public TextAsset masterInk;
+    public Ink.Runtime.Story currentStory;
+
+
     [Header("Story Variables")]
     public TeaType currProgress = TeaType.Intro;
     /// <summary>
@@ -58,6 +64,8 @@ public class GlobalTeapot : MonoBehaviour
         fader = GetComponent<Fader>();
         fader.Init();
         journal.CreateFloorNotes();
+
+        currentStory = new Ink.Runtime.Story(masterInk.text);
     }
 
     private void Update()

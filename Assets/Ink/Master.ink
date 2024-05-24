@@ -23,8 +23,12 @@ Mayor
 Scholar 
 */
 
+// Keep this variable updated based on current character:
+VAR CharacterTitle = "???????????????"
+
 VAR character = "Stick"
 
+== START ==
 {
  - isIntroductionCutscene: -> Introduction // Go to Introduction
  - character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
@@ -49,6 +53,7 @@ bool Variables
 */
  
  == Introduction ==
+~ CharacterTitle = "???????????????"
 Everything is coated in darkness. 
 
 It reeks of death
@@ -76,7 +81,7 @@ Right?
 
 /* PreF1 Reserved for Crypt Keeper and Clergy. If you are working on other characters, please delete this section */
 ==Crypt_Keeper==
-
+~ CharacterTitle = "Crypt Keeper"
 {
  - isIntro: ->intro // Go to intro
  - isDeathF1: -> DeathF1 // Go to death 1
@@ -87,6 +92,7 @@ Right?
  }
  
  =intro
+~ CharacterTitle = "???????????????"
 You approach the familiar figure. Your throat tightens as she turns to you. 
 
 Her warm smile softens the gloom of the decaying fountain. 
@@ -122,15 +128,17 @@ Her warm smile softens the gloom of the decaying fountain.
   <b>???:</b>: I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." ->whathappenedcont
     
    =whathappenedcont
+   ~ CharacterTitle = "Crypt Keeper"
     *"How did you do such a thing?"
    <b>CRYPT KEEPER:</b> "A magician never reveals her secrets...but since you're special, I'll make an exception." 
    
    <b>CRYPT KEEPER:</b>  "That lantern that hangs from your staff contains your soul. When in close proximity with it, your spirit can once again animate your body as it did while you were still...living."
    
-    <b>CRYPT KEEPER:</b> "I even carefully fitted your latern with some precious stones. If you're ever in danger, those gems will bring you back to me. I'm always here to take care of you, darling. When you feel the latern's glow, think of it as my embrace." ->lanterndesc
+    <b>CRYPT KEEPER:</b> "I even carefully fitted your latern with some precious stones. If you're ever in danger, those gems will bring you back to me. I'm always here to take care of you, darling. When you feel the latern's glow, think of it as my embrace."
+    ->lanterndesc
    
    =lanterndesc
-    You look down the lantern.
+    You look down at the lantern.
      
      Within it, a small candle burns soflty. The flicker of its flame is comforting. 
      
@@ -414,6 +422,7 @@ Once again, she lets go, giving you a wave and a smile.
 -> END
 
 ==Stick==
+~ CharacterTitle = "Stick"
 {
  - isHub: -> Hub // Go to hub
  - isDeathF2: -> Hub // Go to death 2 
@@ -665,6 +674,7 @@ You look around and find a dog bowl, several weird masks, and a few keys. Howeve
 
 -> END 
 ==Mayor==
+~ CharacterTitle = "Mayor"
 {
  - isMayorIntro: -> intro// Go to intro
  - isHub: -> Hub// Go to hub
@@ -975,6 +985,7 @@ The Mayor’s gaze seems unfocused for a few seconds, until he coughs and looks 
 <b>MAYOR</b>: “I wish you well in your endeavors.”
 -> DONE
 ==Clergy==
+~ CharacterTitle = "High Priest"
 {
  - isIntro: -> intro // Go to intro
  - isDeathF1: -> DeathF1 // Go to death 1
@@ -989,15 +1000,15 @@ INTRO SECTION
  
  = intro
 VAR angryClerics = false
-
+~ CharacterTitle = "Weeping Cleric"
 <b>WEEPING CLERIC</b>: "We face failure! How dare we yet breathe while the Perfect One suffers below..."
+~ CharacterTitle = "Smiling Cleric"
 <b>SMILING CLERIC</b>: "No, brother, we face success! The Perfect One has taken the city and dragged it beneath the lofty reaches of our sacred spire!"
-
+~ CharacterTitle = "Thinking Cleric"
 <b>THINKING CLERIC</b>: "We may still face either fate, my kin, but be aware, a fallen cleric listens."
-
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "Do you come to beg forgiveness?"
-
-
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "Do you come to share our mirth?"
 
 
@@ -1010,25 +1021,28 @@ VAR angryClerics = false
     -> ADoomedQuest
 
 = ADoomedQuest 
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "A doomed quest..."
-
+~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "...but a useful experiment."
-
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "Of course, disgraced one, you may pass into our lord's lair and meet his children. May it rekindle your faith."
 
 -> GoForth
 
 =TrulyDisgraced 
 ~ angryClerics = true
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "Disgraceful, as expected..."
-
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "And what a grand promise! There will be equally grand humor in your failure."
-
+~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "Poor heretic... we will speak to you no longer. Your empty words waste time which could have been spent in silence."
 
 -> GoForth
 
-= GoForth 
+= GoForth
+~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "Asitotheh ko’ila pri’on anikoli, may you fear that which possesses powerful senses, foolish child. Now, fi, {angryClerics:begone.|go forth.}"
     -> END
 
@@ -1037,14 +1051,17 @@ PLAYER DIES IN FLOOR 1 SECTION
 */
 
 = DeathF1 
-
+~ CharacterTitle = "Weeping Cleric"
 <b>WEEPING CLERIC</b>: "I hear shameful footsteps upon the sacred marble floors."
+~ CharacterTitle = "Smiling Cleric"
 <b>SMILING CLERIC</b>: "Of course! The wretched dreamer returns with broken spirits!"
+~ CharacterTitle = "Thinking Cleric"
 <b>THINKING CLERIC</b>: "I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?"
 
 The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.
  *  "I have no need for holy light, but I could use some answers."
     The thoughtful cleric spreads their arms wide.
+    ~ CharacterTitle = "Thinking"
     <b>THINKING</b>: "We have little to hide. As long as you remain diplomatic, we will answer any questions you possess."
         -> AskQuestions
  *  "Let me pass, petulant ones. I care not for your distractions."
@@ -1064,42 +1081,61 @@ The condescension drips sickly sour off of their lips as their eyes alight upon 
     -> GoForth2
 
 = WhoAreYou 
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "I am Ila, acolyte of repose."
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "I am Ina, acolyte of beast."
+~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "I am Ana, acolyte of word. Who are you?"
  *  I am the endless repose.
+ ~ CharacterTitle = "Weeping"
     <b>WEEPING</b>: "Doubtful..."
  *  I am the lonely beast.
+ ~ CharacterTitle = "Smiling"
     <b>SMILING</b>: "Laughable!"
  *  I am the final word.
+ ~ CharacterTitle = "Thinking"
     <b>THINKING</b>: "Intriguing."
  *  I am the Disgraced.
+ ~ CharacterTitle = "Thinking"
     <b>THINKING</b>: "Without a doubt."
 - -> AskQuestions
 
 = WhyStillHere 
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "How could we dare to abandon our post?"
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "Why would ever want to leave this perfect place?"
 The thoughtful cleric considers you for a moment...
+~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "You forget the predicating question, young one. Where would we go?"
 -> AskQuestions
 
 = KnowVillagers 
 <b>THINKING</b>: "Of course, our spire watches over each of them."
  *  "What are your thoughts on the Crypt Keeper?"
+ ~ CharacterTitle = "Weeping"
     <b>WEEPING</b>: "I know her...Heathen. Traitor."
+    ~ CharacterTitle = "Smiling"
     <b>SMILING</b>: "Laughable! A true failure!"
+    ~ CharacterTitle = "Thinking"
     <b>THINKING</b>: "...and a troublingly talented woman."
 
  *  "What are your thoughts on the Mayor?"
+ ~ CharacterTitle = "Weeping"
     <b>WEEPING</b>: "Of course... that-"
     <b>WEEPING</b>: "Wait, who?"
+    ~ CharacterTitle = "Thinking"
     <b>THINKING</b>: "The weak-willed one, didn’t he flee?"
+    ~ CharacterTitle = "Smiling"
     <b>SMILING</b>: "Oh, that fun little puppet! He ran from the city at the first sign of our lord's rise!"
 
  *  "What are your thoughts on the Scholar?"
+ ~ CharacterTitle = "Thinking"
     <b>THINKING</b>: "They were an adept keeper of the church's secrets, even the High Priest adored their fervor."
+    ~ CharacterTitle = "Smiling"
     <b>SMILING</b>: "What a monster for knowledge!"
+    ~ CharacterTitle = "Weeping"
     <b>WEEPING</b>: "...and what a tortured soul."
     
 - -> AskQuestions
@@ -1107,15 +1143,20 @@ The thoughtful cleric considers you for a moment...
 
 = WhatHappenedToChurch 
 The clerics visibly flinch at your question.
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "The church lives, so magnificent, though tears flow from her spires..."
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "...and we live, too, blessed to be the final children of the Malignance..."
+~ CharacterTitle = "Thinking"
 <b>THINKING</b>: "...and the High Priest lives, most holy, slumbering in the great throne, awaiting the proper calalyst to their return."
 <b>THINKING</b>: "Your inquiry cuts blunt and foolish, question us no more."
 
 -> GoForth2
 
-= GoForth2 
+= GoForth2
+~ CharacterTitle = "Smiling"
 <b>SMILING</b>: "We will see you again soon, regardless of whether success or failure sinks its fangs into you first."
+~ CharacterTitle = "Weeping"
 <b>WEEPING</b>: "Though I do not have hope in your ability to escape the cold embrace of death any time soon. Mortality cannot be cheated forever..."
     -> END
 
@@ -1126,15 +1167,15 @@ PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence ove
 
 = Hub 
 The great church has become consumed in a whirl of dark whispers. The chanting voices of the three clerics fill the air.
-
+~ CharacterTitle = "Clerics"
 <b>CLERICS</b>: "Asi'ona! Asi'ona! Asi'ona! Fi'a!"
-
+~ CharacterTitle = "Thinking Cleric"
 <b>THINKING CLERIC</b>: "Perfect One, our great lord, god of gods, creator of ruins, destroyer of all things not yet so. Fi'a! The heretic has stolen what belongs to you, come forth!'
 
 The earth shakes and the air tastes of metal.
 
 A dark, humanoid form rises from the throne behind the clerics, booming laughter filling the air. The figure approaches.
-
+~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?"
  *  "I am no traitor."
  *  "I am no one's puppet."
@@ -1197,7 +1238,7 @@ Chills creep up the back of your neck. The High Priest's cold stare holds you, i
 ==Scholar==
  
  =Hub
- 
+ ~ CharacterTitle = "Scholar"
  {
 - Hub == 0: -> ScholarhubIntro
 - else: -> regularHub
@@ -1562,6 +1603,7 @@ The Scholar reaches over to touch the Gauntlet, then shudders.
 
 ==End== 
 ~character = "Mayor"
+~ CharacterTitle = "Mayor"
 ~background = "next"
 You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your lightfooted step and close the distance across the room in an instant, locking eyes with the Mayor. 
 
@@ -1736,6 +1778,7 @@ Within the box lies The Eye of Genesis.
 Its gaze almost seems to apprise you as you take it into your hands. 
 
 ~character = "Crypt_Keeper"
+~ CharacterTitle = "Crypt Keeper"
 
 You hurry back to meet with the Crypt Keeper, the Eye of Genesis, the final artifact, in hand. 
 

@@ -20,18 +20,11 @@ public class DialogueManager : MonoBehaviour
     [Header("Village Navigation")]
     [SerializeField] VillageNavigationManager navigationManager;
 
-    [Header("Ink File")]
-    [Tooltip("The master ink file.")]
-    [SerializeField] private TextAsset masterInk;
-
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private int currentChoiceIndex = -1;
     private int defaultHeight = 115;
-
-    // Start is called before the first frame update
-    private Ink.Runtime.Story currentStory;
 
     [Header("Status")]
     [SerializeField] private bool isPlaying;
@@ -40,7 +33,7 @@ public class DialogueManager : MonoBehaviour
     // Global Teapot
     GlobalTeapot globalTeapot;
 
-    private string currentInkFileName = "";
+    private bool canStartDialogue = true;
 
     void Start()
     {
@@ -66,7 +59,7 @@ public class DialogueManager : MonoBehaviour
 
         if (!navigationManager.activateInk)
         {
-            currentInkFileName = "";
+            canStartDialogue = true;
             ClearDialogueMode();
         }
 
@@ -99,7 +92,7 @@ public class DialogueManager : MonoBehaviour
     {
         // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
         // Check that there are dialogue options to choose from otherwise there's no option to move
-        if (isPlaying && currentStory.currentChoices.Count > 0)
+        if (isPlaying && globalTeapot.currentStory.currentChoices.Count > 0)
         {
 
             // Move
@@ -107,14 +100,14 @@ public class DialogueManager : MonoBehaviour
             {
                 // Navigate up in the choices list
                 currentChoiceIndex--;
-                if (currentChoiceIndex < 0) currentChoiceIndex = currentStory.currentChoices.Count - 1;
+                if (currentChoiceIndex < 0) currentChoiceIndex = globalTeapot.currentStory.currentChoices.Count - 1;
                 // Optionally, call a function to update the UI here
             }
             else if (direction == "right")        // right
             {
                 // Navigate down in the choices list
                 currentChoiceIndex++;
-                if (currentChoiceIndex >= currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                if (currentChoiceIndex >= globalTeapot.currentStory.currentChoices.Count) currentChoiceIndex = 0;
                 // Optionally, call a function to update the UI here
             }
         }
@@ -126,7 +119,7 @@ public class DialogueManager : MonoBehaviour
         if (isPlaying)
         {
             // Check if there are any choices to navigate
-            if (currentStory.currentChoices.Count > 0)
+            if (globalTeapot.currentStory.currentChoices.Count > 0)
             {
                 MakeChoice(currentChoiceIndex);
             }
@@ -139,10 +132,10 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(string character = "???????????????", bool isIntroductionCutscene = false)
     {
-        TextAsset inkJson = masterInk;
+        
 
         // Prevent from restarting conversation at the end
-        if (currentInkFileName == inkJson.name)
+        if (!canStartDialogue)
         {
             Debug.Log("Do not restart currently running story.");
             isPlaying = true;
@@ -150,76 +143,69 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log("Start running story.");
 
-        currentStory = new Ink.Runtime.Story(inkJson.text);
+        globalTeapot.currentStory.ChoosePathString("START");
 
-        currentStory.variablesState["isMayorIntro"] = globalTeapot.currProgress == GlobalTeapot.TeaType.Intro; // MAYOR INTRO DELAY NOT IMPLEMENTED, CURRENTLY JUST HAPPENS DURING THE NORMAL INTRO
-        currentStory.variablesState["hasMayorNote1"] = globalTeapot.hasMayorNote1;
-        currentStory.variablesState["hasMayorNote2"] = globalTeapot.hasMayorNote2;
-        currentStory.variablesState["hasFinalMayorNote"] = globalTeapot.hasFinalMayorNote;
+        globalTeapot.currentStory.variablesState["isMayorIntro"] = globalTeapot.currProgress == GlobalTeapot.TeaType.Intro; // MAYOR INTRO DELAY NOT IMPLEMENTED, CURRENTLY JUST HAPPENS DURING THE NORMAL INTRO
+        globalTeapot.currentStory.variablesState["hasMayorNote1"] = globalTeapot.hasMayorNote1;
+        globalTeapot.currentStory.variablesState["hasMayorNote2"] = globalTeapot.hasMayorNote2;
+        globalTeapot.currentStory.variablesState["hasFinalMayorNote"] = globalTeapot.hasFinalMayorNote;
 
         // Set defaults, will be modified afterward if needs to be true
-        currentStory.variablesState["isIntro"] = false;
-        currentStory.variablesState["isDeathF1"] = false;
-        currentStory.variablesState["isHub"] = false;
-        currentStory.variablesState["isDeathF2"] = false;
-        currentStory.variablesState["isEnd"] = false;
-        currentStory.variablesState["isIntroductionCutscene"] = isIntroductionCutscene;
-        currentStory.variablesState["hasDied"] = false;
+        globalTeapot.currentStory.variablesState["isIntro"] = false;
+        globalTeapot.currentStory.variablesState["isDeathF1"] = false;
+        globalTeapot.currentStory.variablesState["isHub"] = false;
+        globalTeapot.currentStory.variablesState["isDeathF2"] = false;
+        globalTeapot.currentStory.variablesState["isEnd"] = false;
+        globalTeapot.currentStory.variablesState["isIntroductionCutscene"] = isIntroductionCutscene;
+        globalTeapot.currentStory.variablesState["hasDied"] = false;
 
         switch (globalTeapot.currProgress)
         {
             case GlobalTeapot.TeaType.Intro:
-                currentStory.variablesState["isIntro"] = true;
+                globalTeapot.currentStory.variablesState["isIntro"] = true;
                 Debug.Log("intro with " + character);
                 break;
             case GlobalTeapot.TeaType.Dungeon_F1:
-                currentStory.variablesState["isDeathF1"] = true;
+                globalTeapot.currentStory.variablesState["isDeathF1"] = true;
                 Debug.Log("deathf1 with " + character);
                 break;
             case GlobalTeapot.TeaType.Dungeon_F2:
                 if (globalTeapot.hasDied)
                 {
-                    currentStory.variablesState["isDeathF2"] = true;
+                    globalTeapot.currentStory.variablesState["isDeathF2"] = true;
                     Debug.Log("deathf2 with " + character);
                 }
                 else
                 {
-                    currentStory.variablesState["isHub"] = true;
+                    globalTeapot.currentStory.variablesState["isHub"] = true;
                     Debug.Log("hub with " + character);
                 }
                 break;
             case GlobalTeapot.TeaType.End:
-                currentStory.variablesState["isEnd"] = true;
+                globalTeapot.currentStory.variablesState["isEnd"] = true;
                 Debug.Log("end with " + character);
                 break;
             default:
                 Debug.Log("default in dialogue switch statement (this is bad)");
-                currentStory.variablesState["isIntro"] = true;
+                globalTeapot.currentStory.variablesState["isIntro"] = true;
                 break;
         }
 
         // VAR background = "First"
-        currentStory.variablesState["StickHappiness"] = globalTeapot.stickHappiness;
+        globalTeapot.currentStory.variablesState["StickHappiness"] = globalTeapot.stickHappiness;
 
-        currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
-        currentInkFileName = inkJson.name; // Update the current ink file name         
+        globalTeapot.currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
+        canStartDialogue = false;
         isPlaying = true;
 
         dialoguePanel.SetActive(true);
-        if (character == "Crypt_Keeper")
-        {
-            characterNameText.text = "Crypt Keeper";
-        } else
-        {
-            characterNameText.text = character;
-        }
         ContinueStory();
     }
 
     private void ExitDialogueMode()
     {
         Debug.Log(gameObject);
-        globalTeapot.stickHappiness = (int)currentStory.variablesState["StickHappiness"];
+        globalTeapot.stickHappiness = (int)globalTeapot.currentStory.variablesState["StickHappiness"];
         isPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -237,9 +223,11 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueStory()
     {
-        if (currentStory.canContinue)
+        if (globalTeapot.currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
+            dialogueText.text = globalTeapot.currentStory.Continue();
+            characterNameText.text = (string)globalTeapot.currentStory.variablesState["CharacterTitle"];
+
 
             DisplayChoices();
         }
@@ -251,7 +239,7 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayChoices()
     {
-        List<Ink.Runtime.Choice> currentChoices = currentStory.currentChoices;
+        List<Ink.Runtime.Choice> currentChoices = globalTeapot.currentStory.currentChoices;
 
         if (currentChoices.Count > choices.Length)
         {
@@ -302,10 +290,10 @@ public class DialogueManager : MonoBehaviour
     private void MakeChoice(int choiceIndex)
     {
         // Check if the choiceIndex is valid for the current choices
-        if (choiceIndex >= 0 && choiceIndex < currentStory.currentChoices.Count)
+        if (choiceIndex >= 0 && choiceIndex < globalTeapot.currentStory.currentChoices.Count)
         {
             // Tell the story to choose the selected choice
-            currentStory.ChooseChoiceIndex(choiceIndex);
+            globalTeapot.currentStory.ChooseChoiceIndex(choiceIndex);
 
             // Reset the choice index as we're moving to the next part of the story
             currentChoiceIndex = -1;
