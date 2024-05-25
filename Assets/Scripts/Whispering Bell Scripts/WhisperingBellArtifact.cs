@@ -70,6 +70,7 @@ public class WhisperingBellArtifact : MonoBehaviour
         if (WhisperingBell.cooldown == 0.0f && WhisperingBell.duration == 0.0f && !blockAction){ // Temporary key press, needs to be connected to player controller
             // TODO: add a call to make the player ripple effect
             Debug.Log("Bell Activated");
+            GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayBellSFX();
             WhisperBellAction();
         }
     }

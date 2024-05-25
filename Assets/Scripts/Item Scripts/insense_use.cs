@@ -14,7 +14,7 @@ public class insense_use : MonoBehaviour
     {
         scentPlaceholder -= 210;
         noiseMaker.MakeSound(transform.position, noiseSize);
-
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayElixirSFX();
     }
 
     // Update is called once per frame

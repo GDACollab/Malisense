@@ -20,6 +20,7 @@ public class ExplosionScript : MonoBehaviour
     {
         noise.MakeSound(transform.position, noise_level);
         Camera.main.GetComponent<SmartCamera>().ScreenShake(screenShakeDuration, screenShakeMagnitude);
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayDynamiteBoomSFX();
     }
 
     private void Update()
