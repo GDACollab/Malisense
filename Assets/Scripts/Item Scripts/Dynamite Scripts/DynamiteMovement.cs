@@ -50,6 +50,8 @@ public class DynamiteMovement : MonoBehaviour
         if (directionalTriangle.position.x > playerPosition.position.x) { rotationSpeed = -rotationSpeed; }
 
         StartCoroutine(Move());
+
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayDynamiteLightSFX();
     }
 
     private void Update()
