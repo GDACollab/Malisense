@@ -432,8 +432,10 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 "We may talk about this more at a later date, but I think the best thing for me now is to collect my own thoughts."
 ~ CharacterTitle = ""
-+++[<i>Leave</i>] -> leave
-+++[<i>Embrace her once more</i>] -> embrace 
++++[<i>Leave</i>] 
+    -> leave
++++[<i>Embrace her once more</i>] 
+    -> embrace 
 
 =embrace 
 ~ CharacterTitle = ""
@@ -688,7 +690,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 =HappyLeave
 ~ CharacterTitle = ""
 <i>However, the dungeon is too dangerous for a dog, so you stop in your tracks.</i>
- * <i>Tell Stick to stay</i>
+ * [<i>Tell Stick to stay</i>]
  ~ CharacterTitle = ""
     <i>You tell Stick to stay.</i>
     ~ CharacterTitle = "Stick"
@@ -696,7 +698,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
     ~ CharacterTitle = ""
     <i>Stick whines a bit but understands and backs off.</i>
     <i>With a heavy heart, you leave the Custodian's house.</i>
- * <i>Try to leave</i>
+ * [<i>Try to leave</i>]
  ~ CharacterTitle = ""
     <i>You try to leave, but Stick tries to leave with you.</i>
     ->HappyLeave
@@ -709,7 +711,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 <i>Its collar reads: "Stick, my loyal and beloved pet"</i>
 ~ CharacterTitle = "Stick"
 <b>Stick:</b> *Whimper* *Whimper*
- * <i>Pet Stick</i>
+ * [<i>Pet Stick</i>]
     ~ StickHappiness = StickHappiness + 1
     ~ CharacterTitle = ""
     <i>You softly pet Stick's head.</i>
@@ -718,7 +720,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail as you gently wave goodbye.</i>
     ->DONE
- * <i>Leave Stick Alone</i>
+ * [<i>Leave Stick Alone</i>]
  ~ CharacterTitle = ""
     <i>You once again turn and leave, ignoring the whimpers behind you.</i>
 ->END
@@ -727,11 +729,11 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 ~ CharacterTitle = ""
 <i>You enter the Custodian's house looking around at the various shelves filled with dust.</i>
 <i>Stick lays on the ground unresponsive to your intrusion.</i>
-    * <i>Pet Stick</i>
+    * [<i>Pet Stick</i>]
     ~ CharacterTitle = ""
         <i>You bend down and softly pet Stick's head.</i>
         <i>Stick remains unresponsive to you.</i>
-        ** <i>Keep petting</i>
+        ** [<i>Keep petting</i>]
             ~ StickHappiness = StickHappiness + 1
             ~ CharacterTitle = ""
             <i>You keep petting Stick.</i>
@@ -741,11 +743,11 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
             ~ CharacterTitle = ""
             <i>Stick slightly wags its tail as you gently wave goodbye.</i>
             ->END
-        ** <i>Leave Stick Alone</i>
+        ** [<i>Leave Stick Alone</i>]
         ~ CharacterTitle = ""
             <i>You leave, ignoring Stick alone on the floor.</i>
             ->END
-    * <i>Leave the Custodian's House</i>
+    * [<i>Leave the Custodian's House</i>]
     ~ CharacterTitle = ""
         <i>You leave, ignoring Stick alone on the floor.</i>
         ->END
@@ -753,29 +755,29 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 =StickOHNO
 ~ CharacterTitle = ""
-<i>You enter the Custodian's house with a creak. It's a dusty room with various trinkets and baubles.
-<i>You look around and find a dog bowl, several weird masks, and a few keys. However, you find nothing of importance here. 
+<i>You enter the Custodian's house with a creak. It's a dusty room with various trinkets and baubles.</i>
+<i>You look around and find a dog bowl, several weird masks, and a few keys. However, you find nothing of importance here. </i>
 -> WishfulThinking(StickHappiness)
 
 =WishfulThinking(tries)
- + <i>Keep looking
+ +[<i>Keep looking</i>]
  ~ CharacterTitle = ""
-    <i>You keep looking, but you don't find anything of interest.
+    <i>You keep looking, but you don't find anything of interest.</i>
     ->WishfulThinking(tries-1)
- * {tries == -8} <i>Sit in silence
-    <i>...
-    <i>...
-    <i>...
-    ** <i>...
-        <i>......
-    ** <i>...
-        <i>...............
+ *{tries == -8}[<i>Sit in silence</i>]
+    <i>...</i>
+    <i>...</i>
+    <i>...</i>
+    **[<i>...</i>]
+        <i>......</i>
+    **[<i>...</i>]
+        <i>...............</i>
     
     -- ~ StickHappiness = -10
     -> WishfulThinking(tries-1)
- * <i>Leave
+ *[<i>Leave</i>]
  ~ CharacterTitle = ""
-    <i>You leave the Custodian's house, wondering why you ever even entered.
+    <i>You leave the Custodian's house, wondering why you ever even entered.</i>
 ->END
 
 -> END 
@@ -1196,12 +1198,12 @@ PLAYER DIES IN FLOOR 1 SECTION
 "I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?"
 ~ CharacterTitle = ""
 <i>The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.</i>
- *  "I have no need for holy light, but I could use some answers."
+ *  ["I have no need for holy light, but I could use some answers."]
     <i>The thoughtful cleric spreads their arms wide.</i>
     ~ CharacterTitle = "Thinking"
     "We have little to hide. As long as you remain diplomatic, we will answer any questions you possess."
         -> AskQuestions
- *  "Let me pass, petulant ones. I care not for your distractions."
+ *  ["Let me pass, petulant ones. I care not for your distractions."]
     -> GoForth2
 
 = AskQuestions 
@@ -1318,9 +1320,9 @@ PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence ove
 <i>A dark, humanoid form rises from the throne behind the clerics, booming laughter filling the air. The figure approaches.</i>
 ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?"
- *  "I am no traitor."
- *  "I am no one's puppet."
- *  "I am not a monster."
+ *  ["I am no traitor."]
+ *  ["I am no one's puppet."]
+ *  ["I am not a monster."]
  ~ CharacterTitle = "High Priest"
 -<b>HIGH PRIEST</b>: "Maybe not, but you are weak. Though you have stolen from my dungeon, you have only shown the futility of your quest."
 <b>HIGH PRIEST</b>: "My children grow hungrier. Your final death is imminent."
@@ -1337,21 +1339,21 @@ PLAYER DIES IN FLOOR 2 SECTION
 <i>The menacing figure of the High Priest turns to you, the other clerics cowering behind.</i>
  ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "My clerics forewarned me of the great humor of your repeated failings, but nothing could have prepared me for the reality of your humiliation."
-  *  "Enough mocking, I have questions."
+  *  ["Enough mocking, I have questions."]
   ~ CharacterTitle = ""
     <i>The High Priest's black eyes burn twin holes in your head, but they do not decline your request.</i>
         -> AskQuestionsOfHP
- *  "I will not speak to you any more than I must, fear-father. Let me pass."
+ *  ["I will not speak to you any more than I must, fear-father. Let me pass."]
     -> GoForth3
 
 = AskQuestionsOfHP 
- *  "What are you?"
+ *  ["What are you?"]
     -> WhatAreYou
- *  "What do you think of the villagers?"
+ *  ["What do you think of the villagers?"]
     -> WhatOfVillagers
- *  "You returned when I discovered the Magic Hand, why? What do you want?"
+ *  ["You returned when I discovered the Magic Hand, why? What do you want?"]
     -> WhatYouWant
- *  "Enough. I wish to pass on into the dungeon."
+ *  ["Enough. I wish to pass on into the dungeon."]
     -> GoForth3
 
 = WhatAreYou 
@@ -1368,13 +1370,13 @@ PLAYER DIES IN FLOOR 2 SECTION
 = WhatOfVillagers 
  ~ CharacterTitle = "High Priest"
 <b>HIGH PRIEST</b>: "They are, all but one, wretched invertibrates. Which of them interests you?"
- *  "The Crypt Keeper."
+ *  ["The Crypt Keeper."]
   ~ CharacterTitle = "High Priest"
     <b>HIGH PRIEST</b>: "She is a betrayer, heathen, and the most egregious of failures, despite her talents."
- *  "The Mayor."
+ *  ["The Mayor."]
   ~ CharacterTitle = "High Priest"
     <b>HIGH PRIEST</b>: "He is a weak-willed puppet, and it was delicious fun to toy with him before he fled during my rise."
- *   "The Scholar."
+ *  ["The Scholar."]
   ~ CharacterTitle = "High Priest"
     <b>HIGH PRIEST</b>: "They are a poor, tortured monster, and I cannot help but adore their fervor. They are also quite a talented keeper of secrets, to be sure."
 - -> AskQuestionsOfHP
@@ -1522,18 +1524,20 @@ PLAYER DIES IN FLOOR 2 SECTION
  ~ CharacterTitle = "Scholar"
 <b>SCHOLAR</b>: What do you wish of me?
 
- *  "What is the Whispering Bell?"
+ *  ["What is the Whispering Bell?"]
     -> WhisperingBell
-* {WhisperingBell} "May I show you something?" -> AfterA1
+* {WhisperingBell} ["May I show you something?"]
+    -> AfterA1
 
- *  "What is the Apparition Gauntlet?"
+ *  ["What is the Apparition Gauntlet?"]
     -> ApparitionGauntlet
-* {ApparitionGauntlet} "May I show you something?" -> AfterA2
+* {ApparitionGauntlet} ["May I show you something?"]
+    -> AfterA2
 
- *  "What is the Eye of Genesis?"
+ *  ["What is the Eye of Genesis?"]
     -> EyeofGenesis
     
- *  "I'm done here."
+ *  ["I'm done here."]
     -> END
 
 *-> CharacterQs
@@ -1602,10 +1606,10 @@ PLAYER DIES IN FLOOR 2 SECTION
 
 <b>SCHOLAR</b>: What was their clerical title, again? Well, no matter, they have earned my knowledge of this artifact. 
 
-* "Please, tell me more."
+* ["Please, tell me more."]
  -> tellMore
  
-* "Just get on with it, already."
+* ["Just get on with it, already."]
  -> getOn
 
 = tellMore  
@@ -1665,10 +1669,10 @@ PLAYER DIES IN FLOOR 2 SECTION
 
 <b>SCHOLAR</b>: To think that such a legendary artifact is here before me now. 
 
- * "Please, tell me more."
+ * ["Please, tell me more."]
  -> tellMoreGautlet 
  
-* "Just get on with it, already."
+* ["Just get on with it, already."]
  -> getOnGautlet
  
  =getOnGautlet 
@@ -1739,16 +1743,16 @@ PLAYER DIES IN FLOOR 2 SECTION
 ->END 
 
 = CharacterQs 
-* "What do you know about the Crypt Keeper?"
+* ["What do you know about the Crypt Keeper?"]
 -> ckAnswers
 
-* "What can you tell me about the Mayor?"
+* ["What can you tell me about the Mayor?"]
 -> mayorAnswers
 
-* "Anything to say about the clergy?"
+* ["Anything to say about the clergy?"]
 -> clergyAnswers
 
-* "Enough questions."
+* ["Enough questions."]
 -> END
 
 = ckAnswers 
@@ -1757,7 +1761,7 @@ PLAYER DIES IN FLOOR 2 SECTION
 
 <b>SCHOLAR</b>: I know not if it is my place to say this, but rightfully she left the clergy long ago while I remained, blinded by my search for knowledge. 
 
- * "Why did she leave?" 
+ * ["Why did she leave?"]
  ~ CharacterTitle = "Scholar"
 <b>SCHOLAR</b>: There were times where the good she could do was limited by being in the Church. And so she left, for a better life. And look where it got her in comparison. 
  ~ CharacterTitle = ""
@@ -1773,7 +1777,7 @@ PLAYER DIES IN FLOOR 2 SECTION
 
 <b>SCHOLAR</b>: I have done many things that were senseless, but never as senseless as that fool of a mayor. 
 
- *"Senseless?" 
+ *["Senseless?"]
 
 <b>SCHOLAR</b>: The wanderer seeks to know of my many mistakes, but I shall only speak of it if you show me any and all artifacts you collect. 
 
@@ -1984,21 +1988,21 @@ PLAYER DIES IN FLOOR 2 SECTION
 
 <i>As you approach her, she remains silent, unmoving. Instead, she focuses on the barren land surrounding the town.</i>
 
-*<i>Get closer</i>
+*[<i>Get closer</i>]
     ~ CharacterTitle = ""
     <i>Her acknowledgement of your presence is betrayed only by tinge of sorrow that has appeared in her face.</i>
-    **<i>Sit down next to her</i>
+    **[<i>Sit down next to her</i>]
         ~ CharacterTitle = "Crypt Keeper"
         "You know what this means, right?"
-        ***"Of course."
+        ***["Of course."]
             ~ CharacterTitle = "Crypt Keeper"
              "Yes, yes...You know what this means for the Malignance, you know what this means for Radafell..."
              ~ CharacterTitle = ""
                 <i>Her tone of voice raising with every passing word.</i>
                 ->WhatItMeans
-        ***"I do not."
+        ***["I do not."]
             ->WhatItMeans
-        ***"..."
+        ***["..."]
             ->WhatItMeans
 
 ==WhatItMeans
@@ -2006,19 +2010,19 @@ PLAYER DIES IN FLOOR 2 SECTION
 <i>She takes up your hands, and finally makes eye contact with you. Her eyes water.</i>
 ~ CharacterTitle = "Crypt Keeper"
 "Do you know what this means for you?"
-*"For me?"
+*["For me?"]
     ~ CharacterTitle = "Crypt Keeper"
     "Yes! For you! You haven't sat down and thought about what all this means for you?"
     ~ CharacterTitle = ""
     <i>Her grip on your hands strengthen, averting her eyes once again.</i>
-    **"I have not."
+    **["I have not."]
         ~ CharacterTitle = "Crypt Keeper"
         "Of course you haven't. Of course you haven't...and that's why you were the only person who could have succeeded in this quest."
-        ***"What does this mean?"
+        ***["What does this mean?"]
             ~ CharacterTitle = ""
             <i>Any words that she tries to get out are choked up by her tears as she embraces you, burying herself into your chest. </i>
             
-            ****<i>Comfort her</i>
+            ****[<i>Comfort her</i>]
                 ~ CharacterTitle = ""
                 <i>For a minute, she remains like this. You feel her shoulders heave up and down as she continues to silently weep with you in embrace.</i>
                
@@ -2026,51 +2030,50 @@ PLAYER DIES IN FLOOR 2 SECTION
                 ~ CharacterTitle = "Crypt Keeper"
                 "It...it's for the best though. Please, my peony, give me the artifact."
                  
-                ******<i>Give her the artifact</i>
+                ******[<i>Give her the artifact</i>]
                     ~ CharacterTitle = ""
                     <i>After taking the artifact, she embraces you one final time. She pulls away before she begins the cleansing ritual of the Eye of Genesis.</i>
                         
-                    *******<i>Breathe</i>
+                    *******[<i>Breathe</i>]
                         ~ CharacterTitle = ""
                         <i>As the process goes on you start to feel tired, weak, like you can't...</i>
                             
-                        ********<i>Breathe</i>
+                        ********[<i>Breathe</i>]
                             ~ CharacterTitle = ""
                             <i>The light fades. The only thing that you can envision are your memories.</i>
                                 
                             ->SensesReturn
 
 ==SensesReturn==
-*<i>Look</i>
+*[<i>Look</i>]
     ~ CharacterTitle = ""
     <i>Your adventures, the monsters you've encountered, the people you've met, the city you've saved all flash before your eyes.</i>
     ->SensesReturn
 
-*<i>Smell</i>
+*[<i>Smell</i>]
     ~ CharacterTitle = ""
     <i>You inhale sharply, smelling the flora of the city. The sharp fragrance reminds you of your past, and a newer, brighter future.</i>
     ->SensesReturn
 
-*<i>Taste</i>
+*[<i>Taste</i>]
     ~ CharacterTitle = ""
     <i>Your mouth starts to water as you taste once again. Breads, meats, fruits, familiar flavors from unfamiliar places.</i>
     ->SensesReturn
 
-*<i>Hear
+*[<i>Hear</i>]
     ~ CharacterTitle = ""
     <i>You once again hear churchbells ring, birds chirping, a bustling city once again.</i>
     ->SensesReturn
-*{CHOICE_COUNT() ==0}
-<i>Feel</i>
+*{CHOICE_COUNT() ==0} [<i>Feel</i>]
     ~ CharacterTitle = ""
     <i>You feel air escape you, the light from the cleansing grows brighter and you feel it's heat on you.</i>
-    **<i>Feel</i>
+    **[<i>Feel</i>]
         ~ CharacterTitle = ""
         <i>You feel a burning sensation, little pins and needles assaulting into your skin.</i>
-        ***<i>Feel</i>
+        ***[<i>Feel</i>]
             ~ CharacterTitle = ""
             <i>You feel comfort, taking shelter in the warmth of the light, a familiar feeling. An embrace, her embrace.</i>
-            ****<i>Breathe</i>
+            ****[<i>Breathe</i>]
                 ~ CharacterTitle = ""
                 <i>Then it goes silent.</i>
 
