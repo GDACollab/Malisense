@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     #region TEMP VARS REMOVE
     // ### START TEMP VARIABLES ### DELETE BEFORE FINAL BUILD
     [Header("Temp Variables (Remove before Final Build)")]
-    public GameObject controlMessage;
+    public int toggleLayer = 5;
+    private bool toggledOff = false;
     public GameObject[] enemies;
     public UnityEvent testFunctions;
     // ### END TEMP VARIABLES ###
@@ -195,7 +196,17 @@ public class Player : MonoBehaviour
         // Hide text containing controls
         if (hideMessage.triggered)
         {
-            controlMessage.SetActive(!controlMessage.activeSelf);
+            Camera temp = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+            if(temp){
+                if(toggledOff){
+                    temp.cullingMask |= 1 << toggleLayer;
+                    toggledOff = false;
+                }
+                else{
+                    temp.cullingMask &= ~(1 << toggleLayer);
+                    toggledOff = true;
+                }
+            }
         }
         // Deactivate/Reactivate Enemies
         if (setEnemies.triggered)
