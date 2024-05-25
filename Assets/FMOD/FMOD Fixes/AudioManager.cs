@@ -455,21 +455,34 @@ public class AudioManager : MonoBehaviour
     }
     
     public void PlayLowStaminaSFX(){
-        Play(lowStaminaSFX);
+        if (movementSFX.isValid())
+        {
+            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            movementSFX.release();
+        }
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(lowStaminaSFX, out _);
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.LogWarning("FMOD event path does not exist: " + lowStaminaSFX);
+            return;
+        }
+
+        movementSFX = RuntimeManager.CreateInstance(lowStaminaSFX);
+        movementSFX.start();
+        
     }
     
     public void PlayStepSFX(float running=0.0f){
+        if (movementSFX.isValid())
+        {
+            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            movementSFX.release();
+        }
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(playerStepSFX, out _);
         if (result != FMOD.RESULT.OK)
         {
             Debug.LogWarning("FMOD event path does not exist: " + playerStepSFX);
             return;
-        }
-
-        if (movementSFX.isValid())
-        {
-            movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            movementSFX.release();
         }
         movementSFX = RuntimeManager.CreateInstance(playerStepSFX);
         movementSFX.setParameterByName("running", running);
@@ -480,7 +493,7 @@ public class AudioManager : MonoBehaviour
     {
         if (movementSFX.isValid())
         {
-            movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             movementSFX.release();
         }
     }

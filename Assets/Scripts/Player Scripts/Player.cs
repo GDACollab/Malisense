@@ -77,6 +77,8 @@ public class Player : MonoBehaviour
     private GlobalTeapot globalTeapot;
     // Dungeon Manager
     private DungeonManager dungeonManager;
+    // Audio Manager
+    private AudioManager audioManager;
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
@@ -134,7 +136,8 @@ public class Player : MonoBehaviour
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         // Get Dungeon Manager
         dungeonManager = FindObjectOfType<DungeonManager>();
-
+        // Get Audio Manager
+        audioManager = globalTeapot.audioManager;
         #region TEMP INPUTS
         // Get temp input options
         hideMessage = playerInput.actions.FindAction("Hide Message");
@@ -326,10 +329,13 @@ public class Player : MonoBehaviour
             if (currentStamina < maxStamina)
             {                            // regen stamina
                 currentStamina += staminaRegen * Time.deltaTime;
-                if (currentStamina < 4.0f && !stopSFX && movementSFX != movementSFXState.STOPALL) // Player is no longer exhausted so stop exhausted sfx
+                if (!stopSFX && !isExhausted && movementSFX == movementSFXState.EXHAUSTED) // Player is no longer exhausted so switch to appropriate sfx
                 {
-                    movementSFX = movementSFXState.STOPALL;
                     stopSFX = true;
+                    if (!isMoving) // Player isn't moving
+                        movementSFX = movementSFXState.STOPALL;
+                    else // Player is moving
+                        movementSFX = movementSFXState.WALKING;
                 }
             }
         }
@@ -517,21 +523,25 @@ public class Player : MonoBehaviour
         if(stopSFX && movementSFX == movementSFXState.WALKING ) // Play Walk SFX
         {
             stopSFX = false;
+            audioManager.PlayStepSFX(1.0f);
             Debug.Log("Switching to Walk SFX");
         }
         else if(stopSFX && movementSFX == movementSFXState.RUNNING) // Play Sprint SFX
         {
             stopSFX = false;
+            audioManager.PlayStepSFX(0.0f);
             Debug.Log("Switching to Running SFX");
         }
         else if(stopSFX && movementSFX == movementSFXState.EXHAUSTED) // Play Exhausted SFX
         {
             stopSFX = false;
+            audioManager.PlayLowStaminaSFX();
             Debug.Log("Switching to Exhausted SFX");
         }
         else if(stopSFX && movementSFX == movementSFXState.STOPALL) // Player is not moving so stop all SFX
         {
             stopSFX = false;
+            audioManager.StopStepSound();
             Debug.Log("Stopping all SFX");
         }
     }
