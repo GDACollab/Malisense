@@ -234,7 +234,9 @@ MonoBehaviour:
   numNotesObtained: 0
   numStoreCredits: 0
   audioManager: {fileID: 4924827947121429571}
+  fader: {fileID: 0}
   journal: {fileID: 11400000, guid: 05aa790e0c7782942998137eaa301d9a, type: 2}
+  deviceInputs: {fileID: 11400000, guid: 9a07b5ecc80560e48a3c6d7e27f11994, type: 2}
 --- !u!114 &4924827947121429571
 MonoBehaviour:
   m_ObjectHideFlags: 0

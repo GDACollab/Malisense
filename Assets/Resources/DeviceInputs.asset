@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bc244524c71474a9d95a0eaf8e453d, type: 3}
+  m_Name: DeviceInputs
+  m_EditorClassIdentifier: 
+  currDevice: 0
+  inputs:
+  - inputType: '{move}'
+    keyboard: WASD
+    xInput: L-Stick
+    dualShock: L-Stick
+    switchPro: L-Stick
+  - inputType: '{sprint}'
+    keyboard: SHIFT
+    xInput: A
+    dualShock: "\xD7"
+    switchPro: B
+  - inputType: '{cancel}'
+    keyboard: SHIFT
+    xInput: A
+    dualShock: "\xD7"
+    switchPro: B
+  - inputType: '{select}'
+    keyboard: SPACE
+    xInput: B
+    dualShock: "\u25CB"
+    switchPro: A
+  - inputType: '{interact}'
+    keyboard: SPACE
+    xInput: B
+    dualShock: "\u25CB"
+    switchPro: A
+  - inputType: '{scrollleft}'
+    keyboard: 
+    xInput: LB
+    dualShock: L1
+    switchPro: L
+  - inputType: '{scrollright}'
+    keyboard: 
+    xInput: RB
+    dualShock: R1
+    switchPro: R
+  - inputType: '{slot1}'
+    keyboard: 1
+    xInput: 
+    dualShock: 
+    switchPro: 
+  - inputType: '{slot2}'
+    keyboard: 2
+    xInput: 
+    dualShock: 
+    switchPro: 
+  - inputType: '{slot3}'
+    keyboard: 3
+    xInput: 
+    dualShock: 
+    switchPro: 
+  - inputType: '{useitem}'
+    keyboard: Q
+    xInput: X
+    dualShock: "\u25A1"
+    switchPro: Y
+  - inputType: '{artifact1}'
+    keyboard: E
+    xInput: Y
+    dualShock: "\u25B3"
+    switchPro: X
+  - inputType: '{artifact2}'
+    keyboard: R
+    xInput: LT
+    dualShock: L2
+    switchPro: ZL
+  - inputType: '{pause}'
+    keyboard: TAB
+    xInput: MENU
+    dualShock: OPTIONS
+    switchPro: START
+  - inputType: '{settingstab}'
+    keyboard: Q
+    xInput: LB
+    dualShock: L1
+    switchPro: L
+  - inputType: '{journaltab}'
+    keyboard: E
+    xInput: RB
+    dualShock: R1
+    switchPro: R

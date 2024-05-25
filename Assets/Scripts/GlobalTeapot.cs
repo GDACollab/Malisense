@@ -23,6 +23,17 @@ public class GlobalTeapot : MonoBehaviour
         End
     }
 
+    /// <summary>
+    /// Connected Device Type
+    /// </summary>
+    public enum TeaCup
+    {
+        KEYBOARD,
+        XINPUT,
+        DUALSHOCK,
+        SWITCH
+    }
+
     [Header("Story Variables")]
     public TeaType currProgress = TeaType.Intro;
     /// <summary>
@@ -40,6 +51,7 @@ public class GlobalTeapot : MonoBehaviour
     public AudioManager audioManager;
     public Fader fader;
     public Journal journal;
+    public DeviceInputs deviceInputs;
 
     private void Awake()
     {
@@ -53,6 +65,8 @@ public class GlobalTeapot : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
         if (!journal) { journal = Resources.Load<Journal>("Journal"); }
+        if (!deviceInputs) { deviceInputs = Resources.Load<DeviceInputs>("DeviceInputs"); }
+        deviceInputs.Init();
         audioManager = GetComponent<AudioManager>();
         fader = GetComponent<Fader>();
         fader.Init();
@@ -91,5 +105,10 @@ public class GlobalTeapot : MonoBehaviour
             numNotesObtained++;
             numStoreCredits++;
         }
+    }
+
+    private void OnDisable()
+    {
+        deviceInputs.Deactivate();
     }
 }
