@@ -486,6 +486,7 @@ public class AudioManager : MonoBehaviour
         }
         movementSFX = RuntimeManager.CreateInstance(playerStepSFX);
         movementSFX.setParameterByName("running", running);
+        movementSFX.setVolume(0.3f);
         movementSFX.start();
     }
 

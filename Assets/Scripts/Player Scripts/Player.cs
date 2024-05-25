@@ -316,7 +316,7 @@ public class Player : MonoBehaviour
         {
             isSprinting = false;
             playerAnimator.SetBool("sprinting", false);
-            if(!stopSFX && movementSFX != movementSFXState.WALKING && isMoving && !isExhausted) // If walking sfx is not playing already and the player is walking, play it
+            if(canMove && !stopSFX && movementSFX != movementSFXState.WALKING && isMoving && !isExhausted) // If walking sfx is not playing already and the player is walking, play it
             {
                 movementSFX = movementSFXState.WALKING;
                 stopSFX = true;
@@ -332,9 +332,9 @@ public class Player : MonoBehaviour
                 if (!stopSFX && !isExhausted && movementSFX == movementSFXState.EXHAUSTED) // Player is no longer exhausted so switch to appropriate sfx
                 {
                     stopSFX = true;
-                    if (!isMoving) // Player isn't moving
+                    if (!isMoving || !canMove) // Player isn't moving
                         movementSFX = movementSFXState.STOPALL;
-                    else // Player is moving
+                    else if(canMove)// Player is moving
                         movementSFX = movementSFXState.WALKING;
                 }
             }
@@ -418,7 +418,11 @@ public class Player : MonoBehaviour
 
         // Stop reading
         if (isReading)
-        {
+        {   if(!stopSFX && movementSFX != movementSFXState.STOPALL)
+            {
+                stopSFX = true;
+                movementSFX = movementSFXState.STOPALL;
+            }
             interactArea.removeInteracts();
             dungeonManager.DeactivateNote();
             isReading = false;
@@ -478,6 +482,12 @@ public class Player : MonoBehaviour
             // Read note
             else if (note)
             {
+                if(!stopSFX && movementSFX != movementSFXState.STOPALL)
+                {
+                    stopSFX = true;
+                    movementSFX = movementSFXState.STOPALL;
+                    SFXManager();
+                }
                 interactArea.removeInteracts();
                 canMove = false;
                 isReading = true;
