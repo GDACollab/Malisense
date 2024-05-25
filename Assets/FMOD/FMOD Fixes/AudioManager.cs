@@ -408,12 +408,28 @@ public class AudioManager : MonoBehaviour
         Play(sightIdleSFX);
     }
     
-    public void PlaySoundAlertSFX(){
-        Play(soundAlertSFX);
+    // public void PlaySoundAlertSFX(){
+    //     Play(soundAlertSFX);
+    // }
+    public void PlaySoundAlertSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(soundAlertSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
     }
     
-    public void PlaySoundIdleSFX(){
-        Play(soundIdleSFX);
+    // public void PlaySoundIdleSFX(){
+    //     Play(soundIdleSFX);
+    // }
+    public void PlaySoundIdleSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(soundIdleSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
     }
     
     public void PlayFakeMonsterSFX(){
