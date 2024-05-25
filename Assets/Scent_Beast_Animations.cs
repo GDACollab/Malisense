@@ -13,7 +13,7 @@ public class Scent_Beast_Animations : MonoBehaviour
     void Start()
     {
         stateMachine = GetComponent<StateMachine>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
