@@ -5,21 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Scent_Beast_Animations : MonoBehaviour
 {
-    public StateMachine stateMachine;
+    public Animator animator;
 
-    private Animator _animator;
+    private StateMachine stateMachine;
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
+        stateMachine = GetComponent<StateMachine>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _animator.SetBool("see player", stateMachine.currentState == StateMachine.State.Alert);
-        _animator.SetBool("chasing", stateMachine.currentState == StateMachine.State.Chasing);
-        _animator.SetBool("chasing", stateMachine.currentState == StateMachine.State.Patrolling);
+        animator.SetBool("Alert", stateMachine.currentState == StateMachine.State.Alert);
+        animator.SetBool("Chasing", stateMachine.currentState != StateMachine.State.Patrolling && stateMachine.currentState != StateMachine.State.Alert);
+        animator.SetBool("Patrol", stateMachine.currentState == StateMachine.State.Patrolling);
     }
 }
