@@ -92,6 +92,16 @@ public class Player : MonoBehaviour
 
     public List<Artifact> Artifacts = new List<Artifact>();
 
+    private enum movementSFXState
+    {
+        WALKING,
+        RUNNING,
+        EXHAUSTED,
+        STOPALL
+    };
+    private movementSFXState movementSFX; // Indicates what movement sfx is being played
+    private bool stopSFX = false; // Indicates that we need to stop current movement sfx
+
     void Start()
     {
         // Set input system variables
@@ -163,6 +173,7 @@ public class Player : MonoBehaviour
             StaminaManager();
             InventoryManager();
             SoundManager();
+            SFXManager();
         }
     }
 
@@ -281,12 +292,20 @@ public class Player : MonoBehaviour
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!isExhausted))
         {
             isSprinting = true;
+            if(!stopSFX && movementSFX != movementSFXState.RUNNING)
+            {
+                movementSFX = movementSFXState.RUNNING;
+                stopSFX = true;
+            }
             playerAnimator.SetBool("sprinting", true);
             adjustedSpeed *= sprintRatio;   // Adjust Speed
             currentStamina -= staminaDepletion * Time.deltaTime;        // deplete stamina
             if (currentStamina < 0f)
             {                                   // check if player should now be exhausted
                 isExhausted = true;
+                stopSFX = true;
+                movementSFX = movementSFXState.EXHAUSTED;
+                
                 StaminaBar.GetComponent<Animator>().SetBool("isExhausted", isExhausted);
             }
         }
@@ -294,9 +313,24 @@ public class Player : MonoBehaviour
         {
             isSprinting = false;
             playerAnimator.SetBool("sprinting", false);
+            if(!stopSFX && movementSFX != movementSFXState.WALKING && isMoving && !isExhausted) // If walking sfx is not playing already and the player is walking, play it
+            {
+                movementSFX = movementSFXState.WALKING;
+                stopSFX = true;
+            }
+            else if(!stopSFX && !isMoving && movementSFX != movementSFXState.STOPALL && !isExhausted) // If player has stopped and music hasn't been stopped, stop it 
+            {
+                movementSFX = movementSFXState.STOPALL;
+                stopSFX = true;
+            }
             if (currentStamina < maxStamina)
             {                            // regen stamina
                 currentStamina += staminaRegen * Time.deltaTime;
+                if (currentStamina < 4.0f && !stopSFX && movementSFX != movementSFXState.STOPALL) // Player is no longer exhausted so stop exhausted sfx
+                {
+                    movementSFX = movementSFXState.STOPALL;
+                    stopSFX = true;
+                }
             }
         }
 
@@ -476,6 +510,30 @@ public class Player : MonoBehaviour
         }
         interactArea.removeInteracts();
 
+    }
+
+    private void SFXManager()
+    {
+        if(stopSFX && movementSFX == movementSFXState.WALKING ) // Play Walk SFX
+        {
+            stopSFX = false;
+            Debug.Log("Switching to Walk SFX");
+        }
+        else if(stopSFX && movementSFX == movementSFXState.RUNNING) // Play Sprint SFX
+        {
+            stopSFX = false;
+            Debug.Log("Switching to Running SFX");
+        }
+        else if(stopSFX && movementSFX == movementSFXState.EXHAUSTED) // Play Exhausted SFX
+        {
+            stopSFX = false;
+            Debug.Log("Switching to Exhausted SFX");
+        }
+        else if(stopSFX && movementSFX == movementSFXState.STOPALL) // Player is not moving so stop all SFX
+        {
+            stopSFX = false;
+            Debug.Log("Stopping all SFX");
+        }
     }
 
     private void SoundManager()

@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
     }
     
     public EventInstance currentPlaying;
+    public EventInstance movementSFX;
     MusicTrack currentTrack = MusicTrack.MENU;
     protected PLAYBACK_STATE playbackState;
 
@@ -457,8 +458,31 @@ public class AudioManager : MonoBehaviour
         Play(lowStaminaSFX);
     }
     
-    public void PlayStepSFX(bool running=false){
-        PlayModified(playerStepSFX, "Running", System.Convert.ToSingle(running));
+    public void PlayStepSFX(float running=0.0f){
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(playerStepSFX, out _);
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.LogWarning("FMOD event path does not exist: " + playerStepSFX);
+            return;
+        }
+
+        if (movementSFX.isValid())
+        {
+            movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            movementSFX.release();
+        }
+        movementSFX = RuntimeManager.CreateInstance(playerStepSFX);
+        movementSFX.setParameterByName("running", running);
+        movementSFX.start();
+    }
+
+    public void StopStepSound()
+    {
+        if (movementSFX.isValid())
+        {
+            movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            movementSFX.release();
+        }
     }
     
     /// <summary>
