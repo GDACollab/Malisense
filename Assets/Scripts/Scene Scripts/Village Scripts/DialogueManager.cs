@@ -132,8 +132,6 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(string character = "???????????????", bool isIntroductionCutscene = false)
     {
-        
-
         // Prevent from restarting conversation at the end
         if (!canStartDialogue)
         {
@@ -142,6 +140,9 @@ public class DialogueManager : MonoBehaviour
             return; // Skip reinitializing the story
         }
         Debug.Log("Start running story.");
+
+        // Name of owner of house stored in variable character and is one of ["Scholar", "Stick", "Crypt_Keeper", "Clergy", "Mayor", "???????????????"]
+        // AUDIOMANAGER: CK OST / Shop OST
 
         globalTeapot.currentStory.ChoosePathString("START");
 
@@ -226,8 +227,15 @@ public class DialogueManager : MonoBehaviour
         if (globalTeapot.currentStory.canContinue)
         {
             dialogueText.text = globalTeapot.currentStory.Continue();
+            // Villager name stored in variable characterNameText.text is one of "????????????", "Crypt Keeper", "Clerics", "Smiling Cleric", Thinking Cleric, "Weeping Cleric", "Smiling", "Weeping", "Thinking", "High Priest", "Stick", "Scholar", "Mayor"]
             characterNameText.text = (string)globalTeapot.currentStory.variablesState["CharacterTitle"];
 
+            // Only bark when a character is talking:
+            if (characterNameText.text != "")
+            {
+                // Name of owner of house stored in variable navigationManager.CurrentCharacter and is one of ["Scholar", "Stick", "Crypt_Keeper", "Clergy", "Mayor", "???????????????"]
+                // AUDIOMANAGER: Villager barks
+            }
 
             DisplayChoices();
         }

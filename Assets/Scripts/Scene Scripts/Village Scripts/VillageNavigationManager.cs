@@ -52,6 +52,7 @@ public class VillageNavigationManager : MonoBehaviour
     //Story Variables
     private bool hasForcedCKIntro = false;
     private bool hasForcedClergyIntro = false;
+    private bool hasForcedMayorIntro = false;
 
     // Global Teapot
     GlobalTeapot globalTeapot;
@@ -68,6 +69,7 @@ public class VillageNavigationManager : MonoBehaviour
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
         audioManager.PlayOST(audioManager.dungeonOST);
+        // AUDIOMANAGER: Village OST
 
         // Building Selection:
         // Turn off every building's light
@@ -290,6 +292,8 @@ public class VillageNavigationManager : MonoBehaviour
         }
 
         currentlySelected = true;
+
+        // AUDIOMANAGER: Village OST
     }
 
 
