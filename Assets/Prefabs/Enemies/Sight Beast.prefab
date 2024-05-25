@@ -279,7 +279,6 @@ GameObject:
   - component: {fileID: -2143965568594709404}
   - component: {fileID: 6089753570044768361}
   - component: {fileID: 3756714849023598437}
-  - component: {fileID: 779943132625553680}
   m_Layer: 8
   m_Name: Sight Beast
   m_TagString: Enemy
@@ -459,7 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68913520dcf664c0489334094f4a5ecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 8694767944396127748}
+  _puppetAnimator: {fileID: 8694767944396127748}
+  _lightAnimator: {fileID: 7929056975138697904}
 --- !u!114 &3196582113618833869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,27 +579,6 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
---- !u!95 &779943132625553680
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252077317078807248}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5704342065390394418
 GameObject:
   m_ObjectHideFlags: 0
