@@ -592,7 +592,7 @@ Animator:
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -633,7 +633,7 @@ Transform:
   - {fileID: 3501707255719967641}
   - {fileID: 4632489622618928290}
   - {fileID: 3550916298700733624}
-  - {fileID: 2657973176771345743}
+  - {fileID: 7178685510169361609}
   m_Father: {fileID: 3131323788594825379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7929056975138697904
@@ -657,45 +657,13 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &7165775096218260801
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2657973176771345743}
-  m_Layer: 8
-  m_Name: Sprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2657973176771345743
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7165775096218260801}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7178685510169361609}
-  m_Father: {fileID: 7399970916169899145}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8408227534993786135
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2657973176771345743}
+    m_TransformParent: {fileID: 7399970916169899145}
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_Name
@@ -715,11 +683,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.51
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -764,6 +732,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8694767944396127748}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2385232368867009634}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: bc412ad87a75a814ebd0a5a8a3ea34cc, type: 3}
 --- !u!4 &7178685510169361609 stripped
 Transform:
@@ -788,7 +759,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 54657bbdf672b5e4fa1c548eec9777ad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -796,3 +767,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &2385232368867009634
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8311333443395396778}
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
