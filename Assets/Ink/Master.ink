@@ -213,8 +213,8 @@ bool Variables
 "Just...promise me you won’t do something I can’t bring you back from." 
 
 "Don’t let your hunger for redemption destroy what we still have."
-~ CharacterTitle = ""
-<i>Breathe. </i>
+
+"Breathe."
 
 -> END
 
