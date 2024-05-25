@@ -19,6 +19,7 @@ public class Scent_Beast_Animations : MonoBehaviour
     void Update()
     {
         _animator.SetBool("see player", stateMachine.currentState == StateMachine.State.Alert);
-        _animator.SetFloat("running speed", value: 20); //temp need to get actaul speed of ScentBeast
+        _animator.SetBool("chasing", stateMachine.currentState == StateMachine.State.Chasing);
+        _animator.SetBool("chasing", stateMachine.currentState == StateMachine.State.Patrolling);
     }
 }
