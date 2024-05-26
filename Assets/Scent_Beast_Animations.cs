@@ -20,7 +20,8 @@ public class Scent_Beast_Animations : MonoBehaviour
     void Update()
     {
         animator.SetBool("Alert", stateMachine.currentState == StateMachine.State.Alert);
-        animator.SetBool("Chasing", stateMachine.currentState != StateMachine.State.Patrolling && stateMachine.currentState != StateMachine.State.Alert);
+        animator.SetBool("Alert", stateMachine.currentState != StateMachine.State.Distracted);
+        animator.SetBool("Chasing", stateMachine.currentState == StateMachine.State.Chasing);
         animator.SetBool("Patrol", stateMachine.currentState == StateMachine.State.Patrolling);
     }
 }
