@@ -101,7 +101,7 @@ public class DungeonManager : MonoBehaviour
     public void KillPlayer()
     {
         audioManager.StopCurrentSong();
-        audioManager.StopStepSound();
+        audioManager.StopStepSound(true);
         audioManager.PlayDeathSFX();
         globalTeapot.numStoreCredits = globalTeapot.numNotesObtained;
         EndDungeon(true, false);
@@ -109,7 +109,7 @@ public class DungeonManager : MonoBehaviour
 
     public void EndDungeon(bool death = false, bool artifact = false)
     {
-        audioManager.StopStepSound();
+        audioManager.StopStepSound(true);
         globalTeapot.hasDied = death;
         Action sceneChange;
 

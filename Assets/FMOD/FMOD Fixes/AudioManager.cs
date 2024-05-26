@@ -39,6 +39,8 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)]
     public float sfxVolume = 0.5f;
     [Range(0f, 1f)]
+    public float movementsfxVolume = 0.3f;
+    [Range(0f, 1f)]
     public float ambienceVolume = 0.5f;
 
     // [Header("Bus Paths")]
@@ -478,6 +480,7 @@ public class AudioManager : MonoBehaviour
         }
 
         movementSFX = RuntimeManager.CreateInstance(lowStaminaSFX);
+        movementSFX.setVolume(sfxVolume);
         movementSFX.start();
         
     }
@@ -495,15 +498,19 @@ public class AudioManager : MonoBehaviour
         }
         movementSFX = RuntimeManager.CreateInstance(playerStepSFX);
         movementSFX.setParameterByName("running", running);
-        movementSFX.setVolume(0.4f);
+        movementSFX.setVolume(movementsfxVolume);
         movementSFX.start();
     }
 
-    public void StopStepSound()
+    public void StopStepSound(bool immediate)
     {
-        if (movementSFX.isValid())
+        if (movementSFX.isValid() && !immediate)
         {
             StartCoroutine(FadeOut());
+        }else if (movementSFX.isValid()) // Allows sound to immediately stop for 
+        {
+            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            movementSFX.release();
         }
     }
     

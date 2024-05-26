@@ -551,9 +551,9 @@ public class Player : MonoBehaviour
         else if(stopSFX && movementSFX == movementSFXState.STOPALL) // Player is not moving so stop all SFX
         {
             stopSFX = false;
-            audioManager.StopStepSound();
+            audioManager.StopStepSound(false);
             Debug.Log("Stopping all SFX");
-        }
+        }   
     }
 
     private void SoundManager()
