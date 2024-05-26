@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     public EventInstance movementSFX;
     MusicTrack currentTrack = MusicTrack.MENU;
     protected PLAYBACK_STATE playbackState;
+    protected PLAYBACK_STATE movementState;
 
     // Scream Distance
     public Vector2 screamDistance = new Vector2(10, 50);
@@ -453,12 +454,21 @@ public class AudioManager : MonoBehaviour
     public void PlayReviveSFX(){
         Play(reviveSFX);
     }
-    
+    private IEnumerator FadeOut()
+    { 
+        movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        movementSFX.getPlaybackState(out movementState);
+        while (movementState != PLAYBACK_STATE.STOPPED)
+        {
+            movementSFX.getPlaybackState(out movementState);
+            yield return null;
+        }
+    }
+
     public void PlayLowStaminaSFX(){
         if (movementSFX.isValid())
         {
-            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            movementSFX.release();
+            StartCoroutine(FadeOut());
         }
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(lowStaminaSFX, out _);
         if (result != FMOD.RESULT.OK)
@@ -475,8 +485,7 @@ public class AudioManager : MonoBehaviour
     public void PlayStepSFX(float running=0.0f){
         if (movementSFX.isValid())
         {
-            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            movementSFX.release();
+            StartCoroutine(FadeOut());
         }
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(playerStepSFX, out _);
         if (result != FMOD.RESULT.OK)
@@ -486,7 +495,7 @@ public class AudioManager : MonoBehaviour
         }
         movementSFX = RuntimeManager.CreateInstance(playerStepSFX);
         movementSFX.setParameterByName("running", running);
-        movementSFX.setVolume(0.3f);
+        movementSFX.setVolume(0.4f);
         movementSFX.start();
     }
 
@@ -494,8 +503,7 @@ public class AudioManager : MonoBehaviour
     {
         if (movementSFX.isValid())
         {
-            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            movementSFX.release();
+            StartCoroutine(FadeOut());
         }
     }
     
