@@ -1120,10 +1120,6 @@ MonoBehaviour:
     m_ActionName: Player/SetDown[/Keyboard/x]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 46c9acae-0f5f-43ea-bc6d-8ab3580fadc5
-    m_ActionName: Player/Journal Action[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 040a405d-7375-4406-93a7-28b93e745851
     m_ActionName: Player/Hide Message[/Keyboard/p]
   - m_PersistentCalls:
@@ -1194,6 +1190,66 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1c2a4c4c-6d13-43c2-80af-645b7ccf9862
     m_ActionName: Player/Activate Functions[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9a1d8ea5-c94f-431b-8d51-1b9372e46568
+    m_ActionName: Player/Pause[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 48a53c2f-194e-44cf-94e4-dabbcab2a28e
+    m_ActionName: Inventory/Use Artifact 2[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3b8a12cb-1646-4727-8fd4-e90c79420d9d
+    m_ActionName: UI/Cancel[/Keyboard/backspace,/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9ee706a-d7d5-4b5a-bf7a-45ca5c96d00c
+    m_ActionName: UI/Pause[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d95c3d63-23c8-4a70-acab-8b44cbf0f581
+    m_ActionName: UI/JournalTab[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 182cf768-7449-491d-977c-63eeddcb3abb
+    m_ActionName: UI/SettingsTab[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 256b0ea4-9563-40cc-92ba-bb07dbd16af4
+    m_ActionName: UI/Debug[/Keyboard/slash,/Keyboard/backslash]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 412238716}
+        m_TargetAssemblyTypeName: NavigationManager, Assembly-CSharp
+        m_MethodName: Trailer1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4f9c3d92-9f9d-4c01-8c0a-7dc28ef03657
+    m_ActionName: UI/Trailer1[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 412238716}
+        m_TargetAssemblyTypeName: NavigationManager, Assembly-CSharp
+        m_MethodName: Trailer2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a687808d-e688-493d-a0b5-db73c9cac3bd
+    m_ActionName: UI/Trailer2[/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
@@ -1211,6 +1267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def4dc3ccb0666a4195ebb37c7e4dc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiLayer: 5
+  titleLayer: 6
   eventSystem: {fileID: 322620004}
   mainMenuStartButton: {fileID: 290927574}
   optionsVolumeSlider: {fileID: 1160479517}
@@ -2718,7 +2776,7 @@ GameObject:
   - component: {fileID: 739843682}
   - component: {fileID: 739843681}
   - component: {fileID: 739843680}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}

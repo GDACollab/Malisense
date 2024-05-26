@@ -797,6 +797,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Trailer1",
+                    "type": "Button",
+                    "id": "4f9c3d92-9f9d-4c01-8c0a-7dc28ef03657",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trailer2",
+                    "type": "Button",
+                    "id": "a687808d-e688-493d-a0b5-db73c9cac3bd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1206,6 +1224,28 @@
                     "action": "Debug",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bde8fcc2-4a54-47d2-90f1-170413ca268d",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trailer1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8736e1d2-620b-4a5a-aa08-d76323794f6b",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trailer2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

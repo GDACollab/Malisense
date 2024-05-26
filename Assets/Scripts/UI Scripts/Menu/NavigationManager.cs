@@ -8,6 +8,12 @@ using UnityEngine.UI;
 
 public class NavigationManager : MonoBehaviour
 {
+	[Header("Trailer Debug")]
+	public int uiLayer = 5;
+	public int titleLayer = 6;
+	private bool uiOff = false;
+	private bool titleOff = false;
+	
 	[Header("Event System")]
 	[SerializeField] EventSystem eventSystem;
 
@@ -22,9 +28,42 @@ public class NavigationManager : MonoBehaviour
 	enum Screens { MAIN_MENU, OPTIONS, CONTROLS, CREDITS1,  CREDITS2, CREDITS3 }
 	Screens currentScreen = Screens.MAIN_MENU;
 
+	public void Trailer1(InputAction.CallbackContext context){
+		if(context.performed){
+			Camera temp = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+			if(temp){
+				if(uiOff){
+					temp.cullingMask |= 1 << uiLayer;
+					uiOff = false;
+				}
+				else{
+					temp.cullingMask &= ~(1 << uiLayer);
+					uiOff = true;
+				}
+			}
+		}
+	}
+	
+	public void Trailer2(InputAction.CallbackContext context){
+		Debug.Log("I work 2");
+		if(context.performed){
+			Camera temp = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+			if(temp){
+				if(titleOff){
+					temp.cullingMask |= 1 << titleLayer;
+					titleOff = false;
+				}
+				else{
+					temp.cullingMask &= ~(1 << titleLayer);
+					titleOff = true;
+				}
+			}
+		}
+	}
 
 	public void Move(InputAction.CallbackContext context)
 	{
+		Debug.Log("I tried");
 		// when you press a button, there are 3 phases that happen: started, performed, and canceled
 		// we don't want this function to run 3 times when the select button is pressed, so we check for the performed stage
 		if (context.performed)
