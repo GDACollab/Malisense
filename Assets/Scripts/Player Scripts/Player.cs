@@ -72,11 +72,14 @@ public class Player : MonoBehaviour
     // Stamina States
     [HideInInspector] public bool isExhausted = false; // makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
     bool isReading = false;
+    bool isAlive = true;
 
     // Global Teapot
     private GlobalTeapot globalTeapot;
     // Dungeon Manager
     private DungeonManager dungeonManager;
+    // Audio Manager
+    private AudioManager audioManager;
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
@@ -91,6 +94,16 @@ public class Player : MonoBehaviour
     public List<GameObject> activeSafeZones = new List<GameObject>();
 
     public List<Artifact> Artifacts = new List<Artifact>();
+
+    private enum movementSFXState
+    {
+        WALKING,
+        RUNNING,
+        EXHAUSTED,
+        STOPALL
+    };
+    private movementSFXState movementSFX; // Indicates what movement sfx is being played
+    private bool stopSFX = false; // Indicates that we need to stop current movement sfx
 
     void Start()
     {
@@ -124,7 +137,8 @@ public class Player : MonoBehaviour
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         // Get Dungeon Manager
         dungeonManager = FindObjectOfType<DungeonManager>();
-
+        // Get Audio Manager
+        audioManager = globalTeapot.audioManager;
         #region TEMP INPUTS
         // Get temp input options
         hideMessage = playerInput.actions.FindAction("Hide Message");
@@ -163,6 +177,8 @@ public class Player : MonoBehaviour
             StaminaManager();
             InventoryManager();
             SoundManager();
+            if(isAlive)
+                SFXManager();
         }
     }
 
@@ -173,6 +189,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player died due to contact to enemy");
             newInventory.inventory.Clear();
+            isAlive = false;
             playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
             playerAnimator.SetTrigger("die");
             StartCoroutine(ZoomCamera());
@@ -281,12 +298,20 @@ public class Player : MonoBehaviour
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!isExhausted))
         {
             isSprinting = true;
+            if(!stopSFX && movementSFX != movementSFXState.RUNNING)
+            {
+                movementSFX = movementSFXState.RUNNING;
+                stopSFX = true;
+            }
             playerAnimator.SetBool("sprinting", true);
             adjustedSpeed *= sprintRatio;   // Adjust Speed
             currentStamina -= staminaDepletion * Time.deltaTime;        // deplete stamina
             if (currentStamina < 0f)
             {                                   // check if player should now be exhausted
                 isExhausted = true;
+                stopSFX = true;
+                movementSFX = movementSFXState.EXHAUSTED;
+                
                 StaminaBar.GetComponent<Animator>().SetBool("isExhausted", isExhausted);
             }
         }
@@ -294,9 +319,27 @@ public class Player : MonoBehaviour
         {
             isSprinting = false;
             playerAnimator.SetBool("sprinting", false);
+            if(canMove && !stopSFX && movementSFX != movementSFXState.WALKING && isMoving && !isExhausted) // If walking sfx is not playing already and the player is walking, play it
+            {
+                movementSFX = movementSFXState.WALKING;
+                stopSFX = true;
+            }
+            else if(!stopSFX && !isMoving && movementSFX != movementSFXState.STOPALL && !isExhausted) // If player has stopped and music hasn't been stopped, stop it 
+            {
+                movementSFX = movementSFXState.STOPALL;
+                stopSFX = true;
+            }
             if (currentStamina < maxStamina)
             {                            // regen stamina
                 currentStamina += staminaRegen * Time.deltaTime;
+                if (!stopSFX && !isExhausted && movementSFX == movementSFXState.EXHAUSTED) // Player is no longer exhausted so switch to appropriate sfx
+                {
+                    stopSFX = true;
+                    if (!isMoving || !canMove) // Player isn't moving
+                        movementSFX = movementSFXState.STOPALL;
+                    else if(canMove)// Player is moving
+                        movementSFX = movementSFXState.WALKING;
+                }
             }
         }
 
@@ -378,7 +421,11 @@ public class Player : MonoBehaviour
 
         // Stop reading
         if (isReading)
-        {
+        {   if(!stopSFX && movementSFX != movementSFXState.STOPALL)
+            {
+                stopSFX = true;
+                movementSFX = movementSFXState.STOPALL;
+            }
             interactArea.removeInteracts();
             dungeonManager.DeactivateNote();
             isReading = false;
@@ -438,6 +485,12 @@ public class Player : MonoBehaviour
             // Read note
             else if (note)
             {
+                if(!stopSFX && movementSFX != movementSFXState.STOPALL)
+                {
+                    stopSFX = true;
+                    movementSFX = movementSFXState.STOPALL;
+                    SFXManager();
+                }
                 interactArea.removeInteracts();
                 canMove = false;
                 isReading = true;
@@ -476,6 +529,34 @@ public class Player : MonoBehaviour
         }
         interactArea.removeInteracts();
 
+    }
+
+    private void SFXManager()
+    {
+        if(stopSFX && movementSFX == movementSFXState.WALKING ) // Play Walk SFX
+        {
+            stopSFX = false;
+            audioManager.PlayStepSFX(1.0f);
+            Debug.Log("Switching to Walk SFX");
+        }
+        else if(stopSFX && movementSFX == movementSFXState.RUNNING) // Play Sprint SFX
+        {
+            stopSFX = false;
+            audioManager.PlayStepSFX(0.0f);
+            Debug.Log("Switching to Running SFX");
+        }
+        else if(stopSFX && movementSFX == movementSFXState.EXHAUSTED) // Play Exhausted SFX
+        {
+            stopSFX = false;
+            audioManager.PlayLowStaminaSFX();
+            Debug.Log("Switching to Exhausted SFX");
+        }
+        else if(stopSFX && movementSFX == movementSFXState.STOPALL) // Player is not moving so stop all SFX
+        {
+            stopSFX = false;
+            audioManager.StopStepSound(false);
+            Debug.Log("Stopping all SFX");
+        }   
     }
 
     private void SoundManager()
