@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     // Stamina States
     [HideInInspector] public bool isExhausted = false; // makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
     bool isReading = false;
+    bool isAlive = true;
 
     // Global Teapot
     private GlobalTeapot globalTeapot;
@@ -176,7 +177,8 @@ public class Player : MonoBehaviour
             StaminaManager();
             InventoryManager();
             SoundManager();
-            SFXManager();
+            if(isAlive)
+                SFXManager();
         }
     }
 
@@ -187,6 +189,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player died due to contact to enemy");
             newInventory.inventory.Clear();
+            isAlive = false;
             playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
             playerAnimator.SetTrigger("die");
             StartCoroutine(ZoomCamera());

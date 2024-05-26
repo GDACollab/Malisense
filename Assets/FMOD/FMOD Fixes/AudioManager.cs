@@ -507,9 +507,9 @@ public class AudioManager : MonoBehaviour
         if (movementSFX.isValid() && !immediate)
         {
             StartCoroutine(FadeOut());
-        }else if (movementSFX.isValid()) // Allows sound to immediately stop for 
+        }else if (movementSFX.isValid())
         {
-            movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             movementSFX.release();
         }
     }
