@@ -39,7 +39,7 @@ public class StateMachine : MonoBehaviour
     private bool distractInit = false;
     private bool _statue;
     private DungeonManager dungeonManager;
-    private AudioManager audioManager;
+    private AudioManager audioManager; 
     private Player playerObj;
     void Start()
     {
