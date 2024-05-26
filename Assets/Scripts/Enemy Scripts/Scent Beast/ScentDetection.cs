@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD;
+using FMODUnity;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class ScentDetection : MonoBehaviour
 {
     GameObject player;
+    
+    
 
     private StateMachine stateMac;
 
@@ -24,6 +29,18 @@ public class ScentDetection : MonoBehaviour
     static public float scentPerSecond_Alert = 2;
     static public float scentPerSecond_Chase = 5;
 
+    [Header("Audio")]
+    private AudioManager audioManager;
+    
+    [Range(0, 600)]
+    [Tooltip("minimum range for delay between idle audio sounds (in seconds)")]
+    public float idleAudioDelayMin;
+    [Range(0, 600)]
+    [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
+    public float idleAudioDelayMax;
+
+    private StudioEventEmitter soundEmitter;
+
     [Header("Read-only")]
 
     // player scent should always be between 0 and 100
@@ -34,10 +51,13 @@ public class ScentDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (idleAudioDelayMax < idleAudioDelayMin) UnityEngine.Debug.LogWarning("ScentDetection: Start(): Idle Audio Delay values are incorrect");
+        soundEmitter = GetComponent<StudioEventEmitter>();
         scentPerSecond = scentPerSecond_Patrol;
         stateMac = GetComponent<StateMachine>();
         player = GameObject.FindWithTag("Player");
         playerDist = Vector2.Distance(player.transform.position, transform.position);
+        audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
 
         StartCoroutine("sniffCheck");
 
@@ -63,16 +83,25 @@ public class ScentDetection : MonoBehaviour
 
     // checks if monster is close enough to player to smell them
     IEnumerator sniffCheck() {
-
+        float idleDelay = Random.Range(idleAudioDelayMin,idleAudioDelayMax);
+        float idleTimer = Time.time;
         while (true) {
             checkPlayer();
             switch (GetComponent<StateMachine>().currentState) {
                 case StateMachine.State.Patrolling:
+                    idleDelay -= Time.time - idleTimer;
+                    idleTimer = Time.time;
+                    UnityEngine.Debug.Log("delay = " + idleDelay);
+                    if (idleDelay <= 0) {
+                        idleDelay = Random.Range(idleAudioDelayMin,idleAudioDelayMax);
+                        audioManager.PlayScentIdleSFX(soundEmitter);
+                    }
                     if (scentPerSecond != scentPerSecond_Patrol) scentPerSecond = scentPerSecond_Patrol;
                     // if crossed threshold switch state
                     if (playerScent > scentT_Patrol2Alert || playerDist < distT_Patrol2Alert) {
                         stateMac.currentState = StateMachine.State.Alert;
-                        Debug.Log("Scent Beast switching from Patrol -> Alert");
+                        audioManager.PlayScentAlertSFX(soundEmitter);
+                        UnityEngine.Debug.Log("Scent Beast switching from Patrol -> Alert");
                     }
                     break;
                 case StateMachine.State.Alert:
@@ -80,10 +109,10 @@ public class ScentDetection : MonoBehaviour
                     // if crossed threshold switch state
                     if (playerScent < scentT_Patrol2Alert && playerDist > distT_Patrol2Alert) {
                         stateMac.currentState = StateMachine.State.Patrolling;
-                        Debug.Log("Scent Beast switching from Alert -> Patrol");
+                        UnityEngine.Debug.Log("Scent Beast switching from Alert -> Patrol");
                     } else if (playerScent > scentT_Alert2Chase || playerDist < distT_Alert2Chase) {
                         stateMac.currentState = StateMachine.State.Chasing;
-                        Debug.Log("Scent Beast switching from Alert -> Chase");
+                        UnityEngine.Debug.Log("Scent Beast switching from Alert -> Chase");
                     }
                     break;
                 case StateMachine.State.Chasing:
@@ -92,7 +121,7 @@ public class ScentDetection : MonoBehaviour
                     // Chasing doesn't end untill scent is off the player
                     if (playerScent < scentT_Alert2Chase && playerDist > distT_Alert2Chase) {
                         stateMac.currentState = StateMachine.State.Alert;
-                        Debug.Log("Scent Beast switching from Chase -> Alert");
+                        UnityEngine.Debug.Log("Scent Beast switching from Chase -> Alert");
                     }
                     break;
             }

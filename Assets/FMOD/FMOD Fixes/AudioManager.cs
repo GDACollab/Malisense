@@ -399,9 +399,24 @@ public class AudioManager : MonoBehaviour
     public void PlayScentAlertSFX(){
         Play(scentAlertSFX);
     }
-    
+    public void PlayScentAlertSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(scentAlertSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
+    }
     public void PlayScentIdleSFX(){
         Play(scentIdleSFX);
+    }
+    public void PlayScentIdleSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(scentIdleSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
     }
     
     public void PlaySightAlertSFX(){
