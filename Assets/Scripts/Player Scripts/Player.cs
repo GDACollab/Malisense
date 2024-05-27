@@ -508,6 +508,7 @@ public class Player : MonoBehaviour
             // Pick up heavy item
             else if (heavyItem)
             {
+                audioManager.PlayPickupSFX();
                 interactArea.removeInteracts();
                 newInventory.carriedObject = heavyItem;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
@@ -518,6 +519,7 @@ public class Player : MonoBehaviour
             // Pick up regular item
             else if (item)
             {
+                audioManager.PlayPickupSFX();
                 interactArea.removeInteracts();
                 bool success = newInventory.AddItem(item.item, 1);
                 if (success)

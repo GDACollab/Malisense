@@ -69,6 +69,7 @@ public class DungeonManager : MonoBehaviour
 
     public void ActivateNote(FloorNote note)
     {
+        audioManager.PlayPickupSFX();
         foreach (var input in GetComponentsInChildren<PlayerInput>())
         {
             input.enabled = false;
