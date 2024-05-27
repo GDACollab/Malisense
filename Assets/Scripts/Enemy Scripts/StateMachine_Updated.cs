@@ -51,7 +51,7 @@ public class StateMachine_Updated : MonoBehaviour
                 alert.Init();
                 break;
             case State.Chasing:
-                audioManager.PlayScream();
+                audioManager.Play(audioManager.monsterScream);
                 chasing.Init();
                 break;
         }
