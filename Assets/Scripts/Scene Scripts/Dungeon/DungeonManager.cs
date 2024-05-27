@@ -40,7 +40,6 @@ public class DungeonManager : MonoBehaviour
 
         SetFloorNotes();
         StartCoroutine(FadeFromBlack(fadeInTime));
-        audioManager.PlayDungeonOST();
     }
 
     /// <summary>
@@ -51,7 +50,7 @@ public class DungeonManager : MonoBehaviour
     {
         if (enemy.currentState == StateMachine.State.Chasing)
         {
-            enemies.Add(enemy);
+            enemies.Append(enemy);
             audioManager.PlayScream(enemy.GetComponent<StudioEventEmitter>());
             UpdateMusic();
         }
@@ -100,8 +99,6 @@ public class DungeonManager : MonoBehaviour
 
     public void KillPlayer()
     {
-        audioManager.StopCurrentSong();
-        audioManager.PlayDeathSFX();
         globalTeapot.numStoreCredits = globalTeapot.numNotesObtained;
         EndDungeon(true, false);
     }
@@ -153,12 +150,12 @@ public class DungeonManager : MonoBehaviour
         if (!isChasing && enemies.Count > 0)
         {
             isChasing = true;
-            audioManager.PlayChaseOST();
+            audioManager.ChaseOST();
         }
         else if (isChasing && enemies.Count == 0)
         {
             isChasing = false;
-            audioManager.PlayDungeonOST();
+            audioManager.DungeonOST();
         }
     }
 
