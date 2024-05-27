@@ -19,7 +19,7 @@ public class VillageNavigationManager : MonoBehaviour
 {
 
     //Building Selection
-    enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
+    public enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
     [Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
     [Tooltip("0: Scholar, 1: Custodian, 3: Crypt Keeper, 4: Church, 5: Mayor")]
     [SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
@@ -68,8 +68,7 @@ public class VillageNavigationManager : MonoBehaviour
         // Get the Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
-        audioManager.PlayOST(audioManager.dungeonOST);
-        // AUDIOMANAGER: Village OST
+        audioManager.PlayVillageOST();
 
         // Building Selection:
         // Turn off every building's light
