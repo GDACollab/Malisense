@@ -21,8 +21,10 @@ public class AudioManager : MonoBehaviour
     }
     
     public EventInstance currentPlaying;
+    public EventInstance movementSFX;
     MusicTrack currentTrack = MusicTrack.MENU;
     protected PLAYBACK_STATE playbackState;
+    protected PLAYBACK_STATE movementState;
 
     // Scream Distance
     public Vector2 screamDistance = new Vector2(10, 50);
@@ -36,6 +38,8 @@ public class AudioManager : MonoBehaviour
     public float musicVolume = 0.5f;
     [Range(0f, 1f)]
     public float sfxVolume = 0.5f;
+    [Range(0f, 1f)]
+    public float movementsfxVolume = 0.3f;
     [Range(0f, 1f)]
     public float ambienceVolume = 0.5f;
 
@@ -395,9 +399,24 @@ public class AudioManager : MonoBehaviour
     public void PlayScentAlertSFX(){
         Play(scentAlertSFX);
     }
-    
+    public void PlayScentAlertSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(scentAlertSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
+    }
     public void PlayScentIdleSFX(){
         Play(scentIdleSFX);
+    }
+    public void PlayScentIdleSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(scentIdleSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
     }
     
     public void PlaySightAlertSFX(){
@@ -412,26 +431,45 @@ public class AudioManager : MonoBehaviour
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
     }
-
+    //Error with this one
     public void PlaySightIdleSFX(){
         Play(sightIdleSFX);
     }
+    //End of Potential Error
+
     //The above function doesn't work; call the below one instead!
     public void PlaySightIdleSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(sightIdleSFX);
+
+    
+    // public void PlaySoundAlertSFX(){
+    //     Play(soundAlertSFX);
+    // }
+    public void PlaySoundAlertSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(soundAlertSFX);
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
+
     }
 
     public void PlaySoundAlertSFX(){
         Play(soundAlertSFX);
     }
     
-    public void PlaySoundIdleSFX(){
-        Play(soundIdleSFX);
+    // public void PlaySoundIdleSFX(){
+    //     Play(soundIdleSFX);
+    // }
+    public void PlaySoundIdleSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(soundIdleSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
     }
     
     public void PlayFakeMonsterSFX(){
@@ -470,13 +508,62 @@ public class AudioManager : MonoBehaviour
     public void PlayReviveSFX(){
         Play(reviveSFX);
     }
-    
+    private IEnumerator FadeOut()
+    { 
+        movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        movementSFX.getPlaybackState(out movementState);
+        while (movementState != PLAYBACK_STATE.STOPPED)
+        {
+            movementSFX.getPlaybackState(out movementState);
+            yield return null;
+        }
+    }
+
     public void PlayLowStaminaSFX(){
-        Play(lowStaminaSFX);
+        if (movementSFX.isValid())
+        {
+            StartCoroutine(FadeOut());
+        }
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(lowStaminaSFX, out _);
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.LogWarning("FMOD event path does not exist: " + lowStaminaSFX);
+            return;
+        }
+
+        movementSFX = RuntimeManager.CreateInstance(lowStaminaSFX);
+        movementSFX.setVolume(sfxVolume);
+        movementSFX.start();
+        
     }
     
-    public void PlayStepSFX(bool running=false){
-        PlayModified(playerStepSFX, "Running", System.Convert.ToSingle(running));
+    public void PlayStepSFX(float running=0.0f){
+        if (movementSFX.isValid())
+        {
+            StartCoroutine(FadeOut());
+        }
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(playerStepSFX, out _);
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.LogWarning("FMOD event path does not exist: " + playerStepSFX);
+            return;
+        }
+        movementSFX = RuntimeManager.CreateInstance(playerStepSFX);
+        movementSFX.setParameterByName("running", running);
+        movementSFX.setVolume(movementsfxVolume);
+        movementSFX.start();
+    }
+
+    public void StopStepSound(bool immediate)
+    {
+        if (movementSFX.isValid() && !immediate)
+        {
+            StartCoroutine(FadeOut());
+        }else if (movementSFX.isValid())
+        {
+            movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            movementSFX.release();
+        }
     }
     
     /// <summary>
