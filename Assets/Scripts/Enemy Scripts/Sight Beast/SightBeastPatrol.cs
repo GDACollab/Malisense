@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using Array = System.Array;
+using FMODUnity;
 
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(EnemyPathfinder))]
@@ -32,11 +33,15 @@ public class SightBeastPatrol : StateBaseClass
     private SightBeastSightModule _sight;
     private int _pathIndex;
 
+    //emitter that audio is played from
+    private StudioEventEmitter _audioEmitter;
+
     private void Awake()
     {
         _stateMachine = GetComponent<StateMachine>();
         _pathfinder = GetComponent<EnemyPathfinder>();
         _sight = GetComponent<SightBeastSightModule>();
+        _audioEmitter = GetComponent<StudioEventEmitter>();
     }
 
     private SBProtoPatrolArea GetRandomArea()
@@ -86,6 +91,8 @@ public class SightBeastPatrol : StateBaseClass
             // When done idling, move to new area
             if (_idleTimeLeft < 0f)
             {
+                //Sound effect for patrolling
+                GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySightIdleSFX(_audioEmitter);
                 _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
 
                 if (patrolPath && patrolPath.areas.Length > 0)
@@ -101,6 +108,8 @@ public class SightBeastPatrol : StateBaseClass
         // Switch to alert state
         if (_sight.CanSeeTarget())
         {
+            //Sound effect for starting chase
+            GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySightAlertSFX(_audioEmitter);
             if (_lastSeenTime + alertDuration > Time.time)
             {
                 _stateMachine.currentState = StateMachine.State.Chasing;

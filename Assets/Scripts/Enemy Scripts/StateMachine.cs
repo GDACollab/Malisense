@@ -39,7 +39,6 @@ public class StateMachine : MonoBehaviour
     private bool distractInit = false;
     private bool _statue;
     private DungeonManager dungeonManager;
-    private AudioManager audioManager;
     private Player playerObj;
     void Start()
     {
@@ -50,8 +49,6 @@ public class StateMachine : MonoBehaviour
         //currentState = State.Patrolling;
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //
-        audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
 
     void Update()
@@ -107,7 +104,6 @@ public class StateMachine : MonoBehaviour
                 if (!chaseInit)
                 {
                     //Debug.Log("Chase Start");
-                    audioManager.Play(audioManager.monsterScream);
                     SetChase();
                     chasing.Init();
                     chaseInit = true;
