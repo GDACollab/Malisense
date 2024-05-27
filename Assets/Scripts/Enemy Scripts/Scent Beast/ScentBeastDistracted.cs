@@ -12,10 +12,7 @@ public class ScentBeastDistract : StateBaseClass, ISwitchable
 
     private Coroutine _stunnedCoroutine;
     private StateMachine _stateMachine;
-    private Rigidbody2D _rb2d;
     private EnemyPathfinder _pathfinder;
-    private SpriteRenderer _scentSprite;
-    private Sprite AwakeSprite;
     private int _statueCounter;
 
     private void Awake()
@@ -26,9 +23,6 @@ public class ScentBeastDistract : StateBaseClass, ISwitchable
     }
     void Start()
     {
-        _scentSprite = GetComponentInChildren<SpriteRenderer>();
-        _rb2d = GetComponent<Rigidbody2D>();
-        AwakeSprite = _scentSprite.sprite;
 
     }
 
@@ -47,11 +41,7 @@ public class ScentBeastDistract : StateBaseClass, ISwitchable
         else
         {
             _statueCounter = _stateMachine.GetActivationsToAwake();
-            _scentSprite.sprite = _stateMachine.GetStatueSprite();
-            //Stops enemy from hurting player while statue
-            gameObject.tag = "Untagged";
-            //Prevents player from pushing monster while statue
-            _rb2d.mass = 10000;
+            _stateMachine.CreateStatue();
         }
     }
     public override void On_Update()
@@ -92,11 +82,8 @@ public class ScentBeastDistract : StateBaseClass, ISwitchable
         if (_statueCounter <= 0)
         {
             _stateMachine.AwakenStatue();
-            _scentSprite.sprite = AwakeSprite;
-            gameObject.tag = "Enemy";
             //Alert target is set to it self's position
             ExitToState(StateMachine.State.Patrolling);
-            _rb2d.mass = 1;
             //Debug.Log("Monster Working");
         }
     }
