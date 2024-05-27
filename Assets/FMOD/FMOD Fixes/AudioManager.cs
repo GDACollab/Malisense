@@ -422,10 +422,26 @@ public class AudioManager : MonoBehaviour
     public void PlaySightAlertSFX(){
         Play(sightAlertSFX);
     }
-    
+    //The above function doesn't work; call the below one instead!
+    public void PlaySightAlertSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(sightAlertSFX);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
+    }
+    //Error with this one
     public void PlaySightIdleSFX(){
         Play(sightIdleSFX);
     }
+    //End of Potential Error
+
+    //The above function doesn't work; call the below one instead!
+    public void PlaySightIdleSFX(StudioEventEmitter emitter)
+    {
+        emitter.EventReference = RuntimeManager.PathToEventReference(sightIdleSFX);
+
     
     // public void PlaySoundAlertSFX(){
     //     Play(soundAlertSFX);
@@ -437,6 +453,11 @@ public class AudioManager : MonoBehaviour
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
+
+    }
+
+    public void PlaySoundAlertSFX(){
+        Play(soundAlertSFX);
     }
     
     // public void PlaySoundIdleSFX(){
