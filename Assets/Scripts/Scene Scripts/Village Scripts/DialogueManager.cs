@@ -6,6 +6,7 @@ using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.TextCore.Text;
 
 /// <summary>
 /// A script that handles dialogue UI and Ink functionality (variables, choices, etc)
@@ -18,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI characterNameText;
     [SerializeField] private GameObject clericsSprite;
     [SerializeField] private GameObject HPSprite;
+    [SerializeField] private GameObject CKSprite;
 
     [Header("Village Navigation")]
     [SerializeField] VillageNavigationManager navigationManager;
@@ -243,6 +245,12 @@ public class DialogueManager : MonoBehaviour
 
     private void ExitDialogueMode()
     {
+        // Hide CK if she dissapeared
+        if (navigationManager.CurrentCharacter == "Crypt_Keeper" && globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            CKSprite.SetActive(false);
+        }
+
         Debug.Log(gameObject);
         globalTeapot.stickHappiness = (int)globalTeapot.currentStory.variablesState["StickHappiness"];
         isPlaying = false;
