@@ -1,22 +1,38 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class SightBeastAnimations : MonoBehaviour
 {
-    public StateMachine stateMachine;
+    public Animator _puppetAnimator;
+    public Animator _lightAnimator;
 
-    private Animator _animator;
+    private StateMachine _stateMachine;
+    private Rigidbody2D _rd2d;
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
+        _stateMachine = GetComponent<StateMachine>();
+        //_animator = GetComponent<Animator>();
+        _rd2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _animator.SetBool("Alert", stateMachine.currentState == StateMachine.State.Alert);
-        _animator.SetBool("Chasing", stateMachine.currentState == StateMachine.State.Chasing);
+        // ----- Lighting animator inputs -----
+        _lightAnimator.SetBool("Alert", _stateMachine.currentState == StateMachine.State.Alert);
+        _lightAnimator.SetBool("Chasing", _stateMachine.currentState == StateMachine.State.Chasing);
+
+        // ----- Puppet animator inputs -----
+        // Visual response to startling events
+        if (_stateMachine.currentState == StateMachine.State.Alert || _stateMachine.currentState == StateMachine.State.Distracted)
+        {
+            _puppetAnimator.SetTrigger("Alert");
+            _puppetAnimator.SetTrigger("Alert");
+        }
+
+        // Feed speed data to animator
+        _puppetAnimator.SetFloat("Speed", _rd2d.velocity.magnitude);
     }
 }
