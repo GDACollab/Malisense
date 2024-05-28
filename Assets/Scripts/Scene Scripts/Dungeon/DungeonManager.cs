@@ -120,9 +120,11 @@ public class DungeonManager : MonoBehaviour
             {
                 case GlobalTeapot.TeaType.Dungeon_F1:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
+                    Debug.Log("moving from Dungeon_F1 to Dungeon_F2");
                     break;
                 case GlobalTeapot.TeaType.Dungeon_F2:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.End;
+                    Debug.Log("moving from Dungeon_F2 to End");
                     break;
                 default:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;

@@ -6,7 +6,12 @@ VAR isIntroductionCutscene = false
 VAR isEnd = false
 VAR hasDied = false
 
+VAR isScholarIntro = false
 VAR isMayorIntro = false
+
+VAR highPriestWasIntroduced = false
+VAR toldCKAboutHighPriest = false
+
 VAR hasMayorNote1 = false
 VAR hasMayorNote2 = false
 VAR hasFinalMayorNote = false
@@ -94,7 +99,7 @@ bool Variables
  }
  
  =intro
- {intro > 1: -> CKBedrock}
+ {intro > 1: -> CKIntroRevisit}
 ~ CharacterTitle = ""
 <i>You approach the familiar figure. Your throat tightens as she turns to you. </i>
 
@@ -193,7 +198,7 @@ bool Variables
        
 
     *{CHOICE_COUNT() == 0}->
-~ CharacterTitle = "Crypt Keeper"
+    ~ CharacterTitle = "Crypt Keeper"
        "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
        ~ CharacterTitle = ""
        <i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
@@ -203,6 +208,13 @@ bool Variables
        <i>The woman snaps her fingers and disappears, leaving nothing behind but a faint aroma of lavender.</i>
 
         -> END
+
+= CKIntroRevisit
+~ CharacterTitle = ""
+<i>The soft scent of flowers floats on the wind.</i>
+     
+<i>All is deathly quiet.</i>
+->END
 
 = DeathF1
 {DeathF1 > 1: -> CKBedrock}
@@ -225,18 +237,18 @@ bool Variables
 = hub
 {hub > 1: -> CKBedrock}
 ~ CharacterTitle = ""
-{Clergy.Hub && Artifact1<0: <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
+{highPriestWasIntroduced && !toldCKAboutHighPriest: <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
 
 ~ CharacterTitle = "Crypt Keeper"
-Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to.
+"Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to."
 ~ CharacterTitle = ""
  *["I have a question."]
  ~ CharacterTitle = "Crypt Keeper"
- What would you like to discuss, my peony? -> conversation
+ "What would you like to discuss, my peony?" -> conversation
  
  *["Goodbye."]
  ~ CharacterTitle = "Crypt Keeper"
- Until next time, then. Don't keep me waiting. -> END
+ "Until next time, then. Don't keep me waiting." -> END
  
  =conversation
  ~ CharacterTitle = ""
@@ -275,7 +287,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
  "Until next time, then. Don't keep me waiting." -> END
 
 = DeathF2
-{DeathF2 > 1: -> CKBedrock}
+{DeathF2 > 1: -> hub}
 ~ CharacterTitle = "Crypt Keeper"
 { shuffle once:
 
@@ -287,8 +299,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 }
 ~ CharacterTitle = ""
 *[<i>Breathe.</i>]
-
--> END
+    -> END
 
 =Artifact1
 ~ CharacterTitle = ""
@@ -839,9 +850,7 @@ Ruff!
 <i>The familiar man gives a tasteless, empty chuckle.</i>
 ~ CharacterTitle = "Mayor"
 “Regrettably so, I fear. It brings some small joy that your memory hasn’t rotted like your form.”
-
 “Still, I doubt I am the only one who harbors such remorse.”
-
 -> questions
 
 =Sorry 
@@ -849,15 +858,14 @@ Ruff!
 <i>The familiar man breathes deep through his nose, unbothered by the scent of death.</i>
 ~ CharacterTitle = "Mayor"
 “You are not alone in fault, friend. Far from it.”
-
- “Fear and complacency go hand in hand, after all.”
+“Fear and complacency go hand in hand, after all.”
 
 -> questions
 
 
 = questions 
 ~ CharacterTitle = ""
-{questions < 1:  <i>Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.</i>}'
+{questions < 1:  <i>Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.</i>}
 ~ CharacterTitle = "Mayor"
 “You must have questions. Ask away.”
 
@@ -1276,13 +1284,13 @@ PLAYER DIES IN FLOOR 1 SECTION
 "I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?"
 ~ CharacterTitle = ""
 <i>The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.</i>
+ *  ["Let me pass, petulant ones. I care not for your distractions."]
+    -> GoForth2
  *  ["I have no need for holy light, but I could use some answers."]
     <i>The thoughtful cleric spreads their arms wide.</i>
     ~ CharacterTitle = "Thinking"
     "We have little to hide. As long as you remain diplomatic, we will answer any questions you possess."
         -> AskQuestions
- *  ["Let me pass, petulant ones. I care not for your distractions."]
-    -> GoForth2
 
 = AskQuestions 
 ~ CharacterTitle = ""
@@ -1382,7 +1390,7 @@ PLAYER DIES IN FLOOR 1 SECTION
 
 
  /*
-PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence over hub? hopefully hub will only ever be triggered once)
+PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence over hub? hopefully hub will only ever be triggered once (LOL IVY -ivy))
 */
 
 = Hub 

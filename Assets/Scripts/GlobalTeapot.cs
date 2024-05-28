@@ -34,10 +34,11 @@ public class GlobalTeapot : MonoBehaviour
     /// <summary>
     /// True if player has this
     /// </summary>
-    public bool hasDied = false, hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
-    public int deathCount = 0;
+    public bool hasDied = false, toldCKAboutHighPriest = false;
+    public bool mayorWasIntroduced = false, scholarWasIntroduced = false, highPriestWasIntroduced = false;
+    public bool hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
+    public int deathCount = 0, stickHappiness = 0;
     public Loader.Scene currentScene = Loader.Scene.DeathScene;
-    public int stickHappiness = 0;
 
     [Header("Note Variables")]
     public int numNotesObtained = 0;
