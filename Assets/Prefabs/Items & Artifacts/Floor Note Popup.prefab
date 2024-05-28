@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3169541122218148557}
   - component: {fileID: 706067298910599030}
   - component: {fileID: 1335403922402898115}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Note Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 779275f0551643b448bea6a96997e45a, type: 2}
-  m_sharedMaterial: {fileID: 4302880436136656644, guid: 779275f0551643b448bea6a96997e45a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9318d23bbe84737429398203453427f9, type: 2}
+  m_sharedMaterial: {fileID: -3439606163060724706, guid: 9318d23bbe84737429398203453427f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 2085453198389689761}
   - component: {fileID: 9172874607924414699}
   - component: {fileID: 8910087267473935478}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Floor Note Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,8 +161,8 @@ RectTransform:
   m_GameObject: {fileID: 1426537842294368631}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.37, y: 1.37, z: 1.37}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3169541122218148557}
   m_Father: {fileID: 0}

@@ -352,9 +352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7587588156094408718, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
       propertyPath: m_text
-      value: 'R
-
-'
+      value: '{artifact2}'
       objectReference: {fileID: 0}
     - target: {fileID: 8737559194961989539, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
       propertyPath: m_Name
@@ -470,6 +468,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 21ce49f48048cd449b4291c116c419f3, type: 3}
+    - target: {fileID: 7315643347151724873, guid: 0654b62a08cdbd54b8d21ee2ed98d553, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
+    - target: {fileID: 7315643347151724873, guid: 0654b62a08cdbd54b8d21ee2ed98d553, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6763417379106355407, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
+    - target: {fileID: 7315643347151724873, guid: 0654b62a08cdbd54b8d21ee2ed98d553, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -684,7 +694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7587588156094408718, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
       propertyPath: m_text
-      value: E
+      value: '{artifact1}'
       objectReference: {fileID: 0}
     - target: {fileID: 8737559194961989539, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
       propertyPath: m_Name
@@ -906,6 +916,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2e72c8986ec9bbf498ff2f74e41e61bb, type: 3}
+    - target: {fileID: 7315643347151724873, guid: 0654b62a08cdbd54b8d21ee2ed98d553, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
+    - target: {fileID: 7315643347151724873, guid: 0654b62a08cdbd54b8d21ee2ed98d553, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6763417379106355407, guid: 1dedc6478ad506849a71dc82009fcffb, type: 2}
+    - target: {fileID: 7315643347151724873, guid: 0654b62a08cdbd54b8d21ee2ed98d553, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1011,6 +1033,10 @@ PrefabInstance:
     - target: {fileID: 3309278336925357584, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587588156094408718, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
+      propertyPath: m_text
+      value: '{useitem}'
       objectReference: {fileID: 0}
     - target: {fileID: 8737559194961989539, guid: 6eaea911b023abb4298516935d7c84b6, type: 3}
       propertyPath: m_Name

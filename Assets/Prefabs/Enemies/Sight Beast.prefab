@@ -515,7 +515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gracePeriod: 0.5
   maxAlertPeriod: 10
-  speed: 200
+  speed: 100
   nextWaypointDistance: 3
   lookAroundTime: 2
   lookAroundSpeed: 4
@@ -533,8 +533,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 31
   rateOfAcceleration: 1
-  speedMax: 30
-  lookAheadDistance: 6
+  speedMax: 40
+  lookAheadDistance: 10
   seeAroundWallsTime: 2
 --- !u!114 &6089753570044768361
 MonoBehaviour:

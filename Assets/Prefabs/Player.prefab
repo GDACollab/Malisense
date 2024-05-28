@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131963359574473401}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5000005, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5337750370170260473}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2908825092979245917}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &7253929776923821292
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.6698113, g: 0.30647027, b: 0.30647027, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c561c38b471a3cf4f8ee1a6ed4af6f0f, type: 3}
+  m_Color: {r: 0.8, g: 0.16, b: 0.16, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,6 +123,7 @@ Transform:
   m_Children:
   - {fileID: 6200923349891170566}
   - {fileID: 5337750370170260473}
+  - {fileID: 2908825092979245917}
   - {fileID: 1444829086891879211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -138,7 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97262fb220fef241b8a29f3852c6ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlMessage: {fileID: 0}
   enemies: []
   testFunctions:
     m_PersistentCalls:
@@ -157,7 +157,6 @@ MonoBehaviour:
         m_CallState: 2
   walkingSpeed: 6
   sprintRatio: 2
-  sneakRatio: 1
   maxStamina: 15
   staminaRegen: 2
   staminaDepletion: 4
@@ -172,7 +171,6 @@ MonoBehaviour:
   StaminaBar: {fileID: 0}
   isMoving: 0
   isSprinting: 0
-  isSneaking: 0
   canMove: 1
   isExhausted: 0
   interactBody: {fileID: 5337750370170260473}
@@ -376,6 +374,51 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.75, y: 1.75}
   m_Direction: 0
+--- !u!1 &7865805979336843400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2908825092979245917}
+  - component: {fileID: 5386294984268089715}
+  m_Layer: 7
+  m_Name: WhisperBellio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2908825092979245917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865805979336843400}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5397364737053256248}
+  m_Father: {fileID: 692372581050402871}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5386294984268089715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865805979336843400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fda3149f2aa5ea499bb9ec24f26a8b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8855317105823334606
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,8 +450,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5397364737053256248}
+  m_Children: []
   m_Father: {fileID: 692372581050402871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &51532724068628565
