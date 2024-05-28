@@ -15,8 +15,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
     private Rigidbody2D _rb2d;
     private EnemyPathfinder _pathfinder;
     private SightBeastAlert _alert;
-    private SpriteRenderer _sightSprite;
-    private Sprite AwakeSprite;
+    //private SpriteRenderer _sightSprite;
     private int _statueCounter;
     private Light2D _light;
 
@@ -29,9 +28,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
     }
     void Start()
     {
-        _sightSprite = GetComponentInChildren<SpriteRenderer>();
         _rb2d = GetComponent<Rigidbody2D>();
-        AwakeSprite = _sightSprite.sprite;
         _light = GetComponentInChildren<Light2D>();
 
     }
@@ -52,12 +49,10 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
         else
         {
             _statueCounter = _stateMachine.GetActivationsToAwake();
-            _sightSprite.sprite = _stateMachine.GetStatueSprite();
+            _stateMachine.CreateStatue();
             //Stops enemy from hurting player while statue
-            gameObject.tag = "Untagged";
             _light.enabled = false;
             //Prevents player from pushing monster while statue
-            _rb2d.mass = 10000;
         }
     }
     public override void On_Update()
@@ -99,12 +94,9 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
         if (_statueCounter <= 0)
         {
             _stateMachine.AwakenStatue();
-            _sightSprite.sprite = AwakeSprite;
-            gameObject.tag = "Enemy";
             //Alert target is set to it self's position
             _alert.SetStatueTarget();
             ExitToState(StateMachine.State.Alert);
-            _rb2d.mass = 1;
             _light.enabled = true;
             //Debug.Log("Monster Working");
         }
