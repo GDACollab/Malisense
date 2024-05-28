@@ -6,6 +6,7 @@ using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.TextCore.Text;
 
 /// <summary>
 /// A script that handles dialogue UI and Ink functionality (variables, choices, etc)
@@ -16,6 +17,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI characterNameText;
+    [SerializeField] private GameObject clericsSprite;
+    [SerializeField] private GameObject HPSprite;
+    [SerializeField] private GameObject CKSprite;
 
     [Header("Village Navigation")]
     [SerializeField] VillageNavigationManager navigationManager;
@@ -42,6 +46,15 @@ public class DialogueManager : MonoBehaviour
 
         isPlaying = false;
         dialoguePanel.SetActive(false);
+
+        globalTeapot.currentStory.ResetState();
+        
+        // Enable correct clergy sprite
+        if (globalTeapot.highPriestWasIntroduced)
+        {
+            clericsSprite.SetActive(false);
+            HPSprite.SetActive(true);
+        }
 
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -146,10 +159,37 @@ public class DialogueManager : MonoBehaviour
 
         globalTeapot.currentStory.ChoosePathString("START");
 
-        globalTeapot.currentStory.variablesState["isMayorIntro"] = globalTeapot.currProgress == GlobalTeapot.TeaType.Intro; // MAYOR INTRO DELAY NOT IMPLEMENTED, CURRENTLY JUST HAPPENS DURING THE NORMAL INTRO
+        // Mayor introduction variables
+        if (character == "Mayor" && !globalTeapot.mayorWasIntroduced)
+        {
+            globalTeapot.currentStory.variablesState["isMayorIntro"] = true;
+            globalTeapot.mayorWasIntroduced = true;
+        } else
+        {
+            globalTeapot.currentStory.variablesState["isMayorIntro"] = false;
+        }
+        // Scholar introduction variables
+        if (character == "Scholar" && !globalTeapot.scholarWasIntroduced)
+        {
+            globalTeapot.currentStory.variablesState["isScholarIntro"] = true;
+            globalTeapot.scholarWasIntroduced = true;
+        }
+        else
+        {
+            globalTeapot.currentStory.variablesState["isScholarIntro"] = false;
+        }
+        // High Priest introduction variables
+        if (character == "Clergy" && !globalTeapot.highPriestWasIntroduced && globalTeapot.currProgress ==  GlobalTeapot.TeaType.Dungeon_F2)
+        {
+            globalTeapot.highPriestWasIntroduced = true;
+        }
+
         globalTeapot.currentStory.variablesState["hasMayorNote1"] = globalTeapot.hasMayorNote1;
         globalTeapot.currentStory.variablesState["hasMayorNote2"] = globalTeapot.hasMayorNote2;
         globalTeapot.currentStory.variablesState["hasFinalMayorNote"] = globalTeapot.hasFinalMayorNote;
+
+        globalTeapot.currentStory.variablesState["toldCKAboutHighPriest"] = globalTeapot.toldCKAboutHighPriest;
+        globalTeapot.currentStory.variablesState["highPriestWasIntroduced"] = globalTeapot.highPriestWasIntroduced;
 
         // Set defaults, will be modified afterward if needs to be true
         globalTeapot.currentStory.variablesState["isIntro"] = false;
@@ -205,6 +245,12 @@ public class DialogueManager : MonoBehaviour
 
     private void ExitDialogueMode()
     {
+        // Hide CK if she dissapeared
+        if (navigationManager.CurrentCharacter == "Crypt_Keeper" && globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        {
+            CKSprite.SetActive(false);
+        }
+
         Debug.Log(gameObject);
         globalTeapot.stickHappiness = (int)globalTeapot.currentStory.variablesState["StickHappiness"];
         isPlaying = false;
@@ -228,6 +274,11 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = globalTeapot.currentStory.Continue();
             // Villager name stored in variable characterNameText.text is one of "????????????", "Crypt Keeper", "Clerics", "Smiling Cleric", Thinking Cleric, "Weeping Cleric", "Smiling", "Weeping", "Thinking", "High Priest", "Stick", "Scholar", "Mayor"]
+            if ((string)globalTeapot.currentStory.variablesState["CharacterTitle"] == "High Priest")
+            {
+                clericsSprite.SetActive(false);
+                HPSprite.SetActive(true);
+            }
             characterNameText.text = (string)globalTeapot.currentStory.variablesState["CharacterTitle"];
 
             // Only bark when a character is talking:
