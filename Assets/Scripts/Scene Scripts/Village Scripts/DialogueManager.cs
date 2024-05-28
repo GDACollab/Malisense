@@ -169,10 +169,10 @@ public class DialogueManager : MonoBehaviour
             globalTeapot.currentStory.variablesState["isMayorIntro"] = false;
         }
         // Scholar introduction variables
-        if (character == "Scholar" && !globalTeapot.mayorWasIntroduced)
+        if (character == "Scholar" && !globalTeapot.scholarWasIntroduced)
         {
             globalTeapot.currentStory.variablesState["isScholarIntro"] = true;
-            globalTeapot.mayorWasIntroduced = true;
+            globalTeapot.scholarWasIntroduced = true;
         }
         else
         {

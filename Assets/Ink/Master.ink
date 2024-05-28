@@ -1,6 +1,6 @@
-VAR isIntro = true
+VAR isIntro = false
 VAR isDeathF1 = false
-VAR isHub = false
+VAR isHub = true
 VAR isDeathF2 = false 
 VAR isIntroductionCutscene = false
 VAR isEnd = false
@@ -9,7 +9,7 @@ VAR hasDied = false
 VAR isScholarIntro = false
 VAR isMayorIntro = false
 
-VAR highPriestWasIntroduced = false
+VAR highPriestWasIntroduced = true
 VAR toldCKAboutHighPriest = false
 
 VAR hasMayorNote1 = false
@@ -38,7 +38,7 @@ VAR character = "Crypt_Keeper"
 == START ==
 {
  - isIntroductionCutscene: -> Introduction // Go to Introduction
- - character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
+ - character == "Crypt_Keeper": -> Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
  - character == "Clergy": -> Clergy // Go to Clergy
@@ -90,14 +90,14 @@ bool Variables
 ==Crypt_Keeper==
 ~ CharacterTitle = "Crypt Keeper"
 {
- - isIntro: ->intro // Go to intro
+ - isIntro: -> intro // Go to intro
  - isDeathF1: -> DeathF1 // Go to death 1
- - isHub: -> hub// Go to hub
- - isDeathF2: -> DeathF2// Go to death 2 
+ - isHub: -> hub // Go to hub
+ - isDeathF2: -> DeathF2 // Go to death 2 
  - isEnd: // Go to end
  - else: Error
  }
- 
+
  =intro
  {intro > 1: -> CKIntroRevisit}
 ~ CharacterTitle = ""
@@ -117,7 +117,7 @@ bool Variables
 ~ CharacterTitle = ""
     <i>She lets out a quiet sigh. </i>
     ~ CharacterTitle = "????????????"
-    "I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." ->whathappened
+    "I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." -> whathappened
    
  * ["Hello?"]
  ~ CharacterTitle = "????????????"
@@ -125,7 +125,7 @@ bool Variables
     
     "But I guess that's how peonies are–just when you think they've wilted completely, they suddenly blossom brighter than ever before."
    ~ CharacterTitle = ""
-   <i>You feel as if you know this person, but struggle to even recall her name.</i> ->whathappened
+   <i>You feel as if you know this person, but struggle to even recall her name.</i> -> whathappened
    
    =whathappened
    *["What happened?"]
@@ -136,7 +136,7 @@ bool Variables
    ~ CharacterTitle = "????????????"
    "You...passed on. Oh, you can only imagine how distraught I was to find your lifeless body out here. Thankfully, I was able to collect myself and begin preparations to bring you back." 
   ~ CharacterTitle = "Crypt Keeper"
-  I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." ->whathappenedcont
+  I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." -> whathappenedcont
     
    =whathappenedcont
     
@@ -147,7 +147,7 @@ bool Variables
     "That lantern that hangs from your staff contains your soul. When in close proximity with it, your spirit can once again animate your body as it did while you were still...living."
    
     "I even carefully fitted your latern with some precious stones. If you're ever in danger, those gems will bring you back to me. I'm always here to take care of you, darling. When you feel the latern's glow, think of it as my embrace."
-    ->lanterndesc
+    -> lanterndesc
    
    =lanterndesc
    ~ CharacterTitle = ""
@@ -159,7 +159,7 @@ bool Variables
      
     <i>The lantern itself is ornately sculpted. It's so polished that you can see yourself reflected in its silver casing. </i>
      
-    <i>Someone clearly has put a lot of effort into preparing it for this occassion.</i> ->interrogation
+    <i>Someone clearly has put a lot of effort into preparing it for this occassion.</i> -> interrogation
      
     =interrogation
     *["Where is everyone?"]
@@ -170,7 +170,7 @@ bool Variables
         
         "I bet they'll be quite happy to see you. But please, let's not discuss this any further." 
         
-        "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." ->interrogation
+        "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." -> interrogation
    
     *["Where am I?"]
     ~ CharacterTitle = "Crypt Keeper"
@@ -178,13 +178,13 @@ bool Variables
         
         "Resuscitation is difficult in a city, where death is so omnnipresent."
         
-        "But I guess it's an apt setting, seeing as I've cleaned you up like the mother dove cleans her young in the fountain's basin." ->interrogation
+        "But I guess it's an apt setting, seeing as I've cleaned you up like the mother dove cleans her young in the fountain's basin." -> interrogation
         
     *["Why revive me?"]
       ~ CharacterTitle = ""
       <i>She frowns. </i>
         ~ CharacterTitle = "Crypt Keeper"
-        "Why revive anyone else? You're the lantern of my life, peony. You should know that better than anyone else." ->interrogation
+        "Why revive anyone else? You're the lantern of my life, peony. You should know that better than anyone else." -> interrogation
     
     *["How did I die?"]
       ~ CharacterTitle = "Crypt Keeper"
@@ -194,10 +194,10 @@ bool Variables
        
       "'This won't do.', I told myself, 'This won't do.' So I picked you up--all of you, including the fingers you had lost--and put you back together." 
       
-      "Don't worry, I didn't peek under your mask. I know you're awfully sensitive about that."  ->interrogation
+      "Don't worry, I didn't peek under your mask. I know you're awfully sensitive about that."  -> interrogation
        
 
-    *{CHOICE_COUNT() == 0}->
+    *{CHOICE_COUNT() == 0}-> 
     ~ CharacterTitle = "Crypt Keeper"
        "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
        ~ CharacterTitle = ""
@@ -214,7 +214,7 @@ bool Variables
 <i>The soft scent of flowers floats on the wind.</i>
      
 <i>All is deathly quiet.</i>
-->END
+-> END
 
 = DeathF1
 {DeathF1 > 1: -> CKBedrock}
@@ -231,27 +231,25 @@ bool Variables
 "Don’t let your hunger for redemption destroy what we still have."
 
 "Breathe."
-
 -> END
 
-= hub
+ =hub
 {hub > 1: -> CKBedrock}
 ~ CharacterTitle = ""
-{highPriestWasIntroduced && !toldCKAboutHighPriest: <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
-
+{highPriestWasIntroduced && (toldCKAboutHighPriest != true): <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
 ~ CharacterTitle = "Crypt Keeper"
 "Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to."
 ~ CharacterTitle = ""
- *["I have a question."]
- ~ CharacterTitle = "Crypt Keeper"
- "What would you like to discuss, my peony?" -> conversation
+
+*["I have a question."]
+~ CharacterTitle = "Crypt Keeper"
+"What would you like to discuss, my peony?" -> conversation
+*["Goodbye."]
+~ CharacterTitle = "Crypt Keeper"
+"Until next time, then. Don't keep me waiting." -> END
  
- *["Goodbye."]
- ~ CharacterTitle = "Crypt Keeper"
- "Until next time, then. Don't keep me waiting." -> END
- 
- =conversation
- ~ CharacterTitle = ""
+=conversation
+~ CharacterTitle = ""
 +["Why do we need the artifacts?"]
 ~ CharacterTitle = "Crypt Keeper"
 "Well, that wretched being wants the artifacts."
@@ -262,7 +260,7 @@ bool Variables
 
 "or we can intervene."
 
-"That creature already destroyed Radefell. We can't let it move any further towards its goal." ->conversation
+"That creature already destroyed Radefell. We can't let it move any further towards its goal." -> conversation
 
 +["What exactly are the dungeons?"]
 ~ CharacterTitle = "Crypt Keeper"
@@ -270,7 +268,7 @@ bool Variables
 
 "It was taking pieces of the city and pulling them underground. This created the dungeons you now traverse."
 
-"As to why would it do such a thing? I'm not sure, but I reckon that we'll find out soon enough." ->conversation
+"As to why would it do such a thing? I'm not sure, but I reckon that we'll find out soon enough." -> conversation
 
 +["How are you holding up?"]
 ~ CharacterTitle = "Crypt Keeper"
@@ -280,7 +278,7 @@ bool Variables
 
 "I miss my bed, and the food here is...of variable quality." 
 
-"But I still have you, my peony. That's all I need." ->conversation
+"But I still have you, my peony. That's all I need." -> conversation
 
 +["Goodbye."]
 ~ CharacterTitle = "Crypt Keeper"
@@ -290,7 +288,6 @@ bool Variables
 {DeathF2 > 1: -> hub}
 ~ CharacterTitle = "Crypt Keeper"
 { shuffle once:
-
 -   "How disappointing..."
 - 	"What a thrilling death. I can see you've had practice."
 -   "Oh dear, you know how much it pains me to see you get hurt."
@@ -298,9 +295,8 @@ bool Variables
 -   "I wonder...is it possible for one to get accustomed to death?"
 }
 ~ CharacterTitle = ""
-*[<i>Breathe.</i>]
-    -> END
-
+* [<i>Breathe.</i>]
+- -> END
 =Artifact1
 ~ CharacterTitle = ""
 <i>She seems to not acknowledge your presence. </i>
@@ -311,22 +307,22 @@ bool Variables
 
 <i>There's only one way to find out.</i>
 
-+[<i>Wait for her to acknowledge you</i>] -> wait
-+[<i>Approach her</i>] -> approach 
++[<i>Wait for her to acknowledge you</i>]-> wait
++[<i>Approach her</i>]-> approach
 
 =wait 
 ~ CharacterTitle = ""
 <i>You observe her care for the plants for minutes on end.</i>
-+[<i>Continue to wait</i>] -> continueWait 
-+[<i>Approach her</i>] -> approach 
++[<i>Continue to wait</i>]-> continueWait 
++[<i>Approach her</i>]-> approach 
 
-= continueWait
+=continueWait
 ~ CharacterTitle = ""
 <i>You stand idly for another minute, even though she has stopped watering the plants. </i>
 <i>After the minute you hear her say...</i>
 ~ CharacterTitle = "Crypt Keeper"
 "Well?"
-->approach
+-> approach
 
 =approach
 ~ CharacterTitle = ""
@@ -341,7 +337,7 @@ bool Variables
 
 "Now, be a doll and help me up, would you?" 
 ~ CharacterTitle = ""
-*[<i>Help her up</i>] 
+*[<i>Help her up</i>]
 
 <i>She dusts herself off and turns to face you. Not a speck of dirt, dust, or plant remains on her white dress. </i>
 
@@ -375,9 +371,9 @@ bool Variables
 ~ CharacterTitle = ""
 <i>You focus is drawn away from the bell and back to the Crypt Keeper as she extends it back towards you to take.</i>
 
-+++["I'm ready to face the next challenge."] -> ready
-+++["Perhaps some rest is in order"] -> rest
-+++["..."] -> stare 
++++["I'm ready to face the next challenge."]-> ready
++++["Perhaps some rest is in order"]-> rest
++++["..."]-> stare 
 
 = ready 
 ~ CharacterTitle = "Crypt Keeper"
@@ -397,10 +393,10 @@ bool Variables
 
 =ClergyQuestions
 ~ CharacterTitle = ""
-*["Do you feel different at all?"] -> different 
-*["Do you know how the High Priest died?"] -> died 
-*["What do you know of the three clerics?"] -> threeClerics 
-*->HighPriestRise
+*["Do you feel different at all?"]-> different 
+*["Do you know how the High Priest died?"]-> died 
+*["What do you know of the three clerics?"]-> threeClerics 
+*-> HighPriestRise
 
 = different
 ~ CharacterTitle = ""
@@ -426,18 +422,18 @@ bool Variables
 ~ CharacterTitle = "Crypt Keeper"
 "Yes, I'm acquainted with the three. Nothing more than lackey clerics to the High Priest, but I suppose why not be?"
 "It allows yourself an opportunity to surround the High Priest, and in turn some feeling of power."
-->ClergyQuestions
+-> ClergyQuestions
 
 =HighPriestRise
 ~ CharacterTitle = "Crypt Keeper"
 "You still seem off, peony." 
 "You can tell me what bothers you, I will always be here for you."
 ~ CharacterTitle = ""
-*["I witnessed the High Priest return from death."] 
+*["I witnessed the High Priest return from death."]
 
 <i>The Crypt Keeper goes pale, and she finds herself at a loss for words.</i>
 ~ CharacterTitle = ""
-**["Are you ok?"] 
+**["Are you ok?"]
 ~ CharacterTitle = "Crypt Keeper"
 "Y-yes... I feared you would eventually bring me news like this, but I thank that you did." 
 ~ CharacterTitle = ""
@@ -449,9 +445,9 @@ bool Variables
 
 "We may talk about this more at a later date, but I think the best thing for me now is to collect my own thoughts."
 ~ CharacterTitle = ""
-+++[<i>Leave</i>] 
++++[<i>Leave</i>]
     -> leave
-+++[<i>Embrace her once more</i>] 
++++[<i>Embrace her once more</i>]
     -> embrace 
 
 =embrace 
@@ -479,14 +475,14 @@ bool Variables
  <i>She laughs lightly to herself</i>
  ~ CharacterTitle = "Crypt Keeper"
  "Through my external perspective, it's easy to conclude that you may be having <i>some</i> trouble." 
- ->FinalBedrock
+ -> FinalBedrock
  
  + ["It has been difficult"]
  ~ CharacterTitle = "Crypt Keeper"
   "I had concluded so. I have manifested your revivification more than usual."
    ~ CharacterTitle = ""
  <i> She laughs lightly to herself</i>
- ->FinalBedrock
+ -> FinalBedrock
  
  =FinalBedrock
   ~ CharacterTitle = "Crypt Keeper"
@@ -499,27 +495,27 @@ bool Variables
 {
  - isHub: -> Hub // Go to hub
  - isDeathF2: -> Hub // Go to death 2 
- - else: Error ->END
+ - else: Error -> END
  }
  
 = Hub 
 {StickHappiness:
- - 1: ->Stick1
- - 2: ->Stick2
- - 3: ->Stick3
- - 4: ->Stick4
- - 5: ->Stick4
- - -1: ->StickSad1
- - -2: ->StickSad2
- - -3: ->StickOHNO
- - -10: ->StickOHNO
- - else: ->NeutralStick
+ - 1: -> Stick1
+ - 2: -> Stick2
+ - 3: -> Stick3
+ - 4: -> Stick4
+ - 5: -> Stick4
+ - -1: -> StickSad1
+ - -2: -> StickSad2
+ - -3: -> StickOHNO
+ - -10: -> StickOHNO
+ - else: -> NeutralStick
  }
  
 // = DeathF2
 // {
-//  - FirstStickDeathF2 && StickHappiness>0: ->ConcernedStick
-//  - else: ->Hub
+//  - FirstStickDeathF2 && StickHappiness>0: -> ConcernedStick
+//  - else: -> Hub
 //  }
 // -> END
 
@@ -537,7 +533,7 @@ bool Variables
     Ruff, ruff!
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail as you gently wave goodbye.</i>
-    ->DONE
+    -> DONE
  *[<i>Leave Stick Alone</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
@@ -558,12 +554,12 @@ bool Variables
     Ruff, ruff!
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail.</i>
-    ->PetStick
+    -> PetStick
  *[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
     <i>You ignore Stick and leave the house.</i>
-->END
+-> END
 
 =PetStick
  +[<i>Pet Stick again</i>]
@@ -573,11 +569,11 @@ bool Variables
     Ruff, ruff!
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail.</i>
-    ->PetStick
+    -> PetStick
  *[<i>Wave goodbye</i>]
  ~ CharacterTitle = ""
     <i>You wave goodbye to Stick as you leave the house.</i>
-->END
+-> END
 
 =Stick2
 ~ CharacterTitle = ""
@@ -593,12 +589,12 @@ bool Variables
     Arf!
     ~ CharacterTitle = ""
     <i>Stick nuzzles into your hand.</i>
-    ->PetStick2
+    -> PetStick2
  *[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
     <i>You ignore Stick and leave the house.</i>
-->END
+-> END
     
 =PetStick2
 +[<i>Keep petting Stick</i>]
@@ -607,11 +603,11 @@ bool Variables
     Arf!
     ~ CharacterTitle = ""
     <i>Stick nuzzles into your hand.</i>
-    ->PetStick
+    -> PetStick
  *[<i>Wave goodbye</i>]
  ~ CharacterTitle = ""
     <i>You wave goodbye to Stick as you leave the house.</i>
-->END
+-> END
 
 =Stick3
 ~ CharacterTitle = ""
@@ -639,7 +635,7 @@ Ruff!
     <i>You give Stick one last pet and unwillingly leave.</i>
     ~ CharacterTitle = "Stick"
     Bark!
-    ->DONE
+    -> DONE
  *[<i>Leave]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = "Stick"
@@ -660,7 +656,7 @@ Ruff!
     <i>You give Stick a hearty back rub.</i>
     ~ CharacterTitle = "Stick"
     Woof! Woof!
-    ->PetStick3
+    -> PetStick3
 *[<i>Get up to leave</i>]
 ~ CharacterTitle = ""
     <i>As you get up and start to leave, Stick follows.</i>
@@ -672,7 +668,7 @@ Ruff!
     <i>You give Stick the best belly rub you've ever done in your life.</i>
     ~ CharacterTitle = "Stick"
     Awooo!
-    ->PetStick3
+    -> PetStick3
  +[<i>Give Stick a treat</i>]
  ~ CharacterTitle = ""
     <i>You find a jar of dog treats on a nearby shelf.</i>
@@ -681,9 +677,9 @@ Ruff!
     Ruff!
     ~ CharacterTitle = ""
     <i>Stick happily gobbles down the treat. </i>
-    ->PetStick3
+    -> PetStick3
  +[<i>Get Stick to do a trick</i>]
-    ->StickTrick
+    -> StickTrick
  *[<i>Get up to leave</i>]
  ~ CharacterTitle = ""
     <i>As you get up and start to leave, Stick follows.</i>
@@ -729,7 +725,7 @@ Ruff!
         Arf! Arf!
     - else: ERROR RANDOM MODULE FAILED CONTACT YOUR NEAREST PELICAN
 }
-->PetStick3
+-> PetStick3
 
 =HappyLeave
 ~ CharacterTitle = ""
@@ -745,9 +741,9 @@ Ruff!
  * [<i>Try to leave</i>]
  ~ CharacterTitle = ""
     <i>You try to leave, but Stick tries to leave with you.</i>
-    ->HappyLeave
- -->END
-->END
+    -> HappyLeave
+ --> END
+-> END
 
 =StickSad1
 ~ CharacterTitle = ""
@@ -763,11 +759,11 @@ Ruff!
     Ruff, ruff!
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail as you gently wave goodbye.</i>
-    ->DONE
+    -> DONE
  * [<i>Leave Stick Alone</i>]
  ~ CharacterTitle = ""
     <i>You once again turn and leave, ignoring the whimpers behind you.</i>
-->END
+-> END
 
 =StickSad2
 ~ CharacterTitle = ""
@@ -786,16 +782,16 @@ Ruff!
             Ruff...
             ~ CharacterTitle = ""
             <i>Stick slightly wags its tail as you gently wave goodbye.</i>
-            ->END
+            -> END
         ** [<i>Leave Stick Alone</i>]
         ~ CharacterTitle = ""
             <i>You leave, ignoring Stick alone on the floor.</i>
-            ->END
+            -> END
     * [<i>Leave the Custodian's House</i>]
     ~ CharacterTitle = ""
         <i>You leave, ignoring Stick alone on the floor.</i>
-        ->END
-->END
+        -> END
+-> END
 
 =StickOHNO
 ~ CharacterTitle = ""
@@ -807,7 +803,7 @@ Ruff!
  +[<i>Keep looking</i>]
  ~ CharacterTitle = ""
     <i>You keep looking, but you don't find anything of interest.</i>
-    ->WishfulThinking(tries-1)
+    -> WishfulThinking(tries-1)
  *{tries == -8}[<i>Sit in silence</i>]
     <i>...</i>
     <i>...</i>
@@ -822,17 +818,16 @@ Ruff!
  *[<i>Leave</i>]
  ~ CharacterTitle = ""
     <i>You leave the Custodian's house, wondering why you ever even entered.</i>
-->END
+-> END
 
 -> END 
 ==Mayor==
 ~ CharacterTitle = "Mayor"
 {
  - isMayorIntro: -> intro// Go to intro
- - isHub: -> Hub// Go to hub
+ - isHub or isDeathF2: -> Hub// Go to hub
  - else: Error
  }
- 
  //INTRO CUTSCENE WHEN HE'S INTRODUCED OUTSIDE OF FLOOR 2
  
  =intro
@@ -842,8 +837,8 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “...What a bitter state of affairs we find ourselves in."
 
-+["You were there."] -> YouWereThere
-+["I am sorry."] -> Sorry
++["You were there."]-> YouWereThere
++["I am sorry."]-> Sorry
 
 =YouWereThere
 ~ CharacterTitle = ""
@@ -869,10 +864,10 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “You must have questions. Ask away.”
 
-+["How did you survive?"] -> survive 
-+["What happened to the rest of the church?"] ->church
-+["What are you doing here?"] ->here 
-+["That's all for now."] -> EndOfIntro
++["How did you survive?"]-> survive 
++["What happened to the rest of the church?"]-> church
++["What are you doing here?"]-> here 
++["That's all for now."]-> EndOfIntro
 
 =survive
 ~ CharacterTitle = "Mayor"
@@ -891,8 +886,8 @@ Ruff!
 {church < 1: “...Most are gone. Just like everything else.”}
 
 {church < 1: “Perhaps the only just perdition to have come from the Convergence after all this time.” }
-*["Do you know who I am?"] -> whoIam
-*["Couldn’t you have stopped what happened?"] ->stopped 
+*["Do you know who I am?"]-> whoIam
+*["Couldn’t you have stopped what happened?"]-> stopped 
 *-> questions
 
 = here 
@@ -914,7 +909,7 @@ Ruff!
 <i>After a moment of silence, the man leans in to regard your appearance in greater detail.</i>
 ~ CharacterTitle = "Mayor"
 “Not many within our strain of history return to this sense-dulled place.”
-->church
+-> church
 
 =stopped 
 ~ CharacterTitle = "Mayor"
@@ -947,11 +942,11 @@ Ruff!
 
 =HubQuestions
 
-+[<i>Show the Whispering Bell</i>] -> Artifact1
-+{Artifact2Intro} [<i>Show the Apparition Gauntlet</i>] -> Artifact2
-+{hasMayorNote1}[<i>Show note about friend</i>] -> note1
-+{hasMayorNote2}[<i>Show note about enigmatic eye</i>] -> note2
-+[<i>Enough for now</i>] -> goodbye 
++[<i>Show the Whispering Bell</i>]-> Artifact1
++{Artifact2Intro} [<i>Show the Apparition Gauntlet</i>]-> Artifact2
++{hasMayorNote1}[<i>Show note about friend</i>]-> note1
++{hasMayorNote2}[<i>Show note about enigmatic eye</i>]-> note2
++[<i>Enough for now</i>]-> goodbye 
 
 =Artifact1
 ~ CharacterTitle = "Mayor"
@@ -967,9 +962,9 @@ Ruff!
 
 "Spelunking into the ruins of Radefell with horrors stalking its corridors seems amongst the least of pleasant ventures.”
 
-+["It could be better."] -> better 
-+["It could be worse."] -> worse 
-+["It is unpleasant, indeed."] -> unpleasent 
++["It could be better."]-> better 
++["It could be worse."]-> worse 
++["It is unpleasant, indeed."]-> unpleasent 
 
 = better 
 ~ CharacterTitle = ""
@@ -991,7 +986,7 @@ Ruff!
 
 “Nevertheless, hold to that optimism, my friend. It will be as effective a tool as any artifact, if you allow it so to be.”
 
-->Artifact2Intro 
+-> Artifact2Intro 
 
 = unpleasent
 ~ CharacterTitle = ""
@@ -1032,8 +1027,8 @@ Ruff!
 =letter1Questions
 
 +["Who was he?]" -> whoWasHe
-+["Why did you warn him?"] -> WarnHim
-+["What now?"] -> WhatNow
++["Why did you warn him?"]-> WarnHim
++["What now?"]-> WhatNow
 
 =whoWasHe 
 ~ CharacterTitle = ""
@@ -1045,7 +1040,7 @@ Ruff!
 
 “I would have never let such kinship fade.”
 
-->letter1Questions
+-> letter1Questions
 
 =WarnHim 
 ~ CharacterTitle = "Mayor"
@@ -1055,7 +1050,7 @@ Ruff!
 
 “I only hoped that one would heed me, for respect of all those years past.”
 
-->letter1Questions
+-> letter1Questions
 
 =WhatNow 
 ~ CharacterTitle = ""
@@ -1084,8 +1079,8 @@ Ruff!
 -> Letter2Questions 
 
 =Letter2Questions 
-+["What is this artifact?"] -> artifactQuestion
-+["When did you see it?"] -> seeIt 
++["What is this artifact?"]-> artifactQuestion
++["When did you see it?"]-> seeIt 
 * -> HubQuestions
 
 =artifactQuestion
@@ -1098,7 +1093,7 @@ Ruff!
 
 “And its gaze...I hesitate to match its gaze again.”
 
-->Letter2Questions
+-> Letter2Questions
 
 =seeIt 
 ~ CharacterTitle = "Mayor"
@@ -1106,13 +1101,13 @@ Ruff!
 
 “All of Radefell looked toward the Church as their saviors, and none heeded my warning as I raced through the streets.”
 
-->Letter2Questions
+-> Letter2Questions
 
 = Artifact2Intro
 ~ CharacterTitle = "Mayor"
 “Nevertheless, there is still much work for myself to do. No doubt the same for you, with other artifacts to collect.”
 
-->questions
+-> questions
 
 = Artifact2 
 ~ CharacterTitle = ""
@@ -1124,10 +1119,10 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “No doubt such diligence deserves recognition.”
 
-+["Glad to be of service."] ->service 
-+["I deserve no thanks."] -> thanks 
-+["It is my duty."] -> duty
-+["The work remains unfinished."] -> unfinished 
++["Glad to be of service."]-> service 
++["I deserve no thanks."]-> thanks 
++["It is my duty."]-> duty
++["The work remains unfinished."]-> unfinished 
 
 =service 
 ~ CharacterTitle = ""
@@ -1135,7 +1130,7 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “Service is a vast understatement.”
 
-->HubQuestions
+-> HubQuestions
 
 =thanks
 ~ CharacterTitle = ""
@@ -1143,7 +1138,7 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “If you believe it to be so, then I will not impose my gratitude upon you. Just know that the course you took has brought bounty after the most brutal of famines.”
 
-->HubQuestions
+-> HubQuestions
 
 =duty 
 ~ CharacterTitle = ""
@@ -1151,7 +1146,7 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “That I cannot fault, even risen as you are. You have chosen it to be so nonetheless, and you have performed such a task with excellence.”
 
-->HubQuestions
+-> HubQuestions
 
 =unfinished
 ~ CharacterTitle = ""
@@ -1159,7 +1154,7 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “Quite, yes, yet there is still impact from what you have already done. Pride can be claimed in that.”
 
-->HubQuestions
+-> HubQuestions
 
 = goodbye
 ~ CharacterTitle = "Mayor"
@@ -1170,9 +1165,9 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 <b>MAYOR</b>: "Greetings. How goes your endevors into the caverns of Radefell?”
 
-+["It could be better."] -> betterBedrock
-+["It could be worse."] -> worseBedrock
-+["It is unpleasant, indeed."] -> unpleasentBedrock
++["It could be better."]-> betterBedrock
++["It could be worse."]-> worseBedrock
++["It is unpleasant, indeed."]-> unpleasentBedrock
 
 = betterBedrock
 ~ CharacterTitle = ""
@@ -1194,7 +1189,7 @@ Ruff!
 
 “Nevertheless, hold to that optimism, my friend. It will be as effective a tool as any artifact, if you allow it so to be.”
 
-->END 
+-> END 
 
 = unpleasentBedrock
 ~ CharacterTitle = ""
@@ -1216,7 +1211,7 @@ Ruff!
  - isDeathF1: -> DeathF1 // Go to death 1
  - isHub: -> Hub// Go to hub
  - isDeathF2: -> DeathF2// Go to death 2 
- - else: Error ->END
+ - else: Error -> END
  }
  
  /*
@@ -1242,7 +1237,7 @@ VAR angryClerics = false
     -> ADoomedQuest
  *  ["I seek a setting sun on your god."]
     -> TrulyDisgraced
- *  ["I seek nothing but safe passage below."] 
+ *  ["I seek nothing but safe passage below."]
     -> ADoomedQuest
 
 = ADoomedQuest 
@@ -1482,10 +1477,10 @@ PLAYER DIES IN FLOOR 2 SECTION
  =Hub
  ~ CharacterTitle = "Scholar"
  {
-- Hub == 0: -> ScholarhubIntro
-- else: -> regularHub
-} 
-
+ - isScholarIntro: -> ScholarhubIntro// Go to intro
+ - isHub or isDeathF2: -> regularHub// Go to hub
+ - else: Error
+ }
 
 =ScholarhubIntro
 {ScholarhubIntro > 1: -> ScholarBedrock}
@@ -1506,8 +1501,8 @@ Hmm, so it appears one has returned...
  ~ CharacterTitle = "Scholar"
 It’s good to know we few are not the last.
 
-*["What do you mean?"] ->WhatDoYouMean 
-*["It is good to see you too."] ->GoodToSee
+*["What do you mean?"]-> WhatDoYouMean 
+*["It is good to see you too."]-> GoodToSee
 
 =WhatDoYouMean 
  ~ CharacterTitle = "Scholar"
@@ -1527,14 +1522,14 @@ Nothing less than I’d expect from Malisense’s most faithful.
 
 It seems, even after all this time, they remember how to respect their superiors.
 
-->introQuestions
+-> introQuestions
 
 =introQuestions
  ~ CharacterTitle = "Scholar"
 But, niceties and remembrances aside, I doubt idle prattle is what the wanderer seeks. What is it they wish of me?
 
-*["What happened to you?"] -> toYou 
-*["What happened here?"] -> happenedHere 
+*["What happened to you?"]-> toYou 
+*["What happened here?"]-> happenedHere 
 *-> introGoodbye 
 
 =toYou 
@@ -1544,7 +1539,7 @@ And the answer is even more intriguing.
 But, forgotten wanderer, I hardly wish to reveal such knowledge to one who has become practically a stranger. 
 Perhaps some other time I shall tell, but for now the doors to my secrets are locked.
 
-->introQuestions
+-> introQuestions
 
 =happenedHere 
  ~ CharacterTitle = "Scholar"
@@ -1585,18 +1580,18 @@ And...give my regards to the Crypt Keeper. If she's still around.
 {ArtifactTibits < 2: -> ArtifactTibits2}
 {ArtifactTibits > 2: -> ArtifactTibits3}
  ~ CharacterTitle = "Scholar"
-{hasDied: Ah, what joy! The wanderer returns once again! I had worried our last meeting would be our final one. What a tragedy that would have been... ->ArtifactQuestions}
+{hasDied: Ah, what joy! The wanderer returns once again! I had worried our last meeting would be our final one. What a tragedy that would have been... -> ArtifactQuestions}
 
 = ArtifactTibits1
  ~ CharacterTitle = "Scholar"
 The wanderer is eager to know more? Please, enter my domicile and pilfer away at my wealth of knowledge. 
 Let us fill your mind with forgeries.
 I know the wanderer seeks to know more of the artifacts...I shall share my burden with the wanderer so that it no longer crushes solely my shoulders.
-There are three. The Whispering Bell, the Apparition Gauntlet, and the Eye of Genesis. ->ArtifactQuestions
+There are three. The Whispering Bell, the Apparition Gauntlet, and the Eye of Genesis. -> ArtifactQuestions
 
 = ArtifactTibits2
  ~ CharacterTitle = "Scholar"
-Back already, hm? I am pleased the wanderer's steps have not ceased along their journey, and have instead brought them back to me.->ArtifactQuestions
+Back already, hm? I am pleased the wanderer's steps have not ceased along their journey, and have instead brought them back to me.-> ArtifactQuestions
 
 = ArtifactTibits3
  ~ CharacterTitle = ""
@@ -1604,7 +1599,7 @@ Back already, hm? I am pleased the wanderer's steps have not ceased along their 
 
 <i>You must've been seven or eight years old. The Scholar helping you with your studies. </i>
 
-<i>They've made little finger puppets, which they're now using to try and explain the Old Wars to you. Where did that cheery person go? Maybe they never left.</i> ->ArtifactQuestions
+<i>They've made little finger puppets, which they're now using to try and explain the Old Wars to you. Where did that cheery person go? Maybe they never left.</i> -> ArtifactQuestions
 
  
 
@@ -1729,7 +1724,7 @@ Seeing it here, in the flesh, I can confirm a few suspicions that it would have 
 
 There were rumors it was used to track signs of the Malignance when rung, and it thusly must allow you to track the souls corrupted by it. As for a reward for showing me this, I shall tell you of my folly, and of the knowledge I have burdened myself with.
 
-*["Your folly?"] -> folly 
+*["Your folly?"]-> folly 
 
 =folly 
  ~ CharacterTitle = "Scholar"
@@ -1769,7 +1764,7 @@ To think that such a legendary artifact is here before me now.
   ~ CharacterTitle = "Scholar"
  It seems I have also forgotten their lack of patience. But, no matter. Bring it here.
  
- ->tellMoreGautlet
+ -> tellMoreGautlet
  
  = tellMoreGautlet 
 {-getOnGautlet: 
@@ -1788,9 +1783,9 @@ It is as I thought, my intuitions were correct...
 
 =handQuestions
 
-*["How should I use it?"] -> howUseHand 
-*["What was its use?"] -> useHand
-*->handGoodbye
+*["How should I use it?"]-> howUseHand 
+*["What was its use?"]-> useHand
+*-> handGoodbye
 
 =howUseHand 
  ~ CharacterTitle = "Scholar"
@@ -1812,7 +1807,7 @@ It must have been used by the Church for the controlling of beasts...still, as t
 
 If I had merely left the clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
 
-*["Your body?"] 
+*["Your body?"]
  ~ CharacterTitle = "Scholar"
 I...do not know if it is safe to share this secret but...my body is not my own. 
 
@@ -1828,7 +1823,7 @@ I shall speak no more of it to you....
 =handGoodbye 
  ~ CharacterTitle = "Scholar"
 Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
-->END 
+-> END 
 
 = CharacterQs 
 * ["What do you know about the Crypt Keeper?"]
@@ -1884,13 +1879,13 @@ Ah, you have returned. Tell me, what has given you trouble?
 
 +["The monsters are difficult."]
 Do not forget of the items at hand. These wonderful novelties may be the difference between having an artifact in hand, or being awokened in the arms of the Crypt Keeper.
-->ScholarBedrock
+-> ScholarBedrock
 
 +["Gems are hard to find."]
 Hmmm...
 By my research, the gems are known to be at the outskirts of the city.
 Do what you will with that information.
-->ScholarBedrock
+-> ScholarBedrock
 
 +["I am not having difficulty."]
 Interesting response.
@@ -1916,16 +1911,16 @@ Till next time, wanderer.
 ~ CharacterTitle = "Mayor"
 “I knew this time would come...”
 
-+["You have the final artifact!"]  
++["You have the final artifact!"] 
 ~ CharacterTitle = "Mayor"
 “Indeed. It is within my possession, and I am willing to tell you where it is.”  
 
-++["Tell me."] 
+++["Tell me."]
 ~ CharacterTitle = "Mayor"
 “I hid it within the fountain, at the center of town. You can find it there.”
 
-+++["Tell me what happened."] -> Explination 
-+++["I am done with you."] -> CryptKeeperFinal
++++["Tell me what happened."]-> Explination 
++++["I am done with you."]-> CryptKeeperFinal
 
 = Explination
 ~ CharacterTitle = "Mayor"
@@ -1937,8 +1932,8 @@ Till next time, wanderer.
 
 “We know now that it would have never been that simple.”
 
-+["What happened before the Convergence?"] -> PreConvergence
-+["I am done with you."] -> CryptKeeperFinal
++["What happened before the Convergence?"]-> PreConvergence
++["I am done with you."]-> CryptKeeperFinal
 
 =PreConvergence
 ~ CharacterTitle = "Mayor"
@@ -1954,8 +1949,8 @@ Till next time, wanderer.
 
 “I damn myself for each and every soul I abandoned that night.”
 
-+["There was nothing you could do."] -> NothingToDo
-+["I am done with you."] -> CryptKeeperFinal
++["There was nothing you could do."]-> NothingToDo
++["I am done with you."]-> CryptKeeperFinal
 
 =NothingToDo
 ~ CharacterTitle = ""
@@ -1965,9 +1960,9 @@ Till next time, wanderer.
 
 “Especially after this final negligence...”
 
-+["Deservedly so."] -> Deserved
-+["Leave the past behind."] -> behind
-+["I am done with you."] -> CryptKeeperFinal
++["Deservedly so."]-> Deserved
++["Leave the past behind."]-> behind
++["I am done with you."]-> CryptKeeperFinal
 
 =Deserved
 ~ CharacterTitle = ""
@@ -1975,8 +1970,8 @@ Till next time, wanderer.
 ~ CharacterTitle = "Mayor"
 “Indeed, my friend.”
 
-+["Why didn’t you tell me where the Eye is?"] ->WhyDidntYouTellMe
-+["I am done with you."] -> CryptKeeperFinal
++["Why didn’t you tell me where the Eye is?"]-> WhyDidntYouTellMe
++["I am done with you."]-> CryptKeeperFinal
 
 =behind 
 ~ CharacterTitle = ""
@@ -1986,8 +1981,8 @@ Till next time, wanderer.
 
 “Even further, there is one final negligence of mine...”
 
-+["Why didn’t you tell me where the Eye is?"] ->WhyDidntYouTellMe
-+["I am done with you."] -> CryptKeeperFinal
++["Why didn’t you tell me where the Eye is?"]-> WhyDidntYouTellMe
++["I am done with you."]-> CryptKeeperFinal
 
 =WhyDidntYouTellMe
 ~ CharacterTitle = "Mayor"
@@ -2003,14 +1998,14 @@ Till next time, wanderer.
 
 “And that time has come. I won’t pretend that such actions were not selfish.”
 
-->Selfish
+-> Selfish
 
 =Selfish
-*["Why do it then?"] -> WhyDoIt
-*{WhyDoIt}["You deserve to be punished."] -> punish
-*{WhyDoIt}["I would have protected you."] -> protected
-*{punish} or {protected} ["There is one thing I wish you to do."] -> Wish
-+["I am done with you."] -> CryptKeeperFinal
+*["Why do it then?"]-> WhyDoIt
+*{WhyDoIt}["You deserve to be punished."]-> punish
+*{WhyDoIt}["I would have protected you."]-> protected
+*{punish} or {protected} ["There is one thing I wish you to do."]-> Wish
++["I am done with you."]-> CryptKeeperFinal
 
 =WhyDoIt
 ~ CharacterTitle = ""
@@ -2018,7 +2013,7 @@ Till next time, wanderer.
 ~ CharacterTitle = "Mayor"
 “Perhaps, we can never escape our true nature, no matter how much we wish to change.” 
 
-->Selfish
+-> Selfish
 
 = punish
 ~ CharacterTitle = "Mayor"
@@ -2040,10 +2035,10 @@ Till next time, wanderer.
 ~ CharacterTitle = ""
 <i>The Mayor nods, awaiting your word.</i>
 
-+["Await your judgment here."] -> Judgement
-+["Life free of the past."] -> Past
-+["Submit to condemnation."] -> Condemnation
-+["Give yourself to the future of Radefell."] -> GiveYourself
++["Await your judgment here."]-> Judgement
++["Life free of the past."]-> Past
++["Submit to condemnation."]-> Condemnation
++["Give yourself to the future of Radefell."]-> GiveYourself
 
 = Judgement 
 ~ CharacterTitle = "Mayor"
@@ -2051,7 +2046,7 @@ Till next time, wanderer.
 
 “End this curse, once and for all.”
 
-->CryptKeeperFinal
+-> CryptKeeperFinal
 
 = Past
 ~ CharacterTitle = "Mayor"
@@ -2059,7 +2054,7 @@ Till next time, wanderer.
 
 “Go. End this curse, once and for all.”
 
-->CryptKeeperFinal
+-> CryptKeeperFinal
 
 = Condemnation
 ~ CharacterTitle = ""
@@ -2112,11 +2107,11 @@ Till next time, wanderer.
              "Yes, yes...You know what this means for the Malignance, you know what this means for Radafell..."
              ~ CharacterTitle = ""
                 <i>Her tone of voice raising with every passing word.</i>
-                ->WhatItMeans
+                -> WhatItMeans
         ***["I do not."]
-            ->WhatItMeans
+            -> WhatItMeans
         ***["..."]
-            ->WhatItMeans
+            -> WhatItMeans
 
 ==WhatItMeans
 ~ CharacterTitle = ""
@@ -2155,28 +2150,28 @@ Till next time, wanderer.
                             ~ CharacterTitle = ""
                             <i>The light fades. The only thing that you can envision are your memories.</i>
                                 
-                            ->SensesReturn
+                            -> SensesReturn
 
 ==SensesReturn==
 *[<i>Look</i>]
     ~ CharacterTitle = ""
     <i>Your adventures, the monsters you've encountered, the people you've met, the city you've saved all flash before your eyes.</i>
-    ->SensesReturn
+    -> SensesReturn
 
 *[<i>Smell</i>]
     ~ CharacterTitle = ""
     <i>You inhale sharply, smelling the flora of the city. The sharp fragrance reminds you of your past, and a newer, brighter future.</i>
-    ->SensesReturn
+    -> SensesReturn
 
 *[<i>Taste</i>]
     ~ CharacterTitle = ""
     <i>Your mouth starts to water as you taste once again. Breads, meats, fruits, familiar flavors from unfamiliar places.</i>
-    ->SensesReturn
+    -> SensesReturn
 
 *[<i>Hear</i>]
     ~ CharacterTitle = ""
     <i>You once again hear churchbells ring, birds chirping, a bustling city once again.</i>
-    ->SensesReturn
+    -> SensesReturn
 *{CHOICE_COUNT() ==0} [<i>Feel</i>]
     ~ CharacterTitle = ""
     <i>You feel air escape you, the light from the cleansing grows brighter and you feel it's heat on you.</i>
@@ -2205,8 +2200,8 @@ Till next time, wanderer.
 
                 "The more I miss you..."
 
-                "My peony." ->END
+                "My peony." -> END
 
 
-->END
+-> END
 

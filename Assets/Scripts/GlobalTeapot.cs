@@ -67,6 +67,7 @@ public class GlobalTeapot : MonoBehaviour
         journal.CreateFloorNotes();
 
         currentStory = new Ink.Runtime.Story(masterInk.text);
+        // could add error handling: currentStory.onError += ~~~~;
     }
 
     private void Update()

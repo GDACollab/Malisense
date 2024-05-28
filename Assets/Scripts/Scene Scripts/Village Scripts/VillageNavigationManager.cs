@@ -96,15 +96,15 @@ public class VillageNavigationManager : MonoBehaviour
             // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
             selectBuilding();
+        } // Force Mayor Intro 
+        else if (!globalTeapot.mayorWasIntroduced && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
+        {
+            moveBuildingSelection(1);
+            selectBuilding();
         } // Force CK Intro After 1st Death
         else if (globalTeapot.deathCount >= 1 && (globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1 || globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2))
         { 
             moveBuildingSelection(-1);
-            selectBuilding();
-        } // TODO: Force Mayor Intro 
-        else if (!globalTeapot.mayorWasIntroduced && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
-        {
-            moveBuildingSelection(1);
             selectBuilding();
         }
 
