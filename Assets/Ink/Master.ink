@@ -1,12 +1,17 @@
-VAR isIntro = true
+VAR isIntro = false
 VAR isDeathF1 = false
-VAR isHub = false
+VAR isHub = true
 VAR isDeathF2 = false 
 VAR isIntroductionCutscene = false
 VAR isEnd = false
 VAR hasDied = false
 
-VAR isMayorIntro = true
+VAR isScholarIntro = false
+VAR isMayorIntro = false
+
+VAR highPriestWasIntroduced = true
+VAR toldCKAboutHighPriest = false
+
 VAR hasMayorNote1 = false
 VAR hasMayorNote2 = false
 VAR hasFinalMayorNote = false
@@ -28,10 +33,12 @@ VAR CharacterTitle = "????????????"
 
 VAR character = "Crypt_Keeper"
 
+-> START
+
 == START ==
 {
  - isIntroductionCutscene: -> Introduction // Go to Introduction
- - character == "Crypt_Keeper": ->Crypt_Keeper // Go to CK 
+ - character == "Crypt_Keeper": -> Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
  - character == "Clergy": -> Clergy // Go to Clergy
@@ -83,15 +90,16 @@ bool Variables
 ==Crypt_Keeper==
 ~ CharacterTitle = "Crypt Keeper"
 {
- - isIntro: ->intro // Go to intro
+ - isIntro: -> intro // Go to intro
  - isDeathF1: -> DeathF1 // Go to death 1
- - isHub: -> hub// Go to hub
- - isDeathF2: -> DeathF2// Go to death 2 
+ - isHub: -> hub // Go to hub
+ - isDeathF2: -> DeathF2 // Go to death 2 
  - isEnd: // Go to end
  - else: Error
  }
- 
+
  =intro
+ {intro > 1: -> CKIntroRevisit}
 ~ CharacterTitle = ""
 <i>You approach the familiar figure. Your throat tightens as she turns to you. </i>
 
@@ -109,7 +117,7 @@ bool Variables
 ~ CharacterTitle = ""
     <i>She lets out a quiet sigh. </i>
     ~ CharacterTitle = "????????????"
-    "I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." ->whathappened
+    "I'm sure you'll remember soon enough. Let's just say you're quite special to me, and I'm quite special to you." -> whathappened
    
  * ["Hello?"]
  ~ CharacterTitle = "????????????"
@@ -117,7 +125,7 @@ bool Variables
     
     "But I guess that's how peonies are–just when you think they've wilted completely, they suddenly blossom brighter than ever before."
    ~ CharacterTitle = ""
-   <i>You feel as if you know this person, but struggle to even recall her name.</i> ->whathappened
+   <i>You feel as if you know this person, but struggle to even recall her name.</i> -> whathappened
    
    =whathappened
    *["What happened?"]
@@ -128,7 +136,7 @@ bool Variables
    ~ CharacterTitle = "????????????"
    "You...passed on. Oh, you can only imagine how distraught I was to find your lifeless body out here. Thankfully, I was able to collect myself and begin preparations to bring you back." 
   ~ CharacterTitle = "Crypt Keeper"
-  I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." ->whathappenedcont
+  I am the keeper of this crypt, after all. It took a fair bit of work, yes, but you know I'd do anything for my peony." -> whathappenedcont
     
    =whathappenedcont
     
@@ -139,7 +147,7 @@ bool Variables
     "That lantern that hangs from your staff contains your soul. When in close proximity with it, your spirit can once again animate your body as it did while you were still...living."
    
     "I even carefully fitted your latern with some precious stones. If you're ever in danger, those gems will bring you back to me. I'm always here to take care of you, darling. When you feel the latern's glow, think of it as my embrace."
-    ->lanterndesc
+    -> lanterndesc
    
    =lanterndesc
    ~ CharacterTitle = ""
@@ -151,7 +159,7 @@ bool Variables
      
     <i>The lantern itself is ornately sculpted. It's so polished that you can see yourself reflected in its silver casing. </i>
      
-    <i>Someone clearly has put a lot of effort into preparing it for this occassion.</i> ->interrogation
+    <i>Someone clearly has put a lot of effort into preparing it for this occassion.</i> -> interrogation
      
     =interrogation
     *["Where is everyone?"]
@@ -162,7 +170,7 @@ bool Variables
         
         "I bet they'll be quite happy to see you. But please, let's not discuss this any further." 
         
-        "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." ->interrogation
+        "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." -> interrogation
    
     *["Where am I?"]
     ~ CharacterTitle = "Crypt Keeper"
@@ -170,13 +178,13 @@ bool Variables
         
         "Resuscitation is difficult in a city, where death is so omnnipresent."
         
-        "But I guess it's an apt setting, seeing as I've cleaned you up like the mother dove cleans her young in the fountain's basin." ->interrogation
+        "But I guess it's an apt setting, seeing as I've cleaned you up like the mother dove cleans her young in the fountain's basin." -> interrogation
         
     *["Why revive me?"]
       ~ CharacterTitle = ""
       <i>She frowns. </i>
         ~ CharacterTitle = "Crypt Keeper"
-        "Why revive anyone else? You're the lantern of my life, peony. You should know that better than anyone else." ->interrogation
+        "Why revive anyone else? You're the lantern of my life, peony. You should know that better than anyone else." -> interrogation
     
     *["How did I die?"]
       ~ CharacterTitle = "Crypt Keeper"
@@ -186,11 +194,11 @@ bool Variables
        
       "'This won't do.', I told myself, 'This won't do.' So I picked you up--all of you, including the fingers you had lost--and put you back together." 
       
-      "Don't worry, I didn't peek under your mask. I know you're awfully sensitive about that."  ->interrogation
+      "Don't worry, I didn't peek under your mask. I know you're awfully sensitive about that."  -> interrogation
        
 
-    *{CHOICE_COUNT() == 0}->
-~ CharacterTitle = "Crypt Keeper"
+    *{CHOICE_COUNT() == 0}-> 
+    ~ CharacterTitle = "Crypt Keeper"
        "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
        ~ CharacterTitle = ""
        <i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
@@ -201,7 +209,15 @@ bool Variables
 
         -> END
 
+= CKIntroRevisit
+~ CharacterTitle = ""
+<i>The soft scent of flowers floats on the wind.</i>
+     
+<i>All is deathly quiet.</i>
+-> END
+
 = DeathF1
+{DeathF1 > 1: -> CKBedrock}
 ~ CharacterTitle = ""
 <i>In an instant, you feel yourself being thrust back into the cold embrace of life.</i>
 
@@ -213,28 +229,27 @@ bool Variables
 "Just...promise me you won’t do something I can’t bring you back from." 
 
 "Don’t let your hunger for redemption destroy what we still have."
-~ CharacterTitle = ""
-<i>Breathe. </i>
 
+"Breathe."
 -> END
 
-= hub
+ =hub
+{hub > 1: -> CKBedrock}
 ~ CharacterTitle = ""
-{Clergy.Hub && Artifact1<0: <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
-
+{highPriestWasIntroduced && (toldCKAboutHighPriest != true): <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
 ~ CharacterTitle = "Crypt Keeper"
-Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to.
+"Hello, dear. I'd love to talk–that is, if you don't have any pressing matters to attend to."
 ~ CharacterTitle = ""
- *["I have a question."]
- ~ CharacterTitle = "Crypt Keeper"
- What would you like to discuss, my peony? -> conversation
+
+*["I have a question."]
+~ CharacterTitle = "Crypt Keeper"
+"What would you like to discuss, my peony?" -> conversation
+*["Goodbye."]
+~ CharacterTitle = "Crypt Keeper"
+"Until next time, then. Don't keep me waiting." -> END
  
- *["Goodbye."]
- ~ CharacterTitle = "Crypt Keeper"
- Until next time, then. Don't keep me waiting. -> END
- 
- =conversation
- ~ CharacterTitle = ""
+=conversation
+~ CharacterTitle = ""
 +["Why do we need the artifacts?"]
 ~ CharacterTitle = "Crypt Keeper"
 "Well, that wretched being wants the artifacts."
@@ -245,7 +260,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 "or we can intervene."
 
-"That creature already destroyed Radefell. We can't let it move any further towards its goal." ->conversation
+"That creature already destroyed Radefell. We can't let it move any further towards its goal." -> conversation
 
 +["What exactly are the dungeons?"]
 ~ CharacterTitle = "Crypt Keeper"
@@ -253,7 +268,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 "It was taking pieces of the city and pulling them underground. This created the dungeons you now traverse."
 
-"As to why would it do such a thing? I'm not sure, but I reckon that we'll find out soon enough." ->conversation
+"As to why would it do such a thing? I'm not sure, but I reckon that we'll find out soon enough." -> conversation
 
 +["How are you holding up?"]
 ~ CharacterTitle = "Crypt Keeper"
@@ -263,16 +278,16 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 "I miss my bed, and the food here is...of variable quality." 
 
-"But I still have you, my peony. That's all I need." ->conversation
+"But I still have you, my peony. That's all I need." -> conversation
 
 +["Goodbye."]
 ~ CharacterTitle = "Crypt Keeper"
  "Until next time, then. Don't keep me waiting." -> END
 
 = DeathF2
+{DeathF2 > 1: -> hub}
 ~ CharacterTitle = "Crypt Keeper"
 { shuffle once:
-
 -   "How disappointing..."
 - 	"What a thrilling death. I can see you've had practice."
 -   "Oh dear, you know how much it pains me to see you get hurt."
@@ -280,10 +295,8 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 -   "I wonder...is it possible for one to get accustomed to death?"
 }
 ~ CharacterTitle = ""
-*[<i>Breathe.</i>]
-
--> END
-
+* [<i>Breathe.</i>]
+- -> END
 =Artifact1
 ~ CharacterTitle = ""
 <i>She seems to not acknowledge your presence. </i>
@@ -294,22 +307,22 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 <i>There's only one way to find out.</i>
 
-+[<i>Wait for her to acknowledge you</i>] -> wait
-+[<i>Approach her</i>] -> approach 
++[<i>Wait for her to acknowledge you</i>]-> wait
++[<i>Approach her</i>]-> approach
 
 =wait 
 ~ CharacterTitle = ""
 <i>You observe her care for the plants for minutes on end.</i>
-+[<i>Continue to wait</i>] -> continueWait 
-+[<i>Approach her</i>] -> approach 
++[<i>Continue to wait</i>]-> continueWait 
++[<i>Approach her</i>]-> approach 
 
-= continueWait
+=continueWait
 ~ CharacterTitle = ""
 <i>You stand idly for another minute, even though she has stopped watering the plants. </i>
 <i>After the minute you hear her say...</i>
 ~ CharacterTitle = "Crypt Keeper"
 "Well?"
-->approach
+-> approach
 
 =approach
 ~ CharacterTitle = ""
@@ -324,7 +337,7 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 "Now, be a doll and help me up, would you?" 
 ~ CharacterTitle = ""
-*[<i>Help her up</i>] 
+*[<i>Help her up</i>]
 
 <i>She dusts herself off and turns to face you. Not a speck of dirt, dust, or plant remains on her white dress. </i>
 
@@ -358,9 +371,9 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 ~ CharacterTitle = ""
 <i>You focus is drawn away from the bell and back to the Crypt Keeper as she extends it back towards you to take.</i>
 
-+++["I'm ready to face the next challenge."] -> ready
-+++["Perhaps some rest is in order"] -> rest
-+++["..."] -> stare 
++++["I'm ready to face the next challenge."]-> ready
++++["Perhaps some rest is in order"]-> rest
++++["..."]-> stare 
 
 = ready 
 ~ CharacterTitle = "Crypt Keeper"
@@ -380,10 +393,10 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 =ClergyQuestions
 ~ CharacterTitle = ""
-*["Do you feel different at all?"] -> different 
-*["Do you know how the High Priest died?"] -> died 
-*["What do you know of the three clerics?"] -> threeClerics 
-*->HighPriestRise
+*["Do you feel different at all?"]-> different 
+*["Do you know how the High Priest died?"]-> died 
+*["What do you know of the three clerics?"]-> threeClerics 
+*-> HighPriestRise
 
 = different
 ~ CharacterTitle = ""
@@ -409,18 +422,18 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 ~ CharacterTitle = "Crypt Keeper"
 "Yes, I'm acquainted with the three. Nothing more than lackey clerics to the High Priest, but I suppose why not be?"
 "It allows yourself an opportunity to surround the High Priest, and in turn some feeling of power."
-->ClergyQuestions
+-> ClergyQuestions
 
 =HighPriestRise
 ~ CharacterTitle = "Crypt Keeper"
 "You still seem off, peony." 
 "You can tell me what bothers you, I will always be here for you."
 ~ CharacterTitle = ""
-*["I witnessed the High Priest return from death."] 
+*["I witnessed the High Priest return from death."]
 
 <i>The Crypt Keeper goes pale, and she finds herself at a loss for words.</i>
 ~ CharacterTitle = ""
-**["Are you ok?"] 
+**["Are you ok?"]
 ~ CharacterTitle = "Crypt Keeper"
 "Y-yes... I feared you would eventually bring me news like this, but I thank that you did." 
 ~ CharacterTitle = ""
@@ -432,8 +445,10 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 
 "We may talk about this more at a later date, but I think the best thing for me now is to collect my own thoughts."
 ~ CharacterTitle = ""
-+++[<i>Leave</i>] -> leave
-+++[<i>Embrace her once more</i>] -> embrace 
++++[<i>Leave</i>]
+    -> leave
++++[<i>Embrace her once more</i>]
+    -> embrace 
 
 =embrace 
 ~ CharacterTitle = ""
@@ -448,199 +463,226 @@ Hello, dear. I'd love to talk–that is, if you don't have any pressing matters 
 =leave 
 -> END
 
+=CKBedrock
+~ CharacterTitle = "Crypt Keeper"
+"Hello my sweet, you have returned once again. It seems as though the dungeons have been rather troublesome."  
+
+ + ["I am not having trouble"]
+  ~ CharacterTitle = "Crypt Keeper"
+  "I suppose so..." 
+  "Yet, I have manifested your revivification more than usual.
+  ~ CharacterTitle = ""
+ <i>She laughs lightly to herself</i>
+ ~ CharacterTitle = "Crypt Keeper"
+ "Through my external perspective, it's easy to conclude that you may be having <i>some</i> trouble." 
+ -> FinalBedrock
+ 
+ + ["It has been difficult"]
+ ~ CharacterTitle = "Crypt Keeper"
+  "I had concluded so. I have manifested your revivification more than usual."
+   ~ CharacterTitle = ""
+ <i> She laughs lightly to herself</i>
+ -> FinalBedrock
+ 
+ =FinalBedrock
+  ~ CharacterTitle = "Crypt Keeper"
+  "Please tread carefully, peony. I await for you here." 
+    -> END
+
+
 ==Stick==
 ~ CharacterTitle = "Stick"
 {
  - isHub: -> Hub // Go to hub
  - isDeathF2: -> Hub // Go to death 2 
- - else: Error ->END
+ - else: Error -> END
  }
  
 = Hub 
 {StickHappiness:
- - 1: ->Stick1
- - 2: ->Stick2
- - 3: ->Stick3
- - 4: ->Stick4
- - 5: ->Stick4
- - -1: ->StickSad1
- - -2: ->StickSad2
- - -3: ->StickOHNO
- - -10: ->StickOHNO
- - else: ->NeutralStick
+ - 1: -> Stick1
+ - 2: -> Stick2
+ - 3: -> Stick3
+ - 4: -> Stick4
+ - 5: -> Stick4
+ - -1: -> StickSad1
+ - -2: -> StickSad2
+ - -3: -> StickOHNO
+ - -10: -> StickOHNO
+ - else: -> NeutralStick
  }
  
 // = DeathF2
 // {
-//  - FirstStickDeathF2 && StickHappiness>0: ->ConcernedStick
-//  - else: ->Hub
+//  - FirstStickDeathF2 && StickHappiness>0: -> ConcernedStick
+//  - else: -> Hub
 //  }
 // -> END
 
 =NeutralStick
 ~ CharacterTitle = ""
-As you enter the Custodian's house, a melancholy dog approaches you.
-Its collar reads: "Stick, my loyal and beloved pet"
-~ CharacterTitle = "Stick"
-<b>Stick:</b> *Whimper*
+<i>As you enter the Custodian's house, a melancholy dog approaches you.</i>
+<i>Its collar reads: "Stick, my loyal and beloved pet"</i>
+~ CharacterTitle = ""
+<i>Stick whimpers.</i>
  *[<i>Pet Stick</i>]
     ~ StickHappiness = StickHappiness + 1
     ~ CharacterTitle = ""
-    You softly pet Stick's head
+    <i>You softly pet Stick's head</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Ruff, ruff!
+    Ruff, ruff!
     ~ CharacterTitle = ""
-    Stick happily wags its tail as you gently wave goodbye.
-    ->DONE
- *[Leave Stick Alone]
+    <i>Stick happily wags its tail as you gently wave goodbye.</i>
+    -> DONE
+ *[<i>Leave Stick Alone</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
-    As you turn and leave you can hear Stick whimpering softly.
+    <i>As you turn and leave you can hear Stick whimpering softly.</i>
 
 -> END
 
 =Stick1
 ~ CharacterTitle = ""
-Stick wags its tail happily as you enter.
-+[Pet Stick again]
+<i>Stick wags its tail happily as you enter.</i>
++[<i>Pet Stick again</i>]
     {StickHappiness<2: 
         ~StickHappiness=StickHappiness+1
     }
     ~ CharacterTitle = ""
-    You softly pat Stick's head.
+    <i>You softly pat Stick's head.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Ruff, ruff!
+    Ruff, ruff!
     ~ CharacterTitle = ""
-    Stick happily wags its tail.
-    ->PetStick
- *[Leave]
+    <i>Stick happily wags its tail.</i>
+    -> PetStick
+ *[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
-    You ignore Stick and leave the house.
-->END
+    <i>You ignore Stick and leave the house.</i>
+-> END
 
 =PetStick
- +[Pet Stick again]
+ +[<i>Pet Stick again</i>]
  ~ CharacterTitle = ""
-    You softly pat Stick's head.
+    <i>You softly pat Stick's head.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Ruff, ruff!
+    Ruff, ruff!
     ~ CharacterTitle = ""
-    Stick happily wags its tail.
-    ->PetStick
- *[Wave goodbye]
+    <i>Stick happily wags its tail.</i>
+    -> PetStick
+ *[<i>Wave goodbye</i>]
  ~ CharacterTitle = ""
-    You wave goodbye to Stick as you leave the house.
-->END
+    <i>You wave goodbye to Stick as you leave the house.</i>
+-> END
 
 =Stick2
 ~ CharacterTitle = ""
-You enter the Custodian's house. Little trinkets jingle on the wall.
-At your presence, Stick perks up and its tail starts moving rapidly.
- +[Pet Stick again]
+<i>You enter the Custodian's house. Little trinkets jingle on the wall.</i>
+<i>At your presence, Stick perks up and its tail starts moving rapidly.</i>
+ +[<i>Pet Stick again</i>]
     {StickHappiness<3:
         ~StickHappiness=StickHappiness+1
     }
     ~ CharacterTitle = ""
-    You softly rub Stick's head.
+    <i>You softly rub Stick's head.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Arf!
+    Arf!
     ~ CharacterTitle = ""
-    Stick nuzzles into your hand.
-    ->PetStick2
- *[Leave]
+    <i>Stick nuzzles into your hand.</i>
+    -> PetStick2
+ *[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
-    You ignore Stick and leave the house.
-->END
+    <i>You ignore Stick and leave the house.</i>
+-> END
     
 =PetStick2
-+[Keep petting Stick]
-    You softly rub Stick's head.
++[<i>Keep petting Stick</i>]
+    <i>You softly rub Stick's head.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Arf!
+    Arf!
     ~ CharacterTitle = ""
-    Stick nuzzles into your hand.
-    ->PetStick
- *[Wave goodbye]
+    <i>Stick nuzzles into your hand.</i>
+    -> PetStick
+ *[<i>Wave goodbye</i>]
  ~ CharacterTitle = ""
-    You wave goodbye to Stick as you leave the house.
-->END
+    <i>You wave goodbye to Stick as you leave the house.</i>
+-> END
 
 =Stick3
 ~ CharacterTitle = ""
-As you enter the Custodian's house, you see Stick get up and walk towards you, its tail swinging rapidly.
+<i>As you enter the Custodian's house, you see Stick get up and walk towards you, its tail swinging rapidly.</i>
 ~ CharacterTitle = "Stick"
-<b>Stick:</b> Ruff!
+Ruff!
 ~ CharacterTitle = ""
-A bark of triumph.
- *[Pet Stick]
+<i>A bark of triumph.</i>
+ *[<i>Pet Stick</i>]
     {StickHappiness<4:
         ~StickHappiness=StickHappiness+1
     }
     ~ CharacterTitle = ""
-    You pat stick on the back.
+    <i>You pat stick on the back.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Woof!
+    Woof!
     **["Good dog!"]
     ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Woof! Woof!
-    **[Scratch Stick's back some more]
+        Woof! Woof!
+    **[<i>Scratch Stick's back some more</i>]
     ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Arf!
+        Arf!
     - ~ CharacterTitle = ""
-    Stick's tail vigorously wags back and forth.
-    You give Stick one last pet and unwillingly leave.
+    <i>Stick's tail vigorously wags back and forth.</i>
+    <i>You give Stick one last pet and unwillingly leave.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Bark!
-    ->DONE
- *[Leave]
+    Bark!
+    -> DONE
+ *[<i>Leave]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Ruff! Ruff!
+    Ruff! Ruff!
     ~ CharacterTitle = ""
-    You immediately turn around and leave, ignoring Stick's barks.
+    <i>You immediately turn around and leave, ignoring Stick's barks.</i>
 -> END
 
 =Stick4
 ~ CharacterTitle = ""
-As soon as you open the door, Stick launches toward you.
-You crouch down and recieve Stick in your arms.
- *[Pet Stick]
+<i>As soon as you open the door, Stick launches toward you.</i>
+<i>You crouch down and recieve Stick in your arms.</i>
+ *[<i>Pet Stick</i>]
     {StickHappiness<5: 
         ~StickHappiness=StickHappiness+1
     }
     ~ CharacterTitle = ""
-    You give Stick a hearty back rub.
+    <i>You give Stick a hearty back rub.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Woof! Woof!
-    ->PetStick3
-*[Get up to leave]
+    Woof! Woof!
+    -> PetStick3
+*[<i>Get up to leave</i>]
 ~ CharacterTitle = ""
-    As you get up and start to leave, Stick follows.
+    <i>As you get up and start to leave, Stick follows.</i>
     -> HappyLeave
 
 =PetStick3
- +[Pet Stick again]
+ +[<i>Pet Stick again</i>]
  ~ CharacterTitle = ""
-    You give Stick the best belly rub you've ever done in your life.
+    <i>You give Stick the best belly rub you've ever done in your life.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Awooo!
-    ->PetStick3
- +[Give Stick a treat]
+    Awooo!
+    -> PetStick3
+ +[<i>Give Stick a treat</i>]
  ~ CharacterTitle = ""
-    You find a jar of dog treats on a nearby shelf.
-    You give Stick one of the treats.
+    <i>You find a jar of dog treats on a nearby shelf.</i>
+    <i>You give Stick one of the treats.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Ruff!
+    Ruff!
     ~ CharacterTitle = ""
-    Stick happily gobbles down the treat. 
-    ->PetStick3
- +[Get Stick to do a trick]
-    ->StickTrick
- *[Get up to leave]
+    <i>Stick happily gobbles down the treat. </i>
+    -> PetStick3
+ +[<i>Get Stick to do a trick</i>]
+    -> StickTrick
+ *[<i>Get up to leave</i>]
  ~ CharacterTitle = ""
-    As you get up and start to leave, Stick follows.
+    <i>As you get up and start to leave, Stick follows.</i>
     -> HappyLeave
  
  =StickTrick
@@ -651,445 +693,517 @@ You crouch down and recieve Stick in your arms.
  {trick:
     - 1: 
         ~ CharacterTitle = ""
-        You grab a treat and spin it around Stick.
-        Stick starts spinning in circles until it gets dizzy and has trouble standing up.
-        You give Stick the treat.
+        <i>You grab a treat and spin it around Stick.</i>
+        <i>Stick starts spinning in circles until it gets dizzy and has trouble standing up.</i>
+        <i>You give Stick the treat.</i>
         ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Ruh... Ruff...
+        Ruh... Ruff...
     - 2:
         ~ CharacterTitle = ""
-        You grab a treat and tell Stick to sit.
-        Stick sits down.
-        You applaud and give Stick the treat. 
+        <i>You grab a treat and tell Stick to sit.</i>
+        <i>Stick sits down.</i>
+        <i>You applaud and give Stick the treat. </i>
         ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Ruff!
+        Ruff!
     - 3: 
         ~ CharacterTitle = ""
-        You grab a treat and ask Stick to {trick2==1: do a barrel roll|roll over}. 
-        Stick ferociously rolls over and into the wall. 
+        <i>You grab a treat and ask Stick to {trick2==1: do a barrel roll|roll over}. </i>
+        <i>Stick ferociously rolls over and into the wall. </i>
         ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Woof! Ruff!
+        Woof! Ruff!
         ~ CharacterTitle = ""
-        Stick feels proud of their accomplishment.
-        You feed stick the treat.
+        <i>Stick feels proud of their accomplishment.</i>
+        <i>You feed stick the treat.</i>
         ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Arf!
+        Arf!
     - 4: 
         ~ CharacterTitle = ""
-        As you go to grab a treat, you witness something amazing.
-        Stick does a double flip into a 360 midair spin.
-        Stick proudly lands on the floor and you give two treats for that.
+        <i>As you go to grab a treat, you witness something amazing.</i>
+        <i>Stick does a double flip into a 360 midair spin.</i>
+        <i>Stick proudly lands on the floor and you give two treats for that.</i>
         ~ CharacterTitle = "Stick"
-        <b>Stick:</b> Arf! Arf!
+        Arf! Arf!
     - else: ERROR RANDOM MODULE FAILED CONTACT YOUR NEAREST PELICAN
 }
-->PetStick3
+-> PetStick3
 
 =HappyLeave
 ~ CharacterTitle = ""
-However, the dungeon is too dangerous for a dog, so you stop in your tracks.
- * Tell Stick to stay
+<i>However, the dungeon is too dangerous for a dog, so you stop in your tracks.</i>
+ * [<i>Tell Stick to stay</i>]
  ~ CharacterTitle = ""
-    You tell Stick to stay.
+    <i>You tell Stick to stay.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> *whine*
+    *whine*
     ~ CharacterTitle = ""
-    Stick whines a bit but understands and backs off.
-    With a heavy heart, you leave the Custodian's house.
- * Try to leave
+    <i>Stick whines a bit but understands and backs off.</i>
+    <i>With a heavy heart, you leave the Custodian's house.</i>
+ * [<i>Try to leave</i>]
  ~ CharacterTitle = ""
-    You try to leave, but Stick tries to leave with you.
-    ->HappyLeave
- -->END
-->END
+    <i>You try to leave, but Stick tries to leave with you.</i>
+    -> HappyLeave
+ --> END
+-> END
 
 =StickSad1
 ~ CharacterTitle = ""
-As you enter the Custodian's house, a heartbroken dog approaches you.
-Its collar reads: "Stick, my loyal and beloved pet"
-~ CharacterTitle = "Stick"
-<b>Stick:</b> *Whimper* *Whimper*
- * Pet Stick
+<i>As you enter the Custodian's house, a heartbroken dog approaches you.</i>
+<i>Its collar reads: "Stick, my loyal and beloved pet"</i>
+~ CharacterTitle = ""
+<i>Stick whimpers.</i>
+ * [<i>Pet Stick</i>]
     ~ StickHappiness = StickHappiness + 1
     ~ CharacterTitle = ""
-    You softly pet Stick's head.
+    <i>You softly pet Stick's head.</i>
     ~ CharacterTitle = "Stick"
-    <b>Stick:</b> Ruff, ruff!
+    Ruff, ruff!
     ~ CharacterTitle = ""
-    Stick happily wags its tail as you gently wave goodbye.
-    ->DONE
- * Leave Stick Alone
+    <i>Stick happily wags its tail as you gently wave goodbye.</i>
+    -> DONE
+ * [<i>Leave Stick Alone</i>]
  ~ CharacterTitle = ""
-    You once again turn and leave, ignoring the whimpers behind you.
-->END
+    <i>You once again turn and leave, ignoring the whimpers behind you.</i>
+-> END
 
 =StickSad2
 ~ CharacterTitle = ""
-You enter the Custodian's house looking around at the various shelves filled with dust.
-Stick lays on the ground unresponsive to your intrusion.
-    * Pet Stick
+<i>You enter the Custodian's house looking around at the various shelves filled with dust.</i>
+<i>Stick lays on the ground unresponsive to your intrusion.</i>
+    * [<i>Pet Stick</i>]
     ~ CharacterTitle = ""
-        You bend down and softly pet Stick's head.
-        Stick remains unresponsive to you.
-        ** Keep petting
+        <i>You bend down and softly pet Stick's head.</i>
+        <i>Stick remains unresponsive to you.</i>
+        ** [<i>Keep petting</i>]
             ~ StickHappiness = StickHappiness + 1
             ~ CharacterTitle = ""
-            You keep petting Stick.
-            Eventually Stick perks up.
+            <i>You keep petting Stick.</i>
+            <i>Eventually Stick perks up.</i>
             ~ CharacterTitle = "Stick"
-            <b>Stick:</b> Ruff...
+            Ruff...
             ~ CharacterTitle = ""
-            Stick slightly wags its tail as you gently wave goodbye.
-            ->END
-        ** Leave Stick Alone
+            <i>Stick slightly wags its tail as you gently wave goodbye.</i>
+            -> END
+        ** [<i>Leave Stick Alone</i>]
         ~ CharacterTitle = ""
-            You leave, ignoring Stick alone on the floor.
-            ->END
-    * Leave the Custodian's House
+            <i>You leave, ignoring Stick alone on the floor.</i>
+            -> END
+    * [<i>Leave the Custodian's House</i>]
     ~ CharacterTitle = ""
-        You leave, ignoring Stick alone on the floor.
-        ->END
-->END
+        <i>You leave, ignoring Stick alone on the floor.</i>
+        -> END
+-> END
 
 =StickOHNO
 ~ CharacterTitle = ""
-You enter the Custodian's house with a creak. It's a dusty room with various trinkets and baubles.
-You look around and find a dog bowl, several weird masks, and a few keys. However, you find nothing of importance here. 
+<i>You enter the Custodian's house with a creak. It's a dusty room with various trinkets and baubles.</i>
+<i>You look around and find a dog bowl, several weird masks, and a few keys. However, you find nothing of importance here. </i>
 -> WishfulThinking(StickHappiness)
 
 =WishfulThinking(tries)
- + Keep looking
+ +[<i>Keep looking</i>]
  ~ CharacterTitle = ""
-    You keep looking, but you don't find anything of interest.
-    ->WishfulThinking(tries-1)
- * {tries == -8} Sit in silence
-    ...
-    ...
-    ...
-    ** ...
-        ......
-    ** ...
-        ...............
+    <i>You keep looking, but you don't find anything of interest.</i>
+    -> WishfulThinking(tries-1)
+ *{tries == -8}[<i>Sit in silence</i>]
+    <i>...</i>
+    <i>...</i>
+    <i>...</i>
+    **[<i>...</i>]
+        <i>......</i>
+    **[<i>...</i>]
+        <i>...............</i>
     
     -- ~ StickHappiness = -10
     -> WishfulThinking(tries-1)
- * Leave
+ *[<i>Leave</i>]
  ~ CharacterTitle = ""
-    You leave the Custodian's house, wondering why you ever even entered.
-->END
+    <i>You leave the Custodian's house, wondering why you ever even entered.</i>
+-> END
 
 -> END 
 ==Mayor==
 ~ CharacterTitle = "Mayor"
 {
  - isMayorIntro: -> intro// Go to intro
- - isHub: -> Hub// Go to hub
+ - isHub or isDeathF2: -> Hub// Go to hub
  - else: Error
  }
- 
  //INTRO CUTSCENE WHEN HE'S INTRODUCED OUTSIDE OF FLOOR 2
  
  =intro
-As you arise from the dungeon, you notice a familiar man in a top hat, with rosy cheeks and thin, stitched lips. Golden strings hang limply from his limbs, like a discarded marionette. His smile brims with a melancholic mirth.
+ {intro > 1: -> MayorBedrock}
+ ~ CharacterTitle = ""
+<i>As you arise from the dungeon, you notice a familiar man in a top hat, with rosy cheeks and thin, stitched lips. Golden strings hang limply from his limbs, like a discarded marionette. His smile brims with a melancholic mirth.</i>
+~ CharacterTitle = "Mayor"
+“...What a bitter state of affairs we find ourselves in."
 
-<b>MAYOR</b>: “...What a bitter state of affairs we find ourselves in."
-
-+["You were there."] -> YouWereThere
-+["I am sorry."] -> Sorry
++["You were there."]-> YouWereThere
++["I am sorry."]-> Sorry
 
 =YouWereThere
-The familiar man gives a tasteless, empty chuckle.
-
-<b>MAYOR</b>: “Regrettably so, I fear. It brings some small joy that your memory hasn’t rotted like your form.”
-
-<b>MAYOR</b>: “Still, I doubt I am the only one who harbors such remorse.”
-
+~ CharacterTitle = ""
+<i>The familiar man gives a tasteless, empty chuckle.</i>
+~ CharacterTitle = "Mayor"
+“Regrettably so, I fear. It brings some small joy that your memory hasn’t rotted like your form.”
+“Still, I doubt I am the only one who harbors such remorse.”
 -> questions
 
 =Sorry 
-The familiar man breathes deep through his nose, unbothered by the scent of death.
-
-<b>MAYOR</b>: “You are not alone in fault, friend. Far from it.”
-
+~ CharacterTitle = ""
+<i>The familiar man breathes deep through his nose, unbothered by the scent of death.</i>
+~ CharacterTitle = "Mayor"
+“You are not alone in fault, friend. Far from it.”
 “Fear and complacency go hand in hand, after all.”
 
 -> questions
 
 
 = questions 
-{questions < 1:  Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.}
-<b>MAYOR</b>: “You must have questions. Ask away.”
+~ CharacterTitle = ""
+{questions < 1:  <i>Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.</i>}
+~ CharacterTitle = "Mayor"
+“You must have questions. Ask away.”
 
-+["How did you survive?"] -> survive 
-+["What happened to the rest of the church?"] ->church
-+["What are you doing here?"] ->here 
-+["That's all for now."] -> EndOfIntro
++["How did you survive?"]-> survive 
++["What happened to the rest of the church?"]-> church
++["What are you doing here?"]-> here 
++["That's all for now."]-> EndOfIntro
 
 =survive
-<b>MAYOR</b>: “...I fled.”
+~ CharacterTitle = "Mayor"
+“...I fled.”
+~ CharacterTitle = ""
+<i>Forlorn, the man’s posture visibly sinks.</i>
+~ CharacterTitle = "Mayor"
+“I hold no deeper shame. I knew that...thing...that something was coming, and I turned my back on those I purported service to.”
 
-Forlorn, the man’s posture visibly sinks.
-
-<b>MAYOR</b>: “I hold no deeper shame. I knew that...thing...that something was coming, and I turned my back on those I purported service to.”
-
-<b>MAYOR</b>: “Atonement may never grace me for such deep cowardice.”
+“Atonement may never grace me for such deep cowardice.”
 
 -> questions
 
 =church 
-{church < 1: <b>MAYOR</b>: “...Most are gone. Just like everything else.”}
+~ CharacterTitle = "Mayor"
+{church < 1: “...Most are gone. Just like everything else.”}
 
-{church < 1: <b>MAYOR</b>: “Perhaps the only just perdition to have come from the Convergence after all this time.” }
-*["Do you know who I am?"] -> whoIam
-*["Couldn’t you have stopped what happened?"] ->stopped 
+{church < 1: “Perhaps the only just perdition to have come from the Convergence after all this time.” }
+*["Do you know who I am?"]-> whoIam
+*["Couldn’t you have stopped what happened?"]-> stopped 
 *-> questions
 
 = here 
-<b>MAYOR</b>: “Much has come about since the Convergence.” 
+~ CharacterTitle = "Mayor"
+“Much has come about since the Convergence.” 
 
-<b>MAYOR</b>: “By some twist of fate, the town has entrusted me with leading them once more. It remains to be seen if I deserve such station...”
+“By some twist of fate, the town has entrusted me with leading them once more. It remains to be seen if I deserve such station...”
+~ CharacterTitle = ""
+<i>The Mayor directs a heavy glance through a nearby window.</i>
 
-The Mayor directs a heavy glance through a nearby window.
-
-<b>MAYOR</b>: “...or if there is any good that remains to be done.”
+“...or if there is any good that remains to be done.”
 -> questions
 
 
 =whoIam
-<b>MAYOR</b>: “Yes, I do recognize you. You were quite the illustrious disciple then...”
-
-After a moment of silence, the man leans in to regard your appearance in greater detail.
-
-<b>MAYOR</b>: “Not many within our strain of history return to this sense-dulled place.”
-->church
+~ CharacterTitle = "Mayor"
+“Yes, I do recognize you. You were quite the illustrious disciple then...”
+~ CharacterTitle = ""
+<i>After a moment of silence, the man leans in to regard your appearance in greater detail.</i>
+~ CharacterTitle = "Mayor"
+“Not many within our strain of history return to this sense-dulled place.”
+-> church
 
 =stopped 
-<b>MAYOR</b>: ”I do not know, perhaps there were courses of action.”
+~ CharacterTitle = "Mayor"
+”I do not know, perhaps there were courses of action.”
  
-<b>MAYOR</b>: “The church exploited my station, leaving me nothing but a puppet to their dissolute cause. I only came to the truth until it was too late.“
-
-A deep sigh escapes from the man, his lips packed into a timeless grimace.
-
-<b>MAYOR</b>: “Still, those courses are unexplored, those actions untaken.”
+“The church exploited my station, leaving me nothing but a puppet to their dissolute cause. I only came to the truth until it was too late.“
+~ CharacterTitle = ""
+<i>A deep sigh escapes from the man, his lips packed into a timeless grimace.</i>
+~ CharacterTitle = "Mayor"
+“Still, those courses are unexplored, those actions untaken.”
 
 -> church
 
 
 = EndOfIntro 
-<b>MAYOR</b>: “If you wish to speak to me further, you can find me in my home.”
-
-The Mayor regards your appearance and posture. He nods with approval, and speaks as he turns away.
-
-<b>MAYOR</b>: “You always possessed an acute poise. Perhaps such a trait will allow you to right these wrongs of ours.”
+~ CharacterTitle = "Mayor"
+“If you wish to speak to me further, you can find me in my home.”
+~ CharacterTitle = ""
+<i>The Mayor regards your appearance and posture. He nods with approval, and speaks as he turns away.</i>
+~ CharacterTitle = "Mayor"
+“You always possessed an acute poise. Perhaps such a trait will allow you to right these wrongs of ours.”
 -> END
 
 =Hub
-As you enter the room, the Mayor looks to regard you.
-<b>MAYOR</b>: “It is not every day a corpse comes to speak to me. How may I be of assistance?” -> HubQuestions
+{Hub > 1: -> MayorBedrock}
+~ CharacterTitle = ""
+<i>As you enter the room, the Mayor looks to regard you.</i>
+~ CharacterTitle = "Mayor"
+“It is not every day a corpse comes to speak to me. How may I be of assistance?” -> HubQuestions
 
 =HubQuestions
 
-+[Show the Whispering Bell] -> Artifact1
-+{Artifact2Intro} [Show the Apparition Gauntlet] -> Artifact2
-+{hasMayorNote1}[Show note about friend] -> note1
-+{hasMayorNote2}[Show note about enigmatic eye] -> note2
-+[Enough for now] -> goodbye 
++[<i>Show the Whispering Bell</i>]-> Artifact1
++{Artifact2Intro} [<i>Show the Apparition Gauntlet</i>]-> Artifact2
++{hasMayorNote1}[<i>Show note about friend</i>]-> note1
++{hasMayorNote2}[<i>Show note about enigmatic eye</i>]-> note2
++[<i>Enough for now</i>]-> goodbye 
 
 =Artifact1
-<b>MAYOR</b>: “Now, this is most intriguing.”
+~ CharacterTitle = "Mayor"
+“Now, this is most intriguing.”
+~ CharacterTitle = ""
+<i>A foreign air fills the Mayor at the sight of the Bell, his posture gaining some form at the sight of the artifact.</i>
+~ CharacterTitle = "Mayor"
+“That much explains the buzz I have seen wash over the townsfolk as of late.”
 
-A foreign air fills the Mayor at the sight of the Bell, his posture gaining some form at the sight of the artifact.
+“You’ve earned my commendation, albeit I doubt it holds much value in these times.”
 
-<b>MAYOR</b>: “That much explains the buzz I have seen wash over the townsfolk as of late.”
+“No doubt, however, that such an achievement rightfully deserves recognition, even deathless as you are. "
 
-<b>MAYOR</b>: “You’ve earned my commendation, albeit I doubt it holds much value in these times.”
+"Spelunking into the ruins of Radefell with horrors stalking its corridors seems amongst the least of pleasant ventures.”
 
-<b>MAYOR</b>: “No doubt, however, that such an achievement rightfully deserves recognition, even deathless as you are. "
-
-<b>MAYOR</b>: "Spelunking into the ruins of Radefell with horrors stalking its corridors seems amongst the least of pleasant ventures.”
-
-+["It could be better."] -> better 
-+["It could be worse."] -> worse 
-+["It is unpleasant, indeed."] -> unpleasent 
++["It could be better."]-> better 
++["It could be worse."]-> worse 
++["It is unpleasant, indeed."]-> unpleasent 
 
 = better 
-A blanched laugh breaches Mayor’s rosy cheeks, his eyes slitting at the long unfamiliar sensation.
+~ CharacterTitle = ""
+<i>A blanched laugh breaches Mayor’s rosy cheeks, his eyes slitting at the long unfamiliar sensation.</i>
+~ CharacterTitle = "Mayor"
+“Haah, ah...it always could be. That, in a way, is why you seek these artifacts.”
 
-<b>MAYOR</b>: “Haah, ah...it always could be. That, in a way, is why you seek these artifacts.”
+“Each step you take is toward the untwisting of our reality. Each artifact you reclaim is another leap toward the ending of these senseless times.”
 
-<b>MAYOR</b>: “Each step you take is toward the untwisting of our reality. Each artifact you reclaim is another leap toward the ending of these senseless times.”
-
-<b>MAYOR</b>: “Hold to that, and you will see our wrongs righted.”
+“Hold to that, and you will see our wrongs righted.”
 
 -> Artifact2Intro 
 
 =worse 
-A breathless chuckle escapes from the Mayor’s chest, a genuine, slight opening in his smile showing teeth.
+~ CharacterTitle = ""
+<i>A breathless chuckle escapes from the Mayor’s chest, a genuine, slight opening in his smile showing teeth.</i>
+~ CharacterTitle = "Mayor"
+“Heh, heh, that is a decent disposition to possess. Perhaps it will lighten you enough to lighten your step.”
 
-<b>MAYOR</b>: “Heh, heh, that is a decent disposition to possess. Perhaps it will lighten you enough to lighten your step.”
+“Nevertheless, hold to that optimism, my friend. It will be as effective a tool as any artifact, if you allow it so to be.”
 
-<b>MAYOR</b>: “Nevertheless, hold to that optimism, my friend. It will be as effective a tool as any artifact, if you allow it so to be.”
-
-->Artifact2Intro 
+-> Artifact2Intro 
 
 = unpleasent
-The Mayor expels the humored thought through his nose, one half of his lip curling into a true smile.
+~ CharacterTitle = ""
+<i>The Mayor expels the humored thought through his nose, one half of his lip curling into a true smile.</i>
+~ CharacterTitle = "Mayor"
+“Then further respect for your efforts. I do not doubt that the work capable of redeeming ourselves or our world would ever be easy.”
 
-<b>MAYOR</b>: “Then further respect for your efforts. I do not doubt that the work capable of redeeming ourselves or our world would ever be easy.”
+“Yet...if enduring such an endeavor will cleanse the Malignance, then it will be well worth undertaking. You have already made great strides along this path, and such strides show that you are capable of much more.”
 
-<b>MAYOR</b>: “Yet...if enduring such an endeavor will cleanse the Malignance, then it will be well worth undertaking. You have already made great strides along this path, and such strides show that you are capable of much more.”
-
-<b>MAYOR</b>: “Hold to the course, and I do not doubt that you will see it through.”
+“Hold to the course, and I do not doubt that you will see it through.”
 
 -> Artifact2Intro
 
 =note1
-<b>MAYOR</b>: “...Let me read it.”
+~ CharacterTitle = "Mayor"
+“...Let me read it.”
+~ CharacterTitle = ""
+<i>You hold the letter out to the Mayor, whose hands tremble as his eyes regard the letter.</i>
+~ CharacterTitle = "Mayor"
+“Where did you procure this? Within the dungeon?”
 
-You hold the letter out to the Mayor, whose hands tremble as his eyes regard the letter.
+“That can only mean...”
+~ CharacterTitle = ""
+<i>The Mayor grits his savorless teeth, a dry frost settling his gaze low.</i>
+~ CharacterTitle = "Mayor"
+“...My thanks for bringing this to me, my friend.”
+~ CharacterTitle = ""
+<i>With a downward tilt of his head, the Mayor’s face is locked in shadow, a tremble still visible at the tip of his nose.</i>
+~ CharacterTitle = "Mayor"
+“Please, forgive my upset. It is simply just...”
+~ CharacterTitle = ""
+<i>The Mayor’s eyes seem to weaken as he holds the letter out. You take it from his hand, and his arm folds close to his chest.</i>
+~ CharacterTitle = "Mayor"
+“The implication of such a discovery is another pain I will bear.”
 
-<b>MAYOR</b>: “Where did you procure this? Within the dungeon?”
-
-<b>MAYOR</b>: “That can only mean...”
-
-The Mayor grits his savorless teeth, a dry frost settling his gaze low.
-
-<b>MAYOR</b>: “...My thanks for bringing this to me, my friend.”
-
-With a downward tilt of his head, the Mayor’s face is locked in shadow, a tremble still visible at the tip of his nose.
-
-<b>MAYOR</b>: “Please, forgive my upset. It is simply just...”
-
-The Mayor’s eyes seem to weaken as he holds the letter out. You take it from his hand, and his arm folds close to his chest.
-
-<b>MAYOR</b>: “The implication of such a discovery is another pain I will bear.”
-
-<b>MAYOR</b>: “I had hoped when I did not see him or his family here, that he was swifter than I.” -> letter1Questions 
+“I had hoped when I did not see him or his family here, that he was swifter than I.” -> letter1Questions 
 
 =letter1Questions
 
 +["Who was he?]" -> whoWasHe
-+["Why did you warn him?"] -> WarnHim
-+["What now?"] -> WhatNow
++["Why did you warn him?"]-> WarnHim
++["What now?"]-> WhatNow
 
 =whoWasHe 
-A distant light twinkles in the Mayor’s eye, and youthful air fills his chest.
+~ CharacterTitle = ""
+<i>A distant light twinkles in the Mayor’s eye, and youthful air fills his chest.</i>
+~ CharacterTitle = "Mayor"
+“A friend whom I once loved as a brother.”
 
-<b>MAYOR</b>: “A friend whom I once loved as a brother.”
+“If I could turn back time,”
 
-<b>MAYOR</b>: “If I could turn back time,”
+“I would have never let such kinship fade.”
 
-<b>MAYOR</b>: “I would have never let such kinship fade.”
-
-->letter1Questions
+-> letter1Questions
 
 =WarnHim 
-<b>MAYOR</b>: “On that fateful day, I finally broke the Church’s leash. Station and position carries little value in the face of death.”
+~ CharacterTitle = "Mayor"
+“On that fateful day, I finally broke the Church’s leash. Station and position carries little value in the face of death.”
 
-<b>MAYOR</b>: “It was too late, however, to speak out against the false truth the Church peddled. Radefell was too fervent in the belief that its salvation lay in the bringing of what we now know as the Malignance.”
+“It was too late, however, to speak out against the false truth the Church peddled. Radefell was too fervent in the belief that its salvation lay in the bringing of what we now know as the Malignance.”
 
-<b>MAYOR</b>: “I only hoped that one would heed me, for respect of all those years past.”
+“I only hoped that one would heed me, for respect of all those years past.”
 
-->letter1Questions
+-> letter1Questions
 
 =WhatNow 
-The Mayor inhales through his nose as he reforms his posture.
+~ CharacterTitle = ""
+<i>The Mayor inhales through his nose as he reforms his posture.</i>
+~ CharacterTitle = "Mayor"
+“There will forever be things we will wish to change from our pasts, yet the truth of the past can never be altered.”
 
-<b>MAYOR</b>: “There will forever be things we will wish to change from our pasts, yet the truth of the past can never be altered.”
+“All that remains is to seize the present, and to strive toward a future we can be proud to call our past.”
 
-<b>MAYOR</b>: “All that remains is to seize the present, and to strive toward a future we can be proud to call our past.”
+“That is why I have chosen to remain. Since my history is marked with inaction, I will gift any mote of good I can to the future of Radefell.”
 
-<b>MAYOR</b>: “That is why I have chosen to remain. Since my history is marked with inaction, I will gift any mote of good I can to the future of Radefell.”
-
-<b>MAYOR</b>: “Nevertheless, Is there anything you require?”
+“Nevertheless, Is there anything you require?”
 
 -> HubQuestions
 
 =note2 
-<b>MAYOR</b>: “Allow me, please.”
+~ CharacterTitle = "Mayor"
+“Allow me, please.”
+~ CharacterTitle = ""
+<i>You hand the Mayor the page. His eyes squint and his lips frown in recognition.</i>
+~ CharacterTitle = "Mayor"
+“Indeed, yes. This is my penmanship. I was witness to one of the artifacts, before the Convergence.”
 
-You hand the Mayor the page. His eyes squint and his lips frown in recognition.
-
-<b>MAYOR</b>: “Indeed, yes. This is my penmanship. I was witness to one of the artifacts, before the Convergence.”
-
-<b>MAYOR</b>: “What do you wish to know?”
+“What do you wish to know?”
 
 -> Letter2Questions 
 
 =Letter2Questions 
-+["What is this artifact?"] -> artifactQuestion
-+["When did you see it?"] -> seeIt 
++["What is this artifact?"]-> artifactQuestion
++["When did you see it?"]-> seeIt 
 * -> HubQuestions
 
 =artifactQuestion
-<b>MAYOR</b>: “The retainer who demonstrated the artifact called it the Eye of Genesis.”
+~ CharacterTitle = "Mayor"
+“The retainer who demonstrated the artifact called it the Eye of Genesis.”
 
-<b>MAYOR</b>: “They claimed it would unite the powers of the artifacts, and bring form to the Malignance.”
+“They claimed it would unite the powers of the artifacts, and bring form to the Malignance.”
 
-<b>MAYOR</b>: “I cannot comprehend the extent of its power, only that it possesses it.”
+“I cannot comprehend the extent of its power, only that it possesses it.”
 
-<b>MAYOR</b>: “And its gaze...I hesitate to match its gaze again.”
+“And its gaze...I hesitate to match its gaze again.”
 
-->Letter2Questions
+-> Letter2Questions
 
 =seeIt 
-<b>MAYOR</b>: “The morning of the Festival, hours before the Convergence. As the menace of the artifact washed over me, the revelation of horror that would befall us would come too late.”
+~ CharacterTitle = "Mayor"
+“The morning of the Festival, hours before the Convergence. As the menace of the artifact washed over me, the revelation of horror that would befall us would come too late.”
 
-<b>MAYOR</b>: “All of Radefell looked toward the Church as their saviors, and none heeded my warning as I raced through the streets.”
+“All of Radefell looked toward the Church as their saviors, and none heeded my warning as I raced through the streets.”
 
-->Letter2Questions
+-> Letter2Questions
 
 = Artifact2Intro
-<b>MAYOR</b>: “Nevertheless, there is still much work for myself to do. No doubt the same for you, with other artifacts to collect.”
+~ CharacterTitle = "Mayor"
+“Nevertheless, there is still much work for myself to do. No doubt the same for you, with other artifacts to collect.”
 
-->questions
+-> questions
 
 = Artifact2 
-You see surprise tug the lids of the Mayor’s eyes open, and his stitched lips file into an impressed line.
+~ CharacterTitle = ""
+<i>You see surprise tug the lids of the Mayor’s eyes open, and his stitched lips file into an impressed line.</i>
+~ CharacterTitle = "Mayor"
+“Now this is...most auspicious.”
+~ CharacterTitle = ""
+<i>The Mayor’s sight seems to settle on something that isn’t you for a moment, his next words half-spoken as his mind drifts.</i>
+~ CharacterTitle = "Mayor"
+“No doubt such diligence deserves recognition.”
 
-<b>MAYOR</b>:“Now this is...most auspicious.”
-
-The Mayor’s sight seems to settle on something that isn’t you for a moment, his next words half-spoken as his mind drifts.
-
-<b>MAYOR</b>: “No doubt such diligence deserves recognition.”
-
-+["Glad to be of service."] ->service 
-+["I deserve no thanks."] -> thanks 
-+["It is my duty."] -> duty
-+["The work remains unfinished."] -> unfinished 
++["Glad to be of service."]-> service 
++["I deserve no thanks."]-> thanks 
++["It is my duty."]-> duty
++["The work remains unfinished."]-> unfinished 
 
 =service 
-The Mayor’s gaze focuses on the wall behind you for a few seconds, until he looks back to you, coming to his senses.
+~ CharacterTitle = ""
+<i>The Mayor’s gaze focuses on the wall behind you for a few seconds, until he looks back to you, coming to his senses.</i>
+~ CharacterTitle = "Mayor"
+“Service is a vast understatement.”
 
-<b>MAYOR</b>: “Service is a vast understatement.”
-
-->HubQuestions
+-> HubQuestions
 
 =thanks
-The Mayor’s gaze turns downward for a few seconds, until he looks back to you, coming to his senses.
+~ CharacterTitle = ""
+<i>The Mayor’s gaze turns downward for a few seconds, until he looks back to you, coming to his senses.</i>
+~ CharacterTitle = "Mayor"
+“If you believe it to be so, then I will not impose my gratitude upon you. Just know that the course you took has brought bounty after the most brutal of famines.”
 
-<b>MAYOR</b>: “If you believe it to be so, then I will not impose my gratitude upon you. Just know that the course you took has brought bounty after the most brutal of famines.”
-
-->HubQuestions
+-> HubQuestions
 
 =duty 
-The Mayor’s gaze lies upon a way to his right for a few seconds, until he looks back to you, coming to his senses.
+~ CharacterTitle = ""
+<i>The Mayor’s gaze lies upon a way to his right for a few seconds, until he looks back to you, coming to his senses.</i>
+~ CharacterTitle = "Mayor"
+“That I cannot fault, even risen as you are. You have chosen it to be so nonetheless, and you have performed such a task with excellence.”
 
-<b>MAYOR</b>: “That I cannot fault, even risen as you are. You have chosen it to be so nonetheless, and you have performed such a task with excellence.”
-
-->HubQuestions
+-> HubQuestions
 
 =unfinished
+~ CharacterTitle = ""
+<i>The Mayor’s gaze seems unfocused for a few seconds, until he coughs and looks back to you, coming back to his senses.</i>
+~ CharacterTitle = "Mayor"
+“Quite, yes, yet there is still impact from what you have already done. Pride can be claimed in that.”
 
-The Mayor’s gaze seems unfocused for a few seconds, until he coughs and looks back to you, coming back to his senses.
-
-<b>MAYOR</b>: “Quite, yes, yet there is still impact from what you have already done. Pride can be claimed in that.”
-
-->HubQuestions
+-> HubQuestions
 
 = goodbye
-<b>MAYOR</b>: “I wish you well in your endeavors.”
+~ CharacterTitle = "Mayor"
+“I wish you well in your endeavors.”
 -> DONE
+
+=MayorBedrock
+~ CharacterTitle = "Mayor"
+<b>MAYOR</b>: "Greetings. How goes your endevors into the caverns of Radefell?”
+
++["It could be better."]-> betterBedrock
++["It could be worse."]-> worseBedrock
++["It is unpleasant, indeed."]-> unpleasentBedrock
+
+= betterBedrock
+~ CharacterTitle = ""
+<i>A blanched laugh breaches Mayor’s rosy cheeks, his eyes slitting at the long unfamiliar sensation.</i>
+~ CharacterTitle = "Mayor"
+“Haah, ah… it always could be. That, in a way, is why you seek these artifacts.”
+~ CharacterTitle = "Mayor"
+“Each step you take is toward the untwisting of our reality. Each artifact you reclaim is another leap toward the ending of these senseless times.”
+
+“Hold to that, and you will see our wrongs righted.”
+
+-> END 
+
+=worseBedrock
+~ CharacterTitle = ""
+<i>A breathless chuckle escapes from the Mayor’s chest, a genuine, slight opening in his smile showing teeth.</i>
+~ CharacterTitle = "Mayor"
+“Heh, heh, that is a decent disposition to possess. Perhaps it will lighten you enough to lighten your step.”
+
+“Nevertheless, hold to that optimism, my friend. It will be as effective a tool as any artifact, if you allow it so to be.”
+
+-> END 
+
+= unpleasentBedrock
+~ CharacterTitle = ""
+<i>The Mayor expels the humored thought through his nose, one half of his lip curling into a true smile.</i>
+~ CharacterTitle = "Mayor"
+“Then further respect for your efforts. I do not doubt that the work capable of redeeming ourselves or our world would ever be easy.”
+
+“Yet… if enduring such an endeavor will cleanse the Malignance, then it will be well worth undertaking. You have already made great strides along this path, and such strides show that you are capable of much more.”
+
+“Hold to the course, and I do not doubt that you will see it through.”
+
+-> END
+
+
 ==Clergy==
 ~ CharacterTitle = "High Priest"
 {
@@ -1097,7 +1211,7 @@ The Mayor’s gaze seems unfocused for a few seconds, until he coughs and looks 
  - isDeathF1: -> DeathF1 // Go to death 1
  - isHub: -> Hub// Go to hub
  - isDeathF2: -> DeathF2// Go to death 2 
- - else: Error ->END
+ - else: Error -> END
  }
  
  /*
@@ -1123,7 +1237,7 @@ VAR angryClerics = false
     -> ADoomedQuest
  *  ["I seek a setting sun on your god."]
     -> TrulyDisgraced
- *  ["I seek nothing but safe passage below."] 
+ *  ["I seek nothing but safe passage below."]
     -> ADoomedQuest
 
 = ADoomedQuest 
@@ -1164,14 +1278,14 @@ PLAYER DIES IN FLOOR 1 SECTION
 ~ CharacterTitle = "Thinking Cleric"
 "I wonder, will it continue to flail in misguided misery... or has it come here to bathe in the holy light?"
 ~ CharacterTitle = ""
-<i>The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.
- *  "I have no need for holy light, but I could use some answers."
-    The thoughtful cleric spreads their arms wide.
+<i>The condescension drips sickly sour off of their lips as their eyes alight upon you. The grand cathedral around them seems to mock you, too, as their words reverberate off the walls. You can almost imagine the sound of a chuckle from the dark throne cloaked in shadow at the opposite end of the vaulted hall.</i>
+ *  ["Let me pass, petulant ones. I care not for your distractions."]
+    -> GoForth2
+ *  ["I have no need for holy light, but I could use some answers."]
+    <i>The thoughtful cleric spreads their arms wide.</i>
     ~ CharacterTitle = "Thinking"
     "We have little to hide. As long as you remain diplomatic, we will answer any questions you possess."
         -> AskQuestions
- *  "Let me pass, petulant ones. I care not for your distractions."
-    -> GoForth2
 
 = AskQuestions 
 ~ CharacterTitle = ""
@@ -1219,6 +1333,7 @@ PLAYER DIES IN FLOOR 1 SECTION
 -> AskQuestions
 
 = KnowVillagers 
+~ CharacterTitle = "Thinking"
 "Of course, our spire watches over each of them."
  *  ["What are your thoughts on the Crypt Keeper?"]
  ~ CharacterTitle = "Weeping"
@@ -1270,7 +1385,7 @@ PLAYER DIES IN FLOOR 1 SECTION
 
 
  /*
-PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence over hub? hopefully hub will only ever be triggered once)
+PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence over hub? hopefully hub will only ever be triggered once (LOL IVY -ivy))
 */
 
 = Hub 
@@ -1285,15 +1400,14 @@ PLAYER SUCCEEDS IN FLOOR 1 SECTION (?? will the other things take precedence ove
 
 <i>A dark, humanoid form rises from the throne behind the clerics, booming laughter filling the air. The figure approaches.</i>
 ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?"
-~ CharacterTitle = ""
- *  "I am no traitor."
- *  "I am no one's puppet."
- *  "I am not a monster."
+"Your transgressions mark a black stain upon the lightless void. Identify yourself, heretic, among the three: are you traitor, puppet, or monster?"
+ *  ["I am no traitor."]
+ *  ["I am no one's puppet."]
+ *  ["I am not a monster."]
  ~ CharacterTitle = "High Priest"
--<b>HIGH PRIEST</b>: "Maybe not, but you are weak. Though you have stolen from my dungeon, you have only shown the futility of your quest."
-<b>HIGH PRIEST</b>: "My children grow hungrier. Your final death is imminent."
-<b>HIGH PRIEST</b>: "Now, get out of my sight."
+-"Maybe not, but you are weak. Though you have stolen from my dungeon, you have only shown the futility of your quest."
+"My children grow hungrier. Your final death is imminent."
+"Now, get out of my sight."
     -> END
 
 
@@ -1305,698 +1419,789 @@ PLAYER DIES IN FLOOR 2 SECTION
 ~ CharacterTitle = ""
 <i>The menacing figure of the High Priest turns to you, the other clerics cowering behind.</i>
  ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "My clerics forewarned me of the great humor of your repeated failings, but nothing could have prepared me for the reality of your humiliation."
-~ CharacterTitle = ""
-  *  "Enough mocking, I have questions."
+"My clerics forewarned me of the great humor of your repeated failings, but nothing could have prepared me for the reality of your humiliation."
+  *  ["Enough mocking, I have questions."]
+  ~ CharacterTitle = ""
     <i>The High Priest's black eyes burn twin holes in your head, but they do not decline your request.</i>
         -> AskQuestionsOfHP
- *  "I will not speak to you any more than I must, fear-father. Let me pass."
+ *  ["I will not speak to you any more than I must, fear-father. Let me pass."]
     -> GoForth3
 
 = AskQuestionsOfHP 
-~ CharacterTitle = ""
- *  "What are you?"
+ *  ["What are you?"]
     -> WhatAreYou
- *  "What do you think of the villagers?"
+ *  ["What do you think of the villagers?"]
     -> WhatOfVillagers
- *  "You returned when I discovered the Magic Hand, why? What do you want?"
+ *  ["You returned when I discovered the Magic Hand, why? What do you want?"]
     -> WhatYouWant
- *  "Enough. I wish to pass on into the dungeon."
+ *  ["Enough. I wish to pass on into the dungeon."]
     -> GoForth3
 
 = WhatAreYou 
  ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "I am a vision of myself, wrenched from my infinite form into this weak body."
+"I am a vision of myself, wrenched from my infinite form into this weak body."
 ~ CharacterTitle = ""
 <i>Chills creep up the back of your neck. The High Priest's cold stare holds you, immobilized.</i>
  ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "A better question, I ask myself: what are you?"
-<b>HIGH PRIEST</b>: "Death-cheater, oath-breaker, disgraced. Despite your resistance, you are destined to be nothing, just as I am destined to be everything."
-<b>HIGH PRIEST</b>: "Fate will not relent for you, and time will reveal my true nature."
+"A better question, I ask myself: what are you?"
+"Death-cheater, oath-breaker, disgraced. Despite your resistance, you are destined to be nothing, just as I am destined to be everything."
+"Fate will not relent for you, and time will reveal my true nature."
 - -> AskQuestionsOfHP
 
 = WhatOfVillagers 
  ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "They are, all but one, wretched invertibrates. Which of them interests you?"
-~ CharacterTitle = ""
- *  "The Crypt Keeper."
+"They are, all but one, wretched invertibrates. Which of them interests you?"
+ *  ["The Crypt Keeper."]
   ~ CharacterTitle = "High Priest"
-    <b>HIGH PRIEST</b>: "She is a betrayer, heathen, and the most egregious of failures, despite her talents."
- *  "The Mayor."
+    "She is a betrayer, heathen, and the most egregious of failures, despite her talents."
+ *  ["The Mayor."]
   ~ CharacterTitle = "High Priest"
-    <b>HIGH PRIEST</b>: "He is a weak-willed puppet, and it was delicious fun to toy with him before he fled during my rise."
- *   "The Scholar."
+    "He is a weak-willed puppet, and it was delicious fun to toy with him before he fled during my rise."
+ *  ["The Scholar."]
   ~ CharacterTitle = "High Priest"
-    <b>HIGH PRIEST</b>: "They are a poor, tortured monster, and I cannot help but adore their fervor. They are also quite a talented keeper of secrets, to be sure."
+    "They are a poor, tortured monster, and I cannot help but adore their fervor. They are also quite a talented keeper of secrets, to be sure."
 - -> AskQuestionsOfHP
 
 = WhatYouWant 
  ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "You've brushed so close against success..."
-<b>HIGH PRIEST</b>: "I want to bear witness to when you inevitably fail."
+"You've brushed so close against success..."
+"I want to bear witness to when you inevitably fail."
 -> AskQuestionsOfHP
 
 = GoForth3 
  ~ CharacterTitle = "High Priest"
-<b>HIGH PRIEST</b>: "Of course... I will see you again shortly, doomed heretic."
+"Of course... I will see you again shortly, doomed heretic."
     -> END
 ==Scholar==
  
  =Hub
  ~ CharacterTitle = "Scholar"
  {
-- Hub == 0: -> ScholarhubIntro
-- else: -> regularHub
-} 
-
+ - isScholarIntro: -> ScholarhubIntro// Go to intro
+ - isHub or isDeathF2: -> regularHub// Go to hub
+ - else: Error
+ }
 
 =ScholarhubIntro
-Despite your misgivings, you walk towards the uninviting building. 
+{ScholarhubIntro > 1: -> ScholarBedrock}
+ ~ CharacterTitle = ""
+<i>Despite your misgivings, you walk towards the uninviting building. </i>
 
-As you approach, the door creaks open, and a robed figure appears from the deep shadows of the doorway. 
+<i>As you approach, the door creaks open, and a robed figure appears from the deep shadows of the doorway. </i>
 
-The little of their face left uncovered by bandages sends a shiver down your spine. 
+<i>The little of their face left uncovered by bandages sends a shiver down your spine. </i>
 
-And yet...a wave of familiarity crashes upon you all the same. 
+<i>And yet...a wave of familiarity crashes upon you all the same. </i>
 
-The gravelly voice from the person before you echoes louder in your head than in your ears.
+<i>The gravelly voice from the person before you echoes louder in your head than in your ears.</i>
+ ~ CharacterTitle = "Scholar"
+Hmm, so it appears one has returned...
+ ~ CharacterTitle = ""
+<i>It has been a long while since I’ve conversed with someone... of a similar origin. </i>
+ ~ CharacterTitle = "Scholar"
+It’s good to know we few are not the last.
 
-<b>SCHOLAR:</b> Hmm, so it appears one has returned...
-It has been a long while since I’ve conversed with someone... of a similar origin. 
-
-<b>SCHOLAR:</b> It’s good to know we few are not the last.
-
-*["What do you mean?"] ->WhatDoYouMean 
-*["It is good to see you too."] ->GoodToSee
+*["What do you mean?"]-> WhatDoYouMean 
+*["It is good to see you too."]-> GoodToSee
 
 =WhatDoYouMean 
-<b>SCHOLAR:</b> Hmm? Has the wanderer lost themself in their years away? Surely, they must recognize one of their Church’s great knowledge keepers.
+ ~ CharacterTitle = "Scholar"
+Hmm? Has the wanderer lost themself in their years away? Surely, they must recognize one of their Church’s great knowledge keepers.
 
-<b>SCHOLAR:</b> Not much for talk, wanderer? I can’t say I’m surprised. The eternal enigma they are, even to one as learned as I. 
+Not much for talk, wanderer? I can’t say I’m surprised. The eternal enigma they are, even to one as learned as I. 
 
 -> introQuestions 
 
 =GoodToSee 
-You give a deep bow. 
+ ~ CharacterTitle = ""
+<i>You give a deep bow. </i>
+ ~ CharacterTitle = "Scholar"
+Ahh, such respect from the wanderer.
 
-<b>SCHOLAR:</b> Ahh, such respect from the wanderer.
+Nothing less than I’d expect from Malisense’s most faithful.
 
-<b>SCHOLAR:</b> Nothing less than I’d expect from Malisense’s most faithful.
+It seems, even after all this time, they remember how to respect their superiors.
 
-<b>SCHOLAR:</b> It seems, even after all this time, they remember how to respect their superiors.
-
-->introQuestions
+-> introQuestions
 
 =introQuestions
-<b>SCHOLAR:</b> But, niceties and remembrances aside, I doubt idle prattle is what the wanderer seeks. What is it they wish of me?
+ ~ CharacterTitle = "Scholar"
+But, niceties and remembrances aside, I doubt idle prattle is what the wanderer seeks. What is it they wish of me?
 
-*["What happened to you?"] -> toYou 
-*["What happened here?"] -> happenedHere 
+*["What happened to you?"]-> toYou 
+*["What happened here?"]-> happenedHere 
 *-> introGoodbye 
 
 =toYou 
-<b>SCHOLAR:</b> Isn't that an interesting quandary. 
-<b>SCHOLAR:</b> And the answer is even more intriguing.
-<b>SCHOLAR:</b> But, forgotten wanderer, I hardly wish to reveal such knowledge to one who has become practically a stranger. 
-<b>SCHOLAR:</b> Perhaps some other time I shall tell, but for now the doors to my secrets are locked.
+ ~ CharacterTitle = "Scholar"
+Isn't that an interesting quandary. 
+And the answer is even more intriguing.
+But, forgotten wanderer, I hardly wish to reveal such knowledge to one who has become practically a stranger. 
+Perhaps some other time I shall tell, but for now the doors to my secrets are locked.
 
-->introQuestions
+-> introQuestions
 
 =happenedHere 
-<b>SCHOLAR:</b> I take it the wanderer fled before the damned city fell? 
+ ~ CharacterTitle = "Scholar"
+I take it the wanderer fled before the damned city fell? 
 
-<b>SCHOLAR:</b> Well, in essence, after the Ritual that day, the great evil that once laid beyond our limited mortal grasp finally gained physical form, and with that form decided to drag humanity down to the damnation it felt we deserved. 
+Well, in essence, after the Ritual that day, the great evil that once laid beyond our limited mortal grasp finally gained physical form, and with that form decided to drag humanity down to the damnation it felt we deserved. 
 
-<b>SCHOLAR:</b> In an instant, the city disappeared beneath the Earth, and those who remained either lost their minds or their freedom to the Malignance. 
+In an instant, the city disappeared beneath the Earth, and those who remained either lost their minds or their freedom to the Malignance. 
 
-<b>SCHOLAR:</b> Evidently, some people were able to escape the destruction–though none unscathed–and decided to go about the process of rebuilding...or whatever the closest thing might be. 
+Evidently, some people were able to escape the destruction–though none unscathed–and decided to go about the process of rebuilding...or whatever the closest thing might be. 
 
-<b>SCHOLAR:</b> I doubt the Radefell we knew shall ever stand as it did before...
+I doubt the Radefell we knew shall ever stand as it did before...
 
 -> introGoodbye 
 
 =introGoodbye
-They let out a heavy sigh.
+ ~ CharacterTitle = ""
+<i>They let out a heavy sigh.</i>
+ ~ CharacterTitle = "Scholar"
+It has been so long since I have spoken so much to another. 
 
-<b>SCHOLAR:</b> It has been so long since I have spoken so much to another. 
+But, I assume the wanderer has something somewhere to attend to. So, leave, then. 
 
-<b>SCHOLAR:</b> But, I assume the wanderer has something somewhere to attend to. So, leave, then. 
+Come again with any items of interest, and I shall tell of their nature. 
 
-<b>SCHOLAR:</b> Come again with any items of interest, and I shall tell of their nature. 
-
-<b>SCHOLAR:</b> And...give my regards to the Crypt Keeper. If she's still around.
+And...give my regards to the Crypt Keeper. If she's still around.
 -> END
 
 =regularHub
-    As you approach the stout building once more, the dimly-lit windows signal to you that the Scholar is at home.
+{regularHub > 1: -> ScholarBedrock}
+ ~ CharacterTitle = ""
+    <i>As you approach the stout building once more, the dimly-lit windows signal to you that the Scholar is at home.</i>
     *[Knock on the door]
     -> ArtifactTibits
     
 = ArtifactTibits 
-{ArtifactTibits < 1 : <b>SCHOLAR</b>: The wanderer is eager to know more? Please, enter my domicile and pilfer away at my wealth of knowledge. }
+{ArtifactTibits < 1 : -> ArtifactTibits1}
+{ArtifactTibits < 2: -> ArtifactTibits2}
+{ArtifactTibits > 2: -> ArtifactTibits3}
+ ~ CharacterTitle = "Scholar"
+{hasDied: Ah, what joy! The wanderer returns once again! I had worried our last meeting would be our final one. What a tragedy that would have been... -> ArtifactQuestions}
 
-{ArtifactTibits < 1 : <b>SCHOLAR</b>: Let us fill your mind with forgeries. }
+= ArtifactTibits1
+ ~ CharacterTitle = "Scholar"
+The wanderer is eager to know more? Please, enter my domicile and pilfer away at my wealth of knowledge. 
+Let us fill your mind with forgeries.
+I know the wanderer seeks to know more of the artifacts...I shall share my burden with the wanderer so that it no longer crushes solely my shoulders.
+There are three. The Whispering Bell, the Apparition Gauntlet, and the Eye of Genesis. -> ArtifactQuestions
 
-{ArtifactTibits < 1 : <b>SCHOLAR</b>: I know the wanderer seeks to know more of the artifacts...I shall share my burden with the wanderer so that it no longer crushes solely my shoulders. }
+= ArtifactTibits2
+ ~ CharacterTitle = "Scholar"
+Back already, hm? I am pleased the wanderer's steps have not ceased along their journey, and have instead brought them back to me.-> ArtifactQuestions
 
-{ArtifactTibits < 1 : <b>SCHOLAR</b>: There are three. The Whispering Bell, the Apparition Gauntlet, and the Eye of Genesis. ->ArtifactQuestions} 
+= ArtifactTibits3
+ ~ CharacterTitle = ""
+<i>A faint memory emerges from the deep crevaces of your mind. You're sitting alone in an office.</i>
 
-{ArtifactTibits < 2: <b>SCHOLAR</b>: Back already, hm? I am pleased the wanderer's steps have not ceased along their journey, and have instead brought them back to me.->ArtifactQuestions} 
+<i>You must've been seven or eight years old. The Scholar helping you with your studies. </i>
 
-{ArtifactTibits > 3: A faint memory emerges from the deep crevaces of your mind. You're sitting alone in an office.} 
+<i>They've made little finger puppets, which they're now using to try and explain the Old Wars to you. Where did that cheery person go? Maybe they never left.</i> -> ArtifactQuestions
 
-{ArtifactTibits > 3: You must've been seven or eight years old. The Scholar helping you with your studies. }
-
-{ArtifactTibits > 3: They've made little finger puppets, which they're now using to try and explain the Old Wars to you. Where did that cheery person go? Maybe they never left.}
-
-{hasDied: <b>SCHOLAR</b>: Ah, what joy! The wanderer returns once again! I had worried our last meeting would be our final one. What a tragedy that would have been... ->ArtifactQuestions} 
+ 
 
 =ArtifactQuestions 
-<b>SCHOLAR</b>: What do you wish of me?
+ ~ CharacterTitle = "Scholar"
+What do you wish of me?
 
- *  "What is the Whispering Bell?"
+ *  ["What is the Whispering Bell?"]
     -> WhisperingBell
-* {WhisperingBell} "May I show you something?" -> AfterA1
+* {WhisperingBell} ["May I show you something?"]
+    -> AfterA1
 
- *  "What is the Apparition Gauntlet?"
+ *  ["What is the Apparition Gauntlet?"]
     -> ApparitionGauntlet
-* {ApparitionGauntlet} "May I show you something?" -> AfterA2
+* {ApparitionGauntlet} ["May I show you something?"]
+    -> AfterA2
 
- *  "What is the Eye of Genesis?"
+ *  ["What is the Eye of Genesis?"]
     -> EyeofGenesis
     
- *  "I'm done here."
+ *  ["I'm done here."]
     -> END
 
 *-> CharacterQs
 
 
 = WhisperingBell 
-<b>SCHOLAR</b>: According to legend, the Whispering Bell was formed deep underground–much like a diamond. 
+ ~ CharacterTitle = "Scholar"
+According to legend, the Whispering Bell was formed deep underground–much like a diamond. 
 
-<b>SCHOLAR</b>: Over time, the bell was pushed closer and closer to the surface, until it was eventually found by the great General Dymilos. 
+Over time, the bell was pushed closer and closer to the surface, until it was eventually found by the great General Dymilos. 
 
-<b>SCHOLAR</b>: Many historians attribute Dymilos' strategic prowess to the bell, which he claimed allowed him to see enemy soldiers through castle walls and country hillsides. 
+Many historians attribute Dymilos' strategic prowess to the bell, which he claimed allowed him to see enemy soldiers through castle walls and country hillsides. 
 
-<b>SCHOLAR</b>: The battles he won were the crux of Radefell's glory. Our city would not have held as long as it did without his strength. 
+The battles he won were the crux of Radefell's glory. Our city would not have held as long as it did without his strength. 
 
-<b>SCHOLAR</b>: When he died, the bell was taken by the Church, as revered as a sacred item. 
+When he died, the bell was taken by the Church, as revered as a sacred item. 
 
-<b>SCHOLAR</b>: Upon the death of a devotee, the bell would be rung once in honor of their life lived in sacrifice to the Church. 
+Upon the death of a devotee, the bell would be rung once in honor of their life lived in sacrifice to the Church. 
 
-<b>SCHOLAR</b>: The wanderer must remember its tolls, even if they knew not from where. And it seems the bell has yet to toll for them. 
+The wanderer must remember its tolls, even if they knew not from where. And it seems the bell has yet to toll for them. 
 
-<b>SCHOLAR</b>: Keep it that way, dear wanderer. 
+Keep it that way, dear wanderer. 
 
 -> ArtifactQuestions
 
 = ApparitionGauntlet 
-<b>SCHOLAR</b>: Indeed, the Apparition Gauntlet! An item of great power, and greater mystery. I admit, despite my position as Radefell's last great Scholar, even I have very little knowledge of its true origins. 
+ ~ CharacterTitle = "Scholar"
+Indeed, the Apparition Gauntlet! An item of great power, and greater mystery. I admit, despite my position as Radefell's last great Scholar, even I have very little knowledge of its true origins. 
 
-<b>SCHOLAR</b>: However, many legends agree that this artifact sprung from the earth, as if grasping for the light of the surface it knew only whispers of. 
+However, many legends agree that this artifact sprung from the earth, as if grasping for the light of the surface it knew only whispers of. 
 
-<b>SCHOLAR</b>: Supposedly, it's outstretched grasp is fueled by the anger of the souls sacrificed to the Malignance, so much so that they can still influence the mortal world. 
+Supposedly, it's outstretched grasp is fueled by the anger of the souls sacrificed to the Malignance, so much so that they can still influence the mortal world. 
 -> ArtifactQuestions
 
 = EyeofGenesis 
-<b>SCHOLAR</b>: The Eye of Genesis...once a seemingly mundane pendant, it was adorned with a curious eyeball. 
+ ~ CharacterTitle = "Scholar"
+The Eye of Genesis...once a seemingly mundane pendant, it was adorned with a curious eyeball. 
 
-<b>SCHOLAR</b>: This was originally utilized by the Church as a way to oversee everyone within it. Some say its ever watchful gaze is constantly predicting the next movements of all within its line of sight. 
+This was originally utilized by the Church as a way to oversee everyone within it. Some say its ever watchful gaze is constantly predicting the next movements of all within its line of sight. 
 
-<b>SCHOLAR</b>: As for how it tells the clergy about misbehavior or imminent issues, that is a closely guarded secret of the Church that only the High Priest and few others knew. 
+As for how it tells the clergy about misbehavior or imminent issues, that is a closely guarded secret of the Church that only the High Priest and few others knew. 
 
 -> ArtifactQuestions
 
 = AfterA1 
+ ~ CharacterTitle = "Scholar"
+Ahh, it seems our intrepid wanderer has brought back something interesting. Brilliant, brilliant. 
 
-<b>SCHOLAR</b>: Ahh, it seems our intrepid wanderer has brought back something interesting. Brilliant, brilliant. 
+I hope the wanderer does not mind my writing as we talk. My mind has been clouded since Radefell perished, and nearly I along with it. 
 
-<b>SCHOLAR</b>: I hope the wanderer does not mind my writing as we talk. My mind has been clouded since Radefell perished, and nearly I along with it. 
+Writing helps me remember...remember what I am, what it was, and who we are. 
 
-<b>SCHOLAR</b>: Writing helps me remember...remember what I am, what it was, and who we are. 
+Now, what is it that the wanderer wishes to show me?
+ ~ CharacterTitle = ""
+<i>You show them the bell. </i>
 
-<b>SCHOLAR</b>: Now, what is it that the wanderer wishes to show me?
+<i>Instantly, the Scholar's remaining eye lights up. </i>
 
-You show them the bell. 
+<i>You've never seen them in such a state. </i>
 
-Instantly, the Scholar's remaining eye lights up. 
+<i>Their excitement makes them seem almost monstrous, their hand quickly scribbling unrecognized symbols on their parchment. </i>
+ ~ CharacterTitle = "Scholar"
+My, my, my, what have we here? Such an incredible item they seem to have brought to show me! 
 
-You've never seen them in such a state. 
+To the wanderer's layman eyes, I imagine it appears to simply be a bell. 
 
-Their excitement makes them seem almost monstrous, their hand quickly scribbling unrecognized symbols on their parchment. 
+What was their clerical title, again? Well, no matter, they have earned my knowledge of this artifact. 
 
-<b>SCHOLAR</b>: My, my, my, what have we here? Such an incredible item they seem to have brought to show me! 
-
-<b>SCHOLAR</b>: To the wanderer's layman eyes, I imagine it appears to simply be a bell. 
-
-<b>SCHOLAR</b>: What was their clerical title, again? Well, no matter, they have earned my knowledge of this artifact. 
-
-* "Please, tell me more."
+* ["Please, tell me more."]
  -> tellMore
  
-* "Just get on with it, already."
+* ["Just get on with it, already."]
  -> getOn
 
 = tellMore  
-<b>SCHOLAR</b>: It would be my greatest pleasure.
+ ~ CharacterTitle = "Scholar"
+It would be my greatest pleasure.
+ ~ CharacterTitle = ""
+<i>You hold the mysterious bell up to the Scholar. </i>
 
-You hold the mysterious bell up to the Scholar. 
-
-Though their expression remains concealed, you can feel the giddiness rising within them as they hungrily take in every inch of the artifact. 
-
-<b>SCHOLAR</b>: Ah, yes. Yes! What serendipity! The wanderer has brought to me the Whispering Bell!
+<i>Though their expression remains concealed, you can feel the giddiness rising within them as they hungrily take in every inch of the artifact. </i>
+ ~ CharacterTitle = "Scholar"
+Ah, yes. Yes! What serendipity! The wanderer has brought to me the Whispering Bell!
 -> WhisperingBellExplination
 
 = getOn 
-<b>SCHOLAR</b>: Such impatience. The wanderer must learn to wait... 
-
- They begin eyeing the bell thoroughly. Though their expression remains concealed, you can feel the giddiness rising within them as they hungrily take in every inch of the artifact.. 
-
-<b>SCHOLAR</b>: Certainly this cannot be...Yet, it is...wanderer. Oh, gracious wanderer! You have brought to me the Whispering Bell! 
+ ~ CharacterTitle = "Scholar"
+Such impatience. The wanderer must learn to wait... 
+ ~ CharacterTitle = ""
+<i>They begin eyeing the bell thoroughly. Though their expression remains concealed, you can feel the giddiness rising within them as they hungrily take in every inch of the artifact... </i>
+ ~ CharacterTitle = "Scholar"
+Certainly this cannot be...Yet, it is...wanderer. Oh, gracious wanderer! You have brought to me the Whispering Bell! 
 
 -> WhisperingBellExplination
 
 = WhisperingBellExplination
-<b>SCHOLAR</b>: Mortal minds cannot hear the sound of the bell. If I could, I shudder to think of how terrible it might sound. 
+ ~ CharacterTitle = "Scholar"
+Mortal minds cannot hear the sound of the bell. If I could, I shudder to think of how terrible it might sound. 
 
-<b>SCHOLAR</b>: Seeing it here, in the flesh, I can confirm a few suspicions that it would have been unbecoming of me to voice before. 
+Seeing it here, in the flesh, I can confirm a few suspicions that it would have been unbecoming of me to voice before. 
 
-<b>SCHOLAR</b>: There were rumors it was used to track signs of the Malignance when rung, and it thusly must allow you to track the souls corrupted by it. As for a reward for showing me this, I shall tell you of my folly, and of the knowledge I have burdened myself with.
+There were rumors it was used to track signs of the Malignance when rung, and it thusly must allow you to track the souls corrupted by it. As for a reward for showing me this, I shall tell you of my folly, and of the knowledge I have burdened myself with.
 
-*["Your folly?"] -> folly 
+*["Your folly?"]-> folly 
 
 =folly 
-<b>SCHOLAR</b>: I seek memories of the Convergence, to preserve my own humanity, as I now have the unfortunate position of feeling empathy for the Malignance, yet at least I hold my own memories. 
+ ~ CharacterTitle = "Scholar"
+I seek memories of the Convergence, to preserve my own humanity, as I now have the unfortunate position of feeling empathy for the Malignance, yet at least I hold my own memories. 
 
-<b>SCHOLAR</b>: I lost my peers, and my own control over my body, and all for what? 
+I lost my peers, and my own control over my body, and all for what? 
 
-<b>SCHOLAR</b>: To have no mouth with which to speak my knowledge, to bear the burden of these secrets alone...at least I may tell you without any fear. That is all I will say for now. 
+To have no mouth with which to speak my knowledge, to bear the burden of these secrets alone...at least I may tell you without any fear. That is all I will say for now. 
 
-<b>SCHOLAR</b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
+Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
 
-<b>SCHOLAR</b>: The ringing echoes of the dead shall clear the way of the corrupted.
+The ringing echoes of the dead shall clear the way of the corrupted.
 
 -> END
 
 = AfterA2 
+ ~ CharacterTitle = "Scholar"
+Brilliant, simply brilliant. The wanderer never fails to impress, as I should have expected. It seems even I have forgotten why they were so close to the heart of our Church... 
+ ~ CharacterTitle = ""
+<i>You hold up the Apparition Gauntlet.</i>
 
-<b>SCHOLAR</b>: Brilliant, simply brilliant. The wanderer never fails to impress, as I should have expected. It seems even I have forgotten why they were so close to the heart of our Church... 
+<i>As the gilded hand shimmers in the faint light before the doorway, you see its gleam reflected in the Scholar's eyes. Their excitement is apparent. </i>
+ ~ CharacterTitle = "Scholar"
+It...This is...wanderer. My dear wanderer! What blessings they bring to my doorstep, for they have found me the Apparition Gauntlet!
 
-You hold up the Apparition Gauntlet.
+To think that such a legendary artifact is here before me now. 
 
-As the gilded hand shimmers in the faint light before the doorway, you see its gleam reflected in the Scholar's eyes. Their excitement is apparent. 
-
-<b>SCHOLAR</b>: It...This is...wanderer. My dear wanderer! What blessings they bring to my doorstep, for they have found me the Apparition Gauntlet!
-
-<b>SCHOLAR</b>: To think that such a legendary artifact is here before me now. 
-
- * "Please, tell me more."
+ * ["Please, tell me more."]
  -> tellMoreGautlet 
  
-* "Just get on with it, already."
+* ["Just get on with it, already."]
  -> getOnGautlet
  
  =getOnGautlet 
- The Scholar's brow furrows slightly.
+  ~ CharacterTitle = ""
+ <i>The Scholar's brow furrows slightly.</i>
+  ~ CharacterTitle = "Scholar"
+ It seems I have also forgotten their lack of patience. But, no matter. Bring it here.
  
- <b>SCHOLAR</b>: It seems I have also forgotten their lack of patience. But, no matter. Bring it here.
- 
- ->tellMoreGautlet
+ -> tellMoreGautlet
  
  = tellMoreGautlet 
 {-getOnGautlet: 
-<b>SCHOLAR</b>: But, no matter. Bring it here.
+ ~ CharacterTitle = "Scholar"
+But, no matter. Bring it here.
 -else:
-<b>SCHOLAR</b>: If you'll allow me...
+ ~ CharacterTitle = "Scholar"
+If you'll allow me...
 }
-
-The Scholar reaches over to touch the Gauntlet, then shudders. 
-
-<b>SCHOLAR</b>: It is as I thought, my intuitions were correct...
+ ~ CharacterTitle = ""
+<i>The Scholar reaches over to touch the Gauntlet, then shudders. </i>
+ ~ CharacterTitle = "Scholar"
+It is as I thought, my intuitions were correct...
 
 -> handQuestions
 
 =handQuestions
 
-*["How should I use it?"] -> howUseHand 
-*["What was its use?"] -> useHand
-*->handGoodbye
+*["How should I use it?"]-> howUseHand 
+*["What was its use?"]-> useHand
+*-> handGoodbye
 
 =howUseHand 
-<b>SCHOLAR</b>: It seems the souls consumed by the Malignance still claw for the surface of a tempestuous sea of their own multitudes. 
+ ~ CharacterTitle = "Scholar"
+It seems the souls consumed by the Malignance still claw for the surface of a tempestuous sea of their own multitudes. 
 
-<b>SCHOLAR</b>: Their outstretched grasp and its lack of a grip on reality ends up overcompensating, so that its infrequent touch far outstretches the physical bounds of the Gauntlet's fingers. 
+Their outstretched grasp and its lack of a grip on reality ends up overcompensating, so that its infrequent touch far outstretches the physical bounds of the Gauntlet's fingers. 
 
-<b>SCHOLAR</b>: For those with a vocabulary lesser than mine, it may touch others from very far away in its attempts to cling to the mortal realm.
+For those with a vocabulary lesser than mine, it may touch others from very far away in its attempts to cling to the mortal realm.
 
 -> handQuestions
 
 
 
 =useHand
+ ~ CharacterTitle = "Scholar"
+This forces me into a position of conjecture given how much of the information about it is knowledge or rumor, but considering the truth of it being the consumed souls of the Malignance vying for revenge...
 
-<b>SCHOLAR</b>: This forces me into a position of conjecture given how much of the information about it is knowledge or rumor, but considering the truth of it being the consumed souls of the Malignance vying for revenge...
+It must have been used by the Church for the controlling of beasts...still, as thanks for sharing such a wonderous creation with me, I shall speak more of my senselessness...
 
-<b>SCHOLAR</b>: It must have been used by the Church for the controlling of beasts...still, as thanks for sharing such a wonderous creation with me, I shall speak more of my senselessness...
+If I had merely left the clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
 
-<b>SCHOLAR</b>: If I had merely left the clergy like the Crypt Keeper, my body would not be in such a state as this...oh, what a fool I've been. 
+*["Your body?"]
+ ~ CharacterTitle = "Scholar"
+I...do not know if it is safe to share this secret but...my body is not my own. 
 
-*["Your body?"] 
+I only make use of the eye and my mind. I am left as a puppet, much like the Mayor. 
 
-<b>SCHOLAR</b>: I...do not know if it is safe to share this secret but...my body is not my own. 
+N-Not in the political sense or whatever is going on with that coward. 
 
-<b>SCHOLAR</b>: I only make use of the eye and my mind. I am left as a puppet, much like the Mayor. 
+It was a great mistake of mine, to give up my body to a beast that controls it...I am grateful you are the only visitor I get. 
 
-<b>SCHOLAR</b>: N-Not in the political sense or whatever is going on with that coward. 
-
-<b>SCHOLAR</b>: It was a great mistake of mine, to give up my body to a beast that controls it...I am grateful you are the only visitor I get. 
-
-<b>SCHOLAR</b>: I shall speak no more of it to you....
+I shall speak no more of it to you....
 -> handQuestions
 
 =handGoodbye 
-<b>SCHOLAR</b>: Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
-->END 
+ ~ CharacterTitle = "Scholar"
+Now, go and wander once more, down in the dark and despair of the Malignance's tomb. 
+-> END 
 
 = CharacterQs 
-* "What do you know about the Crypt Keeper?"
+* ["What do you know about the Crypt Keeper?"]
 -> ckAnswers
 
-* "What can you tell me about the Mayor?"
+* ["What can you tell me about the Mayor?"]
 -> mayorAnswers
 
-* "Anything to say about the clergy?"
+* ["Anything to say about the clergy?"]
 -> clergyAnswers
 
-* "Enough questions."
+* ["Enough questions."]
 -> END
 
 = ckAnswers 
-<b>SCHOLAR</b>: So you wish to know more about the Crypt Keeper...I must say, there is some knowledge I am not burdened by. 
+ ~ CharacterTitle = "Scholar"
+So you wish to know more about the Crypt Keeper...I must say, there is some knowledge I am not burdened by. 
 
-<b>SCHOLAR</b>: I know not if it is my place to say this, but rightfully she left the clergy long ago while I remained, blinded by my search for knowledge. 
+I know not if it is my place to say this, but rightfully she left the clergy long ago while I remained, blinded by my search for knowledge. 
 
- "Why did she leave?" 
-
-<b>SCHOLAR</b>: There were times where the good she could do was limited by being in the Church. And so she left, for a better life. And look where it got her in comparison. 
-
- They reach to touch the bandages on their face, then shudder.  
-
-<b>SCHOLAR</b>: T-That is enough. Get on with any other questions you have. But please, send the Crypt Keeper my regards. She did the right thing.
+ * ["Why did she leave?"]
+ ~ CharacterTitle = "Scholar"
+There were times where the good she could do was limited by being in the Church. And so she left, for a better life. And look where it got her in comparison. 
+ ~ CharacterTitle = ""
+ <i>They reach to touch the bandages on their face, then shudder.  </i>
+ ~ CharacterTitle = "Scholar"
+T-That is enough. Get on with any other questions you have. But please, send the Crypt Keeper my regards. She did the right thing.
 
 -> CharacterQs
 
 = mayorAnswers 
-<b>SCHOLAR</b>: The world of politics was rather out of my purview of knowledge, I know not the intricacies of negotiation and I most certainly never have known the intricacies of fleeing like a coward. 
+ ~ CharacterTitle = "Scholar"
+The world of politics was rather out of my purview of knowledge, I know not the intricacies of negotiation and I most certainly never have known the intricacies of fleeing like a coward. 
 
-<b>SCHOLAR</b>: I have done many things that were senseless, but never as senseless as that fool of a mayor. 
+I have done many things that were senseless, but never as senseless as that fool of a mayor. 
 
- "Senseless?" 
+ *["Senseless?"]
 
-<b>SCHOLAR</b>: The wanderer seeks to know of my many mistakes, but I shall only speak of it if you show me any and all artifacts you collect. 
+The wanderer seeks to know of my many mistakes, but I shall only speak of it if you show me any and all artifacts you collect. 
 
 -> CharacterQs
 = clergyAnswers 
-<b>SCHOLAR</b>: The clergy...all I know is that they are members of the Church, with the exception of the High Priest...they kept me on a short leash, treating me like a curious infant, even when I was one of the foremost keepers of Church secrets. 
+ ~ CharacterTitle = "Scholar"
+The clergy...all I know is that they are members of the Church, with the exception of the High Priest...they kept me on a short leash, treating me like a curious infant, even when I was one of the foremost keepers of Church secrets. 
 
-<b>SCHOLAR</b>: Perhaps they were right that I would never learn some sort of higher truth, and I never left the clergy like the Crypt Keeper did...if I had, maybe I'd have learned some greater truth.
+Perhaps they were right that I would never learn some sort of higher truth, and I never left the clergy like the Crypt Keeper did...if I had, maybe I'd have learned some greater truth.
 
 -> CharacterQs
 
+=ScholarBedrock
+~ CharacterTitle = "Scholar"
+Ah, you have returned. Tell me, what has given you trouble?
 
++["The monsters are difficult."]
+Do not forget of the items at hand. These wonderful novelties may be the difference between having an artifact in hand, or being awokened in the arms of the Crypt Keeper.
+-> ScholarBedrock
+
++["Gems are hard to find."]
+Hmmm...
+By my research, the gems are known to be at the outskirts of the city.
+Do what you will with that information.
+-> ScholarBedrock
+
++["I am not having difficulty."]
+Interesting response.
+I did not know you were a liar, wanderer.
+~ CharacterTitle = ""
+<i>They quickly scribble something on a nearby paper.</i>
+~ CharacterTitle = "Scholar"
+"Noted."
+-> ScholarBedrock
+
++["Goodbye."]
+Till next time, wanderer.
+    -> END
 
 
 ==End== 
 ~character = "Mayor"
-~ CharacterTitle = "Mayor"
 ~background = "next"
-You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your lightfooted step and close the distance across the room in an instant, locking eyes with the Mayor. 
+~ CharacterTitle = ""
+<i>You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your lightfooted step and close the distance across the room in an instant, locking eyes with the Mayor. </i>
 
-While he does not flinch from your gaze, the Mayor’s lips are pressed together, but not smiling this time.	
+<i>While he does not flinch from your gaze, the Mayor’s lips are pressed together, but not smiling this time.	</i>
+~ CharacterTitle = "Mayor"
+“I knew this time would come...”
 
-<b>MAYOR</b>: “I knew this time would come...”
++["You have the final artifact!"] 
+~ CharacterTitle = "Mayor"
+“Indeed. It is within my possession, and I am willing to tell you where it is.”  
 
-+["You have the final artifact!"]  
-
-<b>MAYOR</b>: “Indeed. It is within my possession, and I am willing to tell you where it is.”  
-
-++["Tell me."] 
-
+++["Tell me."]
+~ CharacterTitle = "Mayor"
 “I hid it within the fountain, at the center of town. You can find it there.”
 
-+++["Tell me what happened."] -> Explination 
-+++["I am done with you."] -> CryptKeeperFinal
++++["Tell me what happened."]-> Explination 
++++["I am done with you."]-> CryptKeeperFinal
 
 = Explination
-{Mayor.note1: <b>MAYOR</b>: “You know the story, you found that scrap of my journal. Allow me to illuminate the full context.”}
+~ CharacterTitle = "Mayor"
+{Mayor.note1: “You know the story, you found that scrap of my journal. Allow me to illuminate the full context.”}
 
-<b>MAYOR</b>: “Even as I acted toward the supposed good of Radefell, I was but an unknowing puppet for the Church, unaware of what would come until it was too late.”
+“Even as I acted toward the supposed good of Radefell, I was but an unknowing puppet for the Church, unaware of what would come until it was too late.”
 
-<b>MAYOR</b>: “The evening before the Convergence, the Church channeled the gall to demonstrate the Eye of Genesis to me. They must have known that not a soul would heed me, that I would tarnish my image in my doomsaying and they would rise to establish their theocracy over Radefell.”
+“The evening before the Convergence, the Church channeled the gall to demonstrate the Eye of Genesis to me. They must have known that not a soul would heed me, that I would tarnish my image in my doomsaying and they would rise to establish their theocracy over Radefell.”
 
-<b>MAYOR</b>: “We know now that it would have never been that simple.”
+“We know now that it would have never been that simple.”
 
-+["What happened before the Convergence?"] -> PreConvergence
-+["I am done with you."] -> CryptKeeperFinal
++["What happened before the Convergence?"]-> PreConvergence
++["I am done with you."]-> CryptKeeperFinal
 
 =PreConvergence
-<b>MAYOR</b>: “I toiled, unable to come to a course of action that could stop the Church. I am no warrior nor sneak, so I had no chance of infiltrating where they kept the Eye of Genesis.”
+~ CharacterTitle = "Mayor"
+“I toiled, unable to come to a course of action that could stop the Church. I am no warrior nor sneak, so I had no chance of infiltrating where they kept the Eye of Genesis.”
 
-<b>MAYOR</b>: “So...I simply waited. Listening to the final celebrations of many lives. Even though I foresaw the apocalypse that would unfold, I could not predict the specificity of its horror.”
+“So...I simply waited. Listening to the final celebrations of many lives. Even though I foresaw the apocalypse that would unfold, I could not predict the specificity of its horror.”
 
-<b>MAYOR</b>: “As the Malignance began to break through and across our reality, I ran into the Church’s doors, wrote the note, and ran like fire with the Eye, hoping that I or another would discover a method for aiding against the Malignance in the future.”
+“As the Malignance began to break through and across our reality, I ran into the Church’s doors, wrote the note, and ran like fire with the Eye, hoping that I or another would discover a method for aiding against the Malignance in the future.”
 
-<b>MAYOR</b>: “I passed those screaming to hear their own voices, so many toppled over, locked in a hell within their body. Unable to move, unable to see, losing the ability to know what horror had befallen us.”
+“I passed those screaming to hear their own voices, so many toppled over, locked in a hell within their body. Unable to move, unable to see, losing the ability to know what horror had befallen us.”
 
-<b>MAYOR</b>: “In that flight from Radefell, the chance to aid those who I warned laid before me, and I left them to their fates.”
+“In that flight from Radefell, the chance to aid those who I warned laid before me, and I left them to their fates.”
 
-<b>MAYOR</b>: “I damn myself for each and every soul I abandoned that night.”
+“I damn myself for each and every soul I abandoned that night.”
 
-+["There was nothing you could do."] -> NothingToDo
-+["I am done with you."] -> CryptKeeperFinal
++["There was nothing you could do."]-> NothingToDo
++["I am done with you."]-> CryptKeeperFinal
 
 =NothingToDo
-The Mayor’s gaze flits low, his dry teeth clenching nearly hard enough to crack.
+~ CharacterTitle = ""
+<i>The Mayor’s gaze flits low, his dry teeth clenching nearly hard enough to crack.</i>
+~ CharacterTitle = "Mayor"
+“I cannot accept any excuse for my cowardice, my friend. It is my failure, and mine alone. I will give myself to whatever good I can accomplish, but I know it will never pay the full tithe of my sin.”
 
-<b>MAYOR</b>: “I cannot accept any excuse for my cowardice, my friend. It is my failure, and mine alone. I will give myself to whatever good I can accomplish, but I know it will never pay the full tithe of my sin.”
+“Especially after this final negligence...”
 
-<b>MAYOR</b>: “Especially after this final negligence...”
-
-+["Deservedly so."] -> Deserved
-+["Leave the past behind."] -> behind
-+["I am done with you."] -> CryptKeeperFinal
++["Deservedly so."]-> Deserved
++["Leave the past behind."]-> behind
++["I am done with you."]-> CryptKeeperFinal
 
 =Deserved
-The Mayor vents a tasteless breath, a pained smile plastered upon his face.
+~ CharacterTitle = ""
+<i>The Mayor vents a tasteless breath, a pained smile plastered upon his face.</i>
+~ CharacterTitle = "Mayor"
+“Indeed, my friend.”
 
-<b>MAYOR</b>: “Indeed, my friend.”
-
-+["Why didn’t you tell me where the Eye is?"] ->WhyDidntYouTellMe
-+["I am done with you."] -> CryptKeeperFinal
++["Why didn’t you tell me where the Eye is?"]-> WhyDidntYouTellMe
++["I am done with you."]-> CryptKeeperFinal
 
 =behind 
-The Mayor smiles, the thin stitch of his lip trembles as his eyes seem to vibrate in his skull.
+~ CharacterTitle = ""
+<i>The Mayor smiles, the thin stitch of his lip trembles as his eyes seem to vibrate in his skull.</i>
+~ CharacterTitle = "Mayor"
+“I...I do not know if I can, my friend. The faces, lost and twisted with the horror of their very existence deprived from them, they haunt me every time I close my eyes.”
 
-<b>MAYOR</b>: “I...I do not know if I can, my friend. The faces, lost and twisted with the horror of their very existence deprived from them, they haunt me every time I close my eyes.”
+“Even further, there is one final negligence of mine...”
 
-<b>MAYOR</b>: “Even further, there is one final negligence of mine...”
-
-+["Why didn’t you tell me where the Eye is?"] ->WhyDidntYouTellMe
-+["I am done with you."] -> CryptKeeperFinal
++["Why didn’t you tell me where the Eye is?"]-> WhyDidntYouTellMe
++["I am done with you."]-> CryptKeeperFinal
 
 =WhyDidntYouTellMe
-<b>MAYOR</b>: “Knowing your task of collecting the artifacts, I realized that my displacement of the Eye of Genesis would need to be revealed.”
+~ CharacterTitle = "Mayor"
+“Knowing your task of collecting the artifacts, I realized that my displacement of the Eye of Genesis would need to be revealed.”
 
-<b>MAYOR</b>: “I did not yet know your capability when you arose, and there was the potential outcome of you losing it in the depths of Radefell where it would be out of reach. I kept it secret then, and I would reveal it to you once you had returned with the second artifact.”
+“I did not yet know your capability when you arose, and there was the potential outcome of you losing it in the depths of Radefell where it would be out of reach. I kept it secret then, and I would reveal it to you once you had returned with the second artifact.”
 
-<b>MAYOR</b>: “But then...hope came to the village. I enjoyed working with our fellows, and a distant contentment finally came to me.”
+“But then...hope came to the village. I enjoyed working with our fellows, and a distant contentment finally came to me.”
 
-<b>MAYOR</b>: “I thought that with the unveiling of the Eye’s location and the cleansing of the Malignance, it would come time to bring those who allowed the Malignance’s proliferation to trial.”
+“I thought that with the unveiling of the Eye’s location and the cleansing of the Malignance, it would come time to bring those who allowed the Malignance’s proliferation to trial.”
 
-<b>MAYOR</b>: “So, instead, I opted not to inform you. I could enjoy the little, happy life here until it would be time to come clean.”
+“So, instead, I opted not to inform you. I could enjoy the little, happy life here until it would be time to come clean.”
 
-<b>MAYOR</b>: “And that time has come. I won’t pretend that such actions were not selfish.”
+“And that time has come. I won’t pretend that such actions were not selfish.”
 
-->Selfish
+-> Selfish
 
 =Selfish
-*["Why do it then?"] -> WhyDoIt
-*{WhyDoIt}["You deserve to be punished."] -> punish
-*{WhyDoIt}["I would have protected you."] -> protected
-*{punish} or {protected} ["There is one thing I wish you to do."] -> Wish
-+["I am done with you."] -> CryptKeeperFinal
+*["Why do it then?"]-> WhyDoIt
+*{WhyDoIt}["You deserve to be punished."]-> punish
+*{WhyDoIt}["I would have protected you."]-> protected
+*{punish} or {protected} ["There is one thing I wish you to do."]-> Wish
++["I am done with you."]-> CryptKeeperFinal
 
 =WhyDoIt
-The Mayor’s rosy cheeks reach a high blush, blended deep with shame.
+~ CharacterTitle = ""
+<i>The Mayor’s rosy cheeks reach a high blush, blended deep with shame.</i>
+~ CharacterTitle = "Mayor"
+“Perhaps, we can never escape our true nature, no matter how much we wish to change.” 
 
-<b>MAYOR</b>: “Perhaps, we can never escape our true nature, no matter how much we wish to change.” 
-
-->Selfish
+-> Selfish
 
 = punish
+~ CharacterTitle = "Mayor"
+“I don’t disagree, I’m afraid.”
 
-<b>MAYOR</b>: “I don’t disagree, I’m afraid.”
-
-<b>MAYOR</b>: “I will accept whatever judgment comes to me. I will give whatever remains of my word to that.” 
+“I will accept whatever judgment comes to me. I will give whatever remains of my word to that.” 
 
 -> Selfish
 
 = protected
-<b>MAYOR</b>: “That is a boundless kindness. One that I could never have predicted.”
+~ CharacterTitle = "Mayor"
+“That is a boundless kindness. One that I could never have predicted.”
 
-<b>MAYOR</b>: “One I would not deserve even had I revealed the Eye sooner.”
+“One I would not deserve even had I revealed the Eye sooner.”
 
 -> Selfish
 
 =Wish
-The Mayor nods, awaiting your word.
+~ CharacterTitle = ""
+<i>The Mayor nods, awaiting your word.</i>
 
-+["Await your judgment here."] -> Judgement
-+["Life free of the past."] -> Past
-+["Submit to condemnation."] -> Condemnation
-+["Give yourself to the future of Radefell."] -> GiveYourself
++["Await your judgment here."]-> Judgement
++["Life free of the past."]-> Past
++["Submit to condemnation."]-> Condemnation
++["Give yourself to the future of Radefell."]-> GiveYourself
 
 = Judgement 
+~ CharacterTitle = "Mayor"
+“Very well. I will do as you ask. Farewell, Disgraced.”
 
-<b>MAYOR</b>: “Very well. I will do as you ask. Farewell, Disgraced.”
+“End this curse, once and for all.”
 
-<b>MAYOR</b>: “End this curse, once and for all.”
-
-->CryptKeeperFinal
+-> CryptKeeperFinal
 
 = Past
-<b>MAYOR</b>: “I...I will do my best to, my friend.”
+~ CharacterTitle = "Mayor"
+“I...I will do my best to, my friend.”
 
-<b>MAYOR</b>: “Go. End this curse, once and for all.”
+“Go. End this curse, once and for all.”
 
-->CryptKeeperFinal
+-> CryptKeeperFinal
 
 = Condemnation
-The Mayor simply nods, then bows his head, closing his eyes as he whispers his last words.
-
-<b>MAYOR</b>: “Go. End this curse, once and for all.”
+~ CharacterTitle = ""
+<i>The Mayor simply nods, then bows his head, closing his eyes as he whispers his last words.</i>
+~ CharacterTitle = "Mayor"
+“Go. End this curse, once and for all.”
 
 -> CryptKeeperFinal
 
 =GiveYourself
-The Mayor’s stitched lip curls inward, but he nods.
+~ CharacterTitle = ""
+<i>The Mayor’s stitched lip curls inward, but he nods.</i>
+~ CharacterTitle = "Mayor"
+“Very well, I can hold true to that. Farewell, Disgraced.”
 
-<b>MAYOR</b>: “Very well, I can hold true to that. Farewell, Disgraced.”
-
-<b>MAYOR</b>: “Go. End this curse, once and for all.”
+“Go. End this curse, once and for all.”
 
 -> CryptKeeperFinal
 
 
 =CryptKeeperFinal
-<b>MAYOR</b>: “Farewell then, Disgraced. End this curse, once and for all.”
+~ CharacterTitle = "Mayor"
+“Farewell then, Disgraced. End this curse, once and for all.”
 ~background = "next"
+~ CharacterTitle = ""
+<i>You approach the fountain, discerning it closely for the artifact. </i>
 
-You approach the fountain, discerning it closely for the artifact. 
+<i>It isn't until you look closely into its waters that you spy a metal box, barely off-color with the stone, at the bottom of the fountain. </i>
 
-It isn't until you look closely into its waters that you spy a metal box, barely off-color with the stone, at the bottom of the fountain. 
+<i>You bend and reach in, heaving the box out of the water, set it down, and open its lid.</i>
 
-You bend and reach in, heaving the box out of the water, set it down, and open its lid.
+<i>Within the box lies The Eye of Genesis. </i>
 
-Within the box lies The Eye of Genesis. 
-
-Its gaze almost seems to apprise you as you take it into your hands. 
+<i>Its gaze almost seems to apprise you as you take it into your hands. </i>
 
 ~character = "Crypt_Keeper"
-~ CharacterTitle = "Crypt Keeper"
+~ CharacterTitle = ""
+<i>You hurry back to meet with the Crypt Keeper, the Eye of Genesis, the final artifact, in hand. </i>
 
-You hurry back to meet with the Crypt Keeper, the Eye of Genesis, the final artifact, in hand. 
+<i>As you approach her, she remains silent, unmoving. Instead, she focuses on the barren land surrounding the town.</i>
 
-As you approach her, she remains silent, unmoving. Instead, she focuses on the barren land surrounding the town.
-
-*Get closer
-    Her acknowledgement of your presence is betrayed only by tinge of sorrow that has appeared in her face.
-    **Sit down next to her
+*[<i>Get closer</i>]
+    ~ CharacterTitle = ""
+    <i>Her acknowledgement of your presence is betrayed only by tinge of sorrow that has appeared in her face.</i>
+    **[<i>Sit down next to her</i>]
+        ~ CharacterTitle = "Crypt Keeper"
         "You know what this means, right?"
-        ***"Of course."
+        ***["Of course."]
+            ~ CharacterTitle = "Crypt Keeper"
              "Yes, yes...You know what this means for the Malignance, you know what this means for Radafell..."
-             
-                Her tone of voice raising with every passing word.
-                ->WhatItMeans
-        ***"I do not."
-            ->WhatItMeans
-        ***"..."
-            ->WhatItMeans
+             ~ CharacterTitle = ""
+                <i>Her tone of voice raising with every passing word.</i>
+                -> WhatItMeans
+        ***["I do not."]
+            -> WhatItMeans
+        ***["..."]
+            -> WhatItMeans
 
 ==WhatItMeans
-She takes up your hands, and finally makes eye contact with you. Her eyes water.
-
+~ CharacterTitle = ""
+<i>She takes up your hands, and finally makes eye contact with you. Her eyes water.</i>
+~ CharacterTitle = "Crypt Keeper"
 "Do you know what this means for you?"
-*"For me?"
+*["For me?"]
+    ~ CharacterTitle = "Crypt Keeper"
     "Yes! For you! You haven't sat down and thought about what all this means for you?"
-    
-    Her grip on your hands strengthen, averting her eyes once again.
-    **"I have not."
+    ~ CharacterTitle = ""
+    <i>Her grip on your hands strengthen, averting her eyes once again.</i>
+    **["I have not."]
+        ~ CharacterTitle = "Crypt Keeper"
         "Of course you haven't. Of course you haven't...and that's why you were the only person who could have succeeded in this quest."
-        ***"What does this mean?"
-            Any words that she tries to get out are choked up by her tears as she embraces you, burying herself into your chest. 
+        ***["What does this mean?"]
+            ~ CharacterTitle = ""
+            <i>Any words that she tries to get out are choked up by her tears as she embraces you, burying herself into your chest. </i>
             
-            ****Comfort her
-               For a minute, she remains like this. You feel her shoulders heave up and down as she continues to silently weep with you in embrace.
+            ****[<i>Comfort her</i>]
+                ~ CharacterTitle = ""
+                <i>For a minute, she remains like this. You feel her shoulders heave up and down as she continues to silently weep with you in embrace.</i>
                
-                  She looks back at you. 
+                <i>She looks back at you. </i>
+                ~ CharacterTitle = "Crypt Keeper"
+                "It...it's for the best though. Please, my peony, give me the artifact."
                  
-                  "It...it's for the best though. Please, my peony, give me the artifact."
-                 
-                  ******Give her the artifact
-                        After taking the artifact, she embraces you one final time. She pulls away before she begins the cleansing ritual of the Eye of Genesis.
+                ******[<i>Give her the artifact</i>]
+                    ~ CharacterTitle = ""
+                    <i>After taking the artifact, she embraces you one final time. She pulls away before she begins the cleansing ritual of the Eye of Genesis.</i>
                         
-                        *******Breathe
-                            As the process goes on you start to feel tired, weak, like you can't...
+                    *******[<i>Breathe</i>]
+                        ~ CharacterTitle = ""
+                        <i>As the process goes on you start to feel tired, weak, like you can't...</i>
                             
-                            ********Breathe
+                        ********[<i>Breathe</i>]
+                            ~ CharacterTitle = ""
+                            <i>The light fades. The only thing that you can envision are your memories.</i>
                                 
-                                The light fades. The only thing that you can envision are your memories.
-                                
-                                ->SensesReturn
+                            -> SensesReturn
 
 ==SensesReturn==
-*Look
-    Your adventures, the monsters you've encountered, the people you've met, the city you've saved all flash before your eyes.
-    ->SensesReturn
+*[<i>Look</i>]
+    ~ CharacterTitle = ""
+    <i>Your adventures, the monsters you've encountered, the people you've met, the city you've saved all flash before your eyes.</i>
+    -> SensesReturn
 
-*Smell
-    You inhale sharply, smelling the flora of the city. The sharp fragrance reminds you of your past, and a newer, brighter future.
-    ->SensesReturn
+*[<i>Smell</i>]
+    ~ CharacterTitle = ""
+    <i>You inhale sharply, smelling the flora of the city. The sharp fragrance reminds you of your past, and a newer, brighter future.</i>
+    -> SensesReturn
 
-*Taste
-    Your mouth starts to water as you taste once again. Breads, meats, fruits, familiar flavors from unfamiliar places.
-    ->SensesReturn
+*[<i>Taste</i>]
+    ~ CharacterTitle = ""
+    <i>Your mouth starts to water as you taste once again. Breads, meats, fruits, familiar flavors from unfamiliar places.</i>
+    -> SensesReturn
 
-*Hear
-    You once again hear churchbells ring, birds chirping, a bustling city once again.
-    ->SensesReturn
-*{CHOICE_COUNT() ==0}
-Feel
-    You feel air escape you, the light from the cleansing grows brighter and you feel it's heat on you.
-    **Feel
-        You feel a burning sensation, little pins and needles assaulting into your skin.
-        ***Feel
-            You feel comfort, taking shelter in the warmth of the light, a familiar feeling. An embrace, her embrace.
-            ****Breathe
-                Then it goes silent.
-                *****Continue
-                    The journey was a long and treacherous.
-                    ******Continue
-                        The burden had been laid on your shoulders, and you succeeded.
-                        ********Continue
-                            At some point I thought I could bear loss, I could withstand saying goodbye.
-                            *********Continue
-                                But no pain was greater than letting you go. 
-                                **********Continue
-                                    As life returns to Radafell the more indebted we are to you.
-                                    ***********Continue
-                                        The more your sacrifice means.
-                                        ************Continue
-                                        The more I miss you...
-                                            *************Continue
-                                            My peony. ->END
+*[<i>Hear</i>]
+    ~ CharacterTitle = ""
+    <i>You once again hear churchbells ring, birds chirping, a bustling city once again.</i>
+    -> SensesReturn
+*{CHOICE_COUNT() ==0} [<i>Feel</i>]
+    ~ CharacterTitle = ""
+    <i>You feel air escape you, the light from the cleansing grows brighter and you feel it's heat on you.</i>
+    **[<i>Feel</i>]
+        ~ CharacterTitle = ""
+        <i>You feel a burning sensation, little pins and needles assaulting into your skin.</i>
+        ***[<i>Feel</i>]
+            ~ CharacterTitle = ""
+            <i>You feel comfort, taking shelter in the warmth of the light, a familiar feeling. An embrace, her embrace.</i>
+            ****[<i>Breathe</i>]
+                ~ CharacterTitle = ""
+                <i>Then it goes silent.</i>
+
+                ~ CharacterTitle = "Crypt Keeper"
+                "The journey was long and treacherous."
+
+                "The burden had been laid on your shoulders, and you succeeded."
+
+                "At some point I thought I could bear loss, I could withstand saying goodbye."
+
+                "But no pain was greater than letting you go."
+
+                "The more life returns to Radefell, the more indebted we are to you."
+
+                "The more your sacrifice means."
+
+                "The more I miss you..."
+
+                "My peony." -> END
 
 
-->END
+-> END
 
