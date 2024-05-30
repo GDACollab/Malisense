@@ -20,12 +20,14 @@ public class AudioManager : MonoBehaviour
         STOP = 6
     }
     
+    
     public EventInstance currentPlaying;
     public EventInstance movementSFX;
     MusicTrack currentTrack = MusicTrack.MENU;
     protected PLAYBACK_STATE playbackState;
     protected PLAYBACK_STATE movementState;
 
+    // Scream Distance
     // Scream Distance
     public Vector2 screamDistance = new Vector2(10, 50);
 
@@ -57,6 +59,7 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region OST PATHS
+    // [Header("FMOD OST")]
     // [Header("FMOD OST")]
     [Tooltip("FMOD Event Path for the menu music")]
     private string masterOST = "event:/OST/Game Scene OST";
@@ -113,12 +116,18 @@ public class AudioManager : MonoBehaviour
     // public string dungeonOST = "event:/OST/Dungeon";
     // #endregion
 
+    // #region AMBIENCE PATHS
+    // [Tooltip("FMOD Event Path for the dungeon ambience")]
+    // public string dungeonOST = "event:/OST/Dungeon";
+    // #endregion
+
     void Awake()
     {
         masterBus = RuntimeManager.GetBus(masterBusPath);
         musicBus = RuntimeManager.GetBus(musicBusPath);
         sfxBus = RuntimeManager.GetBus(sfxBusPath);
         ambienceBus = RuntimeManager.GetBus(ambienceBusPath);
+        SceneManager.sceneUnloaded += (_) => StopCurrentSong();
         SceneManager.sceneUnloaded += (_) => StopCurrentSong();
     }
 
@@ -168,7 +177,7 @@ public class AudioManager : MonoBehaviour
         instance.start();
         instance.release();
     }
-
+    
     /// <summary>
     /// Play a song from the OST.
     /// </summary>
@@ -257,7 +266,7 @@ public class AudioManager : MonoBehaviour
         currentTrack = track;
         Debug.Log("Played: "+track);
     }
-
+    
     /// <summary>
     /// Stops the song currently playing
     /// </summary>
@@ -577,11 +586,13 @@ public class AudioManager : MonoBehaviour
         }
     }
     
+    
     /// <summary>
     /// Plays the select sfx
     /// </summary>
     public void PlayUISelectSFX()
     {
+        Play(selectUISFX);
         Play(selectUISFX);
     }
 
@@ -590,6 +601,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayUIHoverSFX()
     {
+        Play(hoverUISFX);
         Play(hoverUISFX);
     }
     #endregion

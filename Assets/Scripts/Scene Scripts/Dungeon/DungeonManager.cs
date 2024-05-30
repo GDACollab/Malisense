@@ -40,6 +40,7 @@ public class DungeonManager : MonoBehaviour
 
         SetFloorNotes();
         StartCoroutine(FadeFromBlack(fadeInTime));
+        audioManager.PlayDungeonOST();
     }
 
     /// <summary>
@@ -50,7 +51,7 @@ public class DungeonManager : MonoBehaviour
     {
         if (enemy.currentState == StateMachine.State.Chasing)
         {
-            enemies.Append(enemy);
+            enemies.Add(enemy);
             audioManager.PlayScream(enemy.GetComponent<StudioEventEmitter>());
             UpdateMusic();
         }
@@ -157,12 +158,12 @@ public class DungeonManager : MonoBehaviour
         if (!isChasing && enemies.Count > 0)
         {
             isChasing = true;
-            audioManager.ChaseOST();
+            audioManager.PlayChaseOST();
         }
         else if (isChasing && enemies.Count == 0)
         {
             isChasing = false;
-            audioManager.DungeonOST();
+            audioManager.PlayDungeonOST();
         }
     }
 

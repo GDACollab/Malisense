@@ -41,8 +41,9 @@ public class StateMachine : MonoBehaviour
     private bool _statue;
     private Rigidbody2D _rb2d;
     private DungeonManager dungeonManager;
-    private AudioManager audioManager;
     private Player playerObj;
+    private AudioManager audioManager;
+
     void Start()
     {
         _statue = Statue;
@@ -100,7 +101,6 @@ public class StateMachine : MonoBehaviour
                 if (!chaseInit)
                 {
                     //Debug.Log("Chase Start");
-                    audioManager.Play(audioManager.monsterScream);
                     SetChase();
                     chasing.Init();
                     chaseInit = true;

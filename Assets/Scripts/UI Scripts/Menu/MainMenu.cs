@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     public AudioManager audioManager;
     void Awake(){
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
-        audioManager.PlayOST(audioManager.menuOST);
+        audioManager.PlayMenuOST();
     }
     private void Start() {
         StartCoroutine(GlobalTeapot.Instance.fader.FadeFromBlack(2));
