@@ -147,4 +147,21 @@ public class SwitchController : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+    public void OnDrawGizmosSelected()
+    {
+        var col = Gizmos.color;
+        var mat = Gizmos.matrix;
+
+        Gizmos.color = Color.red;
+        // Gizmos.matrix = transform.localToWorldMatrix;
+        foreach(var target in targets){
+            Gizmos.DrawWireSphere(target.transform.position, 1);
+        }
+
+        Gizmos.color = col;
+        Gizmos.matrix = mat;
+    }
+#endif
+
 }

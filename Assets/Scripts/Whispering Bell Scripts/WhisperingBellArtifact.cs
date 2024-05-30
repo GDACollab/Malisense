@@ -27,6 +27,7 @@ public class WhisperingBellArtifact : MonoBehaviour
     public void WhisperBellAction()
     {
         Instantiate(pulseEffect, player.transform.position, player.transform.rotation);
+        GlobalTeapot.Instance.StartCoroutine(player.GetComponent<Player>().DisplayGemHintArrow(whisperingBellDuration));
         foreach (GameObject enemy in enemies)
         {
             Transform targetEnemy = enemy.transform;

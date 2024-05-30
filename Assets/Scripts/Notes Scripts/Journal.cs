@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -66,6 +67,14 @@ public class Journal : ScriptableObject
         return false;
     }
 
+    public void ObtainAllFloorNotes()
+    {
+        foreach (FloorNoteObj note in floorNotes)
+        {
+            note.Obtained = true;
+        }
+    }
+
     public bool CheckFloorNote(string id)
     {
         int index = floorNotes.FindIndex(x => x.ID == id);
@@ -99,6 +108,11 @@ public class JournalEditor : Editor
         {
             Journal journal = (Journal)target;
             journal.CreateFloorNotes(true);
+        }
+        if (GUILayout.Button("Obtain All"))
+        {
+            Journal journal = (Journal)target;
+            journal.ObtainAllFloorNotes();
         }
     }
 }

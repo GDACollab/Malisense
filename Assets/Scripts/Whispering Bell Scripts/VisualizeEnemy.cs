@@ -9,7 +9,7 @@ public class VisualizeEnemy : MonoBehaviour
     [Tooltip("Determine how long the Whispering Bell effects last")]
     [SerializeField] public float wbDuration;
 
-    public Transform targetEnemy; 
+    public Transform targetEnemy;
     private float wbTime = 0;
 
     // Update is called once per frame
@@ -19,6 +19,13 @@ public class VisualizeEnemy : MonoBehaviour
         wbTime += Time.deltaTime;
         Vector3 targetPos = targetEnemy.position + Vector3.up;
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 3f);
-        if (wbTime >= wbDuration) Destroy(gameObject);
+        if (wbTime >= wbDuration)
+        {
+            GetComponent<ParticleSystem>().Stop();
+        }
+        else if (wbTime >= wbDuration + wbDuration)
+        {
+            Destroy(gameObject);
+        }
     }
 }

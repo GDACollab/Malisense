@@ -227,17 +227,22 @@ MonoBehaviour:
   masterInk: {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
   currProgress: 0
   hasDied: 0
+  toldCKAboutHighPriest: 0
+  mayorWasIntroduced: 0
+  scholarWasIntroduced: 0
+  highPriestWasIntroduced: 0
   hasMayorNote1: 0
   hasMayorNote2: 0
   hasFinalMayorNote: 0
   deathCount: 0
-  currentScene: 3
   stickHappiness: 0
+  currentScene: 3
   numNotesObtained: 0
   numStoreCredits: 0
   audioManager: {fileID: 4924827947121429571}
-  fader: {fileID: 0}
+  fader: {fileID: 3375906836540086193}
   journal: {fileID: 11400000, guid: 05aa790e0c7782942998137eaa301d9a, type: 2}
+  deviceInputs: {fileID: 11400000, guid: 9a07b5ecc80560e48a3c6d7e27f11994, type: 2}
 --- !u!114 &4924827947121429571
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,8 +12,9 @@ public static class Loader
         LoadingScene = 1, // This refers to the scene in Build Settings at index 1
         Village = 2, // This refers to the scene in Build Settings at index 2
         Dungeon_F1 = 3, // This refers to the scene in Build Settings at index 3
-        Dungeon_F2 = 4, // This refers to the scene in Build Settings at index 3
-        DeathScene = 5, // This refers to the scene in Build Settings at index 4
+        Dungeon_F2 = 4, // This refers to the scene in Build Settings at index 4
+        DeathScene = 5, // This refers to the scene in Build Settings at index 5
+        CreditsScene = 6 // This refers to the scene in Build Settings at index 6
     }
     private delegate AsyncOperation AsyncLoaderCallback();
     private static AsyncLoaderCallback onLoaderCallback;

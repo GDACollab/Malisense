@@ -29,10 +29,9 @@ public class SightBeastAnimations : MonoBehaviour
         if (_stateMachine.currentState == StateMachine.State.Alert || _stateMachine.currentState == StateMachine.State.Distracted)
         {
             _puppetAnimator.SetTrigger("Alert");
-            _puppetAnimator.SetTrigger("Alert");
         }
 
         // Feed speed data to animator
-        _puppetAnimator.SetFloat("Speed", _rd2d.velocity.magnitude);
+        _puppetAnimator.SetFloat("Speed", _rd2d.velocity.magnitude/3.5f);
     }
 }
