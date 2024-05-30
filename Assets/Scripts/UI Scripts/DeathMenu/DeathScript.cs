@@ -20,7 +20,6 @@ public class DeathScript : MonoBehaviour
     //Functions ======================================================================================
     public void ResetButton(float waitTime)
     {
-        GameObject.FindWithTag("Global Teapot")?.GetComponent<GlobalTeapot>().audioManager.PlayReviveSFX();
         StartCoroutine(Fader(waitTime));
     }
 

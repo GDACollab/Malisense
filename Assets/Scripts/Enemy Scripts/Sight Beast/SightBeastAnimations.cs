@@ -1,10 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class SightBeastAnimations : MonoBehaviour
 {
-    public Animator _animator;
+    public Animator _puppetAnimator;
+    public Animator _lightAnimator;
 
     private StateMachine _stateMachine;
     private Rigidbody2D _rd2d;
@@ -20,11 +20,18 @@ public class SightBeastAnimations : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ----- Lighting animator inputs -----
+        _lightAnimator.SetBool("Alert", _stateMachine.currentState == StateMachine.State.Alert);
+        _lightAnimator.SetBool("Chasing", _stateMachine.currentState == StateMachine.State.Chasing);
+
+        // ----- Puppet animator inputs -----
         // Visual response to startling events
-        _animator.SetBool("Alert", _stateMachine.currentState == StateMachine.State.Alert);
-        _animator.SetBool("Alert", _stateMachine.currentState == StateMachine.State.Distracted);
+        if (_stateMachine.currentState == StateMachine.State.Alert || _stateMachine.currentState == StateMachine.State.Distracted)
+        {
+            _puppetAnimator.SetTrigger("Alert");
+        }
 
         // Feed speed data to animator
-        _animator.SetFloat("Speed", _rd2d.velocity.magnitude);
+        _puppetAnimator.SetFloat("Speed", _rd2d.velocity.magnitude/3.5f);
     }
 }

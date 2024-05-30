@@ -7,9 +7,7 @@ using UnityEngine;
 
 public class ScentDetection : MonoBehaviour
 {
-    GameObject player;
-    
-    
+    Player player;
 
     private StateMachine stateMac;
 
@@ -23,11 +21,20 @@ public class ScentDetection : MonoBehaviour
     public float scentT_Alert2Chase = 90;
 
     [Header("Scent Buildup Values")]
-
     public float scentPerSecond;
-    static public float scentPerSecond_Patrol = 0.75f;
-    static public float scentPerSecond_Alert = 2;
-    static public float scentPerSecond_Chase = 5;
+    static public float scentPerSecond_Patrol = 0.15f;
+    static public float scentPerSecond_Alert = 0.35f;
+    static public float scentPerSecond_Chase = 2;
+    
+    [Header("Behavior Modifiers")]
+    public bool usedIncense = false;
+    [SerializeField] private float incenseDecrease = 40;
+    public float incenseDuration = 3;
+    [SerializeField] private float safeZoneDecrease = 0.75f;
+    [Tooltip("The minimum scent value reached through modification")]
+    [SerializeField] private float minScentValue = 30;
+    private float incenseTime;
+    private bool inSafeZone => player.activeSafeZones.Count > 0;
 
     [Header("Audio")]
     private AudioManager audioManager;
@@ -55,8 +62,9 @@ public class ScentDetection : MonoBehaviour
         soundEmitter = GetComponent<StudioEventEmitter>();
         scentPerSecond = scentPerSecond_Patrol;
         stateMac = GetComponent<StateMachine>();
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         playerDist = Vector2.Distance(player.transform.position, transform.position);
+        incenseTime = 0;
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
 
         StartCoroutine("sniffCheck");
@@ -78,7 +86,30 @@ public class ScentDetection : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerScent < 100) modScent(scentPerSecond * Time.fixedDeltaTime);
+        if(usedIncense){
+            UseIncense();
+        }
+        else if (inSafeZone){
+            if(playerScent > minScentValue){
+                playerScent -= Time.deltaTime * safeZoneDecrease;
+            }
+        }
+        else if (playerScent < 100 && !(stateMac.currentState == StateMachine.State.Distracted)) {
+            modScent(scentPerSecond * Time.fixedDeltaTime);
+            incenseTime = 0;
+        }
+    }
+    
+    void UseIncense(){
+        if(incenseTime < incenseDuration){
+            if(playerScent > minScentValue){
+                playerScent -= Time.deltaTime * incenseDecrease/incenseDuration;
+            }
+            incenseTime += Time.deltaTime;
+        }
+        else {
+            usedIncense = false;
+        }
     }
 
     // checks if monster is close enough to player to smell them
@@ -127,7 +158,6 @@ public class ScentDetection : MonoBehaviour
             }
             // checks scent/dist for threshold corssings            
             yield return new WaitForSeconds(0.25f);
-            
         }
     }
     

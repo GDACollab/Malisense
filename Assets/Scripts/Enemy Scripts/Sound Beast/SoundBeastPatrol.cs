@@ -31,7 +31,7 @@ public class SoundBeastPatrol : StateBaseClass
     public bool randomPath;
 
     private float _idleTimeLeft;
-    private float _lastSeenTime = float.NegativeInfinity;
+    // private float _lastSeenTime = float.NegativeInfinity;
 
     private int _pathIndex;
 

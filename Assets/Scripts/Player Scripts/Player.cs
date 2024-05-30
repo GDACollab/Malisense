@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Pathfinding;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -14,7 +11,6 @@ public class Player : MonoBehaviour
     #region TEMP VARS REMOVE
     // ### START TEMP VARIABLES ### DELETE BEFORE FINAL BUILD
     [Header("Temp Variables (Remove before Final Build)")]
-    public GameObject controlMessage;
     public GameObject[] enemies;
     public UnityEvent testFunctions;
     // ### END TEMP VARIABLES ###
@@ -24,8 +20,7 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     [Tooltip("The player's walking speed")][SerializeField] float walkingSpeed = 6;
     [Tooltip("Speed while sprinting. Walking speed x n")][SerializeField] float sprintRatio = 2;
-    [Tooltip("Speed while sneaking. Walking speed x n")][SerializeField] float sneakRatio = 1;
-    float adjustedSpeed; // the speed the player moves at, accounting for sprinting or sneaking
+    float adjustedSpeed; // the speed the player moves at, accounting for sprinting
 
     // Stamina
     [Header("Stamina")]
@@ -54,7 +49,6 @@ public class Player : MonoBehaviour
     [SerializeField] float NoiseFrequency = 0.2f;
     [SerializeField] float walkLoudness = 3f;
     [SerializeField] float sprintLoudness = 12f;
-    //public float sneakLoudness;
     private float timeCheck = 0;
     private scr_noise noiseSystem;
 
@@ -67,7 +61,6 @@ public class Player : MonoBehaviour
     // Movement States
     [HideInInspector] public bool isMoving;
     [HideInInspector] public bool isSprinting;
-    [HideInInspector] public bool isSneaking;
     [HideInInspector] public bool canMove = true;
     // Stamina States
     [HideInInspector] public bool isExhausted = false; // makes it so player can't run; true when stamina is 0, false when currentStamina >= minimumToSprint
@@ -82,8 +75,8 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
     // Input System
     private PlayerInput playerInput;
-    private InputAction moveAction, sprintAction, sneakAction, interactAction, setDownAction;
-    private InputAction hideMessage, setEnemies, hideFootsteps, activateFunctions; // Test inputs remove before final build please
+    private InputAction moveAction, sprintAction, interactAction;
+    private InputAction hideFootsteps, activateFunctions; // Test inputs remove before final build please
     // Rigid Body and interaction variables
     private Rigidbody2D rb;
     // Interaction Area
@@ -111,9 +104,7 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("8 Directions Movement");
         sprintAction = playerInput.actions.FindAction("Sprint");
-        sneakAction = playerInput.actions.FindAction("Sneak");
         interactAction = playerInput.actions.FindAction("Interact");
-        setDownAction = playerInput.actions.FindAction("SetDown");
 
         // Get Rotating Body for Interactions
         interactArea = interactBody.GetComponent<InteractionSelector>();
@@ -141,21 +132,16 @@ public class Player : MonoBehaviour
         audioManager = globalTeapot.audioManager;
         #region TEMP INPUTS
         // Get temp input options
-        hideMessage = playerInput.actions.FindAction("Hide Message");
-        setEnemies = playerInput.actions.FindAction("Set Enemies");
         hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
         activateFunctions = playerInput.actions.FindAction("Activate Functions");
         #endregion
-
-        // Get the enemies to deactivate
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     private void FixedUpdate()
     {
         BasicMovement();
 
-        foreach(Artifact x in Artifacts)
+        foreach (Artifact x in Artifacts)
         {
             if (x.cooldown != 0)
             {
@@ -175,7 +161,6 @@ public class Player : MonoBehaviour
         if (canMove)
         {
             StaminaManager();
-            InventoryManager();
             SoundManager();
             if(isAlive)
                 SFXManager();
@@ -188,7 +173,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("Player died due to contact to enemy");
-            newInventory.inventory.Clear();
+            newInventory.ClearInventory();
             isAlive = false;
             playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
             playerAnimator.SetTrigger("die");
@@ -196,10 +181,12 @@ public class Player : MonoBehaviour
             dungeonManager.KillPlayer();
         }
     }
-    
-    IEnumerator ZoomCamera(){
+
+    IEnumerator ZoomCamera()
+    {
         var camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        while (camera.orthographicSize > 5){
+        while (camera.orthographicSize > 5)
+        {
             camera.orthographicSize -= Time.unscaledDeltaTime * 2;
             yield return null;
         }
@@ -209,19 +196,6 @@ public class Player : MonoBehaviour
     // Temporary Input Options DELETE BEFORE FINAL BUILD
     private void TempInputOptions()
     {
-        // Hide text containing controls
-        if (hideMessage.triggered)
-        {
-            controlMessage.SetActive(!controlMessage.activeSelf);
-        }
-        // Deactivate/Reactivate Enemies
-        if (setEnemies.triggered)
-        {
-            foreach (var enemy in enemies)
-            {
-                enemy.SetActive(!enemy.activeSelf);
-            }
-        }
         if (hideFootsteps.triggered)
         {
             noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled = !noiseSystem.noiseObject.GetComponent<SpriteRenderer>().enabled;
@@ -258,14 +232,14 @@ public class Player : MonoBehaviour
             if (moveX != 0 || moveY != 0)
             {
                 isMoving = true;
-                playerAnimator.SetBool("moving",true);
+                playerAnimator.SetBool("moving", true);
             }
             else
             {
                 isMoving = false;
                 playerAnimator.SetBool("moving", false);
             }
-                
+
 
             // Flip Sprite
             if (moveX > 0)
@@ -289,10 +263,10 @@ public class Player : MonoBehaviour
 
     private void InputManager()
     {
-        // For sprinting and sneaking
+        // For sprinting
         // Walking (default)
         adjustedSpeed = walkingSpeed;
-        
+
 
         // Sprinting
         if ((sprintAction.ReadValue<float>() > 0f) && (isMoving == true) && (!isExhausted))
@@ -343,22 +317,10 @@ public class Player : MonoBehaviour
             }
         }
 
-        // Sneaking
-        // if (sneakAction.ReadValue<float>() > 0f && !isSprinting)
-        // {
-        // 	adjustedSpeed *= sneakRatio;
-        // 	isSneaking = true;
-        // }
-        // else
-        // {
-        // 	isSneaking = false;
-        // }
-
         // Interaction
         if (interactAction.triggered)
         {
             InteractionManager();
-            // TEST DEATH SCRIPT playerAnimator.SetTrigger("die");
         }
 
         // Slow player when carrying an object 
@@ -388,29 +350,6 @@ public class Player : MonoBehaviour
         {
             StaminaBar.fillAmount = currentStamina / maxStamina;
         }
-    }
-
-    private void InventoryManager()
-    {
-        // Check if the player is carrying an object
-        // if (!newInventory.carriedObject)
-        // {
-        //     return;
-        // }
-        // else
-        // {
-        //     newInventory.carriedObject.transform.rotation = interactBody.transform.rotation;
-        // }
-
-        // if (setDownAction.ReadValue<float>() > 0f)
-        // {
-        //     if (newInventory.carriedObject)
-        //     {
-        //         newInventory.carriedObject.transform.parent = null;
-        //         newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
-        //         newInventory.carriedObject = null;
-        //     }
-        // }
     }
 
     private void InteractionManager()
@@ -513,7 +452,7 @@ public class Player : MonoBehaviour
                 newInventory.carriedObject = heavyItem;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 newInventory.carriedObject.transform.parent = interactBody.transform.parent;
-                newInventory.carriedObject.transform.position = interactBody.transform.position;
+                newInventory.carriedObject.transform.position = interactBody.transform.position + Vector3.up * 0.5f;
                 break;
             }
             // Pick up regular item
@@ -570,7 +509,6 @@ public class Player : MonoBehaviour
             {                                   //(and repetition if there has been too much lag)
                 float size = walkLoudness; // Decide size of noiceObject based on current state
                 if (isSprinting) { size = sprintLoudness; }
-                //else if(player.GetComponent<PlayerControl>().isSneaking) { size = sneakLoudness; }
                 noiseSystem.MakeSound(transform.position, size); //Send command to create sound object
                 timeCheck -= NoiseFrequency; //decrement timeCheck to prevent infinite loop!
             }
@@ -580,5 +518,13 @@ public class Player : MonoBehaviour
             //Make sure time is increased such that when the player moves again, they instantly make sound
             timeCheck = Mathf.Min(NoiseFrequency, timeCheck += Time.deltaTime);
         }
+    }
+
+    public IEnumerator DisplayGemHintArrow(float waitSeconds)
+    {
+        var gemArrObj = GetComponentInChildren<GemHint>(true).gameObject;
+        gemArrObj.SetActive(true);
+        yield return new WaitForSeconds(Mathf.Max(waitSeconds, 5f));
+        gemArrObj.SetActive(false);
     }
 }

@@ -67,6 +67,7 @@ public class SoundBeastAlert : StateBaseClass
         // Start pathfinding to player's position
         GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySoundAlertSFX(GetComponent<StudioEventEmitter>());
         animator.SetTrigger("Alert");
+        animator.SetBool("Run", false);
         aiPath.maxSpeed = AlertedSpeed;
         aiPath.SearchPath();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();

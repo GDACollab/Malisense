@@ -19,7 +19,7 @@ public class VillageNavigationManager : MonoBehaviour
 {
 
     //Building Selection
-    public enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
+    enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
     [Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
     [Tooltip("0: Scholar, 1: Custodian, 2: Crypt Keeper, 3: Church, 4: Mayor")]
     [SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
@@ -68,7 +68,8 @@ public class VillageNavigationManager : MonoBehaviour
         // Get the Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
-        audioManager.PlayVillageOST();
+        audioManager.PlayOST(audioManager.dungeonOST);
+        // AUDIOMANAGER: Village OST
 
         // Building Selection:
         // Turn off every building's light
@@ -95,14 +96,16 @@ public class VillageNavigationManager : MonoBehaviour
             // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
             selectBuilding();
+        } // Force Mayor Intro 
+        else if (!globalTeapot.mayorWasIntroduced && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
+        {
+            moveBuildingSelection(1);
+            selectBuilding();
         } // Force CK Intro After 1st Death
-        else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
+        else if (globalTeapot.deathCount >= 1 && (globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1 || globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2))
         { 
             moveBuildingSelection(-1);
             selectBuilding();
-        } // TODO: Force Mayor Intro 
-        else if (false)
-        { 
         }
 
         activateInk = false;
@@ -121,14 +124,14 @@ public class VillageNavigationManager : MonoBehaviour
                 hasForcedCKIntro = true;
             }
 
-            // Force Clergy Intro After CK Intro
-            if (!hasSelected && !hasEntered && hasForcedCKIntro && !hasForcedClergyIntro)
-            {
-                Debug.Log("forcing CLERGY INTRO");
-                moveBuildingSelection(1);
-                selectBuilding();
-                hasForcedClergyIntro = true;
-            }
+            //// Force Clergy Intro After CK Intro
+            //if (!hasSelected && !hasEntered && hasForcedCKIntro && !hasForcedClergyIntro)
+            //{
+            //    Debug.Log("forcing CLERGY INTRO");
+            //    moveBuildingSelection(1);
+            //    selectBuilding();
+            //    hasForcedClergyIntro = true;
+            //}
         }
         
 
@@ -140,14 +143,29 @@ public class VillageNavigationManager : MonoBehaviour
         if ((!currentlySelected || hasSelected) && !force) return;
 
         selectedBuildingIndex += move;
-        if (selectedBuildingIndex < 0)
+        // Hard-coded behavior for intro and first floor
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro || globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
         {
-            selectedBuildingIndex = buildings.Length - 1;
-        }
-        else if (selectedBuildingIndex >= buildings.Length)
+            if (selectedBuildingIndex < 2)
+            {
+                selectedBuildingIndex = buildings.Length - 2;
+            }
+            else if (selectedBuildingIndex > 3)
+            {
+                selectedBuildingIndex = 2;
+            }
+        } else
         {
-            selectedBuildingIndex = 0;
+            if (selectedBuildingIndex < 0)
+            {
+                selectedBuildingIndex = buildings.Length - 1;
+            }
+            else if (selectedBuildingIndex >= buildings.Length)
+            {
+                selectedBuildingIndex = 0;
+            }
         }
+        
 
         selectedBuilding = buildings[selectedBuildingIndex];
 
