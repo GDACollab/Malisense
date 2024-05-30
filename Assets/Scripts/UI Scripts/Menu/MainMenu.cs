@@ -15,6 +15,9 @@ public class MainMenu : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
         audioManager.PlayOST(audioManager.menuOST);
     }
+    private void Start() {
+        StartCoroutine(GlobalTeapot.Instance.fader.FadeFromBlack(2));
+    }
     //Functions ======================================================================================
     public void PlayGame()
     {
