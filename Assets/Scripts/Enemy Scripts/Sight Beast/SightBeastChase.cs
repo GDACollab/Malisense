@@ -85,7 +85,7 @@ public class SightBeastChase : StateBaseClass
             _sight.LookInDirection(_pathfinder.direction);
         }
 
-        if(_pathfinder.AtGoal
+        if((_pathfinder.AtGoal || _pathfinder.Unreachable)
             && Time.time > _lastSeenTime + seeAroundWallsTime)
         {
             _stateMachine.currentState = StateMachine.State.Patrolling;

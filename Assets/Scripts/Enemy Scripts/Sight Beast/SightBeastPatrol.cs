@@ -35,6 +35,7 @@ public class SightBeastPatrol : StateBaseClass
 
     //emitter that audio is played from
     private StudioEventEmitter _audioEmitter;
+    private AudioManager _audioManager;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class SightBeastPatrol : StateBaseClass
         _pathfinder = GetComponent<EnemyPathfinder>();
         _sight = GetComponent<SightBeastSightModule>();
         _audioEmitter = GetComponent<StudioEventEmitter>();
+        _audioManager = GameObject.Find("Global Teapot").GetComponent<AudioManager>();
     }
 
     private SBProtoPatrolArea GetRandomArea()
@@ -92,7 +94,7 @@ public class SightBeastPatrol : StateBaseClass
             if (_idleTimeLeft < 0f)
             {
                 //Sound effect for patrolling
-                GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySightIdleSFX(_audioEmitter);
+                _audioManager.PlaySightIdleSFX(_audioEmitter);
                 _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
 
                 if (patrolPath && patrolPath.areas.Length > 0)
@@ -109,7 +111,7 @@ public class SightBeastPatrol : StateBaseClass
         if (_sight.CanSeeTarget())
         {
             //Sound effect for starting chase
-            GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySightAlertSFX(_audioEmitter);
+            _audioManager.PlaySightAlertSFX(_audioEmitter);
             if (_lastSeenTime + alertDuration > Time.time)
             {
                 _stateMachine.currentState = StateMachine.State.Chasing;

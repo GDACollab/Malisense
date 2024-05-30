@@ -166,6 +166,7 @@ public class PauseManager : MonoBehaviour
                 journalDisplay.SetActive(true);
                 journalTab.color = Color.white;
                 DisplayJournalPages(lastPageDisplayed);
+                globalTeapot.audioManager.PlayUIHoverSFX();
                 break;
             case Submenu.CONTROLS:
                 controlsDisplay.SetActive(true);
@@ -205,6 +206,7 @@ public class PauseManager : MonoBehaviour
                 return;
             }
             rightArrow.SetTrigger("Pressed");
+            globalTeapot.audioManager.PlayUIHoverSFX();
             DisplayJournalPages(lastPageDisplayed + 2);
         }
         else
@@ -214,6 +216,7 @@ public class PauseManager : MonoBehaviour
                 return;
             }
             leftArrow.SetTrigger("Pressed");
+            globalTeapot.audioManager.PlayUIHoverSFX();
             DisplayJournalPages(lastPageDisplayed - 2);
         }
     }

@@ -45,6 +45,20 @@ public class ScentDetection : MonoBehaviour
     [Range(0, 600)]
     [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
     public float idleAudioDelayMax;
+    
+    [Range(0, 600)]
+    [Tooltip("minimum range for delay between idle audio sounds (in seconds)")]
+    public float alertAudioDelayMin;
+    [Range(0, 600)]
+    [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
+    public float alertAudioDelayMax;
+    
+    [Range(0, 600)]
+    [Tooltip("minimum range for delay between idle audio sounds (in seconds)")]
+    public float chaseAudioDelayMin;
+    [Range(0, 600)]
+    [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
+    public float chaseAudioDelayMax;
 
     private StudioEventEmitter soundEmitter;
 
@@ -116,6 +130,10 @@ public class ScentDetection : MonoBehaviour
     IEnumerator sniffCheck() {
         float idleDelay = Random.Range(idleAudioDelayMin,idleAudioDelayMax);
         float idleTimer = Time.time;
+        float alertDelay = Random.Range(alertAudioDelayMin,alertAudioDelayMax);
+        float alertTimer = Time.time;
+        float chaseDelay = Random.Range(chaseAudioDelayMin,chaseAudioDelayMax);
+        float chaseTimer = Time.time;
         while (true) {
             checkPlayer();
             switch (GetComponent<StateMachine>().currentState) {
@@ -136,6 +154,13 @@ public class ScentDetection : MonoBehaviour
                     }
                     break;
                 case StateMachine.State.Alert:
+                    alertDelay -= Time.time - alertTimer;
+                    alertTimer = Time.time;
+                    UnityEngine.Debug.Log("delay = " + alertDelay);
+                    if (alertDelay <= 0) {
+                        alertDelay = Random.Range(alertAudioDelayMin,alertAudioDelayMax);
+                        audioManager.PlayScentAlertSFX(soundEmitter);
+                    }
                     if (scentPerSecond != scentPerSecond_Alert) scentPerSecond = scentPerSecond_Alert;
                     // if crossed threshold switch state
                     if (playerScent < scentT_Patrol2Alert && playerDist > distT_Patrol2Alert) {
@@ -147,6 +172,13 @@ public class ScentDetection : MonoBehaviour
                     }
                     break;
                 case StateMachine.State.Chasing:
+                    chaseDelay -= Time.time - chaseTimer;
+                    chaseTimer = Time.time;
+                    UnityEngine.Debug.Log("delay = " + chaseDelay);
+                    if (chaseDelay <= 0) {
+                        chaseDelay = Random.Range(chaseAudioDelayMin,chaseAudioDelayMax);
+                        audioManager.PlayScentAlertSFX(soundEmitter);
+                    }
                     if (scentPerSecond != scentPerSecond_Chase) scentPerSecond = scentPerSecond_Chase;
                     // if crossed threshold switch state
                     // Chasing doesn't end untill scent is off the player

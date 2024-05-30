@@ -44,12 +44,15 @@ public class StateMachine : MonoBehaviour
     private Player playerObj;
     private AudioManager audioManager;
 
-    void Start()
-    {
+    private void Awake() {
         _statue = Statue;
         // If statue start distracted otherwise patrol
         if(_statue) currentState = State.Distracted;
         else currentState = State.Patrolling;
+    }
+
+    void Start()
+    {
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _rb2d = GetComponent<Rigidbody2D>();

@@ -1,5 +1,6 @@
 using Pathfinding;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Seeker))]
@@ -24,6 +25,7 @@ public class EnemyPathfinder : MonoBehaviour
     private Rigidbody2D _rb2d;
 
     public bool AtGoal => Vector2.Distance(_rb2d.position, _targetPosition) < goalDistance;
+    public bool Unreachable => IsUnreachable();
 
     public void SetTarget(Vector2 point)
     {
@@ -130,6 +132,16 @@ public class EnemyPathfinder : MonoBehaviour
             // Accelerate towards waypoint
             if (_path != null)
                 MoveTowards(_path.vectorPath[_pathWaypoint]);
+        }
+    }
+    
+    public bool IsUnreachable(){
+        if(_path != null){
+            return Vector2.Distance(_path.vectorPath.Last(), _targetPosition) > Vector2.Distance(_path.vectorPath.Last(), _rb2d.position);
+        }
+        else
+        {
+            return false;
         }
     }
 }
