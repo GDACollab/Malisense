@@ -87,17 +87,8 @@ public class StateMachine : MonoBehaviour
                 if (playerObj.activeSafeZones.Count > 0)
                 {
                     currentState = State.Alert;
-                    patrolInit = false;
-                    chaseInit = false;
-                    if (!alertInit)
-                    {
-                        alert.Init();
-                        alertInit = true;
-                    }
-                    if (alert != null) { alert.On_Update(); }
                     break;
                 }
-                
                 patrolInit = false;
                 alertInit = false;
                 distractInit = false;

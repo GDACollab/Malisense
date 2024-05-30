@@ -236,7 +236,7 @@ public class DialogueManager : MonoBehaviour
                 // Name of owner of house stored in variable navigationManager.CurrentCharacter and is one of ["Scholar", "Stick", "Crypt_Keeper", "Clergy", "Mayor", "???????????????"]
                 // AUDIOMANAGER: Villager barks
                 int buildingIndex = navigationManager.selectedBuildingIndex;
-                GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayVillageBark((VillageNavigationManager.Buildings)buildingIndex);
+                globalTeapot.audioManager.PlayVillageBark((VillageNavigationManager.Buildings)buildingIndex);
             }
 
             DisplayChoices();

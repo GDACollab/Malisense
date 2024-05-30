@@ -402,6 +402,7 @@ public class AudioManager : MonoBehaviour
     public void PlayScentAlertSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(scentAlertSFX);
+        emitter.ResetEvent();
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
@@ -413,6 +414,7 @@ public class AudioManager : MonoBehaviour
     public void PlayScentIdleSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(scentIdleSFX);
+        emitter.ResetEvent();
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
@@ -427,6 +429,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySightAlertSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(sightAlertSFX);
+        emitter.ResetEvent();
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
@@ -442,6 +445,11 @@ public class AudioManager : MonoBehaviour
     public void PlaySightIdleSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(sightIdleSFX);
+        emitter.ResetEvent();
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = screamDistance.x;
+        emitter.OverrideMaxDistance = screamDistance.y;
+        emitter.Play();
     }
 
     // public void PlaySoundAlertSFX(){
@@ -450,6 +458,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySoundAlertSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(soundAlertSFX);
+        emitter.ResetEvent();
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
@@ -466,6 +475,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySoundIdleSFX(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(soundIdleSFX);
+        emitter.ResetEvent();
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;
@@ -491,6 +501,7 @@ public class AudioManager : MonoBehaviour
     public void PlayScream(StudioEventEmitter emitter)
     {
         emitter.EventReference = RuntimeManager.PathToEventReference(monsterScream);
+        emitter.ResetEvent();
         emitter.OverrideAttenuation = true;
         emitter.OverrideMinDistance = screamDistance.x;
         emitter.OverrideMaxDistance = screamDistance.y;

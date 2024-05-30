@@ -553,7 +553,7 @@ public class Player : MonoBehaviour
             audioManager.PlayLowStaminaSFX();
             Debug.Log("Switching to Exhausted SFX");
         }
-        else if(stopSFX && movementSFX == movementSFXState.STOPALL) // Player is not moving so stop all SFX
+        else if(Time.timeScale==0 || stopSFX && movementSFX == movementSFXState.STOPALL) // Player is not moving so stop all SFX
         {
             stopSFX = false;
             audioManager.StopStepSound(false);
