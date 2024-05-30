@@ -36,10 +36,10 @@ public class DynamiteMovement : MonoBehaviour
     // set up to call move(), moves dynamite in direction of player's triangle
     private void Start()
     {
-        directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle/Triangle");
+        directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle");
         arcMovement = GetComponent<DynamiteCurveScript>();
 
-        Vector3 direction = -(transform.position - directionalTriangle.position).normalized;
+        Vector3 direction = directionalTriangle.up;
 
         // TODO: Physics2D.GetLayerCollisionMask(gameObject.layer) would work better than hardcoding GetMask here, but merging tags is hard
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, direction, distance, LayerMask.GetMask("Dungeon"));
