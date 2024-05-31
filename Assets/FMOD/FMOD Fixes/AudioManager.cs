@@ -19,8 +19,8 @@ public class AudioManager : MonoBehaviour
         ENDING = 5,
         STOP = 6
     }
-    
-    
+
+
     public EventInstance currentPlaying;
     public EventInstance movementSFX;
     MusicTrack currentTrack = MusicTrack.MENU;
@@ -42,20 +42,16 @@ public class AudioManager : MonoBehaviour
     public float sfxVolume = 0.5f;
     [Range(0f, 1f)]
     public float movementsfxVolume = 0.3f;
-    [Range(0f, 1f)]
-    public float ambienceVolume = 0.5f;
 
     // [Header("Bus Paths")]
     private string masterBusPath = "bus:/";
     private string musicBusPath = "bus:/Music";
     private string sfxBusPath = "bus:/SFX";
-    private string ambienceBusPath = "bus:/Ambience";
 
     //BUSES
     private Bus masterBus;
     private Bus musicBus;
     private Bus sfxBus;
-    private Bus ambienceBus;
     #endregion
 
     #region OST PATHS
@@ -77,14 +73,14 @@ public class AudioManager : MonoBehaviour
     private string objectMoveSFX = "event:/Game SFX/Dungeon/ObjectMove";
     private string pickupSFX = "event:/Game SFX/Dungeon/Pickup";
     private string switchSFX = "event:/Game SFX/Dungeon/SwitchPull";
-    
+
     // Item SFX
     private string bellSFX = "event:/Game SFX/Items/Artifacts/Bell";
     private string dynamiteBoomSFX = "event:/Game SFX/Items/Consumables/Dynamite/Boom";
     private string dynamiteLightSFX = "event:/Game SFX/Items/Consumables/Dynamite/Light";
     private string elixirSFX = "event:/Game SFX/Items/Consumables/Elixir";
     private string flashDustSFX = "event:/Game SFX/Items/Consumables/FlashLantern";
-    
+
     // Monster SFX
     private string scentAlertSFX = "event:/Game SFX/Monster/Scent/Alert";
     private string scentIdleSFX = "event:/Game SFX/Monster/Scent/Idle";
@@ -94,39 +90,28 @@ public class AudioManager : MonoBehaviour
     private string soundIdleSFX = "event:/Game SFX/Monster/Sound/Idle";
     private string fakeMonsterSFX = "event:/Game SFX/Monster/FakeMonster";
     private string monsterScream = "event:/VS_Malisense/Monster_Scream";
-    
+
     // Player SFX Paths
     private string playerScream = "event:/Game SFX/Player/Die";
     private string puddleSplash = "event:/Game SFX/Player/PuddleSplish";
     private string reviveSFX = "event:/Game SFX/Player/Revive";
     private string lowStaminaSFX = "event:/Game SFX/Player/StaminaLow";
     private string playerStepSFX = "event:/Game SFX/Player/Walk";
-    
+
     // Village SFX Paths
     private string villageBark = "event:/Game SFX/Village/VillagerBark";
-    
+
     // UI SFX Paths
     // [Header("FMOD UI(SFX) Event Path Strings")]
     private string hoverUISFX = "event:/UI SFX/Menu Hover SFX (4)";
     private string selectUISFX = "event:/UI SFX/Menu_button_select_with_bell_and_tail";
     #endregion
 
-    // #region AMBIENCE PATHS
-    // [Tooltip("FMOD Event Path for the dungeon ambience")]
-    // public string dungeonOST = "event:/OST/Dungeon";
-    // #endregion
-
-    // #region AMBIENCE PATHS
-    // [Tooltip("FMOD Event Path for the dungeon ambience")]
-    // public string dungeonOST = "event:/OST/Dungeon";
-    // #endregion
-
     void Awake()
     {
         masterBus = RuntimeManager.GetBus(masterBusPath);
         musicBus = RuntimeManager.GetBus(musicBusPath);
         sfxBus = RuntimeManager.GetBus(sfxBusPath);
-        ambienceBus = RuntimeManager.GetBus(ambienceBusPath);
         SceneManager.sceneUnloaded += (_) => StopCurrentSong();
         SceneManager.sceneUnloaded += (_) => StopCurrentSong();
     }
@@ -137,7 +122,6 @@ public class AudioManager : MonoBehaviour
         masterBus.setVolume(masterVolume);
         musicBus.setVolume(musicVolume);
         sfxBus.setVolume(sfxVolume);
-        ambienceBus.setVolume(ambienceVolume);
     }
 
     /// <summary>
@@ -157,14 +141,15 @@ public class AudioManager : MonoBehaviour
         instance.start();
         instance.release();
     }
-    
+
     /// <summary>
     /// Plays an SFX setting a given parameter to a given value
     /// </summary>
     /// <param name="path">The path to the sound</param>
     /// <param name="parameter">The the name of the parameter</param>
     /// <param name="value">The value to set the parameter at</param>
-    public void PlayModified(string path, string parameter, float value){
+    public void PlayModified(string path, string parameter, float value)
+    {
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out _);
         if (result != FMOD.RESULT.OK)
         {
@@ -177,7 +162,7 @@ public class AudioManager : MonoBehaviour
         instance.start();
         instance.release();
     }
-    
+
     /// <summary>
     /// Play a song from the OST.
     /// </summary>
@@ -189,7 +174,7 @@ public class AudioManager : MonoBehaviour
         {
             Debug.Log("Current playing is valid");
             SwitchSong(path);
-            
+
             // StartCoroutine(RestOfPlayOST(path));
         }
         else
@@ -233,8 +218,9 @@ public class AudioManager : MonoBehaviour
             song.release();
         }
     }
-    
-    private void SwitchSong(string path){
+
+    private void SwitchSong(string path)
+    {
         string newMusic = path.Split("/").Last().ToLower();
         MusicTrack track = MusicTrack.MENU;
         switch (newMusic)
@@ -261,12 +247,12 @@ public class AudioManager : MonoBehaviour
                 track = MusicTrack.ENDING;
                 break;
         }
-        
+
         currentPlaying.setParameterByName("GAME SCENE", (float)track);
         currentTrack = track;
-        Debug.Log("Played: "+track);
+        Debug.Log("Played: " + track);
     }
-    
+
     /// <summary>
     /// Stops the song currently playing
     /// </summary>
@@ -291,42 +277,49 @@ public class AudioManager : MonoBehaviour
     }
 
     #region OST Functions
-    public void PlayMenuOST(){
+    public void PlayMenuOST()
+    {
         PlayOST(menuOST);
     }
-    
-    public void PlayVillageOST(){
+
+    public void PlayVillageOST()
+    {
         PlayOST(villageOST);
     }
-    
-    public void PlayCryptKeeperOST(){
+
+    public void PlayCryptKeeperOST()
+    {
         PlayOST(cryptOST);
     }
-    
+
     /// <summary>
     /// Transitions between Village OST and Shop OST
     /// </summary>
     /// <param name="play">Whether to play or stop the OST</param>
     /// <param name="transitionTime">The transition time</param>
-    public void SetShopOST(bool play, float transitionTime){
-        if(currentTrack == MusicTrack.VILLAGE){
+    public void SetShopOST(bool play, float transitionTime)
+    {
+        if (currentTrack == MusicTrack.VILLAGE)
+        {
             StartCoroutine(TransitionToShopOST(play, transitionTime));
         }
     }
-    
-    private IEnumerator TransitionToShopOST(bool play, float transitionTime){
+
+    private IEnumerator TransitionToShopOST(bool play, float transitionTime)
+    {
         float start = play ? 0 : 1;
         float goal = play ? 1 : 0;
         float tTime = 0;
-        
-        while(tTime<transitionTime){
+
+        while (tTime < transitionTime)
+        {
             tTime += Time.deltaTime;
-            float transition = Mathf.Lerp(start, goal, tTime/transitionTime);
+            float transition = Mathf.Lerp(start, goal, tTime / transitionTime);
             currentPlaying.setParameterByName("SHOP", transition);
             yield return null;
         }
     }
-    
+
     /// <summary>
     /// Plays the dungeon ost
     /// </summary>
@@ -334,15 +327,17 @@ public class AudioManager : MonoBehaviour
     {
         PlayOST(dungeonOST);
     }
-    
+
     /// <summary>
     /// Plays the chase ost
     /// </summary>
-    public void PlayChaseOST(){
+    public void PlayChaseOST()
+    {
         PlayOST(chaseOST);
     }
-    
-    public void PlayEndingOST(){
+
+    public void PlayEndingOST()
+    {
         PlayOST(endingOST);
     }
     #endregion
@@ -352,9 +347,11 @@ public class AudioManager : MonoBehaviour
     /// Plays a villager bark given a villager
     /// </summary>
     /// <param name="villager"></param>
-    public void PlayVillageBark(Buildings villager){
+    public void PlayVillageBark(Buildings villager)
+    {
         float value;
-        switch(villager){
+        switch (villager)
+        {
             case Buildings.SCHOLAR:
                 value = 0;
                 break;
@@ -372,40 +369,49 @@ public class AudioManager : MonoBehaviour
         }
         PlayModified(villageBark, "CurrentVillager", value);
     }
-    
-    public void PlayObjectMoveSFX(){
+
+    public void PlayObjectMoveSFX()
+    {
         Play(objectMoveSFX);
     }
-    
-    public void PlayPickupSFX(){
+
+    public void PlayPickupSFX()
+    {
         Play(pickupSFX);
     }
-    
-    public void PlaySwitchSFX(){
+
+    public void PlaySwitchSFX()
+    {
         Play(switchSFX);
     }
-    
-    public void PlayBellSFX(){
+
+    public void PlayBellSFX()
+    {
         Play(bellSFX);
     }
-    
-    public void PlayDynamiteBoomSFX(){
+
+    public void PlayDynamiteBoomSFX()
+    {
         Play(dynamiteBoomSFX);
     }
-    
-    public void PlayDynamiteLightSFX(){
+
+    public void PlayDynamiteLightSFX()
+    {
         Play(dynamiteLightSFX);
     }
-    
-    public void PlayElixirSFX(){
+
+    public void PlayElixirSFX()
+    {
         Play(elixirSFX);
     }
-    
-    public void PlayFlashDustSFX(){
+
+    public void PlayFlashDustSFX()
+    {
         Play(flashDustSFX);
     }
-    
-    public void PlayScentAlertSFX(){
+
+    public void PlayScentAlertSFX()
+    {
         Play(scentAlertSFX);
     }
     public void PlayScentAlertSFX(StudioEventEmitter emitter)
@@ -417,7 +423,8 @@ public class AudioManager : MonoBehaviour
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
     }
-    public void PlayScentIdleSFX(){
+    public void PlayScentIdleSFX()
+    {
         Play(scentIdleSFX);
     }
     public void PlayScentIdleSFX(StudioEventEmitter emitter)
@@ -429,11 +436,12 @@ public class AudioManager : MonoBehaviour
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
     }
-    
-    public void PlaySightAlertSFX(){
+
+    public void PlaySightAlertSFX()
+    {
         Play(sightAlertSFX);
     }
-    
+
     //The above function doesn't work; call the below one instead!
     public void PlaySightAlertSFX(StudioEventEmitter emitter)
     {
@@ -445,7 +453,8 @@ public class AudioManager : MonoBehaviour
         emitter.Play();
     }
     //Error with this one
-    public void PlaySightIdleSFX(){
+    public void PlaySightIdleSFX()
+    {
         Play(sightIdleSFX);
     }
     //End of Potential Error 
@@ -474,10 +483,11 @@ public class AudioManager : MonoBehaviour
         emitter.Play();
     }
 
-    public void PlaySoundAlertSFX(){
+    public void PlaySoundAlertSFX()
+    {
         Play(soundAlertSFX);
     }
-    
+
     // public void PlaySoundIdleSFX(){
     //     Play(soundIdleSFX);
     // }
@@ -490,11 +500,12 @@ public class AudioManager : MonoBehaviour
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
     }
-    
-    public void PlayFakeMonsterSFX(){
+
+    public void PlayFakeMonsterSFX()
+    {
         Play(fakeMonsterSFX);
     }
-    
+
     /// <summary>
     /// Plays a monster scream
     /// </summary>
@@ -516,20 +527,23 @@ public class AudioManager : MonoBehaviour
         emitter.OverrideMaxDistance = screamDistance.y;
         emitter.Play();
     }
-    
-    public void PlayDeathSFX(){
+
+    public void PlayDeathSFX()
+    {
         Play(playerScream);
     }
-    
-    public void PlayPuddleSFX(){
+
+    public void PlayPuddleSFX()
+    {
         Play(puddleSplash);
     }
-    
-    public void PlayReviveSFX(){
+
+    public void PlayReviveSFX()
+    {
         Play(reviveSFX);
     }
     private IEnumerator FadeOut()
-    { 
+    {
         movementSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         movementSFX.getPlaybackState(out movementState);
         while (movementState != PLAYBACK_STATE.STOPPED)
@@ -539,7 +553,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayLowStaminaSFX(){
+    public void PlayLowStaminaSFX()
+    {
         if (movementSFX.isValid())
         {
             StartCoroutine(FadeOut());
@@ -554,10 +569,11 @@ public class AudioManager : MonoBehaviour
         movementSFX = RuntimeManager.CreateInstance(lowStaminaSFX);
         movementSFX.setVolume(sfxVolume);
         movementSFX.start();
-        
+
     }
-    
-    public void PlayStepSFX(float running=0.0f){
+
+    public void PlayStepSFX(float running = 0.0f)
+    {
         if (movementSFX.isValid())
         {
             StartCoroutine(FadeOut());
@@ -579,14 +595,15 @@ public class AudioManager : MonoBehaviour
         if (movementSFX.isValid() && !immediate)
         {
             StartCoroutine(FadeOut());
-        }else if (movementSFX.isValid())
+        }
+        else if (movementSFX.isValid())
         {
             movementSFX.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             movementSFX.release();
         }
     }
-    
-    
+
+
     /// <summary>
     /// Plays the select sfx
     /// </summary>
