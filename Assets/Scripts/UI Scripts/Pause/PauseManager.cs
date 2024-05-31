@@ -10,7 +10,7 @@ public class PauseManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseParent, optionsMenu, journalDisplay, controlsDisplay;
     [SerializeField] Image journalTab, settingsTab;
-    [SerializeField] Slider masterSlider, musicSlider, sfxSlider, ambianceSlider;
+    [SerializeField] Slider masterSlider, musicSlider, sfxSlider;
     [SerializeField] List<TextMeshProUGUI> notePages;
     [SerializeField] Animator rightArrow, leftArrow;
     [SerializeField] Button debug;
@@ -38,7 +38,6 @@ public class PauseManager : MonoBehaviour
         masterSlider.value = globalTeapot.audioManager.masterVolume;
         musicSlider.value = globalTeapot.audioManager.musicVolume;
         sfxSlider.value = globalTeapot.audioManager.sfxVolume;
-        ambianceSlider.value = globalTeapot.audioManager.ambienceVolume;
     }
 
     private void OnDisable()
@@ -51,7 +50,6 @@ public class PauseManager : MonoBehaviour
         globalTeapot.audioManager.masterVolume = masterSlider.value;
         globalTeapot.audioManager.musicVolume = musicSlider.value;
         globalTeapot.audioManager.sfxVolume = sfxSlider.value;
-        globalTeapot.audioManager.ambienceVolume = ambianceSlider.value;
     }
 
     public void OnMove(InputValue value)
