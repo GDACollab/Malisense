@@ -66,8 +66,10 @@ public class SightBeastChase : StateBaseClass
 
             // Get point 10 units in front of player
             Vector3 dir = _sight.target.position - transform.position;
+            var pos  = _sight.target.position + dir.normalized * lookAheadDistance;
 
-            _pathfinder.SetTarget(_sight.target.position + dir.normalized * lookAheadDistance);
+            pos = (AstarPath.active.data.gridGraph.GetNearest(pos).node.Walkable) ? pos : _sight.target.position;
+            _pathfinder.SetTarget(pos);
 
             // Look towards target
             //_sight.LookAt(_sight.target.position);
@@ -83,7 +85,7 @@ public class SightBeastChase : StateBaseClass
             _sight.LookInDirection(_pathfinder.direction);
         }
 
-        if(_pathfinder.AtGoal
+        if((_pathfinder.AtGoal || _pathfinder.Unreachable)
             && Time.time > _lastSeenTime + seeAroundWallsTime)
         {
             _stateMachine.currentState = StateMachine.State.Patrolling;

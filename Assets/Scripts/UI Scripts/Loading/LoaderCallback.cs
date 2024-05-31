@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class LoaderCallback : MonoBehaviour
 {
     private bool isFirstUpdate = true;
+    public bool keepLoading = false;
 
     public Image fadeOutUIImage; // Reference to the UI Image
     public float fadeSpeed = 0.1f;
@@ -26,7 +27,7 @@ public class LoaderCallback : MonoBehaviour
 
         var asyncScene = Loader.LoaderCallback(); // Calls to load the scene after load 
 
-        while (asyncScene.progress<0.9f/* !SceneManager.GetActiveScene().isLoaded */) // Waits on Loading screen while other screen loads
+        while (asyncScene.progress<0.9f || keepLoading) // Waits on Loading screen while other screen loads
         {
             yield return null;
         }
@@ -57,7 +58,7 @@ public class LoaderCallback : MonoBehaviour
             fadeOutUIImage.color = objectColor;
             yield return null;
         }
-        fadeOutUIImage.gameObject.SetActive(false);
+        // fadeOutUIImage.gameObject.SetActive(false);
         asyncScene.allowSceneActivation = true;
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Array = System.Array;
 using UnityEngine;
 using Pathfinding;
+using FMODUnity;
 
 [RequireComponent(typeof(PatrolPath))]
 [RequireComponent(typeof(StateMachine))]
@@ -12,6 +13,7 @@ public class SoundBeastPatrol : StateBaseClass
     private StateMachine machine;
     public PatrolPath patrolPath;
     private AIPath aiPath;
+    private Animator animator;
 
     [Tooltip("Rate of acceleration.")]
     public float maxSpeed = 2f;
@@ -29,15 +31,18 @@ public class SoundBeastPatrol : StateBaseClass
     public bool randomPath;
 
     private float _idleTimeLeft;
-    private float _lastSeenTime = float.NegativeInfinity;
+    // private float _lastSeenTime = float.NegativeInfinity;
 
     private int _pathIndex;
 
     private Player playerObj;
 
+
+
     private void Awake()
     {
         patrolPath = GetComponent<PatrolPath>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private SBProtoPatrolArea GetRandomArea()
@@ -77,6 +82,7 @@ public class SoundBeastPatrol : StateBaseClass
         _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
 
         // Start at the closest path point when entering patrol state
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySoundIdleSFX(GetComponent<StudioEventEmitter>());
         var startArea = patrolPath.FindClosestArea(transform.position);
         _pathIndex = Array.IndexOf(patrolPath.areas, startArea);
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -84,15 +90,20 @@ public class SoundBeastPatrol : StateBaseClass
 
     public override void On_Update()
     {
+        
         if(aiPath.reachedEndOfPath)
         {
             // Currently idle
             _idleTimeLeft -= Time.deltaTime;
+            animator.SetBool("Idle", true);
+            animator.SetBool("Walk", false);
 
             // When done idling, move to new area
-            if(_idleTimeLeft < 0f)
+            if (_idleTimeLeft < 0f)
             {
                 _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
+                animator.SetBool("Walk", true);
+                animator.SetBool("Idle", false);
 
                 if (patrolPath && patrolPath.areas.Length > 0)
                 {

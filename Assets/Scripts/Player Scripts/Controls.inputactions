@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sneak",
-                    "type": "Value",
-                    "id": "9cbb0e3b-8203-4c15-a40f-661063302a4b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Interact",
                     "type": "Value",
                     "id": "0f867f0c-299e-4332-bb43-aba3a08c28b3",
@@ -40,33 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "SetDown",
-                    "type": "Button",
-                    "id": "d8315170-1e34-4c4e-b04e-4f5d69e9bcf9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Hide Message",
-                    "type": "Value",
-                    "id": "040a405d-7375-4406-93a7-28b93e745851",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Set Enemies",
-                    "type": "Button",
-                    "id": "c59d6e9d-6fd3-4710-90dd-f1ee2edca410",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "Hide Footsteps",
@@ -81,15 +45,6 @@
                     "name": "Activate Functions",
                     "type": "Button",
                     "id": "1c2a4c4c-6d13-43c2-80af-645b7ccf9862",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "9a1d8ea5-c94f-431b-8d51-1b9372e46568",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -264,6 +219,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ad87a5ec-46fd-4bf7-9941-56c740a6dd44",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "8 Directions Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d56b6d1b-6895-4eae-8131-8cc5ed35e069",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -281,17 +247,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "87719c7b-7ded-4748-b8f0-e9188d3424f0",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Sneak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -330,72 +285,6 @@
                 },
                 {
                     "name": "",
-                    "id": "00b306b9-a6c4-41e3-8fb4-e7c2fe2e8dac",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetDown",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "acb7d855-828c-4c74-92fa-1a6fa44199e0",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetDown",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "622f009e-d27d-4de0-b2f8-98211766db40",
-                    "path": "<Keyboard>/semicolon",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Set Enemies",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "06d004de-d906-453a-a4f8-cda4409d186f",
-                    "path": "<Gamepad>/leftStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Set Enemies",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8d97587b-b3e4-4d7c-8abf-e855313e6ba0",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Hide Message",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "08a2d6db-3811-4f8f-aeb7-8d8ffb268cc4",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Hide Message",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "471a1288-151f-4c87-86b4-99441fe6f300",
                     "path": "<Keyboard>/quote",
                     "interactions": "",
@@ -418,23 +307,12 @@
                 },
                 {
                     "name": "",
-                    "id": "55bba8af-2e9d-45b2-9b93-e665773d0dc1",
-                    "path": "<Keyboard>/tab",
+                    "id": "f81e0d4b-2575-4367-9c80-81ac3a08eef2",
+                    "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e7917df-8360-4148-a2d1-bee669d4456c",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
+                    "action": "Activate Functions",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1077,19 +955,8 @@
                 },
                 {
                     "name": "",
-                    "id": "ab322462-f668-47cc-b0c4-51862272e2a1",
-                    "path": "<Keyboard>/backspace",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cancel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6ca873ac-b8c5-4fd2-bc85-feb8ff95195e",
-                    "path": "<Keyboard>/x",
+                    "id": "fc6a3693-9508-4a6c-8b2a-6cd6527d5ed8",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

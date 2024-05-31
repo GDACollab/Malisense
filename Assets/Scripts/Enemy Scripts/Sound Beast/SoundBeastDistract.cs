@@ -13,11 +13,8 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
 
     private Coroutine _stunnedCoroutine;
     private StateMachine _stateMachine;
-    private Rigidbody2D _rb2d;
     private AIPath _aiPath;
     private SoundBeastAlert _alert;
-    private SpriteRenderer _soundSprite;
-    private Sprite AwakeSprite;
     private int _statueCounter;
 
     private void Awake()
@@ -29,9 +26,6 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
     }
     void Start()
     {
-        _soundSprite = GetComponentInChildren<SpriteRenderer>();
-        _rb2d = GetComponent<Rigidbody2D>();
-        AwakeSprite = _soundSprite.sprite;
 
     }
 
@@ -49,11 +43,7 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
         else
         {
             _statueCounter = _stateMachine.GetActivationsToAwake();
-            _soundSprite.sprite = _stateMachine.GetStatueSprite();
-            //Stops enemy from hurting player while statue
-            gameObject.tag = "Untagged";
-            //Prevents player from pushing monster while statue
-            _rb2d.mass = 10000;
+            _stateMachine.CreateStatue();
         }
     }
     public override void On_Update()
@@ -88,8 +78,8 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
 
     public void SwitchInteract(bool activated)
     {
-        ExitToState(StateMachine.State.Distracted);
-        /*
+        // ExitToState(StateMachine.State.Distracted);
+        
         //If switch is activated subtract from statue counter
         if (activated) _statueCounter--;
         else _statueCounter++;
@@ -97,14 +87,11 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
         if (_statueCounter <= 0)
         {
             _stateMachine.AwakenStatue();
-            _soundSprite.sprite = AwakeSprite;
-            gameObject.tag = "Enemy";
-            //Alert target is set to it self's position
-            //_alert.SetStatueTarget();
+            _alert.SetStatueTarget();
             ExitToState(StateMachine.State.Alert);
             //Debug.Log("Monster Working");
         }
-        */
+       
         
     }
 

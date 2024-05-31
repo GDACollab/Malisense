@@ -9,6 +9,7 @@ public class ArtifactAltar : MonoBehaviour, ISwitchable
     public bool isNear = false;
     public Sprite notSelected;
     public Sprite selected;
+    public bool exiting = false;
 
     DungeonManager dungeonManager;
     Player playerInventory;
@@ -18,7 +19,6 @@ public class ArtifactAltar : MonoBehaviour, ISwitchable
     void Start()
     {
         playerInventory = GameObject.FindWithTag("Player").GetComponent<Player>();
-        if (playerInventory.newInventory?.artifact2) { Destroy(gameObject); }
         dungeonManager = FindObjectOfType<DungeonManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -43,7 +43,11 @@ public class ArtifactAltar : MonoBehaviour, ISwitchable
         if (artifact) { playerInventory.newInventory.artifact2 = artifact; }
         if (floorNote) { dungeonManager.ActivateNote(floorNote); }
         else { dungeonManager.DeactivateNote(); }
-        StartCoroutine(WaitBeforeExitingDungeon());
+        if (!exiting)
+        {
+            StartCoroutine(WaitBeforeExitingDungeon());
+            exiting = true;
+        }
     }
 
     IEnumerator WaitBeforeExitingDungeon()

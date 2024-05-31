@@ -22,7 +22,8 @@ public class StateMachine : MonoBehaviour
 
     public State currentState;
     [Tooltip("Sets which sprite the monster starts in when Statue is true.")]
-    public Sprite SpriteStatue;
+    public GameObject StatueSpriteController;
+    public GameObject AnimatorController;
 
     public StateBaseClass patrol;
     public StateBaseClass chasing;
@@ -38,18 +39,23 @@ public class StateMachine : MonoBehaviour
     private bool chaseInit = false;
     private bool distractInit = false;
     private bool _statue;
+    private Rigidbody2D _rb2d;
     private DungeonManager dungeonManager;
-    private AudioManager audioManager;
     private Player playerObj;
-    void Start()
-    {
+    private AudioManager audioManager;
+
+    private void Awake() {
         _statue = Statue;
         // If statue start distracted otherwise patrol
         if(_statue) currentState = State.Distracted;
         else currentState = State.Patrolling;
-        //currentState = State.Patrolling;
+    }
+
+    void Start()
+    {
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _rb2d = GetComponent<Rigidbody2D>();
         //
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
     }
@@ -90,24 +96,14 @@ public class StateMachine : MonoBehaviour
                 if (playerObj.activeSafeZones.Count > 0)
                 {
                     currentState = State.Alert;
-                    patrolInit = false;
-                    chaseInit = false;
-                    if (!alertInit)
-                    {
-                        alert.Init();
-                        alertInit = true;
-                    }
-                    if (alert != null) { alert.On_Update(); }
                     break;
                 }
-                
                 patrolInit = false;
                 alertInit = false;
                 distractInit = false;
                 if (!chaseInit)
                 {
                     //Debug.Log("Chase Start");
-                    audioManager.Play(audioManager.monsterScream);
                     SetChase();
                     chasing.Init();
                     chaseInit = true;
@@ -133,13 +129,25 @@ public class StateMachine : MonoBehaviour
     public bool IsStatue() => _statue;
 
     //awakes monster from statue
-    public void AwakenStatue() => _statue = false;
+    public void AwakenStatue()
+    { 
+        _statue = false;
+        StatueSpriteController.SetActive(false);
+        AnimatorController.SetActive(true);
+        gameObject.tag = "Enemy";
+        _rb2d.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public void CreateStatue()
+    {
+        StatueSpriteController.SetActive(true);
+        AnimatorController.SetActive(false);
+        gameObject.tag = "Untagged";
+        _rb2d.bodyType = RigidbodyType2D.Static;
+    }
     
     //Returns amount of switch activations to awaken statue
     public int GetActivationsToAwake() => ActivationsToAwake;
-
-    //Returns the statue sprite
-    public Sprite GetStatueSprite() => SpriteStatue;
     
     private void SetChase(){
         if (dungeonManager != null)

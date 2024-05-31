@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD;
+using FMODUnity;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class ScentDetection : MonoBehaviour
 {
-    GameObject player;
+    Player player;
 
     private StateMachine stateMac;
 
@@ -18,11 +21,46 @@ public class ScentDetection : MonoBehaviour
     public float scentT_Alert2Chase = 90;
 
     [Header("Scent Buildup Values")]
-
     public float scentPerSecond;
-    static public float scentPerSecond_Patrol = 0.75f;
-    static public float scentPerSecond_Alert = 2;
-    static public float scentPerSecond_Chase = 5;
+    static public float scentPerSecond_Patrol = 0.15f;
+    static public float scentPerSecond_Alert = 0.35f;
+    static public float scentPerSecond_Chase = 2;
+    
+    [Header("Behavior Modifiers")]
+    public bool usedIncense = false;
+    [SerializeField] private float incenseDecrease = 40;
+    public float incenseDuration = 3;
+    [SerializeField] private float safeZoneDecrease = 0.75f;
+    [Tooltip("The minimum scent value reached through modification")]
+    [SerializeField] private float minScentValue = 30;
+    private float incenseTime;
+    private bool inSafeZone => player.activeSafeZones.Count > 0;
+
+    [Header("Audio")]
+    private AudioManager audioManager;
+    
+    [Range(0, 600)]
+    [Tooltip("minimum range for delay between idle audio sounds (in seconds)")]
+    public float idleAudioDelayMin;
+    [Range(0, 600)]
+    [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
+    public float idleAudioDelayMax;
+    
+    [Range(0, 600)]
+    [Tooltip("minimum range for delay between idle audio sounds (in seconds)")]
+    public float alertAudioDelayMin;
+    [Range(0, 600)]
+    [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
+    public float alertAudioDelayMax;
+    
+    [Range(0, 600)]
+    [Tooltip("minimum range for delay between idle audio sounds (in seconds)")]
+    public float chaseAudioDelayMin;
+    [Range(0, 600)]
+    [Tooltip("maximum range for delay between idle audio sounds (in seconds)")]
+    public float chaseAudioDelayMax;
+
+    private StudioEventEmitter soundEmitter;
 
     [Header("Read-only")]
 
@@ -34,10 +72,14 @@ public class ScentDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (idleAudioDelayMax < idleAudioDelayMin) UnityEngine.Debug.LogWarning("ScentDetection: Start(): Idle Audio Delay values are incorrect");
+        soundEmitter = GetComponent<StudioEventEmitter>();
         scentPerSecond = scentPerSecond_Patrol;
         stateMac = GetComponent<StateMachine>();
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         playerDist = Vector2.Distance(player.transform.position, transform.position);
+        incenseTime = 0;
+        audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
 
         StartCoroutine("sniffCheck");
 
@@ -58,47 +100,96 @@ public class ScentDetection : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerScent < 100) modScent(scentPerSecond * Time.fixedDeltaTime);
+        if(usedIncense){
+            UseIncense();
+        }
+        else if (inSafeZone){
+            if(playerScent > minScentValue){
+                playerScent -= Time.deltaTime * safeZoneDecrease;
+            }
+        }
+        else if (playerScent < 100 && !(stateMac.currentState == StateMachine.State.Distracted)) {
+            modScent(scentPerSecond * Time.fixedDeltaTime);
+            incenseTime = 0;
+        }
+    }
+    
+    void UseIncense(){
+        if(incenseTime < incenseDuration){
+            if(playerScent > minScentValue){
+                playerScent -= Time.deltaTime * incenseDecrease/incenseDuration;
+            }
+            incenseTime += Time.deltaTime;
+        }
+        else {
+            usedIncense = false;
+        }
     }
 
     // checks if monster is close enough to player to smell them
     IEnumerator sniffCheck() {
-
+        float idleDelay = Random.Range(idleAudioDelayMin,idleAudioDelayMax);
+        float idleTimer = Time.time;
+        float alertDelay = Random.Range(alertAudioDelayMin,alertAudioDelayMax);
+        float alertTimer = Time.time;
+        float chaseDelay = Random.Range(chaseAudioDelayMin,chaseAudioDelayMax);
+        float chaseTimer = Time.time;
         while (true) {
             checkPlayer();
             switch (GetComponent<StateMachine>().currentState) {
                 case StateMachine.State.Patrolling:
+                    idleDelay -= Time.time - idleTimer;
+                    idleTimer = Time.time;
+                    UnityEngine.Debug.Log("delay = " + idleDelay);
+                    if (idleDelay <= 0) {
+                        idleDelay = Random.Range(idleAudioDelayMin,idleAudioDelayMax);
+                        audioManager.PlayScentIdleSFX(soundEmitter);
+                    }
                     if (scentPerSecond != scentPerSecond_Patrol) scentPerSecond = scentPerSecond_Patrol;
                     // if crossed threshold switch state
                     if (playerScent > scentT_Patrol2Alert || playerDist < distT_Patrol2Alert) {
                         stateMac.currentState = StateMachine.State.Alert;
-                        Debug.Log("Scent Beast switching from Patrol -> Alert");
+                        audioManager.PlayScentAlertSFX(soundEmitter);
+                        UnityEngine.Debug.Log("Scent Beast switching from Patrol -> Alert");
                     }
                     break;
                 case StateMachine.State.Alert:
+                    alertDelay -= Time.time - alertTimer;
+                    alertTimer = Time.time;
+                    UnityEngine.Debug.Log("delay = " + alertDelay);
+                    if (alertDelay <= 0) {
+                        alertDelay = Random.Range(alertAudioDelayMin,alertAudioDelayMax);
+                        audioManager.PlayScentAlertSFX(soundEmitter);
+                    }
                     if (scentPerSecond != scentPerSecond_Alert) scentPerSecond = scentPerSecond_Alert;
                     // if crossed threshold switch state
                     if (playerScent < scentT_Patrol2Alert && playerDist > distT_Patrol2Alert) {
                         stateMac.currentState = StateMachine.State.Patrolling;
-                        Debug.Log("Scent Beast switching from Alert -> Patrol");
+                        UnityEngine.Debug.Log("Scent Beast switching from Alert -> Patrol");
                     } else if (playerScent > scentT_Alert2Chase || playerDist < distT_Alert2Chase) {
                         stateMac.currentState = StateMachine.State.Chasing;
-                        Debug.Log("Scent Beast switching from Alert -> Chase");
+                        UnityEngine.Debug.Log("Scent Beast switching from Alert -> Chase");
                     }
                     break;
                 case StateMachine.State.Chasing:
+                    chaseDelay -= Time.time - chaseTimer;
+                    chaseTimer = Time.time;
+                    UnityEngine.Debug.Log("delay = " + chaseDelay);
+                    if (chaseDelay <= 0) {
+                        chaseDelay = Random.Range(chaseAudioDelayMin,chaseAudioDelayMax);
+                        audioManager.PlayScentAlertSFX(soundEmitter);
+                    }
                     if (scentPerSecond != scentPerSecond_Chase) scentPerSecond = scentPerSecond_Chase;
                     // if crossed threshold switch state
                     // Chasing doesn't end untill scent is off the player
                     if (playerScent < scentT_Alert2Chase && playerDist > distT_Alert2Chase) {
                         stateMac.currentState = StateMachine.State.Alert;
-                        Debug.Log("Scent Beast switching from Chase -> Alert");
+                        UnityEngine.Debug.Log("Scent Beast switching from Chase -> Alert");
                     }
                     break;
             }
             // checks scent/dist for threshold corssings            
             yield return new WaitForSeconds(0.25f);
-            
         }
     }
     

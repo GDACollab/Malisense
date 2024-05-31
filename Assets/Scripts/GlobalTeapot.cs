@@ -23,14 +23,32 @@ public class GlobalTeapot : MonoBehaviour
         End
     }
 
+    /// <summary>
+    /// Connected Device Type
+    /// </summary>
+    public enum TeaCup
+    {
+        KEYBOARD,
+        XINPUT,
+        DUALSHOCK,
+        SWITCH
+    }
+
+    [Header("Ink File")]
+    [Tooltip("The master ink file.")]
+    public TextAsset masterInk;
+    public Ink.Runtime.Story currentStory;
+
     [Header("Story Variables")]
     public TeaType currProgress = TeaType.Intro;
     /// <summary>
     /// True if player has this
     /// </summary>
-    public bool hasDied = false, hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
-    public int deathCount = 0;
-    public Loader.Scene currentScene = Loader.Scene.DeathScene;
+    public bool hasDied = false, toldCKAboutHighPriest = false;
+    public bool mayorWasIntroduced = false, scholarWasIntroduced = false, highPriestWasIntroduced = false;
+    public bool hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
+    public int deathCount = 0, stickHappiness = 0;
+    public Loader.Scene currentScene => Loader.GetCurrentScene();
 
     [Header("Note Variables")]
     public int numNotesObtained = 0;
@@ -38,7 +56,10 @@ public class GlobalTeapot : MonoBehaviour
 
     [Header("Scripts Referenced")]
     public AudioManager audioManager;
+    public Fader fader;
     public Journal journal;
+    public DeviceInputs deviceInputs;
+    [SerializeField] private PlayerInventory inventory;
 
     private void Awake()
     {
@@ -52,13 +73,37 @@ public class GlobalTeapot : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
         if (!journal) { journal = Resources.Load<Journal>("Journal"); }
+        if (!deviceInputs) { deviceInputs = Resources.Load<DeviceInputs>("DeviceInputs"); }
+        if (!inventory) { inventory = Resources.Load<PlayerInventory>("Player_Inventory"); }
+        deviceInputs.Init();
         audioManager = GetComponent<AudioManager>();
+        fader = GetComponent<Fader>();
+        fader.Init();
         journal.CreateFloorNotes();
+
+        currentStory = new Ink.Runtime.Story(masterInk.text);
+        // could add error handling: currentStory.onError += ~~~~;
     }
 
-    private void Update()
+    public void BrewNewTea()
     {
-        currentScene = Loader.GetCurrentScene();
+        currProgress = TeaType.Intro;
+        currentStory.ResetState();
+        journal.CreateFloorNotes();
+        inventory.ResetInventory();
+
+        hasDied = false;
+        toldCKAboutHighPriest = false;
+        mayorWasIntroduced = false;
+        scholarWasIntroduced = false;
+        highPriestWasIntroduced = false;
+        hasMayorNote1 = false;
+        hasMayorNote2 = false;
+        hasFinalMayorNote = false;
+        deathCount = 0;
+        stickHappiness = 0;
+        numNotesObtained = 0;
+        numStoreCredits = 0;
     }
 
     /// <summary>
@@ -88,5 +133,10 @@ public class GlobalTeapot : MonoBehaviour
             numNotesObtained++;
             numStoreCredits++;
         }
+    }
+
+    private void OnDisable()
+    {
+        deviceInputs.Deactivate();
     }
 }

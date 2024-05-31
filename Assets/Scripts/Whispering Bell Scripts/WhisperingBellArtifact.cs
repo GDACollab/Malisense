@@ -27,6 +27,7 @@ public class WhisperingBellArtifact : MonoBehaviour
     public void WhisperBellAction()
     {
         Instantiate(pulseEffect, player.transform.position, player.transform.rotation);
+        GlobalTeapot.Instance.StartCoroutine(player.GetComponent<Player>().DisplayGemHintArrow(whisperingBellDuration));
         foreach (GameObject enemy in enemies)
         {
             Transform targetEnemy = enemy.transform;
@@ -34,6 +35,7 @@ public class WhisperingBellArtifact : MonoBehaviour
             pulseObject.transform.parent = enemy.transform;
         }
         WhisperingBell.duration += Time.deltaTime;
+        WhisperingBell.cooldown = 30;
         blockAction = true;
         
     }
@@ -58,22 +60,19 @@ public class WhisperingBellArtifact : MonoBehaviour
     {
         if (WhisperingBell.cooldown > whisperingBellCooldown)
         {
-            WhisperingBell.cooldown = 0.0f;
             WhisperingBell.duration = 0.0f;
             Destroy(gameObject);
         }
         if (WhisperingBell.duration > 0.0f) WhisperingBell.duration += Time.deltaTime;
         if (WhisperingBell.duration >= 5.0f)    
         {
-            WhisperingBell.cooldown += Time.deltaTime;
             WhisperingBell.duration = 0.0f;
         } 
         if (WhisperingBell.cooldown == 0.0f && WhisperingBell.duration == 0.0f && !blockAction){ // Temporary key press, needs to be connected to player controller
             // TODO: add a call to make the player ripple effect
             Debug.Log("Bell Activated");
+            GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayBellSFX();
             WhisperBellAction();
         }
-
-        else if (WhisperingBell.cooldown > 0.0f) WhisperingBell.cooldown += Time.deltaTime;
     }
 }

@@ -19,9 +19,9 @@ public class VillageNavigationManager : MonoBehaviour
 {
 
     //Building Selection
-    enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
+    public enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
     [Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
-    [Tooltip("0: Scholar, 1: Custodian, 3: Crypt Keeper, 4: Church, 5: Mayor")]
+    [Tooltip("0: Scholar, 1: Custodian, 2: Crypt Keeper, 3: Church, 4: Mayor")]
     [SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
     [Tooltip("Determines which building is selected at the start of the scene.")]
     [SerializeField] Buildings initialSelectedBuilding;
@@ -51,6 +51,8 @@ public class VillageNavigationManager : MonoBehaviour
 
     //Story Variables
     private bool hasForcedCKIntro = false;
+    private bool hasForcedClergyIntro = false;
+    private bool hasForcedMayorIntro = false;
 
     // Global Teapot
     GlobalTeapot globalTeapot;
@@ -66,7 +68,7 @@ public class VillageNavigationManager : MonoBehaviour
         // Get the Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
-        audioManager.PlayOST(audioManager.dungeonOST);
+        audioManager.PlayVillageOST();
 
         // Building Selection:
         // Turn off every building's light
@@ -93,18 +95,19 @@ public class VillageNavigationManager : MonoBehaviour
             // Dialogue Manager will change selected building back to clergy
             selectedBuildingIndex = 5;
             selectBuilding();
-        } // Force CK Intro After 1st Death
-        else if (globalTeapot.deathCount == 1 && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
-        { 
-            moveInList(-1);
+        } // Force Mayor Intro 
+        else if (!globalTeapot.mayorWasIntroduced && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
+        {
+            moveBuildingSelection(1);
             selectBuilding();
-        } // TODO: Force Mayor Intro 
-        //else if(globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
-        //{
-        //    Loader.Load(Loader.Scene.Level_Select);    
-        //}
+        } // Force CK Intro After 1st Death
+        else if (globalTeapot.deathCount >= 1 && (globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1 || globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2))
+        { 
+            moveBuildingSelection(-1);
+            selectBuilding();
         else if (false)
         { 
+
         }
 
         activateInk = false;
@@ -112,31 +115,59 @@ public class VillageNavigationManager : MonoBehaviour
 
     private void Update()
     {
-        // Force CK Intro After Intro Cutscene
-        if (!hasSelected && !hasEntered && !hasForcedCKIntro && globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro)
         {
-            Debug.Log("forcing CK INTRO");
-            moveInList(-3);
-            selectBuilding();
-            hasForcedCKIntro = true;
+            // Force CK Intro After Intro Cutscene
+            if (!hasSelected && !hasEntered && !hasForcedCKIntro )
+            {
+                Debug.Log("forcing CK INTRO");
+                moveBuildingSelection(-3);
+                selectBuilding();
+                hasForcedCKIntro = true;
+            }
+
+            //// Force Clergy Intro After CK Intro
+            //if (!hasSelected && !hasEntered && hasForcedCKIntro && !hasForcedClergyIntro)
+            //{
+            //    Debug.Log("forcing CLERGY INTRO");
+            //    moveBuildingSelection(1);
+            //    selectBuilding();
+            //    hasForcedClergyIntro = true;
+            //}
         }
+        
 
         if (!movePointer) return;
     }
 
-    public void moveInList(int move, bool force = false)
+    public void moveBuildingSelection(int move, bool force = false)
     {
         if ((!currentlySelected || hasSelected) && !force) return;
 
         selectedBuildingIndex += move;
-        if (selectedBuildingIndex < 0)
+        // Hard-coded behavior for intro and first floor
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Intro || globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1)
         {
-            selectedBuildingIndex = buildings.Length - 1;
-        }
-        else if (selectedBuildingIndex >= buildings.Length)
+            if (selectedBuildingIndex < 2)
+            {
+                selectedBuildingIndex = buildings.Length - 2;
+            }
+            else if (selectedBuildingIndex > 3)
+            {
+                selectedBuildingIndex = 2;
+            }
+        } else
         {
-            selectedBuildingIndex = 0;
+            if (selectedBuildingIndex < 0)
+            {
+                selectedBuildingIndex = buildings.Length - 1;
+            }
+            else if (selectedBuildingIndex >= buildings.Length)
+            {
+                selectedBuildingIndex = 0;
+            }
         }
+        
 
         selectedBuilding = buildings[selectedBuildingIndex];
 
@@ -144,7 +175,7 @@ public class VillageNavigationManager : MonoBehaviour
         CurrentCharacter = CharacterList[selectedBuildingIndex];
 
 
-        itemSelected();
+        updateBuildingLights();
     }//NEEDS TO BE UPDATED FOR InputAction
 
     public void selectBuilding()
@@ -166,15 +197,26 @@ public class VillageNavigationManager : MonoBehaviour
         if (hasEntered)
         {
             hasEntered = false;
+            if(selectedBuildingIndex == 0){
+                audioManager.SetShopOST(false, 1/fadeSpeed);
+            }
+            else if(selectedBuildingIndex == 2){
+                audioManager.PlayVillageOST();
+            }
             StartCoroutine(FadeToBlack());
             return;
         };
         hasEntered = true;
+        if(selectedBuildingIndex == 0){
+            audioManager.SetShopOST(true, 1/fadeSpeed);
+        }
+        else if(selectedBuildingIndex == 2){
+            audioManager.PlayCryptKeeperOST();
+        }
         StartCoroutine(FadeToBlack());
-
     }
 
-    private void itemSelected()
+    private void updateBuildingLights()
     {
         // Turn on the light of the building that's selected
         selectedBuilding.light.SetActive(true);
@@ -281,6 +323,8 @@ public class VillageNavigationManager : MonoBehaviour
         }
 
         currentlySelected = true;
+
+        // AUDIOMANAGER: Village OST
     }
 
 

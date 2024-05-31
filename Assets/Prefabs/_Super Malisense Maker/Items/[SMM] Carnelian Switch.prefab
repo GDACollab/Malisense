@@ -276,8 +276,30 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1791998856920783355, guid: ef51aa1b7702f4c408a2d70827fc8ecc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1886449683951728342}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4477517787751656643, guid: ef51aa1b7702f4c408a2d70827fc8ecc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5290610249335750786}
   m_SourcePrefab: {fileID: 100100000, guid: ef51aa1b7702f4c408a2d70827fc8ecc, type: 3}
+--- !u!1 &497370855716482207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4477517787751656643, guid: ef51aa1b7702f4c408a2d70827fc8ecc, type: 3}
+  m_PrefabInstance: {fileID: 4090485191644201052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5290610249335750786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497370855716482207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ada5a2525c51f244897459f30324517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quakeDuration: 1.5
+  quakeIntensity: 0.6
 --- !u!4 &2313205250193463719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1791998856920783355, guid: ef51aa1b7702f4c408a2d70827fc8ecc, type: 3}

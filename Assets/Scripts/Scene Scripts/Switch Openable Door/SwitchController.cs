@@ -38,6 +38,11 @@ public class SwitchController : MonoBehaviour
     private SpriteRenderer switchSprite;
     private List<ISwitchable> sw_targets;
 
+    // Global Teapot
+    private GlobalTeapot globalTeapot;
+     // Audio Manager
+    private AudioManager audioManager;
+
     //Remove non ISwitchable objects from targets
     private void OnValidate()
     {
@@ -55,6 +60,12 @@ public class SwitchController : MonoBehaviour
 
     private void Start()
     {
+
+         // Get Global Teapot
+        globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
+        // Get Audio Manager
+        audioManager = globalTeapot.audioManager;
+
         switchSprite = GetComponent<SpriteRenderer>();
         isActivated = startActivated;
         if (isActivated)
@@ -91,6 +102,7 @@ public class SwitchController : MonoBehaviour
     {
         if (isActivated && !oneTimeSwitch)
         {
+            audioManager.PlaySwitchSFX();
             // Flips self
             FlipSwitch();
 
@@ -104,6 +116,7 @@ public class SwitchController : MonoBehaviour
         }
         else if (!isActivated)
         {
+            audioManager.PlaySwitchSFX();
             // Flips self
             FlipSwitch();
 
@@ -125,6 +138,7 @@ public class SwitchController : MonoBehaviour
     //Sets switch to not activated and turns switch
     public void FlipSwitch()
     {
+        audioManager.PlaySwitchSFX();
         SetSwitch(!isActivated);
     }
 
@@ -146,5 +160,22 @@ public class SwitchController : MonoBehaviour
             isActivated = false;
         }
     }
+
+#if UNITY_EDITOR
+    public void OnDrawGizmosSelected()
+    {
+        var col = Gizmos.color;
+        var mat = Gizmos.matrix;
+
+        Gizmos.color = Color.red;
+        // Gizmos.matrix = transform.localToWorldMatrix;
+        foreach(var target in targets){
+            Gizmos.DrawWireSphere(target.transform.position, 1);
+        }
+
+        Gizmos.color = col;
+        Gizmos.matrix = mat;
+    }
+#endif
 
 }

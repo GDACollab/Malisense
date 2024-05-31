@@ -24,9 +24,15 @@ public static class Loader
     {
         SceneManager.LoadScene((int)Scene.LoadingScene);
     }
-
-    public static void Load(Scene scene)
+    
+    /// <param name="instant"> If true load scene instantly </param>
+    public static void Load(Scene scene, bool instant=false)
     {
+        if(instant){
+            currentScene = scene;
+            SceneManager.LoadSceneAsync((int)scene);
+            return;
+        }
         // Action is stored, then is called from function LoaderCallback
         onLoaderCallback = () =>
         {

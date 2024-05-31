@@ -8,11 +8,14 @@ using UnityEngine.UI;
 
 public class LoadingTextAnimation : MonoBehaviour
 {
+    public LoaderCallback loaderCallback;
     public TextMeshProUGUI loadingText;
     public GameObject monsterParent;
-    public GameObject hintParent;
+    public TextMeshProUGUI hintText;
+    [TextArea(10, 30)]
+    public string hintTexts = "";
+    [SerializeField] private GameObject party;
     RectTransform[] monsters;
-    RectTransform[] hints;
     private string baseText = "Loading";
     private string dots = "";
     private int dotCount = 0;
@@ -22,17 +25,17 @@ public class LoadingTextAnimation : MonoBehaviour
         StartCoroutine(AnimateText());
         
         monsters = monsterParent.GetComponentsInChildren<RectTransform>(true);
-        hints = hintParent.GetComponentsInChildren<RectTransform>(true);
+        string[] hintChoices = hintTexts.Split("\n");
+        hintText.text = hintChoices[Random.Range(0, hintChoices.Length)];
         
         foreach(RectTransform monster in monsters){
             monster.gameObject.SetActive(false);
         }
-        foreach(RectTransform hint in hints){
-            hint.gameObject.SetActive(false);
-        }
         
         monsters[Random.Range(0, monsters.Length)].gameObject.SetActive(true);
-        hints[Random.Range(0, hints.Length)].gameObject.SetActive(true);
+        if(Random.Range(0,1000)==3){
+            StartCoroutine(Party());
+        }
     }
 
     IEnumerator AnimateText()
@@ -48,4 +51,14 @@ public class LoadingTextAnimation : MonoBehaviour
     }
     
     
+    IEnumerator Party(){
+        hintText.text = "Did you know there's a 1 in 1000 chance to...";
+        loaderCallback.keepLoading = true;
+        yield return new WaitForSeconds(3f);
+        party.SetActive(true);
+        yield return new WaitForSeconds(2.75f);
+        loadingText.GetComponent<Animator>().enabled = true;
+        yield return new WaitForSeconds(5f);
+        loaderCallback.keepLoading = false;
+    }
 }

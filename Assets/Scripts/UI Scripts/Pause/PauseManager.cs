@@ -10,18 +10,18 @@ public class PauseManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseParent, optionsMenu, journalDisplay, controlsDisplay;
     [SerializeField] Image journalTab, settingsTab;
-    [SerializeField] Slider masterSlider, musicSlider, sfxSlider, ambianceSlider;
+    [SerializeField] Slider masterSlider, musicSlider, sfxSlider;
     [SerializeField] List<TextMeshProUGUI> notePages;
     [SerializeField] Animator rightArrow, leftArrow;
     [SerializeField] Button debug;
     public static bool isPaused;
-    
-    enum Submenu {SETTINGS, JOURNAL, CONTROLS}
+
+    enum Submenu { SETTINGS, JOURNAL, CONTROLS }
     Submenu currSubMenu = Submenu.SETTINGS;
-    
+
     PlayerInput uiInput;
     List<PlayerInput> otherInputs;
-    
+
     GlobalTeapot globalTeapot;
     List<string> floorNotes;
     int lastPageDisplayed = 0;
@@ -33,43 +33,63 @@ public class PauseManager : MonoBehaviour
         otherInputs = FindObjectsOfType<PlayerInput>().ToList();
         otherInputs.Remove(uiInput);
         DisableUIInput();
-        
+
         isPaused = false;
         masterSlider.value = globalTeapot.audioManager.masterVolume;
         musicSlider.value = globalTeapot.audioManager.musicVolume;
         sfxSlider.value = globalTeapot.audioManager.sfxVolume;
-        ambianceSlider.value = globalTeapot.audioManager.ambienceVolume;
     }
-    
-    public void UpdateVolume(){
+
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void UpdateVolume()
+    {
         globalTeapot.audioManager.masterVolume = masterSlider.value;
         globalTeapot.audioManager.musicVolume = musicSlider.value;
         globalTeapot.audioManager.sfxVolume = sfxSlider.value;
-        globalTeapot.audioManager.ambienceVolume = ambianceSlider.value;
     }
-    
+
     public void OnMove(InputValue value)
     {
-        if (currSubMenu==Submenu.JOURNAL && Mathf.Abs(value.Get<Vector2>().x)>0)
+        if (currSubMenu == Submenu.JOURNAL && Mathf.Abs(value.Get<Vector2>().x) > 0)
         {
-            FlipJournalPage(value.Get<Vector2>().x>0);
+            FlipJournalPage(value.Get<Vector2>().x > 0);
         }
     }
-    
-    public void OnPause(){
+
+    public void OnPause()
+    {
         TogglePause();
     }
-    
-    public void OnJournalTab(){
-        if(isPaused){OpenJournal();}
+
+    public void OnJournalTab()
+    {
+        if (isPaused) { OpenJournal(); }
     }
-    
-    public void OnSettingsTab(){
-        if(isPaused){OpenSettings();}
+
+    public void OnSettingsTab()
+    {
+        if (isPaused) { OpenSettings(); }
     }
-    
-    public void OnDebug(){
-        if(isPaused){debug.onClick.Invoke();}
+
+    public void OnDebug()
+    {
+        if (isPaused) { debug.onClick.Invoke(); }
+    }
+
+    public void OnCancel()
+    {
+        if (currSubMenu == Submenu.CONTROLS)
+        {
+            OpenSettings(true);
+        }
+        else
+        {
+            ResumeGame();
+        }
     }
 
     void TogglePause()
@@ -86,7 +106,7 @@ public class PauseManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if(!isPaused)
+        if (!isPaused)
         {
             SetOtherInputs(false);
             pauseParent.SetActive(true);
@@ -97,7 +117,7 @@ public class PauseManager : MonoBehaviour
             EnableUIInput();
         }
     }
-    
+
     public void ResumeGame()
     {
         pauseParent.SetActive(false);
@@ -107,29 +127,34 @@ public class PauseManager : MonoBehaviour
         SetOtherInputs(true);
     }
 
-    public void OpenSettings(bool force = false){
+    public void OpenSettings(bool force = false)
+    {
         OpenMenu(Submenu.SETTINGS);
-        if(force){masterSlider.Select();}
+        if (force) { masterSlider.Select(); }
     }
-    
-    public void OpenJournal(){
+
+    public void OpenJournal()
+    {
         OpenMenu(Submenu.JOURNAL);
     }
-    
-    public void OpenControls(){
+
+    public void OpenControls()
+    {
         OpenMenu(Submenu.CONTROLS);
     }
-    
-    void OpenMenu(Submenu submenu){
-        if(currSubMenu == submenu){return;}
+
+    void OpenMenu(Submenu submenu)
+    {
+        if (currSubMenu == submenu) { return; }
         currSubMenu = submenu;
         optionsMenu.SetActive(false);
         journalDisplay.SetActive(false);
         controlsDisplay.SetActive(false);
         settingsTab.color = Color.grey;
         journalTab.color = Color.grey;
-        
-        switch(submenu){
+
+        switch (submenu)
+        {
             case Submenu.SETTINGS:
                 optionsMenu.SetActive(true);
                 settingsTab.color = Color.white;
@@ -139,6 +164,7 @@ public class PauseManager : MonoBehaviour
                 journalDisplay.SetActive(true);
                 journalTab.color = Color.white;
                 DisplayJournalPages(lastPageDisplayed);
+                globalTeapot.audioManager.PlayUIHoverSFX();
                 break;
             case Submenu.CONTROLS:
                 controlsDisplay.SetActive(true);
@@ -150,40 +176,53 @@ public class PauseManager : MonoBehaviour
                 break;
         }
     }
-    
-    void DisplayJournalPages(int ind){
+
+    void DisplayJournalPages(int ind)
+    {
         int count = ind;
-        foreach(var page in notePages){
-            if(count>=floorNotes.Count){
+        foreach (var page in notePages)
+        {
+            if (count >= floorNotes.Count)
+            {
                 page.text = "";
             }
-            else{
+            else
+            {
                 page.text = floorNotes[count];
                 count++;
             }
         }
         lastPageDisplayed = ind;
     }
-    
-    public void FlipJournalPage(bool next){
-        if(next){
-            if(lastPageDisplayed+2>=floorNotes.Count){
+
+    public void FlipJournalPage(bool next)
+    {
+        if (next)
+        {
+            if (lastPageDisplayed + 2 >= floorNotes.Count)
+            {
                 return;
             }
             rightArrow.SetTrigger("Pressed");
-            DisplayJournalPages(lastPageDisplayed+2);
+            globalTeapot.audioManager.PlayUIHoverSFX();
+            DisplayJournalPages(lastPageDisplayed + 2);
         }
-        else{
-            if(lastPageDisplayed-2<0){
+        else
+        {
+            if (lastPageDisplayed - 2 < 0)
+            {
                 return;
             }
             leftArrow.SetTrigger("Pressed");
-            DisplayJournalPages(lastPageDisplayed-2);
+            globalTeapot.audioManager.PlayUIHoverSFX();
+            DisplayJournalPages(lastPageDisplayed - 2);
         }
     }
-    
-    public void GoToTitleScreen(){
-        Loader.Load(Loader.Scene.MainMenu);
+
+    public void GoToTitleScreen()
+    {
+        Time.timeScale = 1f;
+        StartCoroutine(globalTeapot.fader.FadeToBlack(() => Loader.Load(Loader.Scene.MainMenu, true), 0.5f));
     }
 
     public void QuitGame()
@@ -191,18 +230,19 @@ public class PauseManager : MonoBehaviour
         Application.Quit();
         Debug.Log("quit");
     }
-    
-    public void Load(int ind){
+
+    public void Load(int ind)
+    {
         ResumeGame();
         switch (ind)
         {
-            case 0: 
+            case 0:
                 Loader.Load(Loader.Scene.Village);
                 break;
-            case 1: 
+            case 1:
                 Loader.Load(Loader.Scene.Dungeon_F1);
                 break;
-            case 2: 
+            case 2:
                 Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             default:
@@ -210,18 +250,22 @@ public class PauseManager : MonoBehaviour
                 break;
         }
     }
-    
-    void SetOtherInputs(bool enable){
-        foreach(PlayerInput input in otherInputs){
+
+    void SetOtherInputs(bool enable)
+    {
+        foreach (PlayerInput input in otherInputs)
+        {
             input.enabled = enable;
         }
     }
-    
-    void EnableUIInput(){
+
+    void EnableUIInput()
+    {
         uiInput.currentActionMap.Enable();
     }
-    
-    void DisableUIInput(){
+
+    void DisableUIInput()
+    {
         uiInput.currentActionMap.Disable();
         uiInput.currentActionMap.FindAction("Pause").Enable();
     }

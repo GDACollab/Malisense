@@ -28,17 +28,18 @@ public class DynamiteMovement : MonoBehaviour
     private IEnumerator Move()
     {
         yield return StartCoroutine(arcMovement.Curve(transform.position, target));
-        Destroy(gameObject);
+        GetComponent<SpriteRenderer>().enabled = false;
         Instantiate(ExplosionPrefab, target, Quaternion.identity);
+        StartCoroutine(MultiExplosion());
     }
 
     // set up to call move(), moves dynamite in direction of player's triangle
     private void Start()
     {
-        directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle/Triangle");
+        directionalTriangle = GameObject.FindGameObjectWithTag("Player").transform.Find("Circle");
         arcMovement = GetComponent<DynamiteCurveScript>();
 
-        Vector3 direction = -(transform.position - directionalTriangle.position).normalized;
+        Vector3 direction = directionalTriangle.up;
 
         // TODO: Physics2D.GetLayerCollisionMask(gameObject.layer) would work better than hardcoding GetMask here, but merging tags is hard
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, direction, distance, LayerMask.GetMask("Dungeon"));
@@ -49,10 +50,22 @@ public class DynamiteMovement : MonoBehaviour
         if (directionalTriangle.position.x > playerPosition.position.x) { rotationSpeed = -rotationSpeed; }
 
         StartCoroutine(Move());
+
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayDynamiteLightSFX();
     }
 
     private void Update()
     {
         transform.Rotate(new Vector3(0, 0, rotationSpeed * Time.deltaTime));
+    }
+    
+    IEnumerator MultiExplosion(){
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(ExplosionPrefab, target+(Vector3)Random.insideUnitCircle, Quaternion.identity);
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(ExplosionPrefab, target+(Vector3)Random.insideUnitCircle, Quaternion.identity);
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(ExplosionPrefab, target+(Vector3)Random.insideUnitCircle, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
