@@ -155,17 +155,22 @@ public class LevelNavigationManager : MonoBehaviour
             Debug.Log("Sorry, you haven't completed Dungeon 1 yet.");
         }*/
         
+    
         switch (selectedDoorIndex)
         {
             case 0:
                 //DungeonManager.instance.finishLevel = true;
-                Loader.Load(Loader.Scene.Dungeon_F2);
+                Debug.Log("Case 0");
+                Loader.Load(Loader.Scene.Dungeon_F1);
+                //Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             case 1:
+                Debug.Log("Case 1");
                 //DungeonManager.instance.finishLevel = true;
                 Loader.Load(Loader.Scene.Dungeon_F2);
                 break;
             default: //defaults to floor 1 if something went wrong
+                Debug.Log("Something must have happened");
                 Loader.Load(Loader.Scene.Dungeon_F1);
                 break;
         }

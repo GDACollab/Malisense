@@ -120,8 +120,10 @@ public class DungeonManager : MonoBehaviour
 
         if (artifact)
         {
-            switch (globalTeapot.currProgress)
+            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
+            /*switch (globalTeapot.currProgress)
             {
+                globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                 case GlobalTeapot.TeaType.Dungeon_F1:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
                     break;
@@ -131,7 +133,7 @@ public class DungeonManager : MonoBehaviour
                 default:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                     break;
-            }
+            }*/
         }
 
         if (death)

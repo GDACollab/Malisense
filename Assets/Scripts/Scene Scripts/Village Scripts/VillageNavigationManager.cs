@@ -99,6 +99,10 @@ public class VillageNavigationManager : MonoBehaviour
             moveInList(-1);
             selectBuilding();
         } // TODO: Force Mayor Intro 
+        //else if(globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
+        //{
+        //    Loader.Load(Loader.Scene.Level_Select);    
+        //}
         else if (false)
         { 
         }
@@ -203,7 +207,8 @@ public class VillageNavigationManager : MonoBehaviour
             if (loadDungeon)
             {
                 loadDungeon = false;
-                Loader.Load(Loader.Scene.Dungeon_F1);
+                Loader.Load(Loader.Scene.Level_Select);
+                //Loader.Load(Loader.Scene.Dungeon_F1);
             }
             else
             {
