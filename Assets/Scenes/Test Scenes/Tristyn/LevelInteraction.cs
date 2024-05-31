@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 public class LevelInteraction : MonoBehaviour
 {
-   [Header("Input")]
+   	[Header("Input")]
 	Controls controls;
 	[Tooltip("The initial delay (in seconds) between an initial move action and a repeated move action.")]
 	[SerializeField] float moveRepeatDelay = 0.5f;
@@ -19,7 +19,7 @@ public class LevelInteraction : MonoBehaviour
 
 	[Header("Manager Scripts")]
 	[SerializeField] private LevelNavigationManager navigationManager;
-    [SerializeField] private DialogueManager dialogueManager;
+    //[SerializeField] private DialogueManager dialogueManager;
 
     private void Start()
 	{
@@ -76,25 +76,32 @@ public class LevelInteraction : MonoBehaviour
 				// Move
 				if (inputVector.x < 0f)             // left
 				{
-                    if (navigationManager.hasEntered)
+					if (!navigationManager.hasEntered){
+						navigationManager.moveInList(-1);
+					}
+                    /*
+					if (navigationManager.hasEntered)
                     {
                         dialogueManager.moveChoiceSelection("left");
                     }
                     else
                     {
                         navigationManager.moveInList(-1);
-                    }
+                    }*/
 				}
 				else if (inputVector.x > 0f)        // right
 				{
-                    if (navigationManager.hasEntered)
+					if(!navigationManager.hasEntered){
+						navigationManager.moveInList(1);
+					}
+                    /*if (navigationManager.hasEntered)
                     {
                         dialogueManager.moveChoiceSelection("right");
                     }
                     else
                     {
                         navigationManager.moveInList(1);
-                    }
+                    }*/
                 }
 			}
 
@@ -114,12 +121,15 @@ public class LevelInteraction : MonoBehaviour
     /// </summary>
     void Select(InputAction.CallbackContext context)
 	{
-		if (navigationManager.hasEntered)
+		if(!navigationManager.hasEntered){
+			navigationManager.selectBuilding();
+		}
+		/*if (navigationManager.hasEntered)
 		{
             dialogueManager.selectDialogue();
         } else
 		{
             navigationManager.selectBuilding();
-		}
+		}*/
 	}
 }
