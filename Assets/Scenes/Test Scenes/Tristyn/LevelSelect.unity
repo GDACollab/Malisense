@@ -3532,8 +3532,10 @@ MonoBehaviour:
   doors:
   - levelNumber: Level1Door
     light: {fileID: 1743216516}
+    levelSceneName: 
   - levelNumber: Level2Door
     light: {fileID: 1168026205}
+    levelSceneName: 
   initialSelectedDoor: 0
   selectedDoorIndex: 0
   currentlySelected: 0
@@ -5000,6 +5002,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527391481}
   m_CullTransparentMesh: 1
+--- !u!1001 &1551684506
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4109551239909308692, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_Name
+      value: Global Teapot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4241208189207889398, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: currentScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085800722210102193, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
 --- !u!1 &1577867139
 GameObject:
   m_ObjectHideFlags: 0
@@ -7543,3 +7606,4 @@ SceneRoots:
   - {fileID: 967665938}
   - {fileID: 1631665891}
   - {fileID: 2136145763}
+  - {fileID: 1551684506}

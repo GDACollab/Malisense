@@ -38,9 +38,12 @@ public class LevelNavigationManager : MonoBehaviour
 
     private GameObject thisObject;
 
+    GlobalTeapot globalTeapot;
+
     // Start is called before the first frame update
     void Start()
     {
+        globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         // Level Door Selection:
         // Turn off every door's light
         foreach (LevelDoor door in doors)
@@ -75,7 +78,6 @@ public class LevelNavigationManager : MonoBehaviour
     //Updates currently selected door based on current index
     void updateDoor()
     {
-        //Below lines written by Tristyn. TY Tristyn!
         // Set selectedDoor to the door associated with selectedDoorIndex
         selectedDoor = doors[selectedDoorIndex];
 
@@ -87,7 +89,6 @@ public class LevelNavigationManager : MonoBehaviour
 
     public void selectBuilding()
     {
-        //uh oh! idk what to do here! Im going to return when I know what to do, and hopefully won't completely forget!
 
         //debug check taken from VilllageNavigationManager.cs
         if (selectedDoor == null)
@@ -96,9 +97,28 @@ public class LevelNavigationManager : MonoBehaviour
             return;
         }
 
-        //SceneManager.LoadScene(doors[selectedDoorIndex].levelSceneName);
-        hasEntered = true;
-        StartCoroutine(FadeToBlack());
+        //Debug.Log(globalTeapot.currProgress);
+        //Debug.Log(selectedDoorIndex);
+        if(selectedDoorIndex == 0){
+            hasEntered = true;
+            StartCoroutine(FadeToBlack());
+        }
+
+        if(selectedDoorIndex == 1){
+            if(globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2){
+                hasEntered = true;
+                StartCoroutine(FadeToBlack());
+            }else{
+                Debug.Log("Sorry, you need to finish Dungeon 1 first");
+            }    
+        }
+        /*if(selectedDoorIndex != 1){
+            Debug.Log(globalTeapot.currProgress);
+        }*/
+            //Loader.Load(Loader.Scene.Dungeon_F1);    
+       
+        //hasEntered = true;
+        //StartCoroutine(FadeToBlack());
     }
 
     //function taken from VilllageNavigationManager.cs, modified
