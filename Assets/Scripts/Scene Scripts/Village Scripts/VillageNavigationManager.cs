@@ -105,6 +105,9 @@ public class VillageNavigationManager : MonoBehaviour
         { 
             moveBuildingSelection(-1);
             selectBuilding();
+        else if (false)
+        { 
+
         }
 
         activateInk = false;
@@ -246,7 +249,8 @@ public class VillageNavigationManager : MonoBehaviour
             if (loadDungeon)
             {
                 loadDungeon = false;
-                Loader.Load(Loader.Scene.Dungeon_F1);
+                Loader.Load(Loader.Scene.Level_Select);
+                //Loader.Load(Loader.Scene.Dungeon_F1);
             }
             else
             {

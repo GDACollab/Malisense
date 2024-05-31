@@ -12,6 +12,8 @@ public class DungeonManager : MonoBehaviour
 {
     [SerializeField] List<StateMachine> enemies = new List<StateMachine>();
     [SerializeField] bool isChasing = false;
+    [SerializeField] public bool finishLevel = false;
+    public static DungeonManager instance;
 
     [Header("Floor Note UI")]
     [SerializeField] GameObject floorNoteDisplay;
@@ -29,6 +31,11 @@ public class DungeonManager : MonoBehaviour
     
     IEnumerator FadeFromBlack(float fadeInTime) => globalTeapot.fader.FadeFromBlack(fadeInTime);
     IEnumerator FadeToBlack(Action sceneChange, float fadeOutTime) => globalTeapot.fader.FadeToBlack(sceneChange, fadeOutTime);
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -122,8 +129,10 @@ public class DungeonManager : MonoBehaviour
 
         if (artifact)
         {
-            switch (globalTeapot.currProgress)
+            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
+            /*switch (globalTeapot.currProgress)
             {
+                globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                 case GlobalTeapot.TeaType.Dungeon_F1:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
                     Debug.Log("moving from Dungeon_F1 to Dungeon_F2");
@@ -135,7 +144,7 @@ public class DungeonManager : MonoBehaviour
                 default:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                     break;
-            }
+            }*/
         }
 
         if (death)
@@ -145,6 +154,7 @@ public class DungeonManager : MonoBehaviour
         }
         else
         {
+            finishLevel = true;
             sceneChange = () => Loader.Load(Loader.Scene.Village);
         }
         StartCoroutine(FadeToBlack(sceneChange, fadeOutTime));
