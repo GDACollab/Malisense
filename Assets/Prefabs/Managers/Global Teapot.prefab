@@ -236,13 +236,13 @@ MonoBehaviour:
   hasFinalMayorNote: 0
   deathCount: 0
   stickHappiness: 0
-  currentScene: 3
   numNotesObtained: 0
   numStoreCredits: 0
   audioManager: {fileID: 4924827947121429571}
   fader: {fileID: 3375906836540086193}
   journal: {fileID: 11400000, guid: 05aa790e0c7782942998137eaa301d9a, type: 2}
   deviceInputs: {fileID: 11400000, guid: 9a07b5ecc80560e48a3c6d7e27f11994, type: 2}
+  inventory: {fileID: 11400000, guid: 0f678626b0d92441c95b46587e73887d, type: 2}
 --- !u!114 &4924827947121429571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,21 +259,7 @@ MonoBehaviour:
   masterVolume: 0.5
   musicVolume: 0.5
   sfxVolume: 0.5
-  ambienceVolume: 0.5
-  masterBusPath: bus:/
-  musicBusPath: bus:/Music
-  sfxBusPath: bus:/SFX
-  ambienceBusPath: bus:/Ambience
-  masterOST: event:/OST/Game Scene OST
-  menuOST: event:/OST/Menu
-  villageOST: event:/OST/Village
-  cryptOST: event:/OST/Crypt
-  dungeonOST: event:/OST/Dungeon
-  chaseOST: event:/OST/Chase
-  endingOST: event:/OST/Ending
-  monsterScream: event:/VS_Malisense/Monster_Scream
-  selectUI: event:/SFX/UI & Menu/UI Select
-  sliderUI: event:/SFX/UI & Menu/UI Slider Feedback
+  movementsfxVolume: 0.3
 --- !u!114 &3375906836540086193
 MonoBehaviour:
   m_ObjectHideFlags: 0
