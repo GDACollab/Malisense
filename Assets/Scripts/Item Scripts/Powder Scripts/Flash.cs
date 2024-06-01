@@ -23,6 +23,7 @@ public class Flash : MonoBehaviour
         innerRad = light.pointLightInnerRadius;
         intensity = light.intensity;
         lifetime = duration;
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlayFlashDustSFX();
     }
 
     void Update()

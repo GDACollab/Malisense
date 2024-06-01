@@ -15,10 +15,11 @@ GameObject:
   - component: {fileID: 2535709646859203902}
   - component: {fileID: 5651225449475446733}
   - component: {fileID: 5485851214165889153}
+  - component: {fileID: 8663892368742448975}
   - component: {fileID: 8425315111178970922}
   - component: {fileID: 2096877065520059329}
-  - component: {fileID: 8663892368742448975}
   - component: {fileID: 8262323620543221307}
+  - component: {fileID: 9127378252060306802}
   m_Layer: 8
   m_Name: Scent Beast
   m_TagString: Enemy
@@ -197,8 +198,31 @@ MonoBehaviour:
   incenseDuration: 3
   safeZoneDecrease: 0.75
   minScentValue: 30
+  idleAudioDelayMin: 45
+  idleAudioDelayMax: 300
+  alertAudioDelayMin: 30
+  alertAudioDelayMax: 60
+  chaseAudioDelayMin: 10
+  chaseAudioDelayMax: 30
   playerScent: 0
   playerDist: 0
+--- !u!114 &8663892368742448975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3aca286f9e636343ae859e0bbe4b1c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endPointRadius: 30
+  enableGizmos: 0
+  ChaseSpeed: 0
+  endpoint: {x: 0, y: 0}
+  player: {fileID: 0}
 --- !u!114 &8425315111178970922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,23 +261,6 @@ MonoBehaviour:
   pathTimeLeft: 10
   endpoint: {x: 0, y: 0}
   player: {fileID: 0}
---- !u!114 &8663892368742448975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446181726072927397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3aca286f9e636343ae859e0bbe4b1c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endPointRadius: 30
-  enableGizmos: 0
-  ChaseSpeed: 0
-  endpoint: {x: 0, y: 0}
-  player: {fileID: 0}
 --- !u!114 &8262323620543221307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +274,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distractLength: 0
+--- !u!114 &9127378252060306802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &7723219441387120371
 GameObject:
   m_ObjectHideFlags: 0

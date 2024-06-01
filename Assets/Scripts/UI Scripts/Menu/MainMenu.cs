@@ -11,11 +11,18 @@ public class MainMenu : MonoBehaviour
     public Image fadeOutUIImage; // Reference to the UI Image
     public float fadeSpeed = 0.5f;
     public AudioManager audioManager;
+    
+    [SerializeField] private Slider masterSlider, musicSlider, sfxSlider;
+    
     void Awake(){
         audioManager = GameObject.FindGameObjectWithTag("Global Teapot").GetComponent<AudioManager>();
-        audioManager.PlayOST(audioManager.menuOST);
+        audioManager.PlayMenuOST();
     }
     private void Start() {
+        masterSlider.value = audioManager.masterVolume;
+        musicSlider.value = audioManager.musicVolume;
+        sfxSlider.value = audioManager.sfxVolume;
+
         StartCoroutine(GlobalTeapot.Instance.fader.FadeFromBlack(2));
     }
     //Functions ======================================================================================
@@ -34,10 +41,21 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void volumeChange(float sliderVolume)
+    public void masterVolumeChange(float sliderVolume)
     {
         audioManager.masterVolume = sliderVolume;
     }
+    
+    public void musicVolumeChange(float sliderVolume)
+    {
+        audioManager.musicVolume = sliderVolume;
+    }
+    
+    public void sfxVolumeChange(float sliderVolume)
+    {
+        audioManager.sfxVolume = sliderVolume;
+    }
+    
     IEnumerator FadeToBlackAndLoadScene()
     {
         fadeOutUIImage.gameObject.SetActive(true);

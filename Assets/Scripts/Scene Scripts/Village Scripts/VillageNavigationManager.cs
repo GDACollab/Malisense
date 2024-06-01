@@ -19,9 +19,9 @@ public class VillageNavigationManager : MonoBehaviour
 {
 
     //Building Selection
-    enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
+    public enum Buildings { SCHOLAR, CUSTODIAN, CRYPT_KEEPER, CHURCH, MAYOR }
     [Header("Building Selection")]      // Implemented by Justin Lam (Rxlling_Pxly)
-    [Tooltip("0: Scholar, 1: Custodian, 3: Crypt Keeper, 4: Church, 5: Mayor")]
+    [Tooltip("0: Scholar, 1: Custodian, 2: Crypt Keeper, 3: Church, 4: Mayor")]
     [SerializeField] Building[] buildings = new Building[5];        // we know that there's only going to be 5 buildings, so we can use an array
     [Tooltip("Determines which building is selected at the start of the scene.")]
     [SerializeField] Buildings initialSelectedBuilding;
@@ -68,8 +68,7 @@ public class VillageNavigationManager : MonoBehaviour
         // Get the Global Teapot
         globalTeapot = GameObject.FindWithTag("Global Teapot").GetComponent<GlobalTeapot>();
         audioManager = GameObject.FindWithTag("Global Teapot").GetComponent<AudioManager>();
-        audioManager.PlayOST(audioManager.dungeonOST);
-        // AUDIOMANAGER: Village OST
+        audioManager.PlayVillageOST();
 
         // Building Selection:
         // Turn off every building's light
@@ -106,6 +105,9 @@ public class VillageNavigationManager : MonoBehaviour
         { 
             moveBuildingSelection(-1);
             selectBuilding();
+        else if (false)
+        { 
+
         }
 
         activateInk = false;
@@ -195,12 +197,23 @@ public class VillageNavigationManager : MonoBehaviour
         if (hasEntered)
         {
             hasEntered = false;
+            if(selectedBuildingIndex == 0){
+                audioManager.SetShopOST(false, 1/fadeSpeed);
+            }
+            else if(selectedBuildingIndex == 2){
+                audioManager.PlayVillageOST();
+            }
             StartCoroutine(FadeToBlack());
             return;
         };
         hasEntered = true;
+        if(selectedBuildingIndex == 0){
+            audioManager.SetShopOST(true, 1/fadeSpeed);
+        }
+        else if(selectedBuildingIndex == 2){
+            audioManager.PlayCryptKeeperOST();
+        }
         StartCoroutine(FadeToBlack());
-
     }
 
     private void updateBuildingLights()
@@ -236,7 +249,8 @@ public class VillageNavigationManager : MonoBehaviour
             if (loadDungeon)
             {
                 loadDungeon = false;
-                Loader.Load(Loader.Scene.Dungeon_F1);
+                Loader.Load(Loader.Scene.Level_Select);
+                //Loader.Load(Loader.Scene.Dungeon_F1);
             }
             else
             {

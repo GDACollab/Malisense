@@ -3,6 +3,7 @@ using Pathfinding;
 using Unity.VisualScripting;
 using System.Drawing;
 using UnityEngine.Tilemaps;
+using FMODUnity;
 
 
 [RequireComponent(typeof(StateMachine))]
@@ -43,6 +44,7 @@ public class SoundBeastAlert : StateBaseClass
     private void Awake() {
         _sound = GetComponent<SoundBeastSoundModule>();
         animator = GetComponentInChildren<Animator>();
+
     }
 
     public override void Init()
@@ -63,6 +65,7 @@ public class SoundBeastAlert : StateBaseClass
         }
 
         // Start pathfinding to player's position
+        GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySoundAlertSFX(GetComponent<StudioEventEmitter>());
         animator.SetTrigger("Alert");
         animator.SetBool("Run", false);
         aiPath.maxSpeed = AlertedSpeed;

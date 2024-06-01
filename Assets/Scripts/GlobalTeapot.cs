@@ -39,7 +39,6 @@ public class GlobalTeapot : MonoBehaviour
     public TextAsset masterInk;
     public Ink.Runtime.Story currentStory;
 
-
     [Header("Story Variables")]
     public TeaType currProgress = TeaType.Intro;
     /// <summary>
@@ -49,7 +48,7 @@ public class GlobalTeapot : MonoBehaviour
     public bool mayorWasIntroduced = false, scholarWasIntroduced = false, highPriestWasIntroduced = false;
     public bool hasMayorNote1 = false, hasMayorNote2 = false, hasFinalMayorNote = false;
     public int deathCount = 0, stickHappiness = 0;
-    public Loader.Scene currentScene = Loader.Scene.DeathScene;
+    public Loader.Scene currentScene => Loader.GetCurrentScene();
 
     [Header("Note Variables")]
     public int numNotesObtained = 0;
@@ -60,6 +59,7 @@ public class GlobalTeapot : MonoBehaviour
     public Fader fader;
     public Journal journal;
     public DeviceInputs deviceInputs;
+    [SerializeField] private PlayerInventory inventory;
 
     private void Awake()
     {
@@ -74,6 +74,7 @@ public class GlobalTeapot : MonoBehaviour
         }
         if (!journal) { journal = Resources.Load<Journal>("Journal"); }
         if (!deviceInputs) { deviceInputs = Resources.Load<DeviceInputs>("DeviceInputs"); }
+        if (!inventory) { inventory = Resources.Load<PlayerInventory>("Player_Inventory"); }
         deviceInputs.Init();
         audioManager = GetComponent<AudioManager>();
         fader = GetComponent<Fader>();
@@ -84,9 +85,25 @@ public class GlobalTeapot : MonoBehaviour
         // could add error handling: currentStory.onError += ~~~~;
     }
 
-    private void Update()
+    public void BrewNewTea()
     {
-        currentScene = Loader.GetCurrentScene();
+        currProgress = TeaType.Intro;
+        currentStory.ResetState();
+        journal.CreateFloorNotes();
+        inventory.ResetInventory();
+
+        hasDied = false;
+        toldCKAboutHighPriest = false;
+        mayorWasIntroduced = false;
+        scholarWasIntroduced = false;
+        highPriestWasIntroduced = false;
+        hasMayorNote1 = false;
+        hasMayorNote2 = false;
+        hasFinalMayorNote = false;
+        deathCount = 0;
+        stickHappiness = 0;
+        numNotesObtained = 0;
+        numStoreCredits = 0;
     }
 
     /// <summary>

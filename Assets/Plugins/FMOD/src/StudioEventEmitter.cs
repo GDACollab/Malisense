@@ -374,5 +374,9 @@ namespace FMODUnity
             }
             return false;
         }
+        public void ResetEvent(){
+            Lookup();
+            instance.clearHandle();
+        }
     }
 }

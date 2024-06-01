@@ -73,7 +73,7 @@ public class SightBeastAlert : StateBaseClass
             }
 
             // Go back to patrol mode after a short animation
-            else if (_pathfinder.AtGoal || Mathf.Abs(_gracePeriodRemaining) > maxAlertPeriod)
+            else if (_pathfinder.AtGoal || _pathfinder.Unreachable/* Mathf.Abs(_gracePeriodRemaining) > maxAlertPeriod */)
             {
                 if (_lookAroundCoroutine == null)
                     _lookAroundCoroutine = StartCoroutine(LookAround());

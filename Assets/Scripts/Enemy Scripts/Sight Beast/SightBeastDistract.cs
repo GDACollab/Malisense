@@ -41,7 +41,7 @@ public class SightBeastDistract : StateBaseClass, ISwitchable
             _pathfinder.SetTarget(transform.position);
             _pathfinder.acceleration = 0;
             //Set target to player position at the time of being distracted
-            _alert.SetDistractTarget();
+            _alert.SetStatueTarget();
             //Stun monster
             StartCoroutine(Stunned());
         }
