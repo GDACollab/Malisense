@@ -420,6 +420,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+--- !u!114 &405707153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4924827947121429571, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+  m_PrefabInstance: {fileID: 405707152}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f74af2088d96646a12408f3d708eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1182180437
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +956,115 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 400821f4a7ff580409e43685515e8b5b, type: 3}
   - {fileID: 21300000, guid: 9f5c53744cf68db4ab9d469262eb1e1e, type: 3}
   - {fileID: 21300000, guid: ec23fe50b8711034a89fb43b89dc2372, type: 3}
-  songs: []
+  songs:
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayVillageOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayDungeonOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayVillageOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayShopOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 30
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayDungeonOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 60
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayChaseOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayCryptKeeperOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   scrollSpeed: 1
   maxLines: 30
   waitBeforeImage: 10

@@ -37,14 +37,14 @@ VAR character = "Crypt_Keeper"
 
 == START ==
 {
+ - isEnd: -> End
  - isIntroductionCutscene: -> Introduction // Go to Introduction
  - character == "Crypt_Keeper": -> Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
  - character == "Clergy": -> Clergy // Go to Clergy
  - character == "Scholar": -> Scholar // Go to Scholar 
- - isEnd: // Go to end
- - else: Error
+ - else: Error -> END
  }
  
 
@@ -94,8 +94,8 @@ bool Variables
  - isDeathF1: -> DeathF1 // Go to death 1
  - isHub: -> hub // Go to hub
  - isDeathF2: -> DeathF2 // Go to death 2 
- - isEnd: // Go to end
- - else: Error
+ - isEnd: -> End // Go to end
+ - else: Error ->END
  }
 
  =intro
@@ -1902,7 +1902,6 @@ Till next time, wanderer.
 
 
 ==End== 
-~character = "Mayor"
 ~background = "next"
 ~ CharacterTitle = ""
 <i>You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your lightfooted step and close the distance across the room in an instant, locking eyes with the Mayor. </i>
@@ -2077,8 +2076,8 @@ Till next time, wanderer.
 
 =CryptKeeperFinal
 ~ CharacterTitle = "Mayor"
+~character = "Disgraced"
 “Farewell then, Disgraced. End this curse, once and for all.”
-~background = "next"
 ~ CharacterTitle = ""
 <i>You approach the fountain, discerning it closely for the artifact. </i>
 
@@ -2088,9 +2087,9 @@ Till next time, wanderer.
 
 <i>Within the box lies The Eye of Genesis. </i>
 
+~character = "Crypt_Keeper"
 <i>Its gaze almost seems to apprise you as you take it into your hands. </i>
 
-~character = "Crypt_Keeper"
 ~ CharacterTitle = ""
 <i>You hurry back to meet with the Crypt Keeper, the Eye of Genesis, the final artifact, in hand. </i>
 
@@ -2140,6 +2139,7 @@ Till next time, wanderer.
                  
                 ******[<i>Give her the artifact</i>]
                     ~ CharacterTitle = ""
+                    ~character = "Darkness"
                     <i>After taking the artifact, she embraces you one final time. She pulls away before she begins the cleansing ritual of the Eye of Genesis.</i>
                         
                     *******[<i>Breathe</i>]
@@ -2183,8 +2183,8 @@ Till next time, wanderer.
             <i>You feel comfort, taking shelter in the warmth of the light, a familiar feeling. An embrace, her embrace.</i>
             ****[<i>Breathe</i>]
                 ~ CharacterTitle = ""
+                ~character = "Dark"
                 <i>Then it goes silent.</i>
-
                 ~ CharacterTitle = "Crypt Keeper"
                 "The journey was long and treacherous."
 

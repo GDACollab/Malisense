@@ -11,10 +11,12 @@ public static class Loader
         MainMenu = 0, // This refers to the scene in Build Settings at index 0
         LoadingScene = 1, // This refers to the scene in Build Settings at index 1
         Village = 2, // This refers to the scene in Build Settings at index 2
-        Level_Select = 3,
-        Dungeon_F1 = 4, // This refers to the scene in Build Settings at index 3
-        Dungeon_F2 = 5, // This refers to the scene in Build Settings at index 3
-        DeathScene = 6, // This refers to the scene in Build Settings at index 4
+        Level_Select = 3, // This refers to the scene in Build Settings at index 3
+        Dungeon_F1 = 4, // This refers to the scene in Build Settings at index 4
+        Dungeon_F2 = 5, // This refers to the scene in Build Settings at index 5
+        DeathScene = 6, // This refers to the scene in Build Settings at index 6
+        EndCutscene = 7, // This refers to the scene in Build Settings at index 7
+        Credits = 8 // This refers to the scene in Build Settings at index 8
     }
     private delegate AsyncOperation AsyncLoaderCallback();
     private static AsyncLoaderCallback onLoaderCallback;

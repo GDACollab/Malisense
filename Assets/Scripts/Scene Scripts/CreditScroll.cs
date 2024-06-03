@@ -91,7 +91,7 @@ public class CreditScroll : MonoBehaviour
         currImage++;
         
         StartCoroutine(globalTeapot.fader.FadeFromBlack(fadeInTime));
-        // StartCoroutine(WaitToCall(songs[currSong]));
+        StartCoroutine(WaitToCall(songs[currSong]));
         StartCoroutine(WaitToCall(() => creditsDisplay.Add(imageDisplay), waitBeforeImage));
     }
 
@@ -185,9 +185,11 @@ public class CreditScroll : MonoBehaviour
     }
     
     IEnumerator WaitToCall(CreditSong song){
-        yield return new WaitForSeconds(song.duration);
         song.song.Invoke(audioManager);
+        yield return new WaitForSeconds(song.duration);
         if(currSong<songs.Count){
+            audioManager.StopCurrentSong();
+            yield return new WaitForSeconds(1f);
             StartCoroutine(WaitToCall(songs[currSong]));
             currSong++;
         }

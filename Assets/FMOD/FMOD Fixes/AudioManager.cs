@@ -113,7 +113,6 @@ public class AudioManager : MonoBehaviour
         musicBus = RuntimeManager.GetBus(musicBusPath);
         sfxBus = RuntimeManager.GetBus(sfxBusPath);
         SceneManager.sceneUnloaded += (_) => StopCurrentSong();
-        SceneManager.sceneUnloaded += (_) => StopCurrentSong();
     }
 
     // Update is called once per frame
@@ -290,6 +289,14 @@ public class AudioManager : MonoBehaviour
     public void PlayCryptKeeperOST()
     {
         PlayOST(cryptOST);
+    }
+    
+    public void PlayShopOST(){
+        SetShopOST(true, 3f);
+    }
+    
+    public void StopShopOST(){
+        SetShopOST(false, 3f);
     }
 
     /// <summary>
