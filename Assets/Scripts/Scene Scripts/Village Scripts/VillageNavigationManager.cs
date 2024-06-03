@@ -105,6 +105,7 @@ public class VillageNavigationManager : MonoBehaviour
         { 
             moveBuildingSelection(-1);
             selectBuilding();
+        }
         else if (false)
         { 
 

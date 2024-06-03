@@ -375,6 +375,7 @@ public class Player : MonoBehaviour
         if (!interactArea.isInteractable() && newInventory.carriedObject)
         {
             newInventory.carriedObject.transform.parent = null;
+            newInventory.carriedObject.GetComponent<SpriteRenderer>().sortingOrder = 11;
             newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
             newInventory.carriedObject = null;
             interactArea.removeInteracts();
@@ -417,6 +418,7 @@ public class Player : MonoBehaviour
             {
                 interactArea.removeInteracts();
                 newInventory.carriedObject.transform.parent = null;
+                newInventory.carriedObject.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 newInventory.carriedObject = null;
                 break;
@@ -450,6 +452,7 @@ public class Player : MonoBehaviour
                 audioManager.PlayPickupSFX();
                 interactArea.removeInteracts();
                 newInventory.carriedObject = heavyItem;
+                newInventory.carriedObject.GetComponent<SpriteRenderer>().sortingOrder = 600;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 newInventory.carriedObject.transform.parent = interactBody.transform.parent;
                 newInventory.carriedObject.transform.position = interactBody.transform.position + Vector3.up * 0.5f;

@@ -59,6 +59,7 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
         yield return new WaitForSeconds(timeLeft);
         //Debug.Log("Stunned ended");
         _aiPath.canMove = true;
+        _alert.SetDistractTarget();
         ExitToState(StateMachine.State.Alert);
     }
 

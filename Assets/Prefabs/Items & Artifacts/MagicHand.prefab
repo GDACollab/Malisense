@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 600
   m_Sprite: {fileID: 21300000, guid: ca4645e241ecd144e9e12c99d1eed8b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -218,6 +218,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MagicHand: {fileID: 11400000, guid: bdab452323e725e44be9a7edf6e38780, type: 2}
+  maxDistance: 30
+  minCooldown: 5
+  maxCooldown: 60
   handAsset: {fileID: 3054732915523113078}
   hoverTint: {r: 1, g: 0.058500085, b: 0, a: 0.69803923}
   lineColor: {r: 0, g: 0, b: 1, a: 1}
@@ -236,7 +239,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1152
+    m_Bits: 17792
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

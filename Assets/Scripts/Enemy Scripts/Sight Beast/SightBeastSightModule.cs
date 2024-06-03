@@ -85,7 +85,7 @@ public class SightBeastSightModule : MonoBehaviour
 
     private bool CanSee(Vector2 castEnd, IEnumerable<ShadowCaster2D> shadowCasters)
     {
-        Vector2 castStart = transform.position;
+        Vector2 castStart = visionLight.transform.position;
 
         // Exit if player is not within view range
         Vector3 dir = DirFromAngle(visionAngle);
@@ -121,15 +121,15 @@ public class SightBeastSightModule : MonoBehaviour
 
     public void LookAt(Vector3 lookTarget)
     {
-        LookInDirection((lookTarget - transform.position).normalized);
+        LookInDirection((lookTarget - visionLight.transform.position).normalized);
     }
 
     public bool CanSee(Vector2 position, float radius)
     {
         // Exit if player exceeds view distance or in safe zone
-        if (Vector2.Distance(transform.position, position) > visionRadius || playerObj.activeSafeZones.Count > 0) return false;
+        if (Vector2.Distance(visionLight.transform.position, position) > visionRadius || playerObj.activeSafeZones.Count > 0) return false;
 
-        var perpendicular = Vector2.Perpendicular(position - (Vector2)transform.position).normalized;
+        var perpendicular = Vector2.Perpendicular(position - (Vector2)visionLight.transform.position).normalized;
         int count = 0;
 
         var shadowCasters = FindObjectsOfType<ShadowCaster2D>();
@@ -173,11 +173,11 @@ public class SightBeastSightModule : MonoBehaviour
     {
         
         Handles.color = new Color(128, 00, 255);
-        Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.right, 360, visionRadius);
+        Handles.DrawWireArc(visionLight.transform.position, Vector3.forward, Vector3.right, 360, visionRadius);
 
         // Draw boundry lines
-        Handles.DrawLine(transform.position, transform.position + DirFromAngle(-visionArcSize / 2 + visionAngle) * visionRadius);
-        Handles.DrawLine(transform.position, transform.position + DirFromAngle(visionArcSize / 2 + visionAngle) * visionRadius);
+        Handles.DrawLine(visionLight.transform.position, visionLight.transform.position + DirFromAngle(-visionArcSize / 2 + visionAngle) * visionRadius);
+        Handles.DrawLine(visionLight.transform.position, visionLight.transform.position + DirFromAngle(visionArcSize / 2 + visionAngle) * visionRadius);
        
     } */
 #endif
