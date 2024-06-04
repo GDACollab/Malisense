@@ -109,6 +109,9 @@ public class LevelNavigationManager : MonoBehaviour
         //Debug.Log(globalTeapot.currProgress);
         //Debug.Log(selectedDoorIndex);
         if(selectedDoorIndex == 0){
+            if(globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2){
+                globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_Redo;
+            }
             hasEntered = true;
             StartCoroutine(FadeToBlack());
         }

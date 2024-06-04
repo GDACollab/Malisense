@@ -19,6 +19,7 @@ public class GlobalTeapot : MonoBehaviour
     {
         Intro,
         Dungeon_F1,
+        Dungeon_Redo,
         Dungeon_F2,
         End
     }

@@ -60,7 +60,7 @@ public class EndCutsceneManager : MonoBehaviour
         globalTeapot.currentStory.ObserveVariable("character", ChangeImage);
         globalTeapot.audioManager.PlayCryptKeeperOST();
         globalTeapot.mayorWasIntroduced = true;
-        
+
         endCutsceneAnimation.frame = 0;
 
         //Get all choices texts
@@ -138,7 +138,8 @@ public class EndCutsceneManager : MonoBehaviour
         {
             globalTeapot.currentStory.variablesState["isMayorIntro"] = true;
             globalTeapot.mayorWasIntroduced = true;
-        } else
+        }
+        else
         {
             globalTeapot.currentStory.variablesState["isMayorIntro"] = false;
         }
@@ -153,7 +154,7 @@ public class EndCutsceneManager : MonoBehaviour
             globalTeapot.currentStory.variablesState["isScholarIntro"] = false;
         }
         // High Priest introduction variables
-        if (character == "Clergy" && !globalTeapot.highPriestWasIntroduced && globalTeapot.currProgress ==  GlobalTeapot.TeaType.Dungeon_F2)
+        if (character == "Clergy" && !globalTeapot.highPriestWasIntroduced && globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2)
         {
             globalTeapot.highPriestWasIntroduced = true;
         }
@@ -221,7 +222,7 @@ public class EndCutsceneManager : MonoBehaviour
     private void ExitDialogueMode()
     {
         isPlaying = false;
-        Action action = () => 
+        Action action = () =>
         {
             dialoguePanel.SetActive(false);
             dialogueText.text = "";
@@ -232,12 +233,13 @@ public class EndCutsceneManager : MonoBehaviour
             StartCoroutine(ShowEndImage());
         };
         StartCoroutine(globalTeapot.fader.FadeToBlack(action, 1f));
-        
+
     }
-    
-    private IEnumerator ShowEndImage(){
-        yield return new WaitForSeconds((float)endCutsceneAnimation.clip.length+1f);
-        Action action = () => 
+
+    private IEnumerator ShowEndImage()
+    {
+        yield return new WaitForSeconds((float)endCutsceneAnimation.clip.length + 1f);
+        Action action = () =>
         {
             EndImage.SetActive(true);
             StartCoroutine(globalTeapot.fader.FadeFromBlack(1f));
@@ -261,25 +263,31 @@ public class EndCutsceneManager : MonoBehaviour
     {
         if (globalTeapot.currentStory.canContinue)
         {
-            if(setCharacter){
-                Action action = () => {
+            if (setCharacter)
+            {
+                Action action = () =>
+                {
                     StartCoroutine(globalTeapot.fader.FadeFromBlack(characterTranstionTime));
                     playerInput.enabled = true;
                     LogicContStory();
                 };
                 if ((string)globalTeapot.currentStory.variablesState["character"] == "Crypt_Keeper")
                 {
-                    action += () => {
+                    action += () =>
+                    {
                         CKSprite.SetActive(true);
                         MayorSprite.SetActive(false);
                         DisgracedSprite.SetActive(false);
                         DarknessSprite.SetActive(false);
-                        globalTeapot.audioManager.PlayEndingOST();
+                        globalTeapot.audioManager.StopCurrentSong();
+
+                        StartCoroutine(WaitToCall(() => globalTeapot.audioManager.PlayEndingOST(), 1f));
                     };
                 }
                 else if ((string)globalTeapot.currentStory.variablesState["character"] == "Mayor")
                 {
-                    action += () => {
+                    action += () =>
+                    {
                         MayorSprite.SetActive(true);
                         CKSprite.SetActive(false);
                         DisgracedSprite.SetActive(false);
@@ -288,7 +296,8 @@ public class EndCutsceneManager : MonoBehaviour
                 }
                 else if ((string)globalTeapot.currentStory.variablesState["character"] == "Disgraced")
                 {
-                    action += () => {
+                    action += () =>
+                    {
                         DisgracedSprite.SetActive(true);
                         CKSprite.SetActive(false);
                         MayorSprite.SetActive(false);
@@ -297,7 +306,8 @@ public class EndCutsceneManager : MonoBehaviour
                 }
                 else if ((string)globalTeapot.currentStory.variablesState["character"] == "Darkness")
                 {
-                    action += () => {
+                    action += () =>
+                    {
                         DarknessSprite.SetActive(true);
                         DisgracedSprite.SetActive(false);
                         CKSprite.SetActive(false);
@@ -312,7 +322,8 @@ public class EndCutsceneManager : MonoBehaviour
                 playerInput.enabled = false;
                 StartCoroutine(globalTeapot.fader.FadeToBlack(action, characterTranstionTime));
             }
-            else{
+            else
+            {
                 LogicContStory();
             }
         }
@@ -321,11 +332,12 @@ public class EndCutsceneManager : MonoBehaviour
             ExitDialogueMode();
         }
     }
-    
-    private void LogicContStory(){
+
+    private void LogicContStory()
+    {
         dialogueText.text = globalTeapot.currentStory.Continue();
         // Villager name stored in variable characterNameText.text is one of "????????????", "Crypt Keeper", "Clerics", "Smiling Cleric", Thinking Cleric, "Weeping Cleric", "Smiling", "Weeping", "Thinking", "High Priest", "Stick", "Scholar", "Mayor"]
-        
+
         characterNameText.text = (string)globalTeapot.currentStory.variablesState["CharacterTitle"];
 
         // Only bark when a character is talking:
@@ -339,8 +351,15 @@ public class EndCutsceneManager : MonoBehaviour
 
         DisplayChoices();
     }
-    
-    private void ChangeImage(string name, object value){
+
+    IEnumerator WaitToCall(Action act, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        act();
+    }
+
+    private void ChangeImage(string name, object value)
+    {
         setCharacter = true;
     }
 
@@ -411,8 +430,9 @@ public class EndCutsceneManager : MonoBehaviour
             UpdateChoiceSelectionVisuals();
         }
     }
-    
-    public void OnMove(){
+
+    public void OnMove()
+    {
         if (globalTeapot.currentStory.currentChoices.Count > 0)
         {
             // Move
@@ -431,12 +451,14 @@ public class EndCutsceneManager : MonoBehaviour
             }
         }
     }
-    
-    public void OnSelect(){
-        if(isPlaying){
+
+    public void OnSelect()
+    {
+        if (isPlaying)
+        {
             selectDialogue();
         }
-        else if(movingOn)
+        else if (movingOn)
         {
             StartCoroutine(globalTeapot.fader.FadeToBlack(() => Loader.Load(Loader.Scene.Credits, true), fadeOutTime));
         }
