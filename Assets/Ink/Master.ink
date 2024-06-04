@@ -1914,7 +1914,7 @@ Till next time, wanderer.
 ~ CharacterTitle = "Mayor"
 “I knew this time would come...”
 
-+["You have the final artifact!"] 
++["You have the final artifact!"]
 ~ CharacterTitle = "Mayor"
 “Indeed. It is within my possession, and I am willing to tell you where it is.”  
 

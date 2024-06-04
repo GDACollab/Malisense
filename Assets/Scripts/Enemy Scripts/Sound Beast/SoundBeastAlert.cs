@@ -231,9 +231,9 @@ public class SoundBeastAlert : StateBaseClass
         player = GameObject.FindGameObjectWithTag("Player").transform;
         aiPath = GetComponent<AIPath>();
         distractTarget = true;
-        circleCenter = soundPosition;
-        aiPath.destination = soundPosition;
-        aiPath.canMove = false;
+        circleCenter = (Vector3.Distance(soundPosition, transform.position)<20) ? soundPosition : transform.position;
+        aiPath.destination = circleCenter;
+        aiPath.canMove = true;
     }
 
     //Sets target to it self when awoken from statue

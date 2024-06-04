@@ -77,7 +77,7 @@ public class LevelNavigationManager : MonoBehaviour
 
     public void moveInList(int change)
     {
-        if (selectedDoorIndex + change < 0 || selectedDoorIndex + change >= doors.Length)
+        if (selectedDoorIndex + change < 0 || selectedDoorIndex + change >= doors.Length || (selectedDoorIndex + change > 0 && globalTeapot.currProgress != GlobalTeapot.TeaType.Dungeon_F2))
             return;
         doors[selectedDoorIndex].light.SetActive(false);
         selectedDoorIndex += change;

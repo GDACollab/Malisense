@@ -108,7 +108,7 @@ public class MagicHandScript : MonoBehaviour
 
         if (interactAction.triggered && currentHover != null)
         {
-            if (currentHover.GetComponent<StateMachine>() && !currentHover.GetComponent<StateMachine>().distracted) // If Enemy
+            if (currentHover.GetComponent<StateMachine>() && currentHover.GetComponent<StateMachine>().currentState != StateMachine.State.Distracted) // If Enemy
             {
                 currentHover.GetComponent<StateMachine>().currentState = StateMachine.State.Distracted;
 
@@ -140,7 +140,7 @@ public class MagicHandScript : MonoBehaviour
 
         StopAllCoroutines();
 
-        if (collision.GetComponent<StateMachine>() && !collision.GetComponent<StateMachine>().distracted) // If Enemy
+        if (collision.GetComponent<StateMachine>() && collision.GetComponent<StateMachine>().currentState != StateMachine.State.Distracted) // If Enemy
         {
             currentHover = collision;
             sprite.color = hoverTint;

@@ -273,7 +273,8 @@ public class EndCutsceneManager : MonoBehaviour
                     playerInput.enabled = true;
                     LogicContStory();
                 };
-                if ((string)globalTeapot.currentStory.variablesState["character"] == "Crypt_Keeper")
+                string character = (string)globalTeapot.currentStory.variablesState["character"];
+                if (character == "Crypt_Keeper")
                 {
                     action += () =>
                     {
@@ -286,7 +287,7 @@ public class EndCutsceneManager : MonoBehaviour
                         StartCoroutine(WaitToCall(() => globalTeapot.audioManager.PlayEndingOST(), 1f));
                     };
                 }
-                else if ((string)globalTeapot.currentStory.variablesState["character"] == "Mayor")
+                else if (character == "Mayor")
                 {
                     action += () =>
                     {
@@ -296,7 +297,7 @@ public class EndCutsceneManager : MonoBehaviour
                         DarknessSprite.SetActive(false);
                     };
                 }
-                else if ((string)globalTeapot.currentStory.variablesState["character"] == "Disgraced")
+                else if (character == "Disgraced")
                 {
                     action += () =>
                     {
@@ -306,7 +307,7 @@ public class EndCutsceneManager : MonoBehaviour
                         DarknessSprite.SetActive(false);
                     };
                 }
-                else if ((string)globalTeapot.currentStory.variablesState["character"] == "Darkness")
+                else if (character == "Darkness")
                 {
                     action += () =>
                     {
@@ -316,7 +317,7 @@ public class EndCutsceneManager : MonoBehaviour
                         MayorSprite.SetActive(false);
                     };
                 }
-                else if ((string)globalTeapot.currentStory.variablesState["character"] == "Dark")
+                else if (character == "Dark")
                 {
                     action += () => { DarkSprite.SetActive(true); };
                 }
@@ -347,7 +348,7 @@ public class EndCutsceneManager : MonoBehaviour
         {
             // Name of owner of house stored in variable navigationManager.CurrentCharacter and is one of ["Scholar", "Stick", "Crypt_Keeper", "Clergy", "Mayor", "???????????????"]
             // AUDIOMANAGER: Villager barks
-            VillageNavigationManager.Buildings buildingIndex = ((string)globalTeapot.currentStory.variablesState["character"] == "Mayor") ? VillageNavigationManager.Buildings.MAYOR : VillageNavigationManager.Buildings.CRYPT_KEEPER;
+            VillageNavigationManager.Buildings buildingIndex = (characterNameText.text == "Mayor") ? VillageNavigationManager.Buildings.MAYOR : VillageNavigationManager.Buildings.CRYPT_KEEPER;
             globalTeapot.audioManager.PlayVillageBark(buildingIndex);
         }
 
