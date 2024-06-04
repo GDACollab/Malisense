@@ -345,7 +345,7 @@ public class EndCutsceneManager : MonoBehaviour
         {
             // Name of owner of house stored in variable navigationManager.CurrentCharacter and is one of ["Scholar", "Stick", "Crypt_Keeper", "Clergy", "Mayor", "???????????????"]
             // AUDIOMANAGER: Villager barks
-            VillageNavigationManager.Buildings buildingIndex = ((string)globalTeapot.currentStory.variablesState["character"] == "Crypt_Keeper") ? VillageNavigationManager.Buildings.CRYPT_KEEPER : VillageNavigationManager.Buildings.MAYOR;
+            VillageNavigationManager.Buildings buildingIndex = ((string)globalTeapot.currentStory.variablesState["character"] == "Mayor") ? VillageNavigationManager.Buildings.MAYOR : VillageNavigationManager.Buildings.CRYPT_KEEPER;
             globalTeapot.audioManager.PlayVillageBark(buildingIndex);
         }
 
