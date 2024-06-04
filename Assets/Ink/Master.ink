@@ -164,11 +164,11 @@ bool Variables
     =interrogation
     *["Where is everyone?"]
     ~ CharacterTitle = "Crypt Keeper"
-        "You don't remember? I'll tell you this much--I was right about that creature."
+        "You don't remember? I'll tell you this much--I was right about the Malignance."
         
-       "Radefell is gone. The survivors are living in this village. I've been helping them, here and there." 
+       "That wretched god's power led to our home's destruction when it pulled the city below. The survivors of Radefell are living in this village, and I've been assisting them."
         
-        "I bet they'll be quite happy to see you. But please, let's not discuss this any further." 
+        "I bet they'll be quite happy to see you. But please, let's not discuss this any further."
         
         "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." -> interrogation
    
@@ -200,8 +200,13 @@ bool Variables
     *{CHOICE_COUNT() == 0}-> 
     ~ CharacterTitle = "Crypt Keeper"
        "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
+        **["Farewell? Why?"]
+            "Your fate calls from deep below. Artifacts of the church, once created in service of the monster that hurt you, are capable of dispelling it's magic if they are put in the right hands."
+            "Visit the church. Inside is the entrance to the ruins of Radefell. Below, the artifacts are locked behind doors powered by red gems. You must unchain them, one by one."
+            "Bring them to me and I may begin to heal our sense-deprived world. Without the magic of that <i>creature</i> we might finally put those poor souls to rest..."
+            "And, most importantly, do not fear death. I will ensure your return, my peony."
        ~ CharacterTitle = ""
-       <i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
+       -<i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
        
        <i>You were safe at the chapel, sure, but any bird is safe in a cage. This is different. </i>
        
@@ -1288,7 +1293,6 @@ PLAYER DIES IN FLOOR 1 SECTION
         -> AskQuestions
 
 = AskQuestions 
-~ CharacterTitle = ""
  *  ["Who are you?"]
     -> WhoAreYou
  *  ["Why are you still here?"]
