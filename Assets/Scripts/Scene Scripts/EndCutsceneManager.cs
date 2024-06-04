@@ -75,30 +75,32 @@ public class EndCutsceneManager : MonoBehaviour
         StartCoroutine(globalTeapot.fader.FadeFromBlack(fadeInTime));
     }
 
-    public void moveChoiceSelection(string direction)
-    {
-        // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
-        // Check that there are dialogue options to choose from otherwise there's no option to move
-        if (isPlaying && globalTeapot.currentStory.currentChoices.Count > 0)
-        {
+    //public void moveChoiceSelection(string direction)
+    //{
+    //    // Need to check isPlaying so that these input events are not triggered before currentStory.currentChoices.Count is a valid reference
+    //    // Check that there are dialogue options to choose from otherwise there's no option to move
+    //    if (isPlaying && globalTeapot.currentStory.currentChoices.Count > 0)
+    //    {
 
-            // Move
-            if (direction == "left")             // left
-            {
-                // Navigate up in the choices list
-                currentChoiceIndex--;
-                if (currentChoiceIndex < 0) currentChoiceIndex = globalTeapot.currentStory.currentChoices.Count - 1;
-                // Optionally, call a function to update the UI here
-            }
-            else if (direction == "right")        // right
-            {
-                // Navigate down in the choices list
-                currentChoiceIndex++;
-                if (currentChoiceIndex >= globalTeapot.currentStory.currentChoices.Count) currentChoiceIndex = 0;
-                // Optionally, call a function to update the UI here
-            }
-        }
-    }
+    //        // Move
+    //        if (direction == "left")             // left
+    //        {
+    //            // Navigate up in the choices list
+    //            currentChoiceIndex--;
+    //            if (currentChoiceIndex < 0) currentChoiceIndex = globalTeapot.currentStory.currentChoices.Count - 1;
+    //            UpdateChoiceSelectionVisuals();
+    //            // Optionally, call a function to update the UI here
+    //        }
+    //        else if (direction == "right")        // right
+    //        {
+    //            // Navigate down in the choices list
+    //            currentChoiceIndex++;
+    //            if (currentChoiceIndex >= globalTeapot.currentStory.currentChoices.Count) currentChoiceIndex = 0;
+    //            UpdateChoiceSelectionVisuals();
+    //            // Optionally, call a function to update the UI here
+    //        }
+    //    }
+    //}
 
     public void selectDialogue()
     {
@@ -387,7 +389,6 @@ public class EndCutsceneManager : MonoBehaviour
             choices[i].gameObject.SetActive(false);
         }
         currentChoiceIndex = 0;
-        UpdateChoiceSelectionVisuals();
     }
 
     private void UpdateChoiceSelectionVisuals()
@@ -442,12 +443,14 @@ public class EndCutsceneManager : MonoBehaviour
                 // Navigate up in the choices list
                 currentChoiceIndex--;
                 if (currentChoiceIndex < 0) currentChoiceIndex = globalTeapot.currentStory.currentChoices.Count - 1;
+                UpdateChoiceSelectionVisuals();
             }
             else if (horiMove > 0) // right
             {
                 // Navigate down in the choices list
                 currentChoiceIndex++;
                 if (currentChoiceIndex >= globalTeapot.currentStory.currentChoices.Count) currentChoiceIndex = 0;
+                UpdateChoiceSelectionVisuals();
             }
         }
     }
