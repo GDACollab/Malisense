@@ -2003,7 +2003,7 @@ Till next time, wanderer.
 *["Why do it then?"]-> WhyDoIt
 *{WhyDoIt}["You deserve to be punished."]-> punish
 *{WhyDoIt}["I would have protected you."]-> protected
-*{punish} or {protected} ["There is one thing I wish you to do."]-> Wish
+*{punish or protected} ["There is one thing I wish you to do."]-> Wish
 +["I am done with you."]-> CryptKeeperFinal
 
 =WhyDoIt

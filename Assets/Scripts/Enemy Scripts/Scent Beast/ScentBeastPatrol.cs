@@ -21,7 +21,7 @@ public class ScentBeastPatrol : StateBaseClass
     EnemyPathfinder _pathfinder;
     
     override public void Init(){
-        floorTilemap = FindObjectOfType<Grid>().GetComponentsInChildren<Tilemap>().ToList().Find(x=>x.name=="Floor");
+        floorTilemap = FindObjectsOfType<Grid>().ToList().Find(x=>x.name=="Grid").GetComponentsInChildren<Tilemap>().ToList().Find(x=>x.name=="Floor");
         _pathfinder = GetComponent<EnemyPathfinder>();
         pathTimeLeft = Random.Range(pathTimeRange.x, pathTimeRange.y);
     }

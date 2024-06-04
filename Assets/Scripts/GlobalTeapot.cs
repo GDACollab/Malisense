@@ -67,6 +67,7 @@ public class GlobalTeapot : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {

@@ -130,6 +130,12 @@ public class Player : MonoBehaviour
         dungeonManager = FindObjectOfType<DungeonManager>();
         // Get Audio Manager
         audioManager = globalTeapot.audioManager;
+        
+        foreach (Artifact x in Artifacts)
+        {
+            x.cooldown = 0;
+        }
+        
         #region TEMP INPUTS
         // Get temp input options
         hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
@@ -258,6 +264,8 @@ public class Player : MonoBehaviour
         else
         {
             rb.velocity = Vector2.zero; // Zero out movement
+            isMoving = false;
+            playerAnimator.SetBool("moving", false);
         }
     }
 
@@ -526,8 +534,10 @@ public class Player : MonoBehaviour
     public IEnumerator DisplayGemHintArrow(float waitSeconds)
     {
         var gemArrObj = GetComponentInChildren<GemHint>(true).gameObject;
-        gemArrObj.SetActive(true);
+        gemArrObj?.SetActive(true);
         yield return new WaitForSeconds(Mathf.Max(waitSeconds, 5f));
-        gemArrObj.SetActive(false);
+        if(gemArrObj){
+            gemArrObj.SetActive(false);
+        }
     }
 }

@@ -13,7 +13,6 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] List<StateMachine> enemies = new List<StateMachine>();
     [SerializeField] bool isChasing = false;
     [SerializeField] public bool finishLevel = false;
-    public static DungeonManager instance;
 
     [Header("Floor Note UI")]
     [SerializeField] GameObject floorNoteDisplay;
@@ -31,11 +30,6 @@ public class DungeonManager : MonoBehaviour
 
     IEnumerator FadeFromBlack(float fadeInTime) => globalTeapot.fader.FadeFromBlack(fadeInTime);
     IEnumerator FadeToBlack(Action sceneChange, float fadeOutTime) => globalTeapot.fader.FadeToBlack(sceneChange, fadeOutTime);
-
-    void Awake()
-    {
-        instance = this;
-    }
 
     // Start is called before the first frame update
     void Start()
