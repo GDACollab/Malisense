@@ -102,11 +102,12 @@ public class VillageNavigationManager : MonoBehaviour
             selectBuilding();
         } // Force CK Intro After 1st Death
         else if (globalTeapot.deathCount >= 1 && (globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F1 || globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2))
-        { 
+        {
             moveBuildingSelection(-1);
             selectBuilding();
+        }
         else if (false)
-        { 
+        {
 
         }
 
