@@ -10,9 +10,9 @@ public class Player : MonoBehaviour
 {
     #region TEMP VARS REMOVE
     // ### START TEMP VARIABLES ### DELETE BEFORE FINAL BUILD
-    [Header("Temp Variables (Remove before Final Build)")]
+    /*[Header("Temp Variables (Remove before Final Build)")]
     public GameObject[] enemies;
-    public UnityEvent testFunctions;
+    public UnityEvent testFunctions;*/
     // ### END TEMP VARIABLES ###
     #endregion
 
@@ -138,8 +138,8 @@ public class Player : MonoBehaviour
         
         #region TEMP INPUTS
         // Get temp input options
-        hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
-        activateFunctions = playerInput.actions.FindAction("Activate Functions");
+        /*hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
+        activateFunctions = playerInput.actions.FindAction("Activate Functions");*/
         #endregion
     }
 
@@ -161,7 +161,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         #region TEMP INPUT UPDATE
-        TempInputOptions(); // Temporary Input Options DELETE BEFORE FINAL BUILD
+        // TempInputOptions(); // Temporary Input Options DELETE BEFORE FINAL BUILD
         #endregion
         InputManager();
         if (canMove)
@@ -200,7 +200,7 @@ public class Player : MonoBehaviour
 
     #region TEMP INPUT FUNC
     // Temporary Input Options DELETE BEFORE FINAL BUILD
-    private void TempInputOptions()
+    /*private void TempInputOptions()
     {
         if (hideFootsteps.triggered)
         {
@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
                 testFunctions.Invoke();
             }
         }
-    }
+    }*/
 
     public void ToggleCheats(int stamdepl)
     {
