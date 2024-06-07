@@ -33,8 +33,7 @@ public class ScentBeastAlert : StateBaseClass
 
     override public void Init(){
         player = GameObject.FindWithTag("Player");
-        floorTilemap = FindObjectOfType<Grid>().GetComponentsInChildren<Tilemap>().ToList().Find(x=>x.name=="Floor");
-        _pathfinder = GetComponent<EnemyPathfinder>();
+        floorTilemap = FindObjectsOfType<Grid>().ToList().Find(x=>x.name=="Grid").GetComponentsInChildren<Tilemap>().ToList().Find(x=>x.name=="Floor");        _pathfinder = GetComponent<EnemyPathfinder>();
         pathTimeLeft = maxPathTime;
         detection = GetComponent<ScentDetection>();
         animator = GetComponentInChildren<Animator>();
