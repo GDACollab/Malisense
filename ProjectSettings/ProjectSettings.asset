@@ -101,7 +101,7 @@ PlayerSettings:
   xboxEnableKinectAutoTracking: 0
   xboxEnableFitness: 0
   visibleInBackground: 1
-  allowFullscreenSwitch: 1
+  allowFullscreenSwitch: 0
   fullscreenMode: 1
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
@@ -279,7 +279,14 @@ PlayerSettings:
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: da84459d35437fa459343a0c1caee76f, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons: []
   m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []

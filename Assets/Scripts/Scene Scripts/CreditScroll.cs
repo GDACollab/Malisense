@@ -23,7 +23,7 @@ public class CreditScroll : MonoBehaviour
     [SerializeField] List<CreditSong> songs = new List<CreditSong>();
     [SerializeField] float scrollSpeed = 1f;
     [SerializeField] int maxLines = 35;
-    [SerializeField] float waitBeforeImage = 10f;
+    bool startImage = true;
     List<float> textScrollLanes = new List<float>{-240, 0, 240};
     List<float> objectScrollLanes = new List<float>{-720, -480, 480, 720};
     
@@ -42,6 +42,7 @@ public class CreditScroll : MonoBehaviour
     List<RectTransform> creditsDisplay = new List<RectTransform>();
     RectTransform imageDisplay;
     RectTransform lastText;
+    RectTransform lastRightText;
     
     List<string> parsedCredits;
     int currLine = 0;
@@ -82,7 +83,7 @@ public class CreditScroll : MonoBehaviour
             Canvas.ForceUpdateCanvases();
         }
         
-        lastText = creditsDisplay.Last();
+        // lastText = creditsDisplay.Last();
         
         imageDisplay = Instantiate(creditsImageTemplate, transform).GetComponent<RectTransform>();
         imageDisplay.GetComponent<Image>().sprite = imageObjects[currImage];
@@ -92,7 +93,6 @@ public class CreditScroll : MonoBehaviour
         
         StartCoroutine(globalTeapot.fader.FadeFromBlack(fadeInTime));
         StartCoroutine(WaitToCall(songs[currSong]));
-        StartCoroutine(WaitToCall(() => creditsDisplay.Add(imageDisplay), waitBeforeImage));
     }
 
     // Update is called once per frame
@@ -129,6 +129,10 @@ public class CreditScroll : MonoBehaviour
             if(imageDisplay == null){
                 SetImage();
             }
+            if(startImage && Mathf.Abs(creditsDisplay.First().anchoredPosition.y) <= Screen.height/2){
+                startImage = false;
+                creditsDisplay.Add(imageDisplay);
+            }
         }
         else if(!creditsEnd && currLine >= parsedCredits.Count && Mathf.Abs(lastText.anchoredPosition.y) + lastText.rect.height - 150 <= Screen.height/2){
             creditsEnd = true;
@@ -147,20 +151,24 @@ public class CreditScroll : MonoBehaviour
         string[] tempText = parsedCredits[currLine].Split("|||");
         RectTransform temper;
         if(tempText.Length>1){
+            lastRightText ??= lastText;
             temper = Instantiate(creditsTextTemplate, transform).GetComponent<RectTransform>();
             creditsDisplay.Add(temper);
             temper.sizeDelta /= 2;
             temper.GetComponent<TMP_Text>().text = tempText[0];
             temper.anchoredPosition = new Vector2(textScrollLanes[0], lastText.anchoredPosition.y-lastText.rect.height);
+            lastText = temper;
             temper = Instantiate(creditsTextTemplate, transform).GetComponent<RectTransform>();
             temper.sizeDelta /= 2;
             creditsDisplay.Add(temper);
             temper.GetComponent<TMP_Text>().text = tempText[1];
-            temper.anchoredPosition = new Vector2(textScrollLanes[2], lastText.anchoredPosition.y-lastText.rect.height);
-            lastText = temper;
+            temper.anchoredPosition = new Vector2(textScrollLanes[2], lastRightText.anchoredPosition.y-lastRightText.rect.height);
+            lastRightText = temper;
             maxLines++;
         }
         else{
+            lastText = (lastRightText && lastRightText.anchoredPosition.y<lastText.anchoredPosition.y) ? lastRightText : lastText;
+            lastRightText = null;
             temper = Instantiate(creditsTextTemplate, transform).GetComponent<RectTransform>();
             creditsDisplay.Add(temper);
             temper.GetComponent<TMP_Text>().text = tempText[0];

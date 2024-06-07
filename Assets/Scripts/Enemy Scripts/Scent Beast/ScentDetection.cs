@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using FMOD;
 using FMODUnity;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class ScentDetection : MonoBehaviour
