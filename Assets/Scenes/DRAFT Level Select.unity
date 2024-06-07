@@ -963,6 +963,7 @@ MonoBehaviour:
   fadeOutUIImage: {fileID: 1393539264}
   fadeSpeed: 12
   loadDungeon: 0
+  door: {fileID: 1777162667}
 --- !u!4 &379905899
 Transform:
   m_ObjectHideFlags: 0
@@ -1673,8 +1674,10 @@ MonoBehaviour:
   dialoguePanel: {fileID: 818488952}
   dialogueText: {fileID: 399681889}
   characterNameText: {fileID: 1687067329}
+  clericsSprite: {fileID: 0}
+  HPSprite: {fileID: 0}
+  CKSprite: {fileID: 0}
   navigationManager: {fileID: 2135270424}
-  masterInk: {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
   choices:
   - {fileID: 1215506463}
   - {fileID: 839256347}
@@ -4797,7 +4800,6 @@ MonoBehaviour:
   moveRepeatDelay: 0.5
   moveRepeatRate: 0.1
   navigationManager: {fileID: 379905898}
-  dialogueManager: {fileID: 0}
 --- !u!114 &1409084080
 MonoBehaviour:
   m_ObjectHideFlags: 0
