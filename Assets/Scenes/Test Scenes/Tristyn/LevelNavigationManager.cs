@@ -39,7 +39,8 @@ public class LevelNavigationManager : MonoBehaviour
     private GameObject thisObject;
 
     GlobalTeapot globalTeapot;
-
+    //public Image door;
+    public SpriteRenderer door;
     //Image secondDoor;
 
     // Start is called before the first frame update
@@ -50,8 +51,11 @@ public class LevelNavigationManager : MonoBehaviour
 
         if(globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_F2){
             Debug.Log("The second door should be opened");
+            door.enabled = false;
             //secondDoor.enabled = false;
             //secondDoor.Destroy();
+        }else{
+            door.enabled = true;
         }
         // Level Door Selection:
         // Turn off every door's light
