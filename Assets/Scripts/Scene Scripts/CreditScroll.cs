@@ -163,12 +163,14 @@ public class CreditScroll : MonoBehaviour
             creditsDisplay.Add(temper);
             temper.sizeDelta /= 2;
             temper.GetComponent<TMP_Text>().text = tempText[0];
+            temper.GetComponent<TMP_Text>().alignment = TextAlignmentOptions.MidlineRight;
             temper.anchoredPosition = new Vector2(textScrollLanes[0], lastText.anchoredPosition.y-lastText.rect.height);
             lastText = temper;
             temper = Instantiate(creditsTextTemplate, transform).GetComponent<RectTransform>();
             temper.sizeDelta /= 2;
             creditsDisplay.Add(temper);
             temper.GetComponent<TMP_Text>().text = tempText[1];
+            temper.GetComponent<TMP_Text>().alignment = TextAlignmentOptions.MidlineLeft;
             temper.anchoredPosition = new Vector2(textScrollLanes[2], lastRightText.anchoredPosition.y-lastRightText.rect.height);
             lastRightText = temper;
             maxLines++;
@@ -230,5 +232,6 @@ public class CreditScroll : MonoBehaviour
     
     private void OnDisable() {
         StopAllCoroutines();
+        audioManager.StopCurrentSong();
     }
 }
