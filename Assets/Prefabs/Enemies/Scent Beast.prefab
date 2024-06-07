@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 2096877065520059329}
   - component: {fileID: 8262323620543221307}
   - component: {fileID: 9127378252060306802}
+  - component: {fileID: 7892172315823582527}
   m_Layer: 8
   m_Name: Scent Beast
   m_TagString: Enemy
@@ -304,6 +305,19 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!114 &7892172315823582527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446181726072927397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d345a7d0039a56248b2ce56960d2f103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puppetAnimator: {fileID: 6821229284784399790}
 --- !u!1 &7723219441387120371
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7626162715007562633
 Transform:
   m_ObjectHideFlags: 0
@@ -399,6 +413,14 @@ PrefabInstance:
     - target: {fileID: -8653719598885068355, guid: 99e8a87b41f068147ad2862428b48d29, type: 3}
       propertyPath: m_Name
       value: 'Extra_sliced_MandyXie_scentbeast '
+      objectReference: {fileID: 0}
+    - target: {fileID: -7552582706839291426, guid: 99e8a87b41f068147ad2862428b48d29, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35714
+      objectReference: {fileID: 0}
+    - target: {fileID: -7552582706839291426, guid: 99e8a87b41f068147ad2862428b48d29, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.35714
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 99e8a87b41f068147ad2862428b48d29, type: 3}
       propertyPath: m_LocalPosition.x

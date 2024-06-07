@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using Unity.VisualScripting;
+using FMOD;
 
 [RequireComponent(typeof(EnemyPathfinder))]
 public class ScentBeastAlert : StateBaseClass
@@ -27,13 +28,17 @@ public class ScentBeastAlert : StateBaseClass
     Tilemap floorTilemap;
     EnemyPathfinder _pathfinder;
     ScentDetection detection;
-    
+
+    private Animator animator;
+
     override public void Init(){
         player = GameObject.FindWithTag("Player");
         floorTilemap = FindObjectOfType<Grid>().GetComponentsInChildren<Tilemap>().ToList().Find(x=>x.name=="Floor");
         _pathfinder = GetComponent<EnemyPathfinder>();
         pathTimeLeft = maxPathTime;
         detection = GetComponent<ScentDetection>();
+        animator = GetComponentInChildren<Animator>();
+        animator.SetTrigger("Alert");
     }
     
     override public void On_Update(){
