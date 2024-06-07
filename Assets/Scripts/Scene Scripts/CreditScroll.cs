@@ -151,7 +151,14 @@ public class CreditScroll : MonoBehaviour
         string[] tempText = parsedCredits[currLine].Split("|||");
         RectTransform temper;
         if(tempText.Length>1){
-            lastRightText ??= lastText;
+            if(tempText[0].Contains("size")){
+                lastText = (lastRightText && lastRightText.anchoredPosition.y<lastText.anchoredPosition.y) ? lastRightText : lastText;
+                lastRightText = lastText;
+            }
+            else{
+                lastRightText ??= lastText;
+            }
+            
             temper = Instantiate(creditsTextTemplate, transform).GetComponent<RectTransform>();
             creditsDisplay.Add(temper);
             temper.sizeDelta /= 2;
