@@ -1,4 +1,6 @@
+using Pathfinding.Util;
 using System.Collections;
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,18 +10,26 @@ public class MagicHandScript : MonoBehaviour
 
     PlayerInput playerInput;
     InputAction moveAction, interactAction;
+    Rigidbody2D rb;
 
     SpriteRenderer sprite;
+    public GameObject handAsset;
     public Color hoverTint;
+
+    public Color lineColor;
 
     Collider2D currentHover;
     GameObject player;
 
+    LineRenderer line;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = handAsset.GetComponent<SpriteRenderer>();
         playerInput = player.GetComponent<PlayerInput>();
+        line = GetComponent<LineRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         moveAction = playerInput.actions.FindAction("8 Directions Movement");
 
         interactAction = playerInput.actions.FindAction("Interact");
@@ -61,8 +71,28 @@ public class MagicHandScript : MonoBehaviour
         float moveY = moveAction.ReadValue<Vector2>().y;
 
         Vector2 direction = new Vector2(moveX, moveY).normalized;
+        if (direction != Vector2.zero)
+        {
+            Quaternion rot = Quaternion.LookRotation(Vector3.forward, direction);
+            handAsset.transform.rotation = Quaternion.RotateTowards(handAsset.transform.rotation, rot, 700f * Time.deltaTime);
 
-        transform.Translate(direction * Time.deltaTime * 10f);
+            Vector2 newPos = rb.position + direction * Time.deltaTime * 10f;
+           
+            Vector3[] pos = { rb.position, player.transform.position };
+            line.SetPositions(pos);
+            lineColor.r = (Vector2.Distance(newPos, player.transform.position) / 14);
+            lineColor.b = 1-(Vector2.Distance(newPos, player.transform.position) / 14);
+            lineColor.a = Vector2.Distance(newPos, player.transform.position) / 14;
+
+            line.startColor = lineColor;
+            line.endColor = lineColor;
+
+            if (Vector2.Distance(newPos, player.transform.position) < 14)
+            {
+                rb.MovePosition(newPos);
+            }
+        }
+
 
         if (interactAction.triggered && currentHover != null)
         {
