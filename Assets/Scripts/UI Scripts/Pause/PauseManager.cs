@@ -75,10 +75,10 @@ public class PauseManager : MonoBehaviour
         if (isPaused) { OpenSettings(); }
     }
 
-    public void OnDebug()
-    {
-        if (isPaused) { debug.onClick.Invoke(); }
-    }
+    // public void OnDebug()
+    // {
+    //     if (isPaused) { debug.onClick.Invoke(); }
+    // }
 
     public void OnCancel()
     {
