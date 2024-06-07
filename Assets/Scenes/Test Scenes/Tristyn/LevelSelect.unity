@@ -2386,6 +2386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 702451819}
   - component: {fileID: 702451820}
+  - component: {fileID: 702451821}
   m_Layer: 0
   m_Name: Level2Door
   m_TagString: Second Door
@@ -2393,14 +2394,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &702451819
-Transform:
+--- !u!224 &702451819
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702451818}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -2409,6 +2409,11 @@ Transform:
   - {fileID: 1168026206}
   m_Father: {fileID: 1418401431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 19.2, y: 10.8}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &702451820
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2461,6 +2466,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!222 &702451821
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702451818}
+  m_CullTransparentMesh: 1
 --- !u!1 &706262943
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,8 +2931,10 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1124693117}
   dialogueText: {fileID: 1009274985}
   characterNameText: {fileID: 1746385614}
+  clericsSprite: {fileID: 0}
+  HPSprite: {fileID: 0}
+  CKSprite: {fileID: 0}
   navigationManager: {fileID: 1273696552}
-  masterInk: {fileID: 4900000, guid: f269bd10835952d47a1463ae4b4b9319, type: 3}
   choices:
   - {fileID: 1527391481}
   - {fileID: 142590573}
@@ -3545,6 +3560,7 @@ MonoBehaviour:
   fadeOutUIImage: {fileID: 1228375087}
   fadeSpeed: 12
   loadDungeon: 0
+  door: {fileID: 702451820}
 --- !u!1 &1009274982
 GameObject:
   m_ObjectHideFlags: 0
@@ -5496,7 +5512,6 @@ MonoBehaviour:
   moveRepeatDelay: 0.5
   moveRepeatRate: 0.1
   navigationManager: {fileID: 967665939}
-  dialogueManager: {fileID: 0}
 --- !u!1 &1651251541
 GameObject:
   m_ObjectHideFlags: 0
