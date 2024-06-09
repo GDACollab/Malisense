@@ -6,7 +6,9 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.LowLevel;
+#if !UNITY_WEBGL
 using UnityEngine.InputSystem.Switch;
+#endif
 using UnityEngine.InputSystem.XInput;
 using TeaCup = GlobalTeapot.TeaCup;
 
@@ -73,10 +75,12 @@ public class DeviceInputs : ScriptableObject
         {
             currDevice = TeaCup.KEYBOARD;
         }
+        #if !UNITY_WEBGL
         if (device is SwitchProControllerHID && currDevice != TeaCup.SWITCH)
         {
             currDevice = TeaCup.SWITCH;
         }
+        #endif
         if (device is XInputController && currDevice != TeaCup.XINPUT)
         {
             currDevice = TeaCup.XINPUT;

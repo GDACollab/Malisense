@@ -6749,7 +6749,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: 88b3e42ab74a0d24bb496a87bfdec16a, type: 2}
 --- !u!4 &1272589175
 Transform:
@@ -9237,7 +9237,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2010354204}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnApplicationQuit
         m_Mode: 1

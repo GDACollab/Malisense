@@ -17,7 +17,12 @@ public class SmartCamera : MonoBehaviour
         mainCamera = GetComponent<Camera>();
         target = GameObject.FindGameObjectWithTag("Player");
         mainCamera.backgroundColor = Color.black;
+        mainCamera.depth = 1;
         setAspectRatio();
+        var backCam = new GameObject().AddComponent<Camera>();
+        backCam.transform.parent = mainCamera.transform;
+        backCam.backgroundColor = Color.black;
+        backCam.cullingMask = 0;
     }
     
     private void FixedUpdate() {

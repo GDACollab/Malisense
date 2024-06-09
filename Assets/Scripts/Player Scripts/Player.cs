@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, interactAction;
-    private InputAction hideFootsteps, activateFunctions; // Test inputs remove before final build please
+    // private InputAction hideFootsteps, activateFunctions; // Test inputs remove before final build please
     // Rigid Body and interaction variables
     private Rigidbody2D rb;
     // Interaction Area
