@@ -2086,7 +2086,7 @@ Till next time, wanderer.
 <i>You approach the fountain, discerning it closely for the artifact. </i>
 
 <i>It isn't until you look closely into its waters that you spy a metal box, barely off-color with the stone, at the bottom of the fountain. </i>
-
+~character = "Artifact"
 <i>You bend and reach in, heaving the box out of the water, set it down, and open its lid.</i>
 
 <i>Within the box lies The Eye of Genesis. </i>

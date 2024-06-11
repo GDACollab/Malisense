@@ -22,6 +22,7 @@ public class EndCutsceneManager : MonoBehaviour
     [SerializeField] private VideoPlayer endCutsceneAnimation;
     [SerializeField] private GameObject EndImage;
     [SerializeField] private GameObject EndHint;
+    [SerializeField] private GameObject artifact;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -44,6 +45,7 @@ public class EndCutsceneManager : MonoBehaviour
     InputAction move;
 
     private bool canStartDialogue = true;
+    private bool inputEnabled = true;
 
     void Start()
     {
@@ -61,7 +63,9 @@ public class EndCutsceneManager : MonoBehaviour
         globalTeapot.audioManager.PlayCryptKeeperOST();
         globalTeapot.mayorWasIntroduced = true;
 
+        endCutsceneAnimation.url = System.IO.Path.Combine(Application.streamingAssetsPath, "MandyXie_End_Cutscene_Animation.mp4");
         endCutsceneAnimation.frame = 0;
+        endCutsceneAnimation.StepForward();
 
         //Get all choices texts
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -240,7 +244,7 @@ public class EndCutsceneManager : MonoBehaviour
 
     private IEnumerator ShowEndImage()
     {
-        yield return new WaitForSeconds((float)endCutsceneAnimation.clip.length + 1f);
+        yield return new WaitForSeconds(13f);
         Action action = () =>
         {
             EndImage.SetActive(true);
@@ -270,7 +274,7 @@ public class EndCutsceneManager : MonoBehaviour
                 Action action = () =>
                 {
                     StartCoroutine(globalTeapot.fader.FadeFromBlack(characterTranstionTime));
-                    playerInput.enabled = true;
+                    StartCoroutine(WaitToCall(() => playerInput.enabled = true, characterTranstionTime/2));
                     LogicContStory();
                 };
                 string character = (string)globalTeapot.currentStory.variablesState["character"];
@@ -306,6 +310,13 @@ public class EndCutsceneManager : MonoBehaviour
                         MayorSprite.SetActive(false);
                         DarknessSprite.SetActive(false);
                     };
+                }
+                else if (character == "Artifact")
+                {
+                    artifact.SetActive(true);
+                    setCharacter = false;
+                    LogicContStory();
+                    return;
                 }
                 else if (character == "Darkness")
                 {
@@ -458,7 +469,7 @@ public class EndCutsceneManager : MonoBehaviour
 
     public void OnSelect()
     {
-        if (isPlaying)
+        if (isPlaying && inputEnabled)
         {
             selectDialogue();
         }
@@ -467,5 +478,9 @@ public class EndCutsceneManager : MonoBehaviour
             globalTeapot.BrewNewTea();
             StartCoroutine(globalTeapot.fader.FadeToBlack(() => Loader.Load(Loader.Scene.Credits, true), fadeOutTime));
         }
+    }
+    
+    private void OnDestroy() {
+        globalTeapot.currentStory.RemoveVariableObserver();
     }
 }
