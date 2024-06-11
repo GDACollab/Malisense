@@ -464,6 +464,7 @@ public class EndCutsceneManager : MonoBehaviour
         }
         else if (movingOn)
         {
+            globalTeapot.BrewNewTea();
             StartCoroutine(globalTeapot.fader.FadeToBlack(() => Loader.Load(Loader.Scene.Credits, true), fadeOutTime));
         }
     }

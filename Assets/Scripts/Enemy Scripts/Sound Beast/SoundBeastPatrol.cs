@@ -5,6 +5,7 @@ using Array = System.Array;
 using UnityEngine;
 using Pathfinding;
 using FMODUnity;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(PatrolPath))]
 [RequireComponent(typeof(StateMachine))]
@@ -80,6 +81,7 @@ public class SoundBeastPatrol : StateBaseClass
         aiPath.maxSpeed = maxSpeed;
         aiPath.SearchPath();
         _idleTimeLeft = Random.Range(minIdleTime, maxIdleTime);
+        GetComponentInChildren<Light2D>(true).gameObject.SetActive(false);
 
         // Start at the closest path point when entering patrol state
         GameObject.Find("Global Teapot").GetComponent<AudioManager>().PlaySoundIdleSFX(GetComponent<StudioEventEmitter>());

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using System.Drawing;
 using UnityEngine.Tilemaps;
 using FMODUnity;
+using UnityEngine.Rendering.Universal;
 
 
 [RequireComponent(typeof(StateMachine))]
@@ -54,6 +55,7 @@ public class SoundBeastAlert : StateBaseClass
         machine = GetComponent<StateMachine>();
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
+        GetComponentInChildren<Light2D>(true).gameObject.SetActive(true);
         aiPath.enabled = true;
         isCircling = false;
         movedToOutside = false;

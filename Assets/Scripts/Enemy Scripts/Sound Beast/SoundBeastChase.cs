@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System.Threading;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(SoundBeastSoundModule))]
@@ -47,6 +48,7 @@ public class SoundBeastChase : StateBaseClass
         rb = GetComponent<Rigidbody2D>();
         machine = GetComponent<StateMachine>();
         GFX = GetComponentInChildren<SpriteRenderer>();
+        GetComponentInChildren<Light2D>(true).gameObject.SetActive(true);
         
         chaseCollider.radius = detectionRadius;
 

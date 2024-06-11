@@ -31,6 +31,7 @@ public class SoundBeastDistract : StateBaseClass, ISwitchable
 
     public override void Init()
     {
+        GetComponentInChildren<Light2D>(true).gameObject.SetActive(false);
         //If not statue stop monster
         if (!_stateMachine.IsStatue())
         {

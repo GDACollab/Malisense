@@ -126,4 +126,8 @@ public class VillageInteraction : MonoBehaviour
             navigationManager.selectBuilding();
 		}
 	}
+	
+	private void OnDisable() {
+		controls.UI.Select.performed -= Select;
+	}
 }

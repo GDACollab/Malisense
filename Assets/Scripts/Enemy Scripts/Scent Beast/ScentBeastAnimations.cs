@@ -19,6 +19,6 @@ public class ScentBeastAnimations : MonoBehaviour
     void Update()
     {
         // Feed speed data to animator
-        _puppetAnimator.SetFloat("Speed", _rd2d.velocity.magnitude / 3.5f);
+        _puppetAnimator.SetFloat("Speed", _rd2d.velocity.magnitude / 3f);
     }
 }
