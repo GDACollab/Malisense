@@ -55,6 +55,7 @@ public class CreditScroll : MonoBehaviour
 
     float hintTimer;
     bool skipHint => hintTimer > 0;
+    bool skipHint2 = true;
 
     GlobalTeapot globalTeapot;
     AudioManager audioManager;
@@ -233,22 +234,65 @@ public class CreditScroll : MonoBehaviour
 
     IEnumerator WaitToCall(CreditSong song)
     {
-        song.song.Invoke(audioManager);
+        yield return new WaitForSeconds(1f);
+        audioManager.PlayEndingOST();
+        Debug.Log(songs[currSong].duration);
         yield return new WaitForSeconds(song.duration);
+        currSong++;
         if (currSong < songs.Count)
         {
             audioManager.StopCurrentSong();
             yield return new WaitForSeconds(1f);
-            StartCoroutine(WaitToCall(songs[currSong]));
+            audioManager.PlayVillageOST();
+            Debug.Log(songs[currSong].duration);
+            yield return new WaitForSeconds(songs[currSong].duration);
+            currSong++;
+        }
+        if (currSong < songs.Count)
+        {
+            audioManager.StopCurrentSong();
+            yield return new WaitForSeconds(1f);
+            audioManager.PlayDungeonOST();
+            Debug.Log(songs[currSong].duration);
+            yield return new WaitForSeconds(songs[currSong].duration);
+            currSong++;
+        }
+        if (currSong < songs.Count)
+        {
+            audioManager.StopCurrentSong();
+            yield return new WaitForSeconds(1f);
+            audioManager.PlayChaseOST();
+            Debug.Log(songs[currSong].duration);
+            yield return new WaitForSeconds(songs[currSong].duration);
+            currSong++;
+        }
+        if (currSong < songs.Count)
+        {
+            audioManager.StopCurrentSong();
+            yield return new WaitForSeconds(1f);
+            audioManager.PlayVillageOST();
+            audioManager.PlayShopOST();
+            Debug.Log(songs[currSong].duration);
+            yield return new WaitForSeconds(songs[currSong].duration);
+            currSong++;
+        }
+        if (currSong < songs.Count)
+        {
+            audioManager.StopCurrentSong();
+            yield return new WaitForSeconds(1f);
+            audioManager.PlayCryptKeeperOST();
+            yield return new WaitForSeconds(songs[currSong].duration);
+            Debug.Log(songs[currSong].duration);
             currSong++;
         }
     }
 
     void OnPause()
     {
-        if (skipHint)
+        if (skipHint && skipHint2)
         {
-            StartCoroutine(globalTeapot.fader.FadeToBlack(() => Loader.Load(Loader.Scene.MainMenu, true), fadeOutTime));
+            skipHint2 = false;
+            StartCoroutine(globalTeapot.fader.FadeToBlack(() => Loader.Load(Loader.Scene.MainMenu, true), longFadeOutTime));
         }
     }
 

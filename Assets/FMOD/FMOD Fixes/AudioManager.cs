@@ -258,6 +258,7 @@ public class AudioManager : MonoBehaviour
     public void StopCurrentSong()
     {
         MusicTrack track = MusicTrack.STOP;
+        currentPlaying.setParameterByName("SHOP", 0);
         currentPlaying.setParameterByName("GAME SCENE", (float)track);
         currentTrack = track;
         // StartCoroutine(StopCurrentSongRoutine());
