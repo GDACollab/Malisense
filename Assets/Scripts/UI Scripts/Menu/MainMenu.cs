@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
     public float fadeSpeed = 0.5f;
     public AudioManager audioManager;
     
+    [SerializeField] private GameObject newGameButton;
     [SerializeField] private Slider masterSlider, musicSlider, sfxSlider;
     
     void Awake(){
@@ -19,6 +20,8 @@ public class MainMenu : MonoBehaviour
         audioManager.PlayMenuOST();
     }
     private void Start() {
+        if(GlobalTeapot.Instance.currProgress == GlobalTeapot.TeaType.Intro){ newGameButton.SetActive(false); }
+
         masterSlider.value = audioManager.masterVolume;
         musicSlider.value = audioManager.musicVolume;
         sfxSlider.value = audioManager.sfxVolume;
@@ -31,9 +34,20 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(FadeToBlackAndLoadScene());
     }
     
+    public void RestartGame()
+    {
+        GlobalTeapot.Instance.BrewNewTea();
+        PlayGame();
+    }
+    
     public void SkipVillage()
     {
         StartCoroutine(FadeToBlackAndLoadDungeon());
+    }
+
+    public void ShowCredits()
+    {
+        StartCoroutine(FadeToBlackAndLoadCredits());
     }
 
     public void OnApplicationQuit()
@@ -68,6 +82,13 @@ public class MainMenu : MonoBehaviour
         fadeOutUIImage.gameObject.SetActive(true);
         yield return StartCoroutine(FadeToBlack());
         Loader.Load(Loader.Scene.Dungeon_F1);
+    }
+    
+    IEnumerator FadeToBlackAndLoadCredits()
+    {
+        fadeOutUIImage.gameObject.SetActive(true);
+        yield return StartCoroutine(FadeToBlack());
+        Loader.Load(Loader.Scene.Credits, true);
     }
 
     IEnumerator FadeToBlack()

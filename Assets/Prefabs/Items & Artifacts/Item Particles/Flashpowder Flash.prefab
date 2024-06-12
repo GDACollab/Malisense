@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3516374263435197929}
   - component: {fileID: 8202528621221622336}
   - component: {fileID: 2496293596126523972}
+  - component: {fileID: 676580539759083507}
   m_Layer: 0
   m_Name: Flashpowder Flash
   m_TagString: Untagged
@@ -98,3 +99,38 @@ MonoBehaviour:
   duration: 1
   endColor: {r: 0, g: 0, b: 0, a: 1}
   exponent: 1.5
+--- !u!58 &676580539759083507
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722482067113795592}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 65279
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 20

@@ -37,14 +37,14 @@ VAR character = "Crypt_Keeper"
 
 == START ==
 {
+ - isEnd: -> End
  - isIntroductionCutscene: -> Introduction // Go to Introduction
  - character == "Crypt_Keeper": -> Crypt_Keeper // Go to CK 
  - character == "Stick": -> Stick // Go to Stick
  - character == "Mayor": -> Mayor // Go to Mayor
  - character == "Clergy": -> Clergy // Go to Clergy
  - character == "Scholar": -> Scholar // Go to Scholar 
- - isEnd: // Go to end
- - else: Error
+ - else: Error -> END
  }
  
 
@@ -94,8 +94,8 @@ bool Variables
  - isDeathF1: -> DeathF1 // Go to death 1
  - isHub: -> hub // Go to hub
  - isDeathF2: -> DeathF2 // Go to death 2 
- - isEnd: // Go to end
- - else: Error
+ - isEnd: -> End // Go to end
+ - else: Error ->END
  }
 
  =intro
@@ -164,11 +164,11 @@ bool Variables
     =interrogation
     *["Where is everyone?"]
     ~ CharacterTitle = "Crypt Keeper"
-        "You don't remember? I'll tell you this much--I was right about that creature."
+        "You don't remember? I'll tell you this much--I was right about the Malignance."
         
-       "Radefell is gone. The survivors are living in this village. I've been helping them, here and there." 
+       "That wretched god's power led to our home's destruction when it pulled the city below. The survivors of Radefell are living in this village, and I've been assisting them."
         
-        "I bet they'll be quite happy to see you. But please, let's not discuss this any further." 
+        "I bet they'll be quite happy to see you. But please, let's not discuss this any further."
         
         "Besides, you're already in such a sorry state. I can't imagine that dwelling on bad news is making you feel any better." -> interrogation
    
@@ -200,8 +200,13 @@ bool Variables
     *{CHOICE_COUNT() == 0}-> 
     ~ CharacterTitle = "Crypt Keeper"
        "Now then, I'm afraid I must wish you farewell. But worry not, my darling, for we shall meet again very soon." 
+        **["Farewell? Why?"]
+            "Your fate calls from deep below. Artifacts of the church, once created in service of the monster that hurt you, are capable of dispelling it's magic if they are put in the right hands."
+            "Visit the church. Inside is the entrance to the ruins of Radefell. Below, the artifacts are locked behind doors powered by red gems. You must unchain them, one by one."
+            "Bring them to me and I may begin to heal our sense-deprived world. Without the magic of that <i>creature</i> we might finally put those poor souls to rest..."
+            "And, most importantly, do not fear death. I will ensure your return, my peony."
        ~ CharacterTitle = ""
-       <i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
+       -<i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
        
        <i>You were safe at the chapel, sure, but any bird is safe in a cage. This is different. </i>
        
@@ -1288,7 +1293,6 @@ PLAYER DIES IN FLOOR 1 SECTION
         -> AskQuestions
 
 = AskQuestions 
-~ CharacterTitle = ""
  *  ["Who are you?"]
     -> WhoAreYou
  *  ["Why are you still here?"]
@@ -1902,7 +1906,6 @@ Till next time, wanderer.
 
 
 ==End== 
-~character = "Mayor"
 ~background = "next"
 ~ CharacterTitle = ""
 <i>You burst into the Mayor’s house, gripping the note in a fierce clutch. You betray your lightfooted step and close the distance across the room in an instant, locking eyes with the Mayor. </i>
@@ -1911,7 +1914,7 @@ Till next time, wanderer.
 ~ CharacterTitle = "Mayor"
 “I knew this time would come...”
 
-+["You have the final artifact!"] 
++["You have the final artifact!"]
 ~ CharacterTitle = "Mayor"
 “Indeed. It is within my possession, and I am willing to tell you where it is.”  
 
@@ -2004,7 +2007,7 @@ Till next time, wanderer.
 *["Why do it then?"]-> WhyDoIt
 *{WhyDoIt}["You deserve to be punished."]-> punish
 *{WhyDoIt}["I would have protected you."]-> protected
-*{punish} or {protected} ["There is one thing I wish you to do."]-> Wish
+*{punish or protected} ["There is one thing I wish you to do."]-> Wish
 +["I am done with you."]-> CryptKeeperFinal
 
 =WhyDoIt
@@ -2077,20 +2080,20 @@ Till next time, wanderer.
 
 =CryptKeeperFinal
 ~ CharacterTitle = "Mayor"
+~character = "Disgraced"
 “Farewell then, Disgraced. End this curse, once and for all.”
-~background = "next"
 ~ CharacterTitle = ""
 <i>You approach the fountain, discerning it closely for the artifact. </i>
 
 <i>It isn't until you look closely into its waters that you spy a metal box, barely off-color with the stone, at the bottom of the fountain. </i>
-
+~character = "Artifact"
 <i>You bend and reach in, heaving the box out of the water, set it down, and open its lid.</i>
 
 <i>Within the box lies The Eye of Genesis. </i>
 
+~character = "Crypt_Keeper"
 <i>Its gaze almost seems to apprise you as you take it into your hands. </i>
 
-~character = "Crypt_Keeper"
 ~ CharacterTitle = ""
 <i>You hurry back to meet with the Crypt Keeper, the Eye of Genesis, the final artifact, in hand. </i>
 
@@ -2140,6 +2143,7 @@ Till next time, wanderer.
                  
                 ******[<i>Give her the artifact</i>]
                     ~ CharacterTitle = ""
+                    ~character = "Darkness"
                     <i>After taking the artifact, she embraces you one final time. She pulls away before she begins the cleansing ritual of the Eye of Genesis.</i>
                         
                     *******[<i>Breathe</i>]
@@ -2183,8 +2187,8 @@ Till next time, wanderer.
             <i>You feel comfort, taking shelter in the warmth of the light, a familiar feeling. An embrace, her embrace.</i>
             ****[<i>Breathe</i>]
                 ~ CharacterTitle = ""
+                ~character = "Dark"
                 <i>Then it goes silent.</i>
-
                 ~ CharacterTitle = "Crypt Keeper"
                 "The journey was long and treacherous."
 

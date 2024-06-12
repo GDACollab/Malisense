@@ -250,7 +250,7 @@ public class VillageNavigationManager : MonoBehaviour
             if (loadDungeon)
             {
                 loadDungeon = false;
-                Loader.Load(Loader.Scene.Level_Select);
+                Loader.Load(Loader.Scene.Level_Select, true);
                 //Loader.Load(Loader.Scene.Dungeon_F1);
             }
             else

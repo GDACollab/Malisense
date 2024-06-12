@@ -10,9 +10,9 @@ public class Player : MonoBehaviour
 {
     #region TEMP VARS REMOVE
     // ### START TEMP VARIABLES ### DELETE BEFORE FINAL BUILD
-    [Header("Temp Variables (Remove before Final Build)")]
+    /*[Header("Temp Variables (Remove before Final Build)")]
     public GameObject[] enemies;
-    public UnityEvent testFunctions;
+    public UnityEvent testFunctions;*/
     // ### END TEMP VARIABLES ###
     #endregion
 
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
     // Input System
     private PlayerInput playerInput;
     private InputAction moveAction, sprintAction, interactAction;
-    private InputAction hideFootsteps, activateFunctions; // Test inputs remove before final build please
+    // private InputAction hideFootsteps, activateFunctions; // Test inputs remove before final build please
     // Rigid Body and interaction variables
     private Rigidbody2D rb;
     // Interaction Area
@@ -130,10 +130,16 @@ public class Player : MonoBehaviour
         dungeonManager = FindObjectOfType<DungeonManager>();
         // Get Audio Manager
         audioManager = globalTeapot.audioManager;
+        
+        foreach (Artifact x in Artifacts)
+        {
+            x.cooldown = 0;
+        }
+        
         #region TEMP INPUTS
         // Get temp input options
-        hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
-        activateFunctions = playerInput.actions.FindAction("Activate Functions");
+        /*hideFootsteps = playerInput.actions.FindAction("Hide Footsteps");
+        activateFunctions = playerInput.actions.FindAction("Activate Functions");*/
         #endregion
     }
 
@@ -155,7 +161,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         #region TEMP INPUT UPDATE
-        TempInputOptions(); // Temporary Input Options DELETE BEFORE FINAL BUILD
+        // TempInputOptions(); // Temporary Input Options DELETE BEFORE FINAL BUILD
         #endregion
         InputManager();
         if (canMove)
@@ -194,7 +200,7 @@ public class Player : MonoBehaviour
 
     #region TEMP INPUT FUNC
     // Temporary Input Options DELETE BEFORE FINAL BUILD
-    private void TempInputOptions()
+    /*private void TempInputOptions()
     {
         if (hideFootsteps.triggered)
         {
@@ -207,7 +213,7 @@ public class Player : MonoBehaviour
                 testFunctions.Invoke();
             }
         }
-    }
+    }*/
 
     public void ToggleCheats(int stamdepl)
     {
@@ -258,6 +264,8 @@ public class Player : MonoBehaviour
         else
         {
             rb.velocity = Vector2.zero; // Zero out movement
+            isMoving = false;
+            playerAnimator.SetBool("moving", false);
         }
     }
 
@@ -375,6 +383,7 @@ public class Player : MonoBehaviour
         if (!interactArea.isInteractable() && newInventory.carriedObject)
         {
             newInventory.carriedObject.transform.parent = null;
+            newInventory.carriedObject.GetComponent<SpriteRenderer>().sortingOrder = 11;
             newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
             newInventory.carriedObject = null;
             interactArea.removeInteracts();
@@ -417,6 +426,7 @@ public class Player : MonoBehaviour
             {
                 interactArea.removeInteracts();
                 newInventory.carriedObject.transform.parent = null;
+                newInventory.carriedObject.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = true;
                 newInventory.carriedObject = null;
                 break;
@@ -450,6 +460,7 @@ public class Player : MonoBehaviour
                 audioManager.PlayPickupSFX();
                 interactArea.removeInteracts();
                 newInventory.carriedObject = heavyItem;
+                newInventory.carriedObject.GetComponent<SpriteRenderer>().sortingOrder = 600;
                 newInventory.carriedObject.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 newInventory.carriedObject.transform.parent = interactBody.transform.parent;
                 newInventory.carriedObject.transform.position = interactBody.transform.position + Vector3.up * 0.5f;
@@ -523,8 +534,10 @@ public class Player : MonoBehaviour
     public IEnumerator DisplayGemHintArrow(float waitSeconds)
     {
         var gemArrObj = GetComponentInChildren<GemHint>(true).gameObject;
-        gemArrObj.SetActive(true);
+        gemArrObj?.SetActive(true);
         yield return new WaitForSeconds(Mathf.Max(waitSeconds, 5f));
-        gemArrObj.SetActive(false);
+        if(gemArrObj){
+            gemArrObj.SetActive(false);
+        }
     }
 }

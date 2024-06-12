@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System.Threading;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(SoundBeastSoundModule))]
 public class SoundBeastChase : StateBaseClass
 {
-    public Transform target;
+    public Vector2 target;
+    private Player player;
+    
+    public CircleCollider2D chaseCollider;
+    public float detectionRadius = 5;
 
     public float chaseTimer = 5f;
     public float speed = 200f;              // Acceleration speed
@@ -37,17 +42,21 @@ public class SoundBeastChase : StateBaseClass
 
     public override void Init()
     {
-        target = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        target = player.transform.position;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         machine = GetComponent<StateMachine>();
         GFX = GetComponentInChildren<SpriteRenderer>();
+        GetComponentInChildren<Light2D>(true).gameObject.SetActive(true);
+        
+        chaseCollider.radius = detectionRadius;
 
         // Update pathfinding
         InvokeRepeating("UpdatePath",   // Method name
                         0f,             // Time to wait before method call
                         pathUpdateRate);// UpdatePath delay
-        _fear = target.GetComponent<FearTracker>();
+        _fear = player.GetComponent<FearTracker>();
         _chaseTimer = chaseTimer;
 
         animator.SetBool("Run", true);
@@ -59,7 +68,7 @@ public class SoundBeastChase : StateBaseClass
     void UpdatePath()
     {
         if (seeker.IsDone())
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            seeker.StartPath(rb.position, target, OnPathComplete);
     }
 
     void OnPathComplete(Path p)
@@ -77,9 +86,10 @@ public class SoundBeastChase : StateBaseClass
             return;
 
         // If exceeded current amount of waypoints in the path
-        if (currentWaypoint >= path.vectorPath.Count)
+        if (currentWaypoint+1 >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
+            target = player.transform.position;
             return;
         }
         else
@@ -95,7 +105,7 @@ public class SoundBeastChase : StateBaseClass
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
-        if (distance < nextWaypointDistance)
+        if (distance < nextWaypointDistance && currentWaypoint+1 < path.vectorPath.Count)
         {
             currentWaypoint++;  // Move on to next waypoint
         }
@@ -128,11 +138,13 @@ public class SoundBeastChase : StateBaseClass
             if(_chaseTimer <=0){
                 _chaseTimer = chaseTimer;
                 CancelInvoke();
-                _sound.detectedNoisePos = target.position;
+                chaseCollider.radius = 0;
+                _sound.detectedNoisePos = target;
                 machine.currentState = StateMachine.State.Alert;
             }
         }
         else{
+            target = _sound.detectedNoisePos;
             _chaseTimer = chaseTimer;
         }
     }

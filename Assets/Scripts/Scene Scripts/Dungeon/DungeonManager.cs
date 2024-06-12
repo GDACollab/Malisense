@@ -13,7 +13,6 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] List<StateMachine> enemies = new List<StateMachine>();
     [SerializeField] bool isChasing = false;
     [SerializeField] public bool finishLevel = false;
-    public static DungeonManager instance;
 
     [Header("Floor Note UI")]
     [SerializeField] GameObject floorNoteDisplay;
@@ -28,14 +27,9 @@ public class DungeonManager : MonoBehaviour
     AudioManager audioManager;
 
     List<FloorNote> floorNotes = new List<FloorNote>();
-    
+
     IEnumerator FadeFromBlack(float fadeInTime) => globalTeapot.fader.FadeFromBlack(fadeInTime);
     IEnumerator FadeToBlack(Action sceneChange, float fadeOutTime) => globalTeapot.fader.FadeToBlack(sceneChange, fadeOutTime);
-
-    void Awake()
-    {
-        instance = this;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -126,13 +120,12 @@ public class DungeonManager : MonoBehaviour
         {
             globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
         }
+        
 
         if (artifact)
         {
-            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
-            /*switch (globalTeapot.currProgress)
+            switch (globalTeapot.currProgress)
             {
-                globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                 case GlobalTeapot.TeaType.Dungeon_F1:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
                     Debug.Log("moving from Dungeon_F1 to Dungeon_F2");
@@ -141,10 +134,13 @@ public class DungeonManager : MonoBehaviour
                     globalTeapot.currProgress = GlobalTeapot.TeaType.End;
                     Debug.Log("moving from Dungeon_F2 to End");
                     break;
+                case GlobalTeapot.TeaType.Dungeon_Redo:
+                    Debug.Log("Redid the dungeon");
+                    break;
                 default:
                     globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F1;
                     break;
-            }*/
+            }
         }
 
         if (death)
@@ -152,10 +148,21 @@ public class DungeonManager : MonoBehaviour
             globalTeapot.deathCount++;
             sceneChange = () => Loader.Load(Loader.Scene.DeathScene, true);
         }
+        else if (globalTeapot.currProgress == GlobalTeapot.TeaType.End)
+        {
+            finishLevel = true;
+            sceneChange = () => Loader.Load(Loader.Scene.EndCutscene);
+        }
         else
         {
             finishLevel = true;
             sceneChange = () => Loader.Load(Loader.Scene.Village);
+        }
+        
+        // If the player goes back to dungeon 1
+        if (globalTeapot.currProgress == GlobalTeapot.TeaType.Dungeon_Redo)
+        {
+            globalTeapot.currProgress = GlobalTeapot.TeaType.Dungeon_F2;
         }
         StartCoroutine(FadeToBlack(sceneChange, fadeOutTime));
     }
@@ -183,7 +190,7 @@ public class DungeonManager : MonoBehaviour
         {
             if (note.noteID.Length > 0)
             {
-                
+
                 if (note.noteID.ToLower() == "destroy" || globalTeapot.journal.CheckFloorNote(note.noteID))
                 {
                     Destroy(note.gameObject);

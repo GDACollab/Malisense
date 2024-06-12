@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArtifactAltar : MonoBehaviour, ISwitchable
 {
     public Artifact artifact;
+    public GameObject artifactObj;
     public FloorNote floorNote;
     public bool isNear = false;
     public Sprite notSelected;
@@ -21,6 +22,8 @@ public class ArtifactAltar : MonoBehaviour, ISwitchable
         playerInventory = GameObject.FindWithTag("Player").GetComponent<Player>();
         dungeonManager = FindObjectOfType<DungeonManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if(GlobalTeapot.Instance.currProgress == GlobalTeapot.TeaType.Dungeon_Redo && artifactObj) { artifactObj.SetActive(false); }
 
         if (floorNote) { floorNote.enabled = false; }
     }

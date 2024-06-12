@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using System.Drawing;
 using UnityEngine.Tilemaps;
 using FMODUnity;
+using UnityEngine.Rendering.Universal;
 
 
 [RequireComponent(typeof(StateMachine))]
@@ -54,6 +55,7 @@ public class SoundBeastAlert : StateBaseClass
         machine = GetComponent<StateMachine>();
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
+        GetComponentInChildren<Light2D>(true).gameObject.SetActive(true);
         aiPath.enabled = true;
         isCircling = false;
         movedToOutside = false;
@@ -231,9 +233,9 @@ public class SoundBeastAlert : StateBaseClass
         player = GameObject.FindGameObjectWithTag("Player").transform;
         aiPath = GetComponent<AIPath>();
         distractTarget = true;
-        circleCenter = soundPosition;
-        aiPath.destination = soundPosition;
-        aiPath.canMove = false;
+        circleCenter = (Vector3.Distance(soundPosition, transform.position)<20) ? soundPosition : transform.position;
+        aiPath.destination = circleCenter;
+        aiPath.canMove = true;
     }
 
     //Sets target to it self when awoken from statue

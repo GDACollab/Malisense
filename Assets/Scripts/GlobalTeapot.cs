@@ -19,6 +19,7 @@ public class GlobalTeapot : MonoBehaviour
     {
         Intro,
         Dungeon_F1,
+        Dungeon_Redo,
         Dungeon_F2,
         End
     }
@@ -66,6 +67,7 @@ public class GlobalTeapot : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {

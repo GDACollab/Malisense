@@ -6,8 +6,14 @@ using UnityEngine.InputSystem;
 
 public class MagicHandScript : MonoBehaviour
 {
+    private static MagicHandScript Instance;
+    
     public Artifact MagicHand;
 
+    [SerializeField] float maxDistance = 14f;
+    [SerializeField] float minCooldown = 5;
+    [SerializeField] float maxCooldown = 60;
+    
     PlayerInput playerInput;
     InputAction moveAction, interactAction;
     Rigidbody2D rb;
@@ -36,6 +42,9 @@ public class MagicHandScript : MonoBehaviour
 
         if (MagicHand.cooldown > 0.0f) {
             player.GetComponent<Player>().canMove = true;
+            if(Instance){
+                Instance.end(minCooldown);
+            }
             Destroy(gameObject);
             return;
         }
@@ -46,6 +55,9 @@ public class MagicHandScript : MonoBehaviour
 
         if(MagicHand.duration == 1)
         {
+            if(Instance){
+                Instance.end(minCooldown);
+            }
             Destroy(gameObject);
             return;
         }
@@ -59,7 +71,7 @@ public class MagicHandScript : MonoBehaviour
 
         if (player == null) Debug.LogError("No player found in scene, Magic hand script");
 
-       
+        Instance = this;
 
         // Sync movement
     }
@@ -80,14 +92,14 @@ public class MagicHandScript : MonoBehaviour
            
             Vector3[] pos = { rb.position, player.transform.position };
             line.SetPositions(pos);
-            lineColor.r = (Vector2.Distance(newPos, player.transform.position) / 14);
-            lineColor.b = 1-(Vector2.Distance(newPos, player.transform.position) / 14);
-            lineColor.a = Vector2.Distance(newPos, player.transform.position) / 14;
+            lineColor.r = (Vector2.Distance(newPos, player.transform.position) / maxDistance);
+            lineColor.b = 1-(Vector2.Distance(newPos, player.transform.position) / maxDistance);
+            lineColor.a = Vector2.Distance(newPos, player.transform.position) / maxDistance;
 
             line.startColor = lineColor;
             line.endColor = lineColor;
 
-            if (Vector2.Distance(newPos, player.transform.position) < 14)
+            if (Vector2.Distance(newPos, player.transform.position) < maxDistance)
             {
                 rb.MovePosition(newPos);
             }
@@ -96,13 +108,13 @@ public class MagicHandScript : MonoBehaviour
 
         if (interactAction.triggered && currentHover != null)
         {
-            if (currentHover.GetComponent<StateMachine>()) // If Enemy
+            if (currentHover.GetComponent<StateMachine>() && currentHover.GetComponent<StateMachine>().currentState != StateMachine.State.Distracted) // If Enemy
             {
                 currentHover.GetComponent<StateMachine>().currentState = StateMachine.State.Distracted;
 
-                end(60f);
+                end(maxCooldown);
             }
-            else if (currentHover.GetComponent<SwitchController>()) // If Switch
+            else if (currentHover.GetComponent<SwitchController>() && !currentHover.GetComponent<CarnelianEarthquake>()) // If Switch
             {
                 currentHover.GetComponent<SwitchController>().ActivateSwitch();
             }
@@ -119,7 +131,7 @@ public class MagicHandScript : MonoBehaviour
 
         if (interactAction.triggered && currentHover == null)
         {
-            end(5f);
+            end(minCooldown);
         }
     }
 
@@ -128,11 +140,11 @@ public class MagicHandScript : MonoBehaviour
 
         StopAllCoroutines();
 
-        if (collision.GetComponent<StateMachine>()) // If Enemy
+        if (collision.GetComponent<StateMachine>() && collision.GetComponent<StateMachine>().currentState != StateMachine.State.Distracted) // If Enemy
         {
             currentHover = collision;
             sprite.color = hoverTint;
-        } else if (collision.GetComponent<SwitchController>()) // If Switch
+        } else if (collision.GetComponent<SwitchController>() && !collision.GetComponent<CarnelianEarthquake>()) // If Switch
         {
             currentHover = collision;
             sprite.color = hoverTint;

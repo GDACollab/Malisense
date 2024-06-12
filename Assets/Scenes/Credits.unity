@@ -420,6 +420,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+--- !u!114 &405707153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4924827947121429571, guid: a5b89bcba4584f044b975067ce0988f8, type: 3}
+  m_PrefabInstance: {fileID: 405707152}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f74af2088d96646a12408f3d708eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1182180437
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c797ec71d14be84ba5667f869e0542d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creditsText: {fileID: 4900000, guid: 96d735eac8b42bc44a82691a4a1329d8, type: 3}
+  creditsText: {fileID: 4900000, guid: 33fdf796e4af4214fbd8db0c0af75cb9, type: 3}
   imageObjects:
   - {fileID: 21300000, guid: 57989f0c1a52e0848be88e8f14a22289, type: 3}
   - {fileID: 21300000, guid: b04260586b433934792eb99c9be55f2e, type: 3}
@@ -932,6 +943,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2e72c8986ec9bbf498ff2f74e41e61bb, type: 3}
   - {fileID: 21300000, guid: 21ce49f48048cd449b4291c116c419f3, type: 3}
   - {fileID: 21300000, guid: 7d041f1f7df1d9d46bba736a4d297c8f, type: 3}
+  - {fileID: 21300000, guid: e1bb873dcd934ad42b91391000b0cd96, type: 3}
+  - {fileID: 21300000, guid: 199d5e4acdeb41d49a48fa4714965194, type: 3}
+  - {fileID: 21300000, guid: f4d3d75b91b7b064fb343dd068e490ee, type: 3}
+  - {fileID: 21300000, guid: 400821f4a7ff580409e43685515e8b5b, type: 3}
+  - {fileID: 21300000, guid: 9f5c53744cf68db4ab9d469262eb1e1e, type: 3}
+  - {fileID: 21300000, guid: ec23fe50b8711034a89fb43b89dc2372, type: 3}
   - {fileID: 21300000, guid: 7bef833fb0d723a458df8abb153e2f16, type: 3}
   - {fileID: 21300000, guid: 3e106d52176f84545abe017c2fb12489, type: 3}
   - {fileID: 21300000, guid: 718ea289bef404c45918b1f80b799d2c, type: 3}
@@ -939,16 +956,117 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 03477b2f1ccc4d2488bc9c262f02e609, type: 3}
   - {fileID: 21300000, guid: 6aa6ceaca1207874d8f81c91d9a57fcf, type: 3}
   - {fileID: 21300000, guid: 183927a4c7ea1984ca96b909030169aa, type: 3}
-  - {fileID: 21300000, guid: e1bb873dcd934ad42b91391000b0cd96, type: 3}
-  - {fileID: 21300000, guid: f4d3d75b91b7b064fb343dd068e490ee, type: 3}
-  - {fileID: 21300000, guid: 199d5e4acdeb41d49a48fa4714965194, type: 3}
-  - {fileID: 21300000, guid: 400821f4a7ff580409e43685515e8b5b, type: 3}
-  - {fileID: 21300000, guid: 9f5c53744cf68db4ab9d469262eb1e1e, type: 3}
-  - {fileID: 21300000, guid: ec23fe50b8711034a89fb43b89dc2372, type: 3}
-  songs: []
+  songs:
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayVillageOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayDungeonOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayVillageOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayShopOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 30
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayDungeonOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 60
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayChaseOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - duration: 120
+    song:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 405707153}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: PlayCryptKeeperOST
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   scrollSpeed: 1
   maxLines: 30
-  waitBeforeImage: 10
   fadeInTime: 2
   fadeOutTime: 0.5
   longFadeOutTime: 2

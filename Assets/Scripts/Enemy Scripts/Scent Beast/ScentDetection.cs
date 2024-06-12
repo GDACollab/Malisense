@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using FMOD;
 using FMODUnity;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class ScentDetection : MonoBehaviour
@@ -140,7 +139,6 @@ public class ScentDetection : MonoBehaviour
                 case StateMachine.State.Patrolling:
                     idleDelay -= Time.time - idleTimer;
                     idleTimer = Time.time;
-                    UnityEngine.Debug.Log("delay = " + idleDelay);
                     if (idleDelay <= 0) {
                         idleDelay = Random.Range(idleAudioDelayMin,idleAudioDelayMax);
                         audioManager.PlayScentIdleSFX(soundEmitter);
