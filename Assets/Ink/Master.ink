@@ -203,7 +203,7 @@ bool Variables
         **["Farewell? Why?"]
             "Your fate calls from deep below. Artifacts of the church, once created in service of the monster that hurt you, are capable of dispelling it's magic if they are put in the right hands."
             "Visit the church. Inside is the entrance to the ruins of Radefell. Below, the artifacts are locked behind doors powered by red gems. You must unchain them, one by one."
-            "Bring them to me and I may begin to heal our sense-deprived world. Without the magic of that <i>creature</i> we might finally put those poor souls to rest..."
+            "Bring them to me and I may begin to heal our sense-deprived world by clensing them, such as I've already done for the bell you carry. Without the magic of that <i>creature</i> we might finally put those poor souls to rest..."
             "And, most importantly, do not fear death. I will ensure your return, my peony."
        ~ CharacterTitle = ""
        -<i>She smiles at you, and–for the first time in a long time–you feel safe. </i>
@@ -239,7 +239,6 @@ bool Variables
 -> END
 
  =hub
-{hub > 1: -> CKBedrock}
 ~ CharacterTitle = ""
 {highPriestWasIntroduced && (toldCKAboutHighPriest != true): <i>You return to the Crypt Keeper, finding her tending to the crypt’s flora.</i> -> Artifact1}
 ~ CharacterTitle = "Crypt Keeper"
@@ -301,7 +300,7 @@ bool Variables
 }
 ~ CharacterTitle = ""
 * [<i>Breathe.</i>]
-- -> END
+- <i>You breathe in deeply, shaking off the fatigue.</i> -> END
 =Artifact1
 ~ CharacterTitle = ""
 <i>She seems to not acknowledge your presence. </i>
@@ -356,15 +355,15 @@ bool Variables
 ~ CharacterTitle = ""
 **[Give her the artifact]
 
-<i>You hand her the bell, and she stares into the faces etched along its surface. </i>
+<i>You hand her the Gauntlet. </i>
 ~ CharacterTitle = "Crypt Keeper"
-"The Whispering Bell..." 
+"The Apparition Gauntlet" 
 ~ CharacterTitle = ""
 <i>She looks back up at you. </i>
 ~ CharacterTitle = "Crypt Keeper"
 "You really did it." 
 ~ CharacterTitle = ""
-<i>The light you saw when you were brought back shines in front of you once again as the Crypt Keeper cleanses the Whispering Bell. </i>
+<i>The light you saw when you were brought back shines in front of you once again as the Crypt Keeper cleanses the Apparition Gauntlet. </i>
 
 <i>The bell emits pained groans as she does, until their cries of anguish lessen.</i>
 
@@ -374,7 +373,7 @@ bool Variables
 
 "So... how are you feeling?" 
 ~ CharacterTitle = ""
-<i>You focus is drawn away from the bell and back to the Crypt Keeper as she extends it back towards you to take.</i>
+<i>Your focus is drawn away from the artifact and back to the Crypt Keeper as she extends it back towards you to take.</i>
 
 +++["I'm ready to face the next challenge."]-> ready
 +++["Perhaps some rest is in order"]-> rest
@@ -475,7 +474,7 @@ bool Variables
  + ["I am not having trouble"]
   ~ CharacterTitle = "Crypt Keeper"
   "I suppose so..." 
-  "Yet, I have manifested your revivification more than usual.
+  "Yet, I have manifested your revivification more than usual."
   ~ CharacterTitle = ""
  <i>She laughs lightly to herself</i>
  ~ CharacterTitle = "Crypt Keeper"
@@ -865,14 +864,14 @@ Ruff!
 
 = questions 
 ~ CharacterTitle = ""
-{questions < 1:  <i>Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.</i>}
+{questions < 2:  <i>Recognition finally dredges memory of this man to the surface, one you had never spoken to but had seen so many times: from before the Convergence, the Mayor of Radefell, Poppet Meitar.</i>}
 ~ CharacterTitle = "Mayor"
 “You must have questions. Ask away.”
 
-+["How did you survive?"]-> survive 
-+["What happened to the rest of the church?"]-> church
-+["What are you doing here?"]-> here 
-+["That's all for now."]-> EndOfIntro
+*["How did you survive?"]-> survive 
+*["What happened to the rest of the church?"]-> church
+*["What are you doing here?"]-> here 
+*["That's all for now."]-> EndOfIntro
 
 =survive
 ~ CharacterTitle = "Mayor"
@@ -888,9 +887,9 @@ Ruff!
 
 =church 
 ~ CharacterTitle = "Mayor"
-{church < 1: “...Most are gone. Just like everything else.”}
+{church < 2: “...Most are gone. Just like everything else.”}
 
-{church < 1: “Perhaps the only just perdition to have come from the Convergence after all this time.” }
+{church < 2: “Perhaps the only just perdition to have come from the Convergence after all this time.” }
 *["Do you know who I am?"]-> whoIam
 *["Couldn’t you have stopped what happened?"]-> stopped 
 *-> questions
@@ -939,7 +938,7 @@ Ruff!
 -> END
 
 =Hub
-{Hub > 1: -> MayorBedrock}
+{Artifact1 && Artifact2 && note1 && note2: -> MayorBedrock}
 ~ CharacterTitle = ""
 <i>As you enter the room, the Mayor looks to regard you.</i>
 ~ CharacterTitle = "Mayor"
@@ -947,11 +946,11 @@ Ruff!
 
 =HubQuestions
 
-+[<i>Show the Whispering Bell</i>]-> Artifact1
-+{Artifact2Intro} [<i>Show the Apparition Gauntlet</i>]-> Artifact2
-+{hasMayorNote1}[<i>Show note about friend</i>]-> note1
-+{hasMayorNote2}[<i>Show note about enigmatic eye</i>]-> note2
-+[<i>Enough for now</i>]-> goodbye 
+*[<i>Show the Whispering Bell</i>]-> Artifact1
+*{Artifact2Intro} [<i>Show the Apparition Gauntlet</i>]-> Artifact2
+*{hasMayorNote1}[<i>Show note about friend</i>]-> note1
+*{hasMayorNote2}[<i>Show note about enigmatic eye</i>]-> note2
++ [<i>Enough for now</i>]-> goodbye 
 
 =Artifact1
 ~ CharacterTitle = "Mayor"
@@ -1084,8 +1083,8 @@ Ruff!
 -> Letter2Questions 
 
 =Letter2Questions 
-+["What is this artifact?"]-> artifactQuestion
-+["When did you see it?"]-> seeIt 
+*["What is this artifact?"]-> artifactQuestion
+*["When did you see it?"]-> seeIt 
 * -> HubQuestions
 
 =artifactQuestion
@@ -1112,7 +1111,7 @@ Ruff!
 ~ CharacterTitle = "Mayor"
 “Nevertheless, there is still much work for myself to do. No doubt the same for you, with other artifacts to collect.”
 
--> questions
+-> HubQuestions
 
 = Artifact2 
 ~ CharacterTitle = ""
@@ -1168,7 +1167,7 @@ Ruff!
 
 =MayorBedrock
 ~ CharacterTitle = "Mayor"
-<b>MAYOR</b>: "Greetings. How goes your endevors into the caverns of Radefell?”
+"Greetings. How goes your endeavors into the caverns of Radefell?”
 
 +["It could be better."]-> betterBedrock
 +["It could be worse."]-> worseBedrock
