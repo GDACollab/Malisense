@@ -20,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject clericsSprite;
     [SerializeField] private GameObject HPSprite;
     [SerializeField] private GameObject CKSprite;
+    [SerializeField] private GameObject StickSprite;
 
     [Header("Village Navigation")]
     [SerializeField] VillageNavigationManager navigationManager;
@@ -234,6 +235,10 @@ public class DialogueManager : MonoBehaviour
 
         // VAR background = "First"
         globalTeapot.currentStory.variablesState["StickHappiness"] = globalTeapot.stickHappiness;
+        if(globalTeapot.stickHappiness < -2)
+        {
+            StickSprite.SetActive(false);
+        }
 
         globalTeapot.currentStory.variablesState["character"] = character; // "Crypt_Keeper" "Stick" "Mayor" "Clergy" "Scholar"
         canStartDialogue = false;

@@ -529,7 +529,7 @@ bool Variables
 <i>Its collar reads: "Stick, my loyal and beloved pet"</i>
 ~ CharacterTitle = ""
 <i>Stick whimpers.</i>
- *[<i>Pet Stick</i>]
+ +[<i>Pet Stick</i>]
     ~ StickHappiness = StickHappiness + 1
     ~ CharacterTitle = ""
     <i>You softly pet Stick's head</i>
@@ -538,7 +538,7 @@ bool Variables
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail as you gently wave goodbye.</i>
     -> DONE
- *[<i>Leave Stick Alone</i>]
+ +[<i>Leave Stick Alone</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
     <i>As you turn and leave you can hear Stick whimpering softly.</i>
@@ -559,7 +559,7 @@ bool Variables
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail.</i>
     -> PetStick
- *[<i>Leave</i>]
+ +[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
     <i>You ignore Stick and leave the house.</i>
@@ -574,7 +574,7 @@ bool Variables
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail.</i>
     -> PetStick
- *[<i>Wave goodbye</i>]
+ +[<i>Wave goodbye</i>]
  ~ CharacterTitle = ""
     <i>You wave goodbye to Stick as you leave the house.</i>
 -> END
@@ -594,7 +594,7 @@ bool Variables
     ~ CharacterTitle = ""
     <i>Stick nuzzles into your hand.</i>
     -> PetStick2
- *[<i>Leave</i>]
+ +[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = ""
     <i>You ignore Stick and leave the house.</i>
@@ -608,7 +608,7 @@ bool Variables
     ~ CharacterTitle = ""
     <i>Stick nuzzles into your hand.</i>
     -> PetStick
- *[<i>Wave goodbye</i>]
+ +[<i>Wave goodbye</i>]
  ~ CharacterTitle = ""
     <i>You wave goodbye to Stick as you leave the house.</i>
 -> END
@@ -620,7 +620,7 @@ bool Variables
 Ruff!
 ~ CharacterTitle = ""
 <i>A bark of triumph.</i>
- *[<i>Pet Stick</i>]
+ +[<i>Pet Stick</i>]
     {StickHappiness<4:
         ~StickHappiness=StickHappiness+1
     }
@@ -628,19 +628,19 @@ Ruff!
     <i>You pat stick on the back.</i>
     ~ CharacterTitle = "Stick"
     Woof!
-    **["Good dog!"]
+    ++["Good dog!"]
     ~ CharacterTitle = "Stick"
         Woof! Woof!
-    **[<i>Scratch Stick's back some more</i>]
+    ++[<i>Scratch Stick's back some more</i>]
     ~ CharacterTitle = "Stick"
         Arf!
-    - ~ CharacterTitle = ""
+    -- ~ CharacterTitle = ""
     <i>Stick's tail vigorously wags back and forth.</i>
     <i>You give Stick one last pet and unwillingly leave.</i>
     ~ CharacterTitle = "Stick"
     Bark!
     -> DONE
- *[<i>Leave]
+ +[<i>Leave</i>]
     ~ StickHappiness = StickHappiness - 1
     ~ CharacterTitle = "Stick"
     Ruff! Ruff!
@@ -652,7 +652,7 @@ Ruff!
 ~ CharacterTitle = ""
 <i>As soon as you open the door, Stick launches toward you.</i>
 <i>You crouch down and recieve Stick in your arms.</i>
- *[<i>Pet Stick</i>]
+ +[<i>Pet Stick</i>]
     {StickHappiness<5: 
         ~StickHappiness=StickHappiness+1
     }
@@ -661,7 +661,7 @@ Ruff!
     ~ CharacterTitle = "Stick"
     Woof! Woof!
     -> PetStick3
-*[<i>Get up to leave</i>]
++[<i>Get up to leave</i>]
 ~ CharacterTitle = ""
     <i>As you get up and start to leave, Stick follows.</i>
     -> HappyLeave
@@ -684,7 +684,7 @@ Ruff!
     -> PetStick3
  +[<i>Get Stick to do a trick</i>]
     -> StickTrick
- *[<i>Get up to leave</i>]
+ +[<i>Get up to leave</i>]
  ~ CharacterTitle = ""
     <i>As you get up and start to leave, Stick follows.</i>
     -> HappyLeave
@@ -734,15 +734,15 @@ Ruff!
 =HappyLeave
 ~ CharacterTitle = ""
 <i>However, the dungeon is too dangerous for a dog, so you stop in your tracks.</i>
- * [<i>Tell Stick to stay</i>]
+ + [<i>Tell Stick to stay</i>]
  ~ CharacterTitle = ""
     <i>You tell Stick to stay.</i>
     ~ CharacterTitle = "Stick"
-    *whine*
+    \*whine\*
     ~ CharacterTitle = ""
     <i>Stick whines a bit but understands and backs off.</i>
     <i>With a heavy heart, you leave the Custodian's house.</i>
- * [<i>Try to leave</i>]
+ + [<i>Try to leave</i>]
  ~ CharacterTitle = ""
     <i>You try to leave, but Stick tries to leave with you.</i>
     -> HappyLeave
@@ -755,7 +755,7 @@ Ruff!
 <i>Its collar reads: "Stick, my loyal and beloved pet"</i>
 ~ CharacterTitle = ""
 <i>Stick whimpers.</i>
- * [<i>Pet Stick</i>]
+ + [<i>Pet Stick</i>]
     ~ StickHappiness = StickHappiness + 1
     ~ CharacterTitle = ""
     <i>You softly pet Stick's head.</i>
@@ -764,8 +764,9 @@ Ruff!
     ~ CharacterTitle = ""
     <i>Stick happily wags its tail as you gently wave goodbye.</i>
     -> DONE
- * [<i>Leave Stick Alone</i>]
- ~ CharacterTitle = ""
+ + [<i>Leave Stick Alone</i>]
+    ~ CharacterTitle = ""
+    ~ StickHappiness = StickHappiness - 1
     <i>You once again turn and leave, ignoring the whimpers behind you.</i>
 -> END
 
@@ -773,11 +774,11 @@ Ruff!
 ~ CharacterTitle = ""
 <i>You enter the Custodian's house looking around at the various shelves filled with dust.</i>
 <i>Stick lays on the ground unresponsive to your intrusion.</i>
-    * [<i>Pet Stick</i>]
+    + [<i>Pet Stick</i>]
     ~ CharacterTitle = ""
         <i>You bend down and softly pet Stick's head.</i>
         <i>Stick remains unresponsive to you.</i>
-        ** [<i>Keep petting</i>]
+        ++ [<i>Keep petting</i>]
             ~ StickHappiness = StickHappiness + 1
             ~ CharacterTitle = ""
             <i>You keep petting Stick.</i>
@@ -787,12 +788,13 @@ Ruff!
             ~ CharacterTitle = ""
             <i>Stick slightly wags its tail as you gently wave goodbye.</i>
             -> END
-        ** [<i>Leave Stick Alone</i>]
+        ++ [<i>Leave Stick Alone</i>]
         ~ CharacterTitle = ""
             <i>You leave, ignoring Stick alone on the floor.</i>
             -> END
-    * [<i>Leave the Custodian's House</i>]
+    + [<i>Leave the Custodian's House</i>]
     ~ CharacterTitle = ""
+        ~ StickHappiness = StickHappiness - 1
         <i>You leave, ignoring Stick alone on the floor.</i>
         -> END
 -> END
@@ -806,6 +808,7 @@ Ruff!
 =WishfulThinking(tries)
  +[<i>Keep looking</i>]
  ~ CharacterTitle = ""
+    <i>...</i>
     <i>You keep looking, but you don't find anything of interest.</i>
     -> WishfulThinking(tries-1)
  *{tries == -8}[<i>Sit in silence</i>]
@@ -819,7 +822,7 @@ Ruff!
     
     -- ~ StickHappiness = -10
     -> WishfulThinking(tries-1)
- *[<i>Leave</i>]
+ +[<i>Leave</i>]
  ~ CharacterTitle = ""
     <i>You leave the Custodian's house, wondering why you ever even entered.</i>
 -> END
@@ -938,7 +941,7 @@ Ruff!
 -> END
 
 =Hub
-{Artifact1 && Artifact2 && note1 && note2: -> MayorBedrock}
+{Artifact1 && Artifact2Intro && Artifact2 && !hasMayorNote1||note1 && !hasMayorNote2||note2: -> MayorBedrock}
 ~ CharacterTitle = ""
 <i>As you enter the room, the Mayor looks to regard you.</i>
 ~ CharacterTitle = "Mayor"
